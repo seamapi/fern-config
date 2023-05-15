@@ -2,7 +2,7 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 0.3.6-rc7
+        version: 0.3.6-rc6
         output:
           location: pypi
           package-name: fern-seam

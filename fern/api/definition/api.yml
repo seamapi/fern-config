@@ -1,6 +1,13 @@
 name: api
-auth: bearer
-environments:
-  Production: https://api.example.com
-  Sandbox: https://sandbox.example.com
+display-name: Seam API 
+auth: Bearer
+auth-schemes: 
+  Bearer: 
+    scheme: bearer
+    token: 
+      name: apiKey
 default-environment: Production
+environments: 
+  Production: https://connect.getseam.com
+error-discrimination:
+  strategy: status-code

@@ -31,8 +31,6 @@ jobs:
 
       - name: Release SDKs, OpenAPI, Postman
         env:
-          FERN_NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
-          FERN_POSTMAN_API_KEY: ${{ secrets.FERN_POSTMAN_API_KEY }}
-          FERN_POSTMAN_WORKSPACE_ID: ${{ secrets.FERN_POSTMAN_WORKSPACE_ID }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: fern generate --group publish --version ${{ github.ref_name }} --log-level debug

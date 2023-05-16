@@ -10,5 +10,5 @@ groups:
         github:
           repository: fern-seam/seam-python
         config:
-          client_class_name: BaseSeamClient
+          client_class_name: Seam
           client_filename: base_client.py

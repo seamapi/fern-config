@@ -1,22 +1,35 @@
-types: 
+service:
+  auth: true
+  base-path: /action_attempts
+  endpoints:
+    get:
+      path: /get
+      method: GET
+      request:
+        name: GetActionAttemptRequest
+        query-parameters:
+          action_attempt_id: ActionAttemptId
+      response: ActionAttempt
+
+types:
   ActionAttemptId: uuid
 
-  ActionAttempt: 
+  ActionAttempt:
     properties:
       status: ActionStatus
       action_type: ActionType
-      action_attempt_id: ActionAttemptId 
+      action_attempt_id: ActionAttemptId
       result: unknown
       error: unknown
-  
-  ActionStatus: 
-    enum: 
+
+  ActionStatus:
+    enum:
       - pending
       - success
       - error
-  
-  ActionType: 
-    enum: 
+
+  ActionType:
+    enum:
       - DELETE_ACCESS_CODE
       - LOCK_DOOR
       - UNLOCK_DOOR

@@ -1,8 +1,0 @@
-errors: 
-  BadRequestError: 
-    status-code: 400
-    type: unknown
-  
-  NotFoundError: 
-    status-code: 404
-    type: unknown

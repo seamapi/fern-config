@@ -1,0 +1,1270 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "Seam Connect", "version": "1.0.0" },
+  "servers": [{ "url": "https://connect.getseam.com" }],
+  "tags":
+    [
+      { "name": "/access_codes", "description": "access_codes" },
+      { "name": "/action_attempts", "description": "action_attempts" },
+      { "name": "/client_sessions", "description": "client_sessions" },
+      { "name": "/connected_accounts", "description": "connected_accounts" },
+      { "name": "/connect_webviews", "description": "connect_webviews" },
+      { "name": "/devices", "description": "devices" },
+      { "name": "/events", "description": "events" },
+      { "name": "/health", "description": "health" },
+      { "name": "/locks", "description": "locks" },
+      { "name": "/noise_sensors", "description": "noise_sensors" },
+      { "name": "/webhooks", "description": "webhooks" },
+      { "name": "/workspaces", "description": "workspaces" },
+    ],
+  "paths":
+    {
+      "/access_codes/create":
+        {
+          "post":
+            {
+              "summary": "/access_codes/create",
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "action_attempt":
+                                        {
+                                          "discriminator":
+                                            { "propertyName": "status" },
+                                          "oneOf":
+                                            [
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["success"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      { "nullable": true },
+                                                    "error":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "error",
+                                                  ],
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["pending"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                    "error":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "result",
+                                                    "error",
+                                                  ],
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["error"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                    "error":
+                                                      {
+                                                        "type": "object",
+                                                        "properties":
+                                                          {
+                                                            "type":
+                                                              {
+                                                                "type": "string",
+                                                              },
+                                                            "message":
+                                                              {
+                                                                "type": "string",
+                                                              },
+                                                          },
+                                                        "required":
+                                                          ["type", "message"],
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "result",
+                                                    "error",
+                                                  ],
+                                              },
+                                            ],
+                                        },
+                                      "access_code":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "common_code_key":
+                                                {
+                                                  "type": "string",
+                                                  "nullable": true,
+                                                },
+                                              "type":
+                                                {
+                                                  "type": "string",
+                                                  "enum":
+                                                    ["time_bound", "ongoing"],
+                                                },
+                                              "is_waiting_for_code_assignment":
+                                                { "type": "boolean" },
+                                              "access_code_id":
+                                                {
+                                                  "type": "string",
+                                                  "format": "uuid",
+                                                },
+                                              "device_id":
+                                                {
+                                                  "type": "string",
+                                                  "format": "uuid",
+                                                },
+                                              "name":
+                                                {
+                                                  "type": "string",
+                                                  "nullable": true,
+                                                },
+                                              "code":
+                                                {
+                                                  "type": "string",
+                                                  "nullable": true,
+                                                },
+                                              "created_at":
+                                                { "type": "string" },
+                                              "errors": { "nullable": true },
+                                              "warnings": { "nullable": true },
+                                              "is_managed":
+                                                {
+                                                  "type": "boolean",
+                                                  "enum": [true],
+                                                },
+                                              "starts_at": { "type": "string" },
+                                              "ends_at": { "type": "string" },
+                                              "status":
+                                                {
+                                                  "type": "string",
+                                                  "enum":
+                                                    [
+                                                      "setting",
+                                                      "set",
+                                                      "unset",
+                                                      "removing",
+                                                      "unknown",
+                                                    ],
+                                                },
+                                            },
+                                          "required":
+                                            [
+                                              "common_code_key",
+                                              "type",
+                                              "access_code_id",
+                                              "device_id",
+                                              "name",
+                                              "code",
+                                              "created_at",
+                                              "is_managed",
+                                              "status",
+                                            ],
+                                        },
+                                      "ok": { "type": "boolean" },
+                                    },
+                                  "required":
+                                    ["action_attempt", "access_code", "ok"],
+                                },
+                            },
+                        },
+                    },
+                  "400": { "description": "Bad Request" },
+                  "401": { "description": "Unauthorized" },
+                },
+              "security":
+                [
+                  { "seam_workspace": [], "access_token": [] },
+                  { "seam_client_session_token": [] },
+                  { "client_session_token": [] },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties":
+                                {
+                                  "device_id":
+                                    { "type": "string", "format": "uuid" },
+                                  "name": { "type": "string" },
+                                  "starts_at": { "type": "string" },
+                                  "ends_at": { "type": "string" },
+                                  "code":
+                                    {
+                                      "type": "string",
+                                      "minLength": 4,
+                                      "maxLength": 8,
+                                      "pattern": "^\\d+$",
+                                    },
+                                  "sync":
+                                    { "default": false, "type": "boolean" },
+                                  "attempt_for_offline_device":
+                                    { "default": true, "type": "boolean" },
+                                  "common_code_key": { "type": "string" },
+                                },
+                              "required": ["device_id"],
+                            },
+                        },
+                    },
+                },
+              "parameters":
+                [
+                  {
+                    "name": "device_id",
+                    "in": "query",
+                    "schema": { "type": "string", "format": "uuid" },
+                    "required": true,
+                  },
+                  {
+                    "name": "name",
+                    "in": "query",
+                    "schema": { "type": "string" },
+                    "required": false,
+                  },
+                  {
+                    "name": "starts_at",
+                    "in": "query",
+                    "schema": { "type": "string" },
+                    "required": false,
+                  },
+                  {
+                    "name": "ends_at",
+                    "in": "query",
+                    "schema": { "type": "string" },
+                    "required": false,
+                  },
+                  {
+                    "name": "code",
+                    "in": "query",
+                    "schema":
+                      {
+                        "type": "string",
+                        "minLength": 4,
+                        "maxLength": 8,
+                        "pattern": "^\\d+$",
+                      },
+                    "required": false,
+                  },
+                  {
+                    "name": "sync",
+                    "in": "query",
+                    "schema": { "default": false, "type": "boolean" },
+                    "required": false,
+                  },
+                  {
+                    "name": "attempt_for_offline_device",
+                    "in": "query",
+                    "schema": { "default": true, "type": "boolean" },
+                    "required": false,
+                  },
+                  {
+                    "name": "common_code_key",
+                    "in": "query",
+                    "schema": { "type": "string" },
+                    "required": false,
+                  },
+                ],
+              "tags": ["/access_codes"],
+              "operationId": "accessCodesCreate",
+            },
+        },
+      "/access_codes/delete":
+        {
+          "post":
+            {
+              "summary": "/access_codes/delete",
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "action_attempt":
+                                        {
+                                          "discriminator":
+                                            { "propertyName": "status" },
+                                          "oneOf":
+                                            [
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["success"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      { "nullable": true },
+                                                    "error":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "error",
+                                                  ],
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["pending"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                    "error":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "result",
+                                                    "error",
+                                                  ],
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["error"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                    "error":
+                                                      {
+                                                        "type": "object",
+                                                        "properties":
+                                                          {
+                                                            "type":
+                                                              {
+                                                                "type": "string",
+                                                              },
+                                                            "message":
+                                                              {
+                                                                "type": "string",
+                                                              },
+                                                          },
+                                                        "required":
+                                                          ["type", "message"],
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "result",
+                                                    "error",
+                                                  ],
+                                              },
+                                            ],
+                                        },
+                                      "ok": { "type": "boolean" },
+                                    },
+                                  "required": ["action_attempt", "ok"],
+                                },
+                            },
+                        },
+                    },
+                  "400": { "description": "Bad Request" },
+                  "401": { "description": "Unauthorized" },
+                },
+              "security":
+                [
+                  { "seam_workspace": [], "access_token": [] },
+                  { "seam_client_session_token": [] },
+                  { "client_session_token": [] },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties":
+                                {
+                                  "device_id":
+                                    { "type": "string", "format": "uuid" },
+                                  "access_code_id":
+                                    { "type": "string", "format": "uuid" },
+                                  "sync":
+                                    { "default": false, "type": "boolean" },
+                                },
+                              "required": ["access_code_id"],
+                            },
+                        },
+                    },
+                },
+              "tags": ["/access_codes"],
+              "operationId": "accessCodesDelete",
+            },
+        },
+      "/access_codes/update":
+        {
+          "put":
+            {
+              "summary": "/access_codes/update",
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "action_attempt":
+                                        {
+                                          "discriminator":
+                                            { "propertyName": "status" },
+                                          "oneOf":
+                                            [
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["success"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      { "nullable": true },
+                                                    "error":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "error",
+                                                  ],
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["pending"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                    "error":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "result",
+                                                    "error",
+                                                  ],
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["error"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                    "error":
+                                                      {
+                                                        "type": "object",
+                                                        "properties":
+                                                          {
+                                                            "type":
+                                                              {
+                                                                "type": "string",
+                                                              },
+                                                            "message":
+                                                              {
+                                                                "type": "string",
+                                                              },
+                                                          },
+                                                        "required":
+                                                          ["type", "message"],
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "result",
+                                                    "error",
+                                                  ],
+                                              },
+                                            ],
+                                        },
+                                      "ok": { "type": "boolean" },
+                                    },
+                                  "required": ["action_attempt", "ok"],
+                                },
+                            },
+                        },
+                    },
+                  "400": { "description": "Bad Request" },
+                  "401": { "description": "Unauthorized" },
+                },
+              "security":
+                [
+                  { "seam_workspace": [], "access_token": [] },
+                  { "seam_client_session_token": [] },
+                  { "client_session_token": [] },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties":
+                                {
+                                  "name": { "type": "string" },
+                                  "starts_at": { "type": "string" },
+                                  "ends_at": { "type": "string" },
+                                  "code":
+                                    {
+                                      "type": "string",
+                                      "minLength": 4,
+                                      "maxLength": 8,
+                                      "pattern": "^\\d+$",
+                                    },
+                                  "sync":
+                                    { "default": false, "type": "boolean" },
+                                  "attempt_for_offline_device":
+                                    { "default": true, "type": "boolean" },
+                                  "access_code_id":
+                                    { "type": "string", "format": "uuid" },
+                                  "device_id":
+                                    { "type": "string", "format": "uuid" },
+                                  "type":
+                                    {
+                                      "type": "string",
+                                      "enum": ["ongoing", "time_bound"],
+                                    },
+                                },
+                              "required": ["access_code_id"],
+                            },
+                        },
+                    },
+                },
+              "parameters":
+                [
+                  {
+                    "name": "name",
+                    "in": "query",
+                    "schema": { "type": "string" },
+                    "required": false,
+                  },
+                  {
+                    "name": "starts_at",
+                    "in": "query",
+                    "schema": { "type": "string" },
+                    "required": false,
+                  },
+                  {
+                    "name": "ends_at",
+                    "in": "query",
+                    "schema": { "type": "string" },
+                    "required": false,
+                  },
+                  {
+                    "name": "code",
+                    "in": "query",
+                    "schema":
+                      {
+                        "type": "string",
+                        "minLength": 4,
+                        "maxLength": 8,
+                        "pattern": "^\\d+$",
+                      },
+                    "required": false,
+                  },
+                  {
+                    "name": "sync",
+                    "in": "query",
+                    "schema": { "default": false, "type": "boolean" },
+                    "required": false,
+                  },
+                  {
+                    "name": "attempt_for_offline_device",
+                    "in": "query",
+                    "schema": { "default": true, "type": "boolean" },
+                    "required": false,
+                  },
+                  {
+                    "name": "access_code_id",
+                    "in": "query",
+                    "schema": { "type": "string", "format": "uuid" },
+                    "required": true,
+                  },
+                  {
+                    "name": "device_id",
+                    "in": "query",
+                    "schema": { "type": "string", "format": "uuid" },
+                    "required": false,
+                  },
+                  {
+                    "name": "type",
+                    "in": "query",
+                    "schema":
+                      { "type": "string", "enum": ["ongoing", "time_bound"] },
+                    "required": false,
+                  },
+                ],
+              "tags": ["/access_codes"],
+              "operationId": "accessCodesUpdatePut",
+            },
+          "post":
+            {
+              "summary": "/access_codes/update",
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "action_attempt":
+                                        {
+                                          "discriminator":
+                                            { "propertyName": "status" },
+                                          "oneOf":
+                                            [
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["success"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      { "nullable": true },
+                                                    "error":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "error",
+                                                  ],
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["pending"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                    "error":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "result",
+                                                    "error",
+                                                  ],
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["error"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                    "error":
+                                                      {
+                                                        "type": "object",
+                                                        "properties":
+                                                          {
+                                                            "type":
+                                                              {
+                                                                "type": "string",
+                                                              },
+                                                            "message":
+                                                              {
+                                                                "type": "string",
+                                                              },
+                                                          },
+                                                        "required":
+                                                          ["type", "message"],
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "result",
+                                                    "error",
+                                                  ],
+                                              },
+                                            ],
+                                        },
+                                      "ok": { "type": "boolean" },
+                                    },
+                                  "required": ["action_attempt", "ok"],
+                                },
+                            },
+                        },
+                    },
+                  "400": { "description": "Bad Request" },
+                  "401": { "description": "Unauthorized" },
+                },
+              "security":
+                [
+                  { "seam_workspace": [], "access_token": [] },
+                  { "seam_client_session_token": [] },
+                  { "client_session_token": [] },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties":
+                                {
+                                  "name": { "type": "string" },
+                                  "starts_at": { "type": "string" },
+                                  "ends_at": { "type": "string" },
+                                  "code":
+                                    {
+                                      "type": "string",
+                                      "minLength": 4,
+                                      "maxLength": 8,
+                                      "pattern": "^\\d+$",
+                                    },
+                                  "sync":
+                                    { "default": false, "type": "boolean" },
+                                  "attempt_for_offline_device":
+                                    { "default": true, "type": "boolean" },
+                                  "access_code_id":
+                                    { "type": "string", "format": "uuid" },
+                                  "device_id":
+                                    { "type": "string", "format": "uuid" },
+                                  "type":
+                                    {
+                                      "type": "string",
+                                      "enum": ["ongoing", "time_bound"],
+                                    },
+                                },
+                              "required": ["access_code_id"],
+                            },
+                        },
+                    },
+                },
+              "parameters":
+                [
+                  {
+                    "name": "name",
+                    "in": "query",
+                    "schema": { "type": "string" },
+                    "required": false,
+                  },
+                  {
+                    "name": "starts_at",
+                    "in": "query",
+                    "schema": { "type": "string" },
+                    "required": false,
+                  },
+                  {
+                    "name": "ends_at",
+                    "in": "query",
+                    "schema": { "type": "string" },
+                    "required": false,
+                  },
+                  {
+                    "name": "code",
+                    "in": "query",
+                    "schema":
+                      {
+                        "type": "string",
+                        "minLength": 4,
+                        "maxLength": 8,
+                        "pattern": "^\\d+$",
+                      },
+                    "required": false,
+                  },
+                  {
+                    "name": "sync",
+                    "in": "query",
+                    "schema": { "default": false, "type": "boolean" },
+                    "required": false,
+                  },
+                  {
+                    "name": "attempt_for_offline_device",
+                    "in": "query",
+                    "schema": { "default": true, "type": "boolean" },
+                    "required": false,
+                  },
+                  {
+                    "name": "access_code_id",
+                    "in": "query",
+                    "schema": { "type": "string", "format": "uuid" },
+                    "required": true,
+                  },
+                  {
+                    "name": "device_id",
+                    "in": "query",
+                    "schema": { "type": "string", "format": "uuid" },
+                    "required": false,
+                  },
+                  {
+                    "name": "type",
+                    "in": "query",
+                    "schema":
+                      { "type": "string", "enum": ["ongoing", "time_bound"] },
+                    "required": false,
+                  },
+                ],
+              "tags": ["/access_codes"],
+              "operationId": "accessCodesUpdatePost",
+            },
+        },
+      "/action_attempts/get":
+        {
+          "get":
+            {
+              "summary": "/action_attempts/get",
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "OK",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "action_attempt":
+                                        {
+                                          "discriminator":
+                                            { "propertyName": "status" },
+                                          "oneOf":
+                                            [
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["success"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      { "nullable": true },
+                                                    "error":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "error",
+                                                  ],
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["pending"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                    "error":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "result",
+                                                    "error",
+                                                  ],
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties":
+                                                  {
+                                                    "status":
+                                                      {
+                                                        "type": "string",
+                                                        "enum": ["error"],
+                                                      },
+                                                    "action_type":
+                                                      { "type": "string" },
+                                                    "action_attempt_id":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                      },
+                                                    "result":
+                                                      {
+                                                        "type": "string",
+                                                        "format": "null",
+                                                        "nullable": true,
+                                                      },
+                                                    "error":
+                                                      {
+                                                        "type": "object",
+                                                        "properties":
+                                                          {
+                                                            "type":
+                                                              {
+                                                                "type": "string",
+                                                              },
+                                                            "message":
+                                                              {
+                                                                "type": "string",
+                                                              },
+                                                          },
+                                                        "required":
+                                                          ["type", "message"],
+                                                      },
+                                                  },
+                                                "required":
+                                                  [
+                                                    "status",
+                                                    "action_type",
+                                                    "action_attempt_id",
+                                                    "result",
+                                                    "error",
+                                                  ],
+                                              },
+                                            ],
+                                        },
+                                      "ok": { "type": "boolean" },
+                                    },
+                                  "required": ["action_attempt", "ok"],
+                                },
+                            },
+                        },
+                    },
+                  "400": { "description": "Bad Request" },
+                  "401": { "description": "Unauthorized" },
+                },
+              "security":
+                [
+                  { "seam_workspace": [], "access_token": [] },
+                  { "seam_client_session_token": [] },
+                  { "client_session_token": [] },
+                ],
+              "parameters":
+                [
+                  {
+                    "name": "action_attempt_id",
+                    "in": "query",
+                    "schema": { "type": "string", "format": "uuid" },
+                    "required": true,
+                  },
+                ],
+              "tags": ["/action_attempts"],
+              "operationId": "actionAttemptsGet",
+            },
+        },
+    },
+  "components":
+    {
+      "securitySchemes":
+        {
+          "access_token":
+            { "type": "http", "scheme": "bearer" },
+        },
+    },
+}

@@ -293,7 +293,7 @@
                     },
                 },
               "tags": ["accessCodes"],
-              "operationId": "accessCodesCreate",
+              "operationId": "accessCodes_Create",
             },
         },
       "/access_codes/delete":
@@ -483,7 +483,7 @@
                     },
                 },
               "tags": ["accessCodes"],
-              "operationId": "accessCodesDelete",
+              "operationId": "accessCodes_Delete",
             },
         },
       "/access_codes/update":
@@ -690,7 +690,7 @@
                     },
                 },
               "tags": ["accessCodes"],
-              "operationId": "accessCodesUpdatePut",
+              "operationId": "accessCodes_UpdatePut",
             },
         },
       "/action_attempts/get":
@@ -866,7 +866,7 @@
                   },
                 ],
               "tags": ["actionAttempts"],
-              "operationId": "actionAttemptsGet",
+              "operationId": "actionAttempts_Get",
             },
         },
     },

@@ -2,7 +2,7 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.3.6-2-gfaf7c18
+        version: 0.3.6-3-g8552cb8
         output:
           location: maven
           coordinate: io.github.fern-api:seam

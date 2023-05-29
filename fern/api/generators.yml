@@ -1,14 +1,23 @@
 groups:
   publish:
     generators:
-      - name: fernapi/fern-python-sdk
-        version: 0.3.6-rc6-1-gac59a945
+      - name: fernapi/fern-java-sdk
+        version: 0.3.6-2-gfaf7c18
         output:
-          location: pypi
-          package-name: fern-seam
-          token: ${PYPI_TOKEN}
+          location: maven
+          coordinate: io.github.fern-api:seam
+          username: ${MAVEN_USERNAME}
+          password: ${MAVEN_PASSWORD}
         github:
-          repository: fern-seam/seam-python
-        config:
-          client_class_name: Seam
-          client_filename: base_client.py
+          repository: fern-seam/seam-java
+      # - name: fernapi/fern-python-sdk
+      #   version: 0.3.6-rc6-1-gac59a945
+      #   output:
+      #     location: pypi
+      #     package-name: fern-seam
+      #     token: ${PYPI_TOKEN}
+      #   github:
+      #     repository: fern-seam/seam-python
+      #   config:
+      #     client_class_name: Seam
+      #     client_filename: base_client.py

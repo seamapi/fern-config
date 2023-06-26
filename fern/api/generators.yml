@@ -10,14 +10,14 @@ groups:
           password: ${MAVEN_PASSWORD}
         github:
           repository: seamapi/seam-java
-      # - name: fernapi/fern-python-sdk
-      #   version: 0.3.6-rc6-1-gac59a945
-      #   output:
-      #     location: pypi
-      #     package-name: fern-seam
-      #     token: ${PYPI_TOKEN}
-      #   github:
-      #     repository: fern-seam/seam-python
-      #   config:
-      #     client_class_name: Seam
-      #     client_filename: base_client.py
+      - name: fernapi/fern-python-sdk
+        version: 0.3.6-rc6-1-gac59a945
+        output:
+          location: pypi
+          package-name: fern-seam
+          token: ${PYPI_TOKEN}
+        github:
+          repository: seamapi/fern-python
+        config:
+          client_class_name: Seam
+          client_filename: base_client.py

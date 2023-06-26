@@ -9,7 +9,7 @@ groups:
           username: ${MAVEN_USERNAME}
           password: ${MAVEN_PASSWORD}
         github:
-          repository: seamapi/seam-java
+          repository: seamapi/java
       - name: fernapi/fern-python-sdk
         version: 0.3.6-rc6-1-gac59a945
         output:

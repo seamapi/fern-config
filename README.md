@@ -1,9 +1,9 @@
-# Seam API
+# Seam API Fern Configuration
 
 Tagging a release on this repository will update the:
 
-- [Python SDK repo](https://github.com/fern-seam/seam-python)
-- [Java SDK repo](https://github.com/fern-seam/seam-java)
+- [Python SDK repo](https://github.com/seamapi/fern-python)
+- [Java SDK repo](https://github.com/seamapi/java)
 
 ## What is in this repository?
 

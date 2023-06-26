@@ -2,10 +2,10 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.3.6-3-g8552cb8
+        version: 0.3.7
         output:
           location: maven
-          coordinate: io.github.fern-api:seam
+          coordinate: io.github.seamapi
           username: ${MAVEN_USERNAME}
           password: ${MAVEN_PASSWORD}
         github:

@@ -29,7 +29,7 @@ jobs:
       - name: Download Fern
         run: npm install -g fern-api
 
-      - name: Release SDKs, OpenAPI, Postman
+      - name: Release SDKs
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}

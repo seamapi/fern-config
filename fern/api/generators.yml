@@ -11,7 +11,7 @@ groups:
         github:
           repository: seamapi/java
       - name: fernapi/fern-python-sdk
-        version: 0.3.6-rc6-1-gac59a945
+        version: 0.3.7
         output:
           location: pypi
           package-name: fern-seam
@@ -21,3 +21,7 @@ groups:
         config:
           client_class_name: Seam
           client_filename: base_client.py
+      - name: fernapi/fern-go-sdk
+        version: 0.0.14
+        github:
+          repository: seamapi/go

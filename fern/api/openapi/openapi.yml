@@ -7129,25 +7129,11 @@
   },
   "components": {
     "securitySchemes": {
-      "seam_workspace": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "seam-workspace"
-      },
-      "seam_client_session_token": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "seam-client-session-token"
-      },
-      "client_session_token": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "client-session-token"
-      },
       "access_token": {
         "type": "http",
         "scheme": "bearer",
-        "bearerFormat": "API Token"
+        "bearerFormat": "API Token",
+        "x-fern-token-variable-name": "api_key"
       }
     },
     "schemas": {

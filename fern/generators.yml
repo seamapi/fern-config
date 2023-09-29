@@ -2,7 +2,7 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.4.2-rc1
+        version: 0.5.7
         output:
           location: maven
           coordinate: io.github.seamapi:java
@@ -10,17 +10,17 @@ groups:
           password: ${MAVEN_PASSWORD}
         github:
           repository: seamapi/java
-      - name: fernapi/fern-python-sdk
-        version: 0.4.4
-        output:
-          location: pypi
-          package-name: fern-seam
-          token: ${PYPI_TOKEN}
-        github:
-          repository: seamapi/fern-python
-        config:
-          client_class_name: Seam
-          package_name: seamapi
+      # - name: fernapi/fern-python-sdk
+      #   version: 0.4.4
+      #   output:
+      #     location: pypi
+      #     package-name: fern-seam
+      #     token: ${PYPI_TOKEN}
+      #   github:
+      #     repository: seamapi/fern-python
+      #   config:
+      #     client_class_name: Seam
+      #     package_name: seamapi
       - name: fernapi/fern-go-sdk
         version: 0.0.14
         github:

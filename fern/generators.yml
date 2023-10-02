@@ -2,7 +2,7 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.5.7
+        version: 0.5.8
         output:
           location: maven
           coordinate: io.github.seamapi:java

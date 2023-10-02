@@ -1,8 +1,6 @@
 # Seam API Fern Configuration
 
 Tagging a release on this repository will update the:
-
-- [Python SDK repo](https://github.com/seamapi/fern-python)
 - [Java SDK repo](https://github.com/seamapi/java)
 - [Go SDK repo](https://github.com/seamapi/go)
 

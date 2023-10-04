@@ -30,7 +30,7 @@ service:
 
     delete:
       path: /access_codes/unmanaged/delete
-      method: POST
+      method: DELETE
       auth: true
       display-name: /access_codes/unmanaged/delete
       request:

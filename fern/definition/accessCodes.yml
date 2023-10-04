@@ -79,7 +79,7 @@ service:
 
     delete:
       path: /access_codes/delete
-      method: POST
+      method: DELETE
       auth: true
       display-name: /access_codes/delete
       request:

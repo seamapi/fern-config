@@ -28,7 +28,7 @@ service:
 
     delete:
       path: /webhooks/delete
-      method: POST
+      method: DELETE
       auth: true
       display-name: /webhooks/delete
       request:

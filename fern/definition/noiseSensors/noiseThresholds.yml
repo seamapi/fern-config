@@ -36,7 +36,7 @@ service:
 
     delete:
       path: /noise_sensors/noise_thresholds/delete
-      method: POST
+      method: DELETE
       auth: true
       display-name: /noise_sensors/noise_thresholds/delete
       request:

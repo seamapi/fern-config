@@ -9,7 +9,7 @@ service:
   endpoints:
     delete:
       path: /connected_accounts/delete
-      method: POST
+      method: DELETE
       auth: true
       display-name: /connected_accounts/delete
       request:

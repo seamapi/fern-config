@@ -49,7 +49,7 @@ service:
 
     delete:
       path: /thermostats/climate_setting_schedules/delete
-      method: POST
+      method: DELETE
       auth: true
       display-name: /thermostats/climate_setting_schedules/delete
       request:

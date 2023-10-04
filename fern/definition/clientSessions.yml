@@ -31,7 +31,7 @@ service:
 
     delete:
       path: /client_sessions/delete
-      method: POST
+      method: DELETE
       auth: true
       display-name: /client_sessions/delete
       request:

@@ -40,7 +40,7 @@ service:
 
     delete:
       path: /connect_webviews/delete
-      method: POST
+      method: DELETE
       auth: true
       display-name: /connect_webviews/delete
       request:

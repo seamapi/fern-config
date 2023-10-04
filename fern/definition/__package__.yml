@@ -462,7 +462,7 @@ types:
       lock:
         type: optional<unknown>
       device:
-        type: optional<unknown>
+        type: Device
       ok: boolean
 
   LocksListResponse:
@@ -470,7 +470,7 @@ types:
       locks:
         type: optional<unknown>
       devices:
-        type: optional<unknown>
+        type: list<Device>
       ok: boolean
 
   LocksLockDoorResponse:

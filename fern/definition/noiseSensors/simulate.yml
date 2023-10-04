@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: ../__package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    trigger_noise_threshold:
+      path: /noise_sensors/simulate/trigger_noise_threshold
+      method: POST
+      auth: true
+      display-name: /noise_sensors/simulate/trigger_noise_threshold
+      request:
+        name: SimulateTriggerNoiseThresholdRequest
+        body:
+          properties:
+            device_id: string
+      response:
+        docs: OK
+        type: root.SimulateTriggerNoiseThresholdResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

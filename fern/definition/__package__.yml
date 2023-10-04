@@ -1,0 +1,1313 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  AccessCodesCreateResponse:
+    properties:
+      action_attempt:
+        type: ActionAttempt
+      access_code:
+        type: AccessCode
+      ok: boolean
+
+  AccessCodesCreateMultipleRequestBehaviorWhenCodeCannotBeShared:
+    enum:
+      - name: throw
+        value: throw
+      - name: create_random_code
+        value: create_random_code
+
+  AccessCodesCreateMultipleResponse:
+    properties:
+      access_codes:
+        type: list<AccessCode>
+      ok: boolean
+
+  AccessCodesDeleteResponse:
+    properties:
+      action_attempt:
+        type: ActionAttempt
+      ok: boolean
+
+  AccessCodesGetResponse:
+    properties:
+      access_code:
+        type: AccessCode
+      ok: boolean
+
+  AccessCodesListResponse:
+    properties:
+      access_codes:
+        type: list<AccessCode>
+      ok: boolean
+
+  AccessCodesPullBackupAccessCodeResponse:
+    properties:
+      backup_access_code:
+        type: AccessCode
+      ok: boolean
+
+  AccessCodesUpdateRequestType:
+    enum:
+      - name: ongoing
+        value: ongoing
+      - name: time_bound
+        value: time_bound
+
+  AccessCodesUpdateResponse:
+    properties:
+      action_attempt:
+        type: ActionAttempt
+      ok: boolean
+
+  ActionAttemptsGetResponse:
+    properties:
+      action_attempt:
+        type: ActionAttempt
+      ok: boolean
+
+  ActionAttemptsListResponse:
+    properties:
+      action_attempts:
+        type: list<ActionAttempt>
+      ok: boolean
+
+  ConnectedAccountsDeleteResponse:
+    properties:
+      ok: boolean
+
+  ConnectedAccountsGetRequest:
+    discriminated: false
+    union:
+      - type: ConnectedAccountsGetRequestConnectedAccountId
+      - type: ConnectedAccountsGetRequestEmail
+
+  ConnectedAccountsGetRequestConnectedAccountId:
+    properties:
+      connected_account_id: string
+
+  ConnectedAccountsGetRequestEmail:
+    properties:
+      email: string
+
+  ConnectedAccountsGetResponse:
+    properties:
+      connected_account:
+        type: ConnectedAccount
+      ok: boolean
+
+  ConnectedAccountsListResponse:
+    properties:
+      connected_accounts:
+        type: list<ConnectedAccount>
+      ok: boolean
+
+  DevicesDeleteResponse:
+    properties:
+      ok: boolean
+
+  DevicesGetResponse:
+    properties:
+      device:
+        type: Device
+      ok: boolean
+
+  DevicesListResponse:
+    properties:
+      devices:
+        type: list<Device>
+      ok: boolean
+
+  DevicesListDeviceProvidersRequestProviderCategory:
+    enum:
+      - name: stable
+        value: stable
+      - name: consumer_smartlocks
+        value: consumer_smartlocks
+
+  DevicesListDeviceProvidersResponse:
+    properties:
+      device_providers:
+        type: list<DevicesListDeviceProvidersResponseDeviceProvidersItem>
+      ok: boolean
+
+  DevicesListDeviceProvidersResponseDeviceProvidersItem:
+    properties:
+      device_provider_name: string
+      display_name: string
+      image_url: string
+      provider_categories:
+        type: >-
+          list<DevicesListDeviceProvidersResponseDeviceProvidersItemProviderCategoriesItem>
+
+  DevicesListDeviceProvidersResponseDeviceProvidersItemProviderCategoriesItem:
+    enum:
+      - name: stable
+        value: stable
+      - name: consumer_smartlocks
+        value: consumer_smartlocks
+
+  DevicesUpdateRequestProperties:
+    properties:
+      name:
+        type: optional<string>
+
+  DevicesUpdateRequestLocation:
+    properties: {}
+
+  DevicesUpdateResponse:
+    properties:
+      ok: boolean
+
+  ClientSessionsCreateResponse:
+    properties:
+      client_session:
+        type: ClientSession
+      ok: boolean
+
+  ClientSessionsDeleteResponse:
+    properties:
+      ok: boolean
+
+  ClientSessionsGetResponse:
+    properties:
+      client_session:
+        type: ClientSession
+      ok: boolean
+
+  ClientSessionsListResponse:
+    properties:
+      client_sessions:
+        type: list<ClientSession>
+      ok: boolean
+
+  EventsGetResponse:
+    properties:
+      event:
+        type: optional<Event>
+      message:
+        type: optional<string>
+      ok: boolean
+
+  EventsListRequestBetweenItem:
+    discriminated: false
+    union:
+      - string
+      - datetime
+
+  EventsListRequestEventType:
+    enum:
+      - name: DeviceConnected
+        value: device.connected
+      - name: DeviceUnmanagedConnected
+        value: device.unmanaged.connected
+      - name: DeviceDisconnected
+        value: device.disconnected
+      - name: DeviceUnmanagedDisconnected
+        value: device.unmanaged.disconnected
+      - name: DeviceConvertedToUnmanaged
+        value: device.converted_to_unmanaged
+      - name: DeviceUnmanagedConvertedToManaged
+        value: device.unmanaged.converted_to_managed
+      - name: DeviceRemoved
+        value: device.removed
+      - name: DeviceTampered
+        value: device.tampered
+      - name: DeviceLowBattery
+        value: device.low_battery
+      - name: DeviceBatteryStatusChanged
+        value: device.battery_status_changed
+      - name: AccessCodeCreated
+        value: access_code.created
+      - name: AccessCodeChanged
+        value: access_code.changed
+      - name: AccessCodeScheduledOnDevice
+        value: access_code.scheduled_on_device
+      - name: AccessCodeSetOnDevice
+        value: access_code.set_on_device
+      - name: AccessCodeDeleted
+        value: access_code.deleted
+      - name: AccessCodeRemovedFromDevice
+        value: access_code.removed_from_device
+      - name: AccessCodeFailedToSetOnDevice
+        value: access_code.failed_to_set_on_device
+      - name: AccessCodeDelayInSettingOnDevice
+        value: access_code.delay_in_setting_on_device
+      - name: AccessCodeFailedToRemoveFromDevice
+        value: access_code.failed_to_remove_from_device
+      - name: AccessCodeDelayInRemovingFromDevice
+        value: access_code.delay_in_removing_from_device
+      - name: AccessCodeUnmanagedConvertedToManaged
+        value: access_code.unmanaged.converted_to_managed
+      - name: AccessCodeUnmanagedFailedToConvertToManaged
+        value: access_code.unmanaged.failed_to_convert_to_managed
+      - name: AccessCodeUnmanagedCreated
+        value: access_code.unmanaged.created
+      - name: AccessCodeUnmanagedRemoved
+        value: access_code.unmanaged.removed
+      - name: LockLocked
+        value: lock.locked
+      - name: LockUnlocked
+        value: lock.unlocked
+      - name: ConnectedAccountConnected
+        value: connected_account.connected
+      - name: ConnectedAccountCreated
+        value: connected_account.created
+      - name: ConnectedAccountDisconnected
+        value: connected_account.disconnected
+      - name: ConnectedAccountCompletedFirstSync
+        value: connected_account.completed_first_sync
+      - name: NoiseSensorNoiseThresholdTriggered
+        value: noise_sensor.noise_threshold_triggered
+      - name: AccessCodeBackupAccessCodePulled
+        value: access_code.backup_access_code_pulled
+
+  EventsListRequestEventTypesItem:
+    enum:
+      - name: DeviceConnected
+        value: device.connected
+      - name: DeviceUnmanagedConnected
+        value: device.unmanaged.connected
+      - name: DeviceDisconnected
+        value: device.disconnected
+      - name: DeviceUnmanagedDisconnected
+        value: device.unmanaged.disconnected
+      - name: DeviceConvertedToUnmanaged
+        value: device.converted_to_unmanaged
+      - name: DeviceUnmanagedConvertedToManaged
+        value: device.unmanaged.converted_to_managed
+      - name: DeviceRemoved
+        value: device.removed
+      - name: DeviceTampered
+        value: device.tampered
+      - name: DeviceLowBattery
+        value: device.low_battery
+      - name: DeviceBatteryStatusChanged
+        value: device.battery_status_changed
+      - name: AccessCodeCreated
+        value: access_code.created
+      - name: AccessCodeChanged
+        value: access_code.changed
+      - name: AccessCodeScheduledOnDevice
+        value: access_code.scheduled_on_device
+      - name: AccessCodeSetOnDevice
+        value: access_code.set_on_device
+      - name: AccessCodeDeleted
+        value: access_code.deleted
+      - name: AccessCodeRemovedFromDevice
+        value: access_code.removed_from_device
+      - name: AccessCodeFailedToSetOnDevice
+        value: access_code.failed_to_set_on_device
+      - name: AccessCodeDelayInSettingOnDevice
+        value: access_code.delay_in_setting_on_device
+      - name: AccessCodeFailedToRemoveFromDevice
+        value: access_code.failed_to_remove_from_device
+      - name: AccessCodeDelayInRemovingFromDevice
+        value: access_code.delay_in_removing_from_device
+      - name: AccessCodeUnmanagedConvertedToManaged
+        value: access_code.unmanaged.converted_to_managed
+      - name: AccessCodeUnmanagedFailedToConvertToManaged
+        value: access_code.unmanaged.failed_to_convert_to_managed
+      - name: AccessCodeUnmanagedCreated
+        value: access_code.unmanaged.created
+      - name: AccessCodeUnmanagedRemoved
+        value: access_code.unmanaged.removed
+      - name: LockLocked
+        value: lock.locked
+      - name: LockUnlocked
+        value: lock.unlocked
+      - name: ConnectedAccountConnected
+        value: connected_account.connected
+      - name: ConnectedAccountCreated
+        value: connected_account.created
+      - name: ConnectedAccountDisconnected
+        value: connected_account.disconnected
+      - name: ConnectedAccountCompletedFirstSync
+        value: connected_account.completed_first_sync
+      - name: NoiseSensorNoiseThresholdTriggered
+        value: noise_sensor.noise_threshold_triggered
+      - name: AccessCodeBackupAccessCodePulled
+        value: access_code.backup_access_code_pulled
+
+  EventsListResponse:
+    properties:
+      events:
+        type: optional<list<Event>>
+      message:
+        type: optional<string>
+      ok: boolean
+
+  HealthGetHealthResponse:
+    properties:
+      ok: boolean
+      msg: literal<"I’m one with the Force. The Force is with me.">
+      last_service_evaluation_at:
+        type: optional<string>
+      service_health_statuses:
+        type: list<ServiceHealth>
+
+  HealthGetServiceHealthResponse:
+    properties:
+      ok: boolean
+      last_service_evaluation_at: string
+      service_health:
+        type: ServiceHealth
+
+  ConnectWebviewsCreateRequestDeviceSelectionMode:
+    enum:
+      - name: none
+        value: none
+      - name: single
+        value: single
+      - name: multiple
+        value: multiple
+
+  ConnectWebviewsCreateRequestAcceptedProvidersItem:
+    enum:
+      - name: akuvox
+        value: akuvox
+      - name: august
+        value: august
+      - name: avigilon_alta
+        value: avigilon_alta
+      - name: brivo
+        value: brivo
+      - name: butterflymx
+        value: butterflymx
+      - name: schlage
+        value: schlage
+      - name: smartthings
+        value: smartthings
+      - name: yale
+        value: yale
+      - name: genie
+        value: genie
+      - name: doorking
+        value: doorking
+      - name: salto
+        value: salto
+      - name: lockly
+        value: lockly
+      - name: ttlock
+        value: ttlock
+      - name: linear
+        value: linear
+      - name: noiseaware
+        value: noiseaware
+      - name: nuki
+        value: nuki
+      - name: seam_relay_admin
+        value: seam_relay_admin
+      - name: igloo
+        value: igloo
+      - name: kwikset
+        value: kwikset
+      - name: minut
+        value: minut
+      - name: my_2n
+        value: my_2n
+      - name: controlbyweb
+        value: controlbyweb
+      - name: nest
+        value: nest
+      - name: igloohome
+        value: igloohome
+      - name: ecobee
+        value: ecobee
+      - name: hubitat
+        value: hubitat
+      - name: yale_access
+        value: yale_access
+
+  ConnectWebviewsCreateRequestProviderCategory:
+    enum:
+      - name: stable
+        value: stable
+      - name: consumer_smartlocks
+        value: consumer_smartlocks
+      - name: internal_beta
+        value: internal_beta
+
+  ConnectWebviewsCreateRequestCustomMetadataValue:
+    discriminated: false
+    union:
+      - string
+      - double
+      - type: optional<string>
+      - boolean
+
+  ConnectWebviewsCreateResponse:
+    properties:
+      connect_webview:
+        type: ConnectWebview
+      ok: boolean
+
+  ConnectWebviewsDeleteResponse:
+    properties:
+      ok: boolean
+
+  ConnectWebviewsGetResponse:
+    properties:
+      connect_webview:
+        type: ConnectWebview
+      ok: boolean
+
+  ConnectWebviewsListResponse:
+    properties:
+      connect_webviews:
+        type: list<ConnectWebview>
+      ok: boolean
+
+  LocksGetResponse:
+    properties:
+      lock:
+        type: optional<unknown>
+      device:
+        type: optional<unknown>
+      ok: boolean
+
+  LocksListResponse:
+    properties:
+      locks:
+        type: optional<unknown>
+      devices:
+        type: optional<unknown>
+      ok: boolean
+
+  LocksLockDoorResponse:
+    properties:
+      action_attempt:
+        type: ActionAttempt
+      ok: boolean
+
+  LocksUnlockDoorResponse:
+    properties:
+      action_attempt:
+        type: ActionAttempt
+      ok: boolean
+
+  ThermostatsGetResponse:
+    properties:
+      thermostat:
+        type: Device
+      ok: boolean
+
+  ThermostatsHeatResponse:
+    properties:
+      ok: boolean
+
+  ThermostatsListResponse:
+    properties:
+      thermostats:
+        type: list<Device>
+      ok: boolean
+
+  ThermostatsUpdateRequestDefaultClimateSetting:
+    properties:
+      automatic_heating_enabled:
+        type: optional<boolean>
+      automatic_cooling_enabled:
+        type: optional<boolean>
+      hvac_mode_setting:
+        type: optional<ThermostatsUpdateRequestDefaultClimateSettingHvacModeSetting>
+      cooling_set_point_celsius:
+        type: optional<double>
+      heating_set_point_celsius:
+        type: optional<double>
+      cooling_set_point_fahrenheit:
+        type: optional<double>
+      heating_set_point_fahrenheit:
+        type: optional<double>
+      manual_override_allowed:
+        type: optional<boolean>
+
+  ThermostatsUpdateRequestDefaultClimateSettingHvacModeSetting:
+    enum:
+      - name: "off"
+        value: "off"
+      - name: heat
+        value: heat
+      - name: cool
+        value: cool
+      - name: heatcool
+        value: heatcool
+
+  ThermostatsUpdateResponse:
+    properties:
+      ok: boolean
+
+  WebhooksCreateResponse:
+    properties:
+      webhook:
+        type: Webhook
+      ok: boolean
+
+  WebhooksDeleteResponse:
+    properties:
+      ok: boolean
+
+  WebhooksGetResponse:
+    properties:
+      webhook:
+        type: Webhook
+      ok: boolean
+
+  WebhooksListResponse:
+    properties:
+      webhooks:
+        type: list<Webhook>
+      ok: boolean
+
+  WorkspacesGetResponse:
+    properties:
+      workspace:
+        type: optional<Workspace>
+      ok: boolean
+
+  WorkspacesListResponse:
+    properties:
+      workspaces:
+        type: list<Workspace>
+      ok: boolean
+
+  WorkspacesResetSandboxResponse:
+    properties:
+      message: string
+      ok: boolean
+
+  SimulateCreateUnmanagedAccessCodeResponse:
+    properties:
+      access_code:
+        type: SimulateCreateUnmanagedAccessCodeResponseAccessCode
+      ok: boolean
+
+  SimulateCreateUnmanagedAccessCodeResponseAccessCode:
+    discriminant: type
+    base-properties: {}
+    union:
+      ongoing:
+        type: SimulateCreateUnmanagedAccessCodeResponseAccessCodeOngoing
+      time_bound:
+        type: SimulateCreateUnmanagedAccessCodeResponseAccessCodeTimeBound
+
+  SimulateCreateUnmanagedAccessCodeResponseAccessCodeOngoing:
+    properties:
+      access_code_id: string
+      code:
+        type: optional<string>
+      status: literal<"set">
+      created_at:
+        type: SimulateCreateUnmanagedAccessCodeResponseAccessCodeOngoingCreatedAt
+      is_managed: string
+      starts_at:
+        type: optional<string>
+      ends_at:
+        type: optional<string>
+
+  SimulateCreateUnmanagedAccessCodeResponseAccessCodeOngoingCreatedAt:
+    discriminated: false
+    union:
+      - string
+      - datetime
+
+  SimulateCreateUnmanagedAccessCodeResponseAccessCodeTimeBound:
+    properties:
+      access_code_id: string
+      code:
+        type: optional<string>
+      status: literal<"set">
+      created_at:
+        type: SimulateCreateUnmanagedAccessCodeResponseAccessCodeTimeBoundCreatedAt
+      is_managed: string
+      starts_at:
+        type: optional<string>
+      ends_at:
+        type: optional<string>
+
+  SimulateCreateUnmanagedAccessCodeResponseAccessCodeTimeBoundCreatedAt:
+    discriminated: false
+    union:
+      - string
+      - datetime
+
+  UnmanagedConvertToManagedResponse:
+    properties:
+      ok: boolean
+
+  UnmanagedDeleteResponse:
+    properties:
+      action_attempt:
+        type: ActionAttempt
+      ok: boolean
+
+  UnmanagedGetResponse:
+    properties:
+      access_code:
+        type: UnmanagedGetResponseAccessCode
+      ok: boolean
+
+  UnmanagedGetResponseAccessCode:
+    properties:
+      type:
+        type: UnmanagedGetResponseAccessCodeType
+      access_code_id: string
+      device_id: string
+      name:
+        type: optional<string>
+      code:
+        type: optional<string>
+      created_at: datetime
+      errors:
+        type: optional<unknown>
+      warnings:
+        type: optional<unknown>
+      is_managed: string
+      starts_at:
+        type: optional<datetime>
+      ends_at:
+        type: optional<datetime>
+      status: literal<"set">
+
+  UnmanagedGetResponseAccessCodeType:
+    enum:
+      - name: time_bound
+        value: time_bound
+      - name: ongoing
+        value: ongoing
+
+  UnmanagedListResponse:
+    properties:
+      devices:
+        type: list<UnmanagedDevice>
+      ok: boolean
+
+  UnmanagedListResponseAccessCodesItem:
+    properties:
+      type:
+        type: UnmanagedListResponseAccessCodesItemType
+      access_code_id: string
+      device_id: string
+      name:
+        type: optional<string>
+      code:
+        type: optional<string>
+      created_at: datetime
+      errors:
+        type: optional<unknown>
+      warnings:
+        type: optional<unknown>
+      is_managed: string
+      starts_at:
+        type: optional<datetime>
+      ends_at:
+        type: optional<datetime>
+      status: literal<"set">
+
+  UnmanagedListResponseAccessCodesItemType:
+    enum:
+      - name: time_bound
+        value: time_bound
+      - name: ongoing
+        value: ongoing
+
+  UnmanagedUpdateResponse:
+    properties:
+      ok: boolean
+
+  Manufacturer:
+    enum:
+      - name: akuvox
+        value: akuvox
+      - name: august
+        value: august
+      - name: brivo
+        value: brivo
+      - name: butterflymx
+        value: butterflymx
+      - name: doorking
+        value: doorking
+      - name: genie
+        value: genie
+      - name: igloo
+        value: igloo
+      - name: keywe
+        value: keywe
+      - name: kwikset
+        value: kwikset
+      - name: linear
+        value: linear
+      - name: lockly
+        value: lockly
+      - name: nuki
+        value: nuki
+      - name: philia
+        value: philia
+      - name: salto
+        value: salto
+      - name: samsung
+        value: samsung
+      - name: schlage
+        value: schlage
+      - name: seam
+        value: seam
+      - name: unknown
+        value: unknown
+      - name: yale
+        value: yale
+      - name: minut
+        value: minut
+      - name: two_n
+        value: two_n
+      - name: ttlock
+        value: ttlock
+      - name: nest
+        value: nest
+      - name: igloohome
+        value: igloohome
+      - name: ecobee
+        value: ecobee
+      - name: hubitat
+        value: hubitat
+
+  ServiceByServiceNameResponse:
+    properties:
+      ok: boolean
+      last_service_evaluation_at: string
+      service_health:
+        type: ServiceHealth
+
+  SimulateTriggerNoiseThresholdResponse:
+    properties:
+      ok: boolean
+
+  NoiseThresholdsCreateResponse:
+    properties:
+      action_attempt:
+        type: ActionAttempt
+      ok: boolean
+
+  NoiseThresholdsDeleteResponse:
+    properties:
+      action_attempt:
+        type: ActionAttempt
+      ok: boolean
+
+  NoiseThresholdsGetResponse:
+    properties:
+      noise_threshold:
+        type: NoiseThreshold
+      ok: boolean
+
+  NoiseThresholdsListResponse:
+    properties:
+      noise_thresholds:
+        type: list<NoiseThreshold>
+      ok: boolean
+
+  NoiseThresholdsUpdateResponse:
+    properties:
+      action_attempt:
+        type: ActionAttempt
+      ok: boolean
+
+  ClimateSettingSchedulesCreateRequestHvacModeSetting:
+    enum:
+      - name: "off"
+        value: "off"
+      - name: heat
+        value: heat
+      - name: cool
+        value: cool
+      - name: heatcool
+        value: heatcool
+
+  ClimateSettingSchedulesCreateResponse:
+    properties:
+      climate_setting_schedule:
+        type: ClimateSettingSchedule
+      ok: boolean
+
+  ClimateSettingSchedulesDeleteResponse:
+    properties:
+      ok: boolean
+
+  ClimateSettingSchedulesGetResponse:
+    properties:
+      climate_setting_schedule:
+        type: ClimateSettingSchedule
+      ok: boolean
+
+  ClimateSettingSchedulesListResponse:
+    properties:
+      climate_setting_schedules:
+        type: list<ClimateSettingSchedule>
+      ok: boolean
+
+  ClimateSettingSchedulesUpdateRequestHvacModeSetting:
+    enum:
+      - name: "off"
+        value: "off"
+      - name: heat
+        value: heat
+      - name: cool
+        value: cool
+      - name: heatcool
+        value: heatcool
+
+  ClimateSettingSchedulesUpdateResponse:
+    properties:
+      climate_setting_schedule:
+        type: ClimateSettingSchedule
+      ok: boolean
+
+  AccessCode:
+    properties:
+      common_code_key:
+        type: optional<string>
+      is_scheduled_on_device:
+        type: optional<boolean>
+      type:
+        type: AccessCodeType
+      is_waiting_for_code_assignment:
+        type: optional<boolean>
+      access_code_id: string
+      device_id: string
+      name:
+        type: optional<string>
+      code:
+        type: optional<string>
+      created_at: datetime
+      errors:
+        type: optional<unknown>
+      warnings:
+        type: optional<unknown>
+      is_managed: string
+      starts_at:
+        type: optional<datetime>
+      ends_at:
+        type: optional<datetime>
+      status:
+        type: AccessCodeStatus
+      is_backup_access_code_available: boolean
+      is_backup:
+        type: optional<boolean>
+      pulled_backup_access_code_id:
+        type: optional<string>
+
+  AccessCodeType:
+    enum:
+      - name: time_bound
+        value: time_bound
+      - name: ongoing
+        value: ongoing
+
+  AccessCodeStatus:
+    enum:
+      - name: setting
+        value: setting
+      - name: set
+        value: set
+      - name: unset
+        value: unset
+      - name: removing
+        value: removing
+      - name: unknown
+        value: unknown
+
+  ActionAttempt:
+    discriminant: status
+    base-properties: {}
+    union:
+      success:
+        type: ActionAttemptSuccess
+      pending:
+        type: ActionAttemptPending
+      error:
+        type: ActionAttemptError
+
+  ActionAttemptSuccess:
+    properties:
+      action_type: string
+      action_attempt_id: string
+      result:
+        type: optional<unknown>
+      error:
+        type: optional<string>
+
+  ActionAttemptPending:
+    properties:
+      action_type: string
+      action_attempt_id: string
+      result:
+        type: optional<string>
+      error:
+        type: optional<string>
+
+  ActionAttemptError:
+    properties:
+      action_type: string
+      action_attempt_id: string
+      result:
+        type: optional<string>
+      error:
+        type: ActionAttemptErrorError
+
+  ActionAttemptErrorError:
+    properties:
+      type: string
+      message: string
+
+  ClientSession:
+    properties:
+      client_session_id: string
+      user_identifier_key:
+        type: optional<string>
+      created_at: datetime
+      token: string
+      device_count: double
+      connected_account_ids:
+        type: list<string>
+      connect_webview_ids:
+        type: list<string>
+      workspace_id: string
+
+  ClimateSettingSchedule:
+    properties:
+      climate_setting_schedule_id: string
+      schedule_type: literal<"time_bound">
+      device_id: string
+      name:
+        type: optional<string>
+      schedule_starts_at: string
+      schedule_ends_at: string
+      created_at: datetime
+      automatic_heating_enabled:
+        type: optional<boolean>
+      automatic_cooling_enabled:
+        type: optional<boolean>
+      hvac_mode_setting:
+        type: optional<ClimateSettingScheduleHvacModeSetting>
+      cooling_set_point_celsius:
+        type: optional<double>
+      heating_set_point_celsius:
+        type: optional<double>
+      cooling_set_point_fahrenheit:
+        type: optional<double>
+      heating_set_point_fahrenheit:
+        type: optional<double>
+      manual_override_allowed:
+        type: optional<boolean>
+
+  ClimateSettingScheduleHvacModeSetting:
+    enum:
+      - name: "off"
+        value: "off"
+      - name: heat
+        value: heat
+      - name: cool
+        value: cool
+      - name: heatcool
+        value: heatcool
+
+  ConnectWebview:
+    properties:
+      connect_webview_id: string
+      connected_account_id:
+        type: optional<string>
+      url: string
+      workspace_id: string
+      device_selection_mode:
+        type: ConnectWebviewDeviceSelectionMode
+      accepted_providers:
+        type: list<string>
+      accepted_devices:
+        type: list<string>
+      any_provider_allowed: boolean
+      any_device_allowed: boolean
+      created_at: datetime
+      login_successful: boolean
+      status:
+        type: ConnectWebviewStatus
+
+  ConnectWebviewDeviceSelectionMode:
+    enum:
+      - name: none
+        value: none
+      - name: single
+        value: single
+      - name: multiple
+        value: multiple
+
+  ConnectWebviewStatus:
+    enum:
+      - name: pending
+        value: pending
+      - name: failed
+        value: failed
+      - name: authorized
+        value: authorized
+
+  ConnectedAccount:
+    properties:
+      connected_account_id:
+        type: optional<string>
+      created_at:
+        type: optional<datetime>
+      user_identifier:
+        type: optional<ConnectedAccountUserIdentifier>
+      account_type:
+        type: optional<string>
+      errors:
+        type: optional<unknown>
+      warnings:
+        type: optional<unknown>
+      custom_metadata:
+        type: optional<map<string, optional<ConnectedAccountCustomMetadataValue>>>
+
+  ConnectedAccountUserIdentifier:
+    properties:
+      username:
+        type: optional<string>
+      api_url:
+        type: optional<string>
+      email:
+        type: optional<string>
+      phone:
+        type: optional<string>
+      exclusive:
+        type: optional<boolean>
+
+  ConnectedAccountCustomMetadataValue:
+    discriminated: false
+    union:
+      - string
+      - double
+      - boolean
+      - type: optional<string>
+
+  Device:
+    properties:
+      device_id: string
+      device_type:
+        type: DeviceType
+      capabilities_supported:
+        type: list<DeviceCapabilitiesSupportedItem>
+      properties:
+        type: DeviceProperties
+      location:
+        type: optional<unknown>
+      connected_account_id: string
+      workspace_id: string
+      errors:
+        type: list<DeviceErrorsItem>
+      warnings:
+        type: list<DeviceWarningsItem>
+      created_at: datetime
+      is_managed: string
+
+  DeviceCapabilitiesSupportedItem:
+    enum:
+      - name: access_code
+        value: access_code
+      - name: lock
+        value: lock
+      - name: noise_detection
+        value: noise_detection
+      - name: thermostat
+        value: thermostat
+      - name: battery
+        value: battery
+
+  DeviceProperties:
+    properties:
+      online: boolean
+      name: string
+      model:
+        type: DevicePropertiesModel
+
+  DevicePropertiesModel:
+    properties:
+      display_name: string
+
+  DeviceErrorsItem:
+    properties:
+      error_code: string
+      message: string
+
+  DeviceWarningsItem:
+    properties:
+      warning_code: string
+      message: string
+
+  Event:
+    properties:
+      event_id: string
+      device_id:
+        type: optional<string>
+      event_type: string
+      workspace_id: string
+      created_at: datetime
+      occurred_at: datetime
+
+  NoiseThreshold:
+    properties:
+      noise_threshold_id: string
+      device_id: string
+      name: string
+      noise_threshold_nrs:
+        type: optional<double>
+      starts_daily_at: string
+      ends_daily_at: string
+      noise_threshold_decibels: double
+
+  ServiceHealth:
+    properties:
+      service: string
+      status:
+        type: ServiceHealthStatus
+      description: string
+
+  ServiceHealthStatus:
+    enum:
+      - name: healthy
+        value: healthy
+      - name: degraded
+        value: degraded
+      - name: down
+        value: down
+
+  UnmanagedDevice:
+    properties:
+      device_id: string
+      device_type:
+        type: DeviceType
+      connected_account_id: string
+      capabilities_supported:
+        type: list<SupportedCapabililty>
+      workspace_id: string
+      errors:
+        type: list<UnmanagedDeviceErrorsItem>
+      warnings:
+        type: list<UnmanagedDeviceWarningsItem>
+      created_at: datetime
+      is_managed: string
+      properties:
+        type: UnmanagedDeviceProperties
+  
+  DeviceType: 
+    enum: 
+      - name: akuvox_lock
+        value: akuvox_lock
+      - name: august_lock
+        value: august_lock
+      - name: brivo_access_point
+        value: brivo_access_point
+      - name: butterflymx_panel
+        value: butterflymx_panel
+      - name: doorking_lock
+        value: doorking_lock
+      - name: genie_door
+        value: genie_door
+      - name: igloo_lock
+        value: igloo_lock
+      - name: linear_lock
+        value: linear_lock
+      - name: lockly_lock
+        value: lockly_lock
+      - name: kwikset_lock
+        value: kwikset_lock
+      - name: nuki_lock
+        value: nuki_lock
+      - name: salto_lock
+        value: salto_lock
+      - name: schlage_lock
+        value: schlage_lock
+      - name: seam_relay
+        value: seam_relay
+      - name: smartthings_lock
+        value: smartthings_lock
+      - name: yale_lock
+        value: yale_lock
+      - name: two_n_intercom
+        value: two_n_intercom
+      - name: controlbyweb_device
+        value: controlbyweb_device
+      - name: ttlock_lock
+        value: ttlock_lock
+      - name: igloohome_lock
+        value: igloohome_lock
+      - name: hubitat_lock
+        value: hubitat_lock
+      - name: noiseaware_activity_zone
+        value: noiseaware_activity_zone
+      - name: minut_sensor
+        value: minut_sensor
+      - name: ecobee_thermostat
+        value: ecobee_thermostat
+      - name: nest_thermostat
+        value: nest_thermostat
+
+  SupportedCapabililty:
+    enum:
+      - name: access_code
+        value: access_code
+      - name: lock
+        value: lock
+      - name: noise_detection
+        value: noise_detection
+      - name: thermostat
+        value: thermostat
+      - name: battery
+        value: battery
+
+  UnmanagedDeviceErrorsItem:
+    properties:
+      error_code: string
+      message: string
+
+  UnmanagedDeviceWarningsItem:
+    properties:
+      warning_code: string
+      message: string
+
+  UnmanagedDeviceProperties:
+    properties:
+      name: string
+      online: boolean
+      manufacturer:
+        type: optional<string>
+      image_url:
+        type: optional<string>
+      image_alt_text:
+        type: optional<string>
+      model:
+        type: UnmanagedDevicePropertiesModel
+
+  UnmanagedDevicePropertiesModel:
+    properties:
+      display_name: string
+
+  Webhook:
+    properties:
+      webhook_id: string
+      url: string
+      event_types:
+        type: optional<list<string>>
+      secret:
+        type: optional<string>
+
+  Workspace:
+    properties:
+      workspace_id: string
+      name: string
+      is_sandbox: boolean
+      connect_partner_name:
+        type: optional<string>
+
+errors:
+  BadRequestError:
+    status-code: 400
+    type: unknown
+
+  UnauthorizedError:
+    status-code: 401
+    type: unknown

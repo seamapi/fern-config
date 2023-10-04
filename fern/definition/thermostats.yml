@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    get:
+      path: /thermostats/get
+      method: POST
+      auth: true
+      display-name: /thermostats/get
+      request:
+        name: ThermostatsGetRequest
+        body:
+          properties:
+            device_id:
+              type: optional<string>
+            name:
+              type: optional<string>
+      response:
+        docs: OK
+        type: root.ThermostatsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    heat:
+      path: /thermostats/heat
+      method: POST
+      auth: true
+      display-name: /thermostats/heat
+      request:
+        name: ThermostatsHeatRequest
+        body:
+          properties:
+            device_id: string
+            heating_set_point_celsius:
+              type: optional<double>
+            heating_set_point_fahrenheit:
+              type: optional<double>
+            sync:
+              type: optional<boolean>
+      response:
+        docs: OK
+        type: root.ThermostatsHeatResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /thermostats/list
+      method: POST
+      auth: true
+      display-name: /thermostats/list
+      request:
+        name: ThermostatsListRequest
+        body:
+          properties:
+            connected_account_id:
+              type: optional<string>
+            connected_account_ids:
+              type: optional<list<string>>
+            connect_webview_id:
+              type: optional<string>
+            device_type:
+              type: optional<root.DeviceType>
+            device_types:
+              type: optional<list<root.DeviceType>>
+            manufacturer:
+              type: optional<root.Manufacturer>
+            device_ids:
+              type: optional<list<string>>
+            limit:
+              type: optional<double>
+            created_before:
+              type: optional<datetime>
+      response:
+        docs: OK
+        type: root.ThermostatsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    update:
+      path: /thermostats/update
+      method: POST
+      auth: true
+      display-name: /thermostats/update
+      request:
+        name: ThermostatsUpdateRequest
+        body:
+          properties:
+            device_id: string
+            default_climate_setting:
+              type: root.ThermostatsUpdateRequestDefaultClimateSetting
+      response:
+        docs: OK
+        type: root.ThermostatsUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

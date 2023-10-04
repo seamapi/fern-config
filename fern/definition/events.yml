@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    get:
+      path: /events/get
+      method: POST
+      auth: true
+      display-name: /events/get
+      request:
+        name: EventsGetRequest
+        body:
+          properties:
+            event_id:
+              type: optional<string>
+            event_type:
+              type: optional<string>
+            device_id:
+              type: optional<string>
+      response:
+        docs: OK
+        type: root.EventsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /events/list
+      method: POST
+      auth: true
+      display-name: /events/list
+      request:
+        name: EventsListRequest
+        body:
+          properties:
+            since:
+              type: optional<string>
+            between:
+              type: optional<list<root.EventsListRequestBetweenItem>>
+            device_id:
+              type: optional<string>
+            device_ids:
+              type: optional<list<string>>
+            access_code_id:
+              type: optional<string>
+            access_code_ids:
+              type: optional<list<string>>
+            event_type:
+              type: optional<root.EventsListRequestEventType>
+            event_types:
+              type: optional<list<root.EventsListRequestEventTypesItem>>
+            connected_account_id:
+              type: optional<string>
+      response:
+        docs: OK
+        type: root.EventsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

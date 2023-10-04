@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    create:
+      path: /client_sessions/create
+      method: POST
+      auth: false
+      display-name: /client_sessions/create
+      request:
+        name: ClientSessionsCreateRequest
+        body:
+          properties:
+            user_identifier_key:
+              type: optional<string>
+            connect_webview_ids:
+              type: optional<list<string>>
+            connected_account_ids:
+              type: optional<list<string>>
+      response:
+        docs: OK
+        type: root.ClientSessionsCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    delete:
+      path: /client_sessions/delete
+      method: POST
+      auth: true
+      display-name: /client_sessions/delete
+      request:
+        name: ClientSessionsDeleteRequest
+        body:
+          properties:
+            client_session_id: string
+      response:
+        docs: OK
+        type: root.ClientSessionsDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    get:
+      path: /client_sessions/get
+      method: POST
+      auth: true
+      display-name: /client_sessions/get
+      request:
+        name: ClientSessionsGetRequest
+        body:
+          properties:
+            client_session_id:
+              type: optional<string>
+            user_identifier_key:
+              type: optional<string>
+      response:
+        docs: OK
+        type: root.ClientSessionsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /client_sessions/list
+      method: POST
+      auth: true
+      display-name: /client_sessions/list
+      request:
+        name: ClientSessionsListRequest
+        body:
+          properties:
+            client_session_id:
+              type: optional<string>
+            user_identifier_key:
+              type: optional<string>
+            without_user_identifier_key:
+              type: optional<boolean>
+      response:
+        docs: OK
+        type: root.ClientSessionsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

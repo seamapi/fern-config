@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: ../__package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    list:
+      path: /devices/unmanaged/list
+      method: POST
+      auth: true
+      display-name: /devices/unmanaged/list
+      request:
+        name: UnmanagedListRequest
+        body:
+          properties:
+            connected_account_id:
+              type: optional<string>
+            connected_account_ids:
+              type: optional<list<string>>
+            connect_webview_id:
+              type: optional<string>
+            device_type:
+              type: optional<root.DeviceType>
+            device_types:
+              type: optional<list<root.DeviceType>>
+            manufacturer:
+              type: optional<root.Manufacturer>
+            device_ids:
+              type: optional<list<string>>
+            limit:
+              type: optional<double>
+            created_before:
+              type: optional<datetime>
+      response:
+        docs: OK
+        type: root.UnmanagedListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    update:
+      path: /devices/unmanaged/update
+      method: POST
+      auth: true
+      display-name: /devices/unmanaged/update
+      request:
+        name: UnmanagedUpdateRequest
+        body:
+          properties:
+            device_id: string
+            is_managed: string
+      response:
+        docs: OK
+        type: root.UnmanagedUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

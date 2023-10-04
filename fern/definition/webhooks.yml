@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    create:
+      path: /webhooks/create
+      method: POST
+      auth: true
+      display-name: /webhooks/create
+      request:
+        name: WebhooksCreateRequest
+        body:
+          properties:
+            url: string
+            event_types:
+              type: optional<list<string>>
+      response:
+        docs: OK
+        type: root.WebhooksCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    delete:
+      path: /webhooks/delete
+      method: POST
+      auth: true
+      display-name: /webhooks/delete
+      request:
+        name: WebhooksDeleteRequest
+        body:
+          properties:
+            webhook_id: string
+      response:
+        docs: OK
+        type: root.WebhooksDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    get:
+      path: /webhooks/get
+      method: POST
+      auth: true
+      display-name: /webhooks/get
+      request:
+        name: WebhooksGetRequest
+        body:
+          properties:
+            webhook_id: string
+      response:
+        docs: OK
+        type: root.WebhooksGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /webhooks/list
+      method: GET
+      auth: true
+      display-name: /webhooks/list
+      response:
+        docs: OK
+        type: root.WebhooksListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

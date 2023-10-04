@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: ../__package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    by_service_name:
+      path: /health/service/[service_name]
+      method: POST
+      auth: false
+      display-name: /health/service/[service_name]
+      request:
+        name: ServiceByServiceNameRequest
+        body:
+          properties:
+            service_name: string
+      response:
+        docs: OK
+        type: root.ServiceByServiceNameResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

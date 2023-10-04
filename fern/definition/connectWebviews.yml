@@ -1,0 +1,101 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    create:
+      path: /connect_webviews/create
+      method: POST
+      auth: true
+      display-name: /connect_webviews/create
+      request:
+        name: ConnectWebviewsCreateRequest
+        body:
+          properties:
+            device_selection_mode:
+              type: optional<root.ConnectWebviewsCreateRequestDeviceSelectionMode>
+            custom_redirect_url:
+              type: optional<string>
+            custom_redirect_failure_url:
+              type: optional<string>
+            accepted_providers:
+              type: >-
+                optional<list<root.ConnectWebviewsCreateRequestAcceptedProvidersItem>>
+            provider_category:
+              type: optional<root.ConnectWebviewsCreateRequestProviderCategory>
+            custom_metadata:
+              type: >-
+                optional<map<string,
+                optional<root.ConnectWebviewsCreateRequestCustomMetadataValue>>>
+      response:
+        docs: OK
+        type: root.ConnectWebviewsCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    delete:
+      path: /connect_webviews/delete
+      method: POST
+      auth: true
+      display-name: /connect_webviews/delete
+      request:
+        name: ConnectWebviewsDeleteRequest
+        body:
+          properties:
+            connect_webview_id: string
+      response:
+        docs: OK
+        type: root.ConnectWebviewsDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    get:
+      path: /connect_webviews/get
+      method: POST
+      auth: true
+      display-name: /connect_webviews/get
+      request:
+        name: ConnectWebviewsGetRequest
+        body:
+          properties:
+            connect_webview_id: string
+      response:
+        docs: OK
+        type: root.ConnectWebviewsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /connect_webviews/list
+      method: POST
+      auth: true
+      display-name: /connect_webviews/list
+      response:
+        docs: OK
+        type: root.ConnectWebviewsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    view:
+      path: /connect_webviews/view
+      method: GET
+      auth: false
+      display-name: /connect_webviews/view
+      request:
+        name: ConnectWebviewsViewRequest
+        query-parameters:
+          connect_webview_id:
+            type: string
+          auth_token:
+            type: string
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

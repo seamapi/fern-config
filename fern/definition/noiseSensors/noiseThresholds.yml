@@ -1,0 +1,119 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: ../__package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    create:
+      path: /noise_sensors/noise_thresholds/create
+      method: POST
+      auth: true
+      display-name: /noise_sensors/noise_thresholds/create
+      request:
+        name: NoiseThresholdsCreateRequest
+        body:
+          properties:
+            device_id: string
+            sync:
+              type: optional<boolean>
+            name:
+              type: optional<string>
+            starts_daily_at: string
+            ends_daily_at: string
+            noise_threshold_decibels:
+              type: optional<double>
+            noise_threshold_nrs:
+              type: optional<double>
+      response:
+        docs: OK
+        type: root.NoiseThresholdsCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    delete:
+      path: /noise_sensors/noise_thresholds/delete
+      method: POST
+      auth: true
+      display-name: /noise_sensors/noise_thresholds/delete
+      request:
+        name: NoiseThresholdsDeleteRequest
+        body:
+          properties:
+            noise_threshold_id: string
+            device_id: string
+            sync:
+              type: optional<boolean>
+      response:
+        docs: OK
+        type: root.NoiseThresholdsDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    get:
+      path: /noise_sensors/noise_thresholds/get
+      method: POST
+      auth: true
+      display-name: /noise_sensors/noise_thresholds/get
+      request:
+        name: NoiseThresholdsGetRequest
+        body:
+          properties:
+            noise_threshold_id: string
+      response:
+        docs: OK
+        type: root.NoiseThresholdsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /noise_sensors/noise_thresholds/list
+      method: POST
+      auth: true
+      display-name: /noise_sensors/noise_thresholds/list
+      request:
+        name: NoiseThresholdsListRequest
+        body:
+          properties:
+            device_id: string
+      response:
+        docs: OK
+        type: root.NoiseThresholdsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    update:
+      path: /noise_sensors/noise_thresholds/update
+      method: POST
+      auth: true
+      display-name: /noise_sensors/noise_thresholds/update
+      request:
+        name: NoiseThresholdsUpdateRequest
+        body:
+          properties:
+            noise_threshold_id: string
+            device_id: string
+            sync:
+              type: optional<boolean>
+            name:
+              type: optional<string>
+            starts_daily_at:
+              type: optional<string>
+            ends_daily_at:
+              type: optional<string>
+            noise_threshold_decibels:
+              type: optional<double>
+            noise_threshold_nrs:
+              type: optional<double>
+      response:
+        docs: OK
+        type: root.NoiseThresholdsUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

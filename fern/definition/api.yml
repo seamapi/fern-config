@@ -1,0 +1,15 @@
+imports:
+  root: __package__.yml
+name: api
+display-name: Seam Connect
+error-discrimination:
+  strategy: status-code
+auth: BearerAuthScheme
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+    token:
+      name: api_key
+default-environment: default
+environments:
+  default: https://connect.getseam.com

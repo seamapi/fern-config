@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    delete:
+      path: /connected_accounts/delete
+      method: POST
+      auth: true
+      display-name: /connected_accounts/delete
+      request:
+        name: ConnectedAccountsDeleteRequest
+        body:
+          properties:
+            connected_account_id: string
+      response:
+        docs: OK
+        type: root.ConnectedAccountsDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    get:
+      path: /connected_accounts/get
+      method: POST
+      auth: true
+      display-name: /connected_accounts/get
+      request:
+        body:
+          type: root.ConnectedAccountsGetRequest
+      response:
+        docs: OK
+        type: root.ConnectedAccountsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /connected_accounts/list
+      method: POST
+      auth: true
+      display-name: /connected_accounts/list
+      response:
+        docs: OK
+        type: root.ConnectedAccountsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

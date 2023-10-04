@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: ../__package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    create_unmanaged_access_code:
+      path: /access_codes/simulate/create_unmanaged_access_code
+      method: POST
+      auth: true
+      display-name: /access_codes/simulate/create_unmanaged_access_code
+      request:
+        name: SimulateCreateUnmanagedAccessCodeRequest
+        body:
+          properties:
+            device_id: string
+            name: string
+            code: string
+      response:
+        docs: OK
+        type: root.SimulateCreateUnmanagedAccessCodeResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

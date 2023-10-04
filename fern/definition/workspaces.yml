@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    get:
+      path: /workspaces/get
+      method: GET
+      auth: true
+      display-name: /workspaces/get
+      response:
+        docs: OK
+        type: root.WorkspacesGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /workspaces/list
+      method: GET
+      auth: true
+      display-name: /workspaces/list
+      response:
+        docs: OK
+        type: root.WorkspacesListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    reset_sandbox:
+      path: /workspaces/reset_sandbox
+      method: POST
+      auth: true
+      display-name: /workspaces/reset_sandbox
+      response:
+        docs: OK
+        type: root.WorkspacesResetSandboxResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

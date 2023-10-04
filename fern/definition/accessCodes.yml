@@ -1,0 +1,194 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    create:
+      path: /access_codes/create
+      method: POST
+      auth: true
+      display-name: /access_codes/create
+      request:
+        name: AccessCodesCreateRequest
+        body:
+          properties:
+            device_id: string
+            name:
+              type: optional<string>
+            starts_at:
+              type: optional<string>
+            ends_at:
+              type: optional<string>
+            code:
+              type: optional<string>
+            sync:
+              type: optional<boolean>
+            attempt_for_offline_device:
+              type: optional<boolean>
+            common_code_key:
+              type: optional<string>
+            prefer_native_scheduling:
+              type: optional<boolean>
+            use_backup_access_code_pool:
+              type: optional<boolean>
+      response:
+        docs: OK
+        type: root.AccessCodesCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    create_multiple:
+      path: /access_codes/create_multiple
+      method: POST
+      auth: true
+      display-name: /access_codes/create_multiple
+      request:
+        name: AccessCodesCreateMultipleRequest
+        body:
+          properties:
+            device_ids:
+              type: list<string>
+            behavior_when_code_cannot_be_shared:
+              type: >-
+                optional<root.AccessCodesCreateMultipleRequestBehaviorWhenCodeCannotBeShared>
+            name:
+              type: optional<string>
+            starts_at:
+              type: optional<string>
+            ends_at:
+              type: optional<string>
+            code:
+              type: optional<string>
+            attempt_for_offline_device:
+              type: optional<boolean>
+            prefer_native_scheduling:
+              type: optional<boolean>
+            use_backup_access_code_pool:
+              type: optional<boolean>
+      response:
+        docs: OK
+        type: root.AccessCodesCreateMultipleResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    delete:
+      path: /access_codes/delete
+      method: POST
+      auth: true
+      display-name: /access_codes/delete
+      request:
+        name: AccessCodesDeleteRequest
+        body:
+          properties:
+            device_id:
+              type: optional<string>
+            access_code_id: string
+            sync:
+              type: optional<boolean>
+      response:
+        docs: OK
+        type: root.AccessCodesDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    get:
+      path: /access_codes/get
+      method: POST
+      auth: true
+      display-name: /access_codes/get
+      request:
+        name: AccessCodesGetRequest
+        body:
+          properties:
+            device_id:
+              type: optional<string>
+            access_code_id:
+              type: optional<string>
+            code:
+              type: optional<string>
+      response:
+        docs: OK
+        type: root.AccessCodesGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /access_codes/list
+      method: POST
+      auth: true
+      display-name: /access_codes/list
+      request:
+        name: AccessCodesListRequest
+        body:
+          properties:
+            device_id: string
+            access_code_ids:
+              type: optional<list<string>>
+      response:
+        docs: OK
+        type: root.AccessCodesListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    pull_backup_access_code:
+      path: /access_codes/pull_backup_access_code
+      method: POST
+      auth: true
+      display-name: /access_codes/pull_backup_access_code
+      request:
+        name: AccessCodesPullBackupAccessCodeRequest
+        body:
+          properties:
+            access_code_id: string
+      response:
+        docs: OK
+        type: root.AccessCodesPullBackupAccessCodeResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    update:
+      path: /access_codes/update
+      method: POST
+      auth: true
+      display-name: /access_codes/update
+      request:
+        name: AccessCodesUpdateRequest
+        body:
+          properties:
+            name:
+              type: optional<string>
+            starts_at:
+              type: optional<string>
+            ends_at:
+              type: optional<string>
+            code:
+              type: optional<string>
+            sync:
+              type: optional<boolean>
+            attempt_for_offline_device:
+              type: optional<boolean>
+            prefer_native_scheduling:
+              type: optional<boolean>
+            use_backup_access_code_pool:
+              type: optional<boolean>
+            access_code_id: string
+            device_id:
+              type: optional<string>
+            type:
+              type: optional<root.AccessCodesUpdateRequestType>
+      response:
+        docs: OK
+        type: root.AccessCodesUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

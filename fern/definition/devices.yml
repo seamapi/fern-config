@@ -1,0 +1,122 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    delete:
+      path: /devices/delete
+      method: POST
+      auth: true
+      display-name: /devices/delete
+      request:
+        name: DevicesDeleteRequest
+        body:
+          properties:
+            device_id: string
+      response:
+        docs: OK
+        type: root.DevicesDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    get:
+      path: /devices/get
+      method: POST
+      auth: true
+      display-name: /devices/get
+      request:
+        name: DevicesGetRequest
+        body:
+          properties:
+            device_id:
+              type: optional<string>
+            name:
+              type: optional<string>
+      response:
+        docs: OK
+        type: root.DevicesGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /devices/list
+      method: POST
+      auth: true
+      display-name: /devices/list
+      request:
+        name: DevicesListRequest
+        body:
+          properties:
+            connected_account_id:
+              type: optional<string>
+            connected_account_ids:
+              type: optional<list<string>>
+            connect_webview_id:
+              type: optional<string>
+            device_type:
+              type: optional<root.DeviceType>
+            device_types:
+              type: optional<list<root.DeviceType>>
+            manufacturer:
+              type: optional<root.Manufacturer>
+            device_ids:
+              type: optional<list<string>>
+            limit:
+              type: optional<double>
+            created_before:
+              type: optional<datetime>
+      response:
+        docs: OK
+        type: root.DevicesListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list_device_providers:
+      path: /devices/list_device_providers
+      method: POST
+      auth: true
+      display-name: /devices/list_device_providers
+      request:
+        name: DevicesListDeviceProvidersRequest
+        body:
+          properties:
+            provider_category:
+              type: optional<root.DevicesListDeviceProvidersRequestProviderCategory>
+      response:
+        docs: OK
+        type: root.DevicesListDeviceProvidersResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    update:
+      path: /devices/update
+      method: POST
+      auth: true
+      display-name: /devices/update
+      request:
+        name: DevicesUpdateRequest
+        body:
+          properties:
+            device_id: string
+            properties:
+              type: optional<root.DevicesUpdateRequestProperties>
+            name:
+              type: optional<string>
+            location:
+              type: optional<root.DevicesUpdateRequestLocation>
+            is_managed:
+              type: optional<boolean>
+      response:
+        docs: OK
+        type: root.DevicesUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

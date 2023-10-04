@@ -10,17 +10,11 @@ groups:
           password: ${MAVEN_PASSWORD}
         github:
           repository: seamapi/java
-      # - name: fernapi/fern-python-sdk
-      #   version: 0.4.4
-      #   output:
-      #     location: pypi
-      #     package-name: fern-seam
-      #     token: ${PYPI_TOKEN}
-      #   github:
-      #     repository: seamapi/fern-python
-      #   config:
-      #     client_class_name: Seam
-      #     package_name: seamapi
+        config: 
+          enable-forward-compatible-enums: true
+          client-class-name: Seam
+          additional-dependencies: 
+            - "testImplementation org.assertj:assertj-core:3.24.2"
       - name: fernapi/fern-go-sdk
         version: 0.0.14
         github:

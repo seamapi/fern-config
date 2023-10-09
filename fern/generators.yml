@@ -12,7 +12,7 @@ groups:
           repository: seamapi/java
         config: 
           client-class-name: Seam
-          additional-dependencies: 
+          custom-dependencies: 
             - "testImplementation org.assertj:assertj-core:3.24.2"
       - name: fernapi/fern-go-sdk
         version: 0.0.14

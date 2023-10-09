@@ -1126,6 +1126,7 @@ types:
       august_metadata: optional<AugustDeviceMetadata>
       schlage_metadata: optional<SchlageDeviceMetadata>
       smartthings_metadata: unknown
+      current_climate_setting: optional<CurrentClimateSetting>
   
   AugustDeviceMetadata: 
     properties: 
@@ -1148,6 +1149,17 @@ types:
   NukiDeviceMetadata: 
     properties: 
       keypad_battery_critical: optional<boolean>
+  
+  CurrentClimateSetting: 
+    properties: 
+      automatic_heating_enabled: optional<boolean>
+      automatic_cooling_enabled: optional<boolean>
+      hvac_mode_setting: optional<string>
+      cooling_set_point_celsius: optional<double>
+      heating_set_point_celsius: optional<double>
+      cooling_set_point_fahrenheit: optional<double>
+      heating_set_point_fahrenheit: optional<double>
+      manual_override_allowed: optional<boolean>
 
   DevicePropertiesModel:
     properties:

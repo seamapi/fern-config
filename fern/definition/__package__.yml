@@ -508,7 +508,7 @@ types:
       automatic_cooling_enabled:
         type: optional<boolean>
       hvac_mode_setting:
-        type: optional<ThermostatsUpdateRequestDefaultClimateSettingHvacModeSetting>
+        type: optional<HvacModeSetting>
       cooling_set_point_celsius:
         type: optional<double>
       heating_set_point_celsius:
@@ -520,7 +520,7 @@ types:
       manual_override_allowed:
         type: optional<boolean>
 
-  ThermostatsUpdateRequestDefaultClimateSettingHvacModeSetting:
+  HvacModeSetting:
     enum:
       - name: "off"
         value: "off"

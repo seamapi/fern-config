@@ -1123,6 +1123,31 @@ types:
       name: string
       model:
         type: DevicePropertiesModel
+      august_metadata: optional<AugustDeviceMetadata>
+      schlage_metadata: optional<SchlageDeviceMetadata>
+      smartthings_metadata: unknown
+  
+  AugustDeviceMetadata: 
+    properties: 
+      lock_id: string
+      lock_name: string
+      house_name: string
+      house_id: optional<string>
+      has_keypad: boolean
+      model: optional<string>
+      keypad_battery_level: optional<string>
+  
+  SchlageDeviceMetadata: 
+    properties: 
+      device_id: string
+      device_name: string
+      access_code_length: integer
+      model: optional<string>
+      location_id: optional<string>
+  
+  NukiDeviceMetadata: 
+    properties: 
+      keypad_battery_critical: optional<boolean>
 
   DevicePropertiesModel:
     properties:

@@ -25,6 +25,7 @@ service:
       response:
         docs: OK
         type: root.ClientSessionsCreateResponse
+        property: client_session
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -42,6 +43,7 @@ service:
       response:
         docs: OK
         type: root.ClientSessionsDeleteResponse
+        property: ok
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -62,6 +64,7 @@ service:
       response:
         docs: OK
         type: root.ClientSessionsGetResponse
+        property: client_session
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -84,6 +87,7 @@ service:
       response:
         docs: OK
         type: root.ClientSessionsListResponse
+        property: client_sessions
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -1,5 +1,5 @@
 groups:
-  publish:
+  java-sdk:
     generators:
       - name: fernapi/fern-java-sdk
         version: 0.5.8
@@ -10,11 +10,13 @@ groups:
           password: ${MAVEN_PASSWORD}
         github:
           repository: seamapi/java
-        config: 
+        config:
           client-class-name: Seam
-          custom-dependencies: 
+          custom-dependencies:
             - "testImplementation org.assertj:assertj-core:3.24.2"
+  go-sdk:
+    generators:
       - name: fernapi/fern-go-sdk
-        version: 0.0.14
+        version: 0.7.0
         github:
           repository: seamapi/go

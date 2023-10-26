@@ -23,6 +23,7 @@ service:
       response:
         docs: OK
         type: root.ThermostatsGetResponse
+        property: thermostat
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -46,6 +47,7 @@ service:
       response:
         docs: OK
         type: root.ThermostatsHeatResponse
+        property: ok
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -80,6 +82,7 @@ service:
       response:
         docs: OK
         type: root.ThermostatsListResponse
+        property: thermostats
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -99,6 +102,7 @@ service:
       response:
         docs: OK
         type: root.ThermostatsUpdateResponse
+        property: ok
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

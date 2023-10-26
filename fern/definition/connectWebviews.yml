@@ -34,6 +34,7 @@ service:
       response:
         docs: OK
         type: root.ConnectWebviewsCreateResponse
+        property: connect_webview
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -51,6 +52,7 @@ service:
       response:
         docs: OK
         type: root.ConnectWebviewsDeleteResponse
+        property: ok
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -68,6 +70,7 @@ service:
       response:
         docs: OK
         type: root.ConnectWebviewsGetResponse
+        property: connect_webview
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

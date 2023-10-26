@@ -23,6 +23,7 @@ service:
       response:
         docs: OK
         type: root.LocksGetResponse
+        property: device
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -57,6 +58,7 @@ service:
       response:
         docs: OK
         type: root.LocksListResponse
+        property: devices
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -76,6 +78,7 @@ service:
       response:
         docs: OK
         type: root.LocksLockDoorResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -95,6 +98,7 @@ service:
       response:
         docs: OK
         type: root.LocksUnlockDoorResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

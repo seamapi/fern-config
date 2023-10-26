@@ -20,6 +20,7 @@ service:
       response:
         docs: OK
         type: root.ConnectedAccountsDeleteResponse
+        property: ok
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -35,6 +36,7 @@ service:
       response:
         docs: OK
         type: root.ConnectedAccountsGetResponse
+        property: connected_account
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -47,6 +49,7 @@ service:
       response:
         docs: OK
         type: root.ConnectedAccountsListResponse
+        property: connected_accounts
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -20,6 +20,7 @@ service:
       response:
         docs: OK
         type: root.DevicesDeleteResponse
+        property: ok
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -40,6 +41,7 @@ service:
       response:
         docs: OK
         type: root.DevicesGetResponse
+        property: device
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -74,6 +76,7 @@ service:
       response:
         docs: OK
         type: root.DevicesListResponse
+        property: devices
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -92,6 +95,7 @@ service:
       response:
         docs: OK
         type: root.DevicesListDeviceProvidersResponse
+        property: device_providers
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -117,6 +121,7 @@ service:
       response:
         docs: OK
         type: root.DevicesUpdateResponse
+        property: ok
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

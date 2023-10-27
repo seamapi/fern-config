@@ -597,7 +597,7 @@ types:
       status: literal<"set">
       created_at:
         type: SimulateCreateUnmanagedAccessCodeResponseAccessCodeOngoingCreatedAt
-      is_managed: string
+      is_managed: boolean
       starts_at:
         type: optional<string>
       ends_at:
@@ -617,7 +617,7 @@ types:
       status: literal<"set">
       created_at:
         type: SimulateCreateUnmanagedAccessCodeResponseAccessCodeTimeBoundCreatedAt
-      is_managed: string
+      is_managed: boolean
       starts_at:
         type: optional<string>
       ends_at:
@@ -660,7 +660,7 @@ types:
         type: optional<unknown>
       warnings:
         type: optional<unknown>
-      is_managed: string
+      is_managed: boolean
       starts_at:
         type: optional<datetime>
       ends_at:
@@ -695,7 +695,7 @@ types:
         type: optional<unknown>
       warnings:
         type: optional<unknown>
-      is_managed: string
+      is_managed: boolean
       starts_at:
         type: optional<datetime>
       ends_at:
@@ -880,7 +880,7 @@ types:
         type: optional<unknown>
       warnings:
         type: optional<unknown>
-      is_managed: string
+      is_managed: boolean
       starts_at:
         type: optional<datetime>
       ends_at:
@@ -1102,7 +1102,7 @@ types:
       warnings:
         type: list<DeviceWarningsItem>
       created_at: datetime
-      is_managed: string
+      is_managed: boolean
 
   DeviceCapabilitiesSupportedItem:
     enum:
@@ -1226,7 +1226,7 @@ types:
       warnings:
         type: list<UnmanagedDeviceWarningsItem>
       created_at: datetime
-      is_managed: string
+      is_managed: boolean
       properties:
         type: UnmanagedDeviceProperties
   

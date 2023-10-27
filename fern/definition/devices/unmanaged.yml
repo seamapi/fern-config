@@ -51,7 +51,7 @@ service:
         body:
           properties:
             device_id: string
-            is_managed: string
+            is_managed: boolean
       response:
         docs: OK
         type: root.UnmanagedUpdateResponse

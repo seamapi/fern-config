@@ -4,9 +4,6 @@ Tagging a release on this repository will update the:
 - [Java SDK repo](https://github.com/seamapi/java)
 - [Go SDK repo](https://github.com/seamapi/go)
 
-> Go versions require the `v` prefix in their tagged versions,
-> so make sure to tag your releases as `vX.Y.Z` (e.g., `v0.0.1`).
-
 ## What is in this repository?
 
 This repository contains

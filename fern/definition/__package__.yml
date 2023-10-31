@@ -534,6 +534,17 @@ types:
   ThermostatsUpdateResponse:
     properties:
       ok: boolean
+  
+  FanModeSetting: 
+    enum:
+      - name: auto
+        value: auto
+      - name: "on"
+        value: "on"
+  
+  ThermostatsSetFanModeResponse:
+    properties:
+      ok: boolean
 
   WebhooksCreateResponse:
     properties:

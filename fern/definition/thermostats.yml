@@ -87,6 +87,29 @@ service:
         - root.BadRequestError
         - root.UnauthorizedError
 
+    set_fan_mode:
+      path: /thermostats/set_fan_mode
+      method: POST
+      auth: true
+      display-name: /thermostats/set_fan_mode
+      request:
+        name: ThermostatsSetFanModeRequest
+        body:
+          properties:
+            device_id: string
+            fan_mode:
+              type: optional<root.FanModeSetting>
+            fan_mode_setting:
+              type: optional<root.FanModeSetting>
+            sync:
+              type: optional<boolean>
+      response:
+        docs: OK
+        type: root.ThermostatsSetFanModeResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
     update:
       path: /thermostats/update
       method: POST

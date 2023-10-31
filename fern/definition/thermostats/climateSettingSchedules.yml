@@ -29,7 +29,7 @@ service:
               type: optional<boolean>
             hvac_mode_setting:
               type: >-
-                optional<root.ClimateSettingSchedulesCreateRequestHvacModeSetting>
+                optional<root.HvacModeSetting>
             cooling_set_point_celsius:
               type: optional<double>
             heating_set_point_celsius:
@@ -125,7 +125,7 @@ service:
               type: optional<boolean>
             hvac_mode_setting:
               type: >-
-                optional<root.ClimateSettingSchedulesUpdateRequestHvacModeSetting>
+                optional<root.HvacModeSetting>
             cooling_set_point_celsius:
               type: optional<double>
             heating_set_point_celsius:

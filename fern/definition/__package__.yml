@@ -528,8 +528,8 @@ types:
         value: heat
       - name: cool
         value: cool
-      - name: heatcool
-        value: heatcool
+      - name: heat_cool
+        value: heat_cool
 
   ThermostatsUpdateResponse:
     properties:
@@ -809,17 +809,6 @@ types:
         type: ActionAttempt
       ok: boolean
 
-  ClimateSettingSchedulesCreateRequestHvacModeSetting:
-    enum:
-      - name: "off"
-        value: "off"
-      - name: heat
-        value: heat
-      - name: cool
-        value: cool
-      - name: heatcool
-        value: heatcool
-
   ClimateSettingSchedulesCreateResponse:
     properties:
       climate_setting_schedule:
@@ -841,17 +830,6 @@ types:
       climate_setting_schedules:
         type: list<ClimateSettingSchedule>
       ok: boolean
-
-  ClimateSettingSchedulesUpdateRequestHvacModeSetting:
-    enum:
-      - name: "off"
-        value: "off"
-      - name: heat
-        value: heat
-      - name: cool
-        value: cool
-      - name: heatcool
-        value: heatcool
 
   ClimateSettingSchedulesUpdateResponse:
     properties:
@@ -985,7 +963,7 @@ types:
       automatic_cooling_enabled:
         type: optional<boolean>
       hvac_mode_setting:
-        type: optional<ClimateSettingScheduleHvacModeSetting>
+        type: optional<HvacModeSetting>
       cooling_set_point_celsius:
         type: optional<double>
       heating_set_point_celsius:
@@ -996,17 +974,6 @@ types:
         type: optional<double>
       manual_override_allowed:
         type: optional<boolean>
-
-  ClimateSettingScheduleHvacModeSetting:
-    enum:
-      - name: "off"
-        value: "off"
-      - name: heat
-        value: heat
-      - name: cool
-        value: cool
-      - name: heatcool
-        value: heatcool
 
   ConnectWebview:
     properties:

@@ -30,6 +30,8 @@ service:
             custom_metadata:
               type: >-
                 optional<map<string,root.CustomMetadataValue>>
+            automatically_manage_new_devices: optional<boolean>
+            wait_for_device_creation: optional<boolean>
       response:
         docs: OK
         type: root.ConnectWebviewsCreateResponse

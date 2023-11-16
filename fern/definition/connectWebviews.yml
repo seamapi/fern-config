@@ -17,20 +17,19 @@ service:
         body:
           properties:
             device_selection_mode:
-              type: optional<root.ConnectWebviewsCreateRequestDeviceSelectionMode>
+              type: optional<root.SelectionMode>
             custom_redirect_url:
               type: optional<string>
             custom_redirect_failure_url:
               type: optional<string>
             accepted_providers:
               type: >-
-                optional<list<root.ConnectWebviewsCreateRequestAcceptedProvidersItem>>
+                optional<list<root.AcceptedProvider>>
             provider_category:
-              type: optional<root.ConnectWebviewsCreateRequestProviderCategory>
+              type: optional<root.ProviderCategory>
             custom_metadata:
               type: >-
-                optional<map<string,
-                optional<root.ConnectWebviewsCreateRequestCustomMetadataValue>>>
+                optional<map<string,root.CustomMetadataValue>>
       response:
         docs: OK
         type: root.ConnectWebviewsCreateResponse

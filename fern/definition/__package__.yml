@@ -352,7 +352,7 @@ types:
       service_health:
         type: ServiceHealth
 
-  ConnectWebviewsCreateRequestDeviceSelectionMode:
+  SelectionMode:
     enum:
       - name: none
         value: none
@@ -361,7 +361,7 @@ types:
       - name: multiple
         value: multiple
 
-  ConnectWebviewsCreateRequestAcceptedProvidersItem:
+  AcceptedProvider:
     enum:
       - name: akuvox
         value: akuvox
@@ -418,7 +418,7 @@ types:
       - name: yale_access
         value: yale_access
 
-  ConnectWebviewsCreateRequestProviderCategory:
+  ProviderCategory:
     enum:
       - name: stable
         value: stable
@@ -427,12 +427,11 @@ types:
       - name: internal_beta
         value: internal_beta
 
-  ConnectWebviewsCreateRequestCustomMetadataValue:
+  CustomMetadataValue:
     discriminated: false
     union:
-      - string
+      - optional<string>
       - double
-      - type: optional<string>
       - boolean
 
   ConnectWebviewsCreateResponse:
@@ -994,7 +993,7 @@ types:
       url: string
       workspace_id: string
       device_selection_mode:
-        type: ConnectWebviewDeviceSelectionMode
+        type: SelectionMode
       accepted_providers:
         type: list<string>
       accepted_devices:
@@ -1005,15 +1004,6 @@ types:
       login_successful: boolean
       status:
         type: ConnectWebviewStatus
-
-  ConnectWebviewDeviceSelectionMode:
-    enum:
-      - name: none
-        value: none
-      - name: single
-        value: single
-      - name: multiple
-        value: multiple
 
   ConnectWebviewStatus:
     enum:

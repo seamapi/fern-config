@@ -10,6 +10,9 @@ auth-schemes:
     scheme: bearer
     token:
       name: api_key
+headers: 
+  Seam-Workspace: 
+    type: optional<string>
 default-environment: default
 environments:
   default: https://connect.getseam.com

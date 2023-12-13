@@ -17,6 +17,6 @@ groups:
   go-sdk:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.8.0
+        version: 0.9.3
         github:
           repository: seamapi/go

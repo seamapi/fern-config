@@ -1,5 +1,5 @@
 groups:
-  publish:
+  java-sdk:
     generators:
       - name: fernapi/fern-java-sdk
         version: 0.5.18
@@ -10,14 +10,13 @@ groups:
           password: ${MAVEN_PASSWORD}
         github:
           repository: seamapi/java
-      - name: fernapi/fern-python-sdk
-        version: 0.7.5
-        output:
-          location: pypi
-          package-name: fern-seam
-          token: ${PYPI_TOKEN}
-        github:
-          repository: seamapi/fern-python
         config:
-          client_class_name: Seam
-          client_filename: base_client.py
+          client-class-name: Seam
+          custom-dependencies:
+            - "testImplementation org.assertj:assertj-core:3.24.2"
+  go-sdk:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 0.9.3
+        github:
+          repository: seamapi/go

@@ -1,0 +1,23 @@
+groups:
+  publish:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 0.5.18
+        output:
+          location: maven
+          coordinate: io.github.seamapi:java
+          username: ${MAVEN_USERNAME}
+          password: ${MAVEN_PASSWORD}
+        github:
+          repository: seamapi/java
+      - name: fernapi/fern-python-sdk
+        version: 0.7.5
+        output:
+          location: pypi
+          package-name: fern-seam
+          token: ${PYPI_TOKEN}
+        github:
+          repository: seamapi/fern-python
+        config:
+          client_class_name: Seam
+          client_filename: base_client.py

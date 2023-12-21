@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  EnrollmentAutomationsLaunchResponseEnrollmentAutomation:
+    properties:
+      acs_credential_provisioning_automation_id: string
+      credential_manager_acs_system_id: string
+      user_identity_id: string
+      created_at: datetime
+      workspace_id: string
+      enrollment_automation_id: string
+
+  EnrollmentAutomationsLaunchResponse:
+    properties:
+      enrollment_automation: EnrollmentAutomationsLaunchResponseEnrollmentAutomation
+      ok: boolean
+
+imports:
+  root: ../__package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    launch:
+      path: /user_identities/enrollment_automations/launch
+      method: POST
+      auth: true
+      display-name: /user_identities/enrollment_automations/launch
+      request:
+        name: EnrollmentAutomationsLaunchRequest
+        body:
+          properties:
+            user_identity_id: string
+            credential_manager_acs_system_id: string
+            acs_credential_pool_id: optional<string>
+            create_credential_manager_user: optional<boolean>
+            credential_manager_acs_user_id: optional<string>
+      response:
+        docs: OK
+        type: EnrollmentAutomationsLaunchResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

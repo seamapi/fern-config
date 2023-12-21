@@ -1,0 +1,120 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  AccessGroupsAddUserResponse:
+    properties:
+      ok: boolean
+
+  AccessGroupsGetResponse:
+    properties:
+      acs_access_group: root.AcsAccessGroup
+      ok: boolean
+
+  AccessGroupsListResponse:
+    properties:
+      acs_access_groups: list<root.AcsAccessGroup>
+      ok: boolean
+
+  AccessGroupsListUsersResponse:
+    properties:
+      acs_users: list<root.AcsUser>
+      ok: boolean
+
+  AccessGroupsRemoveUserResponse:
+    properties:
+      ok: boolean
+
+imports:
+  root: ../__package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    add_user:
+      path: /acs/access_groups/add_user
+      method: POST
+      auth: true
+      display-name: /acs/access_groups/add_user
+      request:
+        name: AccessGroupsAddUserRequest
+        body:
+          properties:
+            acs_access_group_id: string
+            acs_user_id: string
+      response:
+        docs: OK
+        type: AccessGroupsAddUserResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    get:
+      path: /acs/access_groups/get
+      method: POST
+      auth: true
+      display-name: /acs/access_groups/get
+      request:
+        name: AccessGroupsGetRequest
+        body:
+          properties:
+            acs_access_group_id: string
+      response:
+        docs: OK
+        type: AccessGroupsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /acs/access_groups/list
+      method: POST
+      auth: true
+      display-name: /acs/access_groups/list
+      request:
+        name: AccessGroupsListRequest
+        body:
+          properties:
+            acs_system_id: optional<string>
+            acs_user_id: optional<string>
+      response:
+        docs: OK
+        type: AccessGroupsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list_users:
+      path: /acs/access_groups/list_users
+      method: POST
+      auth: true
+      display-name: /acs/access_groups/list_users
+      request:
+        name: AccessGroupsListUsersRequest
+        body:
+          properties:
+            acs_access_group_id: string
+      response:
+        docs: OK
+        type: AccessGroupsListUsersResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    remove_user:
+      path: /acs/access_groups/remove_user
+      method: POST
+      auth: true
+      display-name: /acs/access_groups/remove_user
+      request:
+        name: AccessGroupsRemoveUserRequest
+        body:
+          properties:
+            acs_access_group_id: string
+            acs_user_id: string
+      response:
+        docs: OK
+        type: AccessGroupsRemoveUserResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

@@ -91,7 +91,10 @@ service:
         name: UsersListRequest
         body:
           properties:
-            acs_system_id: string
+            user_identity_id: optional<string>
+            user_identity_phone_number: optional<string>
+            user_identity_email_address: optional<string>
+            acs_system_id: optional<string>
       response:
         docs: OK
         type: UsersListResponse

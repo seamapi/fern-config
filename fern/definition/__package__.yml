@@ -1400,6 +1400,9 @@ types:
       external_type_display_name: optional<string>
       is_suspended: boolean
       access_schedule: optional<AcsUserAccessSchedule>
+      user_identity_id: optional<string>
+      user_identity_email_address: optional<string>
+      user_identity_phone_number: optional<string>
       full_name: optional<string>
       email:
         docs: "Deprecated: use email_address."

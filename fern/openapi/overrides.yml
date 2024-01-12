@@ -1,0 +1,55 @@
+paths: 
+  /connect_webviews/create: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                accepted_providers: 
+                  items: 
+                    x-fern-type-name: AcceptedProvider
+                provider_category: 
+                  x-fern-type-name: ProviderCategory
+  /access_codes/list: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              required: 
+                - device_id
+  /devices/list: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              device_type: 
+                x-fern-type-name: DeviceType
+  /locks/list: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              device_type: 
+                x-fern-type-name: DeviceType
+  /thermostats/list: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              device_type: 
+                x-fern-type-name: DeviceType
+components: 
+  schemas: 
+    device: 
+      properties: 
+        device_type: 
+          x-fern-type-name: DeviceType
+    unmanaged_device: 
+      properties: 
+        device_type: 
+          x-fern-type-name: DeviceType

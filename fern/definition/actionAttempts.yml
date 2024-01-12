@@ -3,6 +3,17 @@
 imports:
   root: __package__.yml
 
+types:
+  ActionAttemptsGetResponse:
+    properties:
+      action_attempt: root.ActionAttempt
+      ok: boolean
+
+  ActionAttemptsListResponse:
+    properties:
+      action_attempts: list<root.ActionAttempt>
+      ok: boolean
+
 service:
   auth: false
   base-path: ""
@@ -19,8 +30,7 @@ service:
             action_attempt_id: string
       response:
         docs: OK
-        type: root.ActionAttemptsGetResponse
-        property: action_attempt
+        type: ActionAttemptsGetResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -34,12 +44,10 @@ service:
         name: ActionAttemptsListRequest
         body:
           properties:
-            action_attempt_ids:
-              type: list<string>
+            action_attempt_ids: list<string>
       response:
         docs: OK
-        type: root.ActionAttemptsListResponse
-        property: action_attempts
+        type: ActionAttemptsListResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

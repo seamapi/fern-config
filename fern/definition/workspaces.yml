@@ -1,5 +1,31 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+types:
+  WorkspacesCreateRequestWebviewLogoShape:
+    enum:
+      - circle
+      - square
+
+  WorkspacesCreateResponse:
+    properties:
+      workspace: root.Workspace
+      ok: boolean
+
+  WorkspacesGetResponse:
+    properties:
+      workspace: optional<root.Workspace>
+      ok: boolean
+
+  WorkspacesListResponse:
+    properties:
+      workspaces: list<root.Workspace>
+      ok: boolean
+
+  WorkspacesResetSandboxResponse:
+    properties:
+      action_attempt: root.ActionAttempt
+      ok: boolean
+
 imports:
   root: __package__.yml
 
@@ -7,28 +33,49 @@ service:
   auth: false
   base-path: ""
   endpoints:
+    create:
+      path: /workspaces/create
+      method: POST
+      auth: true
+      display-name: /workspaces/create
+      request:
+        name: WorkspacesCreateRequest
+        body:
+          properties:
+            name: string
+            connect_partner_name:
+              type: string
+              docs: The name shown inside the connect webview
+            is_sandbox: optional<boolean>
+            webview_primary_button_color: optional<string>
+            webview_logo_shape: optional<WorkspacesCreateRequestWebviewLogoShape>
+      response:
+        docs: OK
+        type: WorkspacesCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
     get:
       path: /workspaces/get
-      method: GET
+      method: POST
       auth: true
       display-name: /workspaces/get
       response:
         docs: OK
-        type: root.WorkspacesGetResponse
-        property: workspace
+        type: WorkspacesGetResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
 
     list:
       path: /workspaces/list
-      method: GET
+      method: POST
       auth: true
       display-name: /workspaces/list
       response:
         docs: OK
-        type: root.WorkspacesListResponse
-        property: workspaces
+        type: WorkspacesListResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -40,7 +87,7 @@ service:
       display-name: /workspaces/reset_sandbox
       response:
         docs: OK
-        type: root.WorkspacesResetSandboxResponse
+        type: WorkspacesResetSandboxResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -3,6 +3,12 @@
 imports:
   root: ../__package__.yml
 
+types:
+  SimulateCreateUnmanagedAccessCodeResponse:
+    properties:
+      access_code: root.UnmanagedAccessCode
+      ok: boolean
+
 service:
   auth: false
   base-path: ""
@@ -21,7 +27,7 @@ service:
             code: string
       response:
         docs: OK
-        type: root.SimulateCreateUnmanagedAccessCodeResponse
+        type: SimulateCreateUnmanagedAccessCodeResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -1,8 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-imports:
-  root: ../__package__.yml
-
 types:
   UserIdentitiesAddAcsUserResponse:
     properties:
@@ -13,8 +10,9 @@ types:
       user_identity_id: string
       user_identity_key: optional<string>
       email_address: optional<string>
-      first_name: optional<string>
-      last_name: optional<string>
+      phone_number: optional<string>
+      display_name: string
+      full_name: optional<string>
       created_at: datetime
       workspace_id: string
 
@@ -42,8 +40,9 @@ types:
       user_identity_id: string
       user_identity_key: optional<string>
       email_address: optional<string>
-      first_name: optional<string>
-      last_name: optional<string>
+      phone_number: optional<string>
+      display_name: string
+      full_name: optional<string>
       created_at: datetime
       workspace_id: string
 
@@ -61,8 +60,9 @@ types:
       user_identity_id: string
       user_identity_key: optional<string>
       email_address: optional<string>
-      first_name: optional<string>
-      last_name: optional<string>
+      phone_number: optional<string>
+      display_name: string
+      full_name: optional<string>
       created_at: datetime
       workspace_id: string
 
@@ -74,6 +74,11 @@ types:
   UserIdentitiesListAccessibleDevicesResponse:
     properties:
       accessible_devices: list<root.Device>
+      ok: boolean
+
+  UserIdentitiesListAcsSystemsResponse:
+    properties:
+      acs_systems: list<root.AcsSystem>
       ok: boolean
 
   UserIdentitiesListAcsUsersResponse:
@@ -88,6 +93,9 @@ types:
   UserIdentitiesRevokeAccessToDeviceResponse:
     properties:
       ok: boolean
+
+imports:
+  root: __package__.yml
 
 service:
   auth: false
@@ -122,12 +130,11 @@ service:
           properties:
             user_identity_key: optional<string>
             email_address: optional<string>
-            first_name: optional<string>
-            last_name: optional<string>
+            phone_number: optional<string>
+            full_name: optional<string>
       response:
         docs: OK
         type: UserIdentitiesCreateResponse
-        property: user_identity
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -142,7 +149,6 @@ service:
       response:
         docs: OK
         type: UserIdentitiesGetResponse
-        property: user_identity
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -161,7 +167,6 @@ service:
       response:
         docs: OK
         type: UserIdentitiesGrantAccessToDeviceResponse
-        
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -174,7 +179,6 @@ service:
       response:
         docs: OK
         type: UserIdentitiesListResponse
-        property: user_identities
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -192,6 +196,23 @@ service:
       response:
         docs: OK
         type: UserIdentitiesListAccessibleDevicesResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list_acs_systems:
+      path: /user_identities/list_acs_systems
+      method: POST
+      auth: true
+      display-name: /user_identities/list_acs_systems
+      request:
+        name: UserIdentitiesListAcsSystemsRequest
+        body:
+          properties:
+            user_identity_id: string
+      response:
+        docs: OK
+        type: UserIdentitiesListAcsSystemsResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

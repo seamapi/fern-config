@@ -1,5 +1,44 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+types:
+  ClimateSettingSchedulesCreateRequestHvacModeSetting:
+    enum:
+      - "off"
+      - heat
+      - cool
+      - heat_cool
+
+  ClimateSettingSchedulesCreateResponse:
+    properties:
+      climate_setting_schedule: root.ClimateSettingSchedule
+      ok: boolean
+
+  ClimateSettingSchedulesDeleteResponse:
+    properties:
+      ok: boolean
+
+  ClimateSettingSchedulesGetResponse:
+    properties:
+      climate_setting_schedule: root.ClimateSettingSchedule
+      ok: boolean
+
+  ClimateSettingSchedulesListResponse:
+    properties:
+      climate_setting_schedules: list<root.ClimateSettingSchedule>
+      ok: boolean
+
+  ClimateSettingSchedulesUpdateRequestHvacModeSetting:
+    enum:
+      - "off"
+      - heat
+      - cool
+      - heat_cool
+
+  ClimateSettingSchedulesUpdateResponse:
+    properties:
+      climate_setting_schedule: root.ClimateSettingSchedule
+      ok: boolean
+
 imports:
   root: ../__package__.yml
 
@@ -16,40 +55,29 @@ service:
         name: ClimateSettingSchedulesCreateRequest
         body:
           properties:
-            schedule_type:
-              type: optional<literal<"time_bound">>
+            schedule_type: optional<literal<"time_bound">>
             device_id: string
-            name:
-              type: optional<string>
+            name: optional<string>
             schedule_starts_at: string
             schedule_ends_at: string
-            automatic_heating_enabled:
-              type: optional<boolean>
-            automatic_cooling_enabled:
-              type: optional<boolean>
-            hvac_mode_setting:
-              type: >-
-                optional<root.HvacModeSetting>
-            cooling_set_point_celsius:
-              type: optional<double>
-            heating_set_point_celsius:
-              type: optional<double>
-            cooling_set_point_fahrenheit:
-              type: optional<double>
-            heating_set_point_fahrenheit:
-              type: optional<double>
-            manual_override_allowed:
-              type: optional<boolean>
+            automatic_heating_enabled: optional<boolean>
+            automatic_cooling_enabled: optional<boolean>
+            hvac_mode_setting: optional<ClimateSettingSchedulesCreateRequestHvacModeSetting>
+            cooling_set_point_celsius: optional<double>
+            heating_set_point_celsius: optional<double>
+            cooling_set_point_fahrenheit: optional<double>
+            heating_set_point_fahrenheit: optional<double>
+            manual_override_allowed: optional<boolean>
       response:
         docs: OK
-        type: root.ClimateSettingSchedulesCreateResponse
+        type: ClimateSettingSchedulesCreateResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
 
     delete:
       path: /thermostats/climate_setting_schedules/delete
-      method: DELETE
+      method: POST
       auth: true
       display-name: /thermostats/climate_setting_schedules/delete
       request:
@@ -59,7 +87,7 @@ service:
             climate_setting_schedule_id: string
       response:
         docs: OK
-        type: root.ClimateSettingSchedulesDeleteResponse
+        type: ClimateSettingSchedulesDeleteResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -73,13 +101,11 @@ service:
         name: ClimateSettingSchedulesGetRequest
         body:
           properties:
-            climate_setting_schedule_id:
-              type: optional<string>
-            device_id:
-              type: optional<string>
+            climate_setting_schedule_id: optional<string>
+            device_id: optional<string>
       response:
         docs: OK
-        type: root.ClimateSettingSchedulesGetResponse
+        type: ClimateSettingSchedulesGetResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -94,9 +120,10 @@ service:
         body:
           properties:
             device_id: string
+            user_identifier_key: optional<string>
       response:
         docs: OK
-        type: root.ClimateSettingSchedulesListResponse
+        type: ClimateSettingSchedulesListResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -111,34 +138,21 @@ service:
         body:
           properties:
             climate_setting_schedule_id: string
-            schedule_type:
-              type: optional<literal<"time_bound">>
-            name:
-              type: optional<string>
-            schedule_starts_at:
-              type: optional<string>
-            schedule_ends_at:
-              type: optional<string>
-            automatic_heating_enabled:
-              type: optional<boolean>
-            automatic_cooling_enabled:
-              type: optional<boolean>
-            hvac_mode_setting:
-              type: >-
-                optional<root.HvacModeSetting>
-            cooling_set_point_celsius:
-              type: optional<double>
-            heating_set_point_celsius:
-              type: optional<double>
-            cooling_set_point_fahrenheit:
-              type: optional<double>
-            heating_set_point_fahrenheit:
-              type: optional<double>
-            manual_override_allowed:
-              type: optional<boolean>
+            schedule_type: optional<literal<"time_bound">>
+            name: optional<string>
+            schedule_starts_at: optional<string>
+            schedule_ends_at: optional<string>
+            automatic_heating_enabled: optional<boolean>
+            automatic_cooling_enabled: optional<boolean>
+            hvac_mode_setting: optional<ClimateSettingSchedulesUpdateRequestHvacModeSetting>
+            cooling_set_point_celsius: optional<double>
+            heating_set_point_celsius: optional<double>
+            cooling_set_point_fahrenheit: optional<double>
+            heating_set_point_fahrenheit: optional<double>
+            manual_override_allowed: optional<boolean>
       response:
         docs: OK
-        type: root.ClimateSettingSchedulesUpdateResponse
+        type: ClimateSettingSchedulesUpdateResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -3,6 +3,207 @@
 imports:
   root: __package__.yml
 
+types:
+  EventsGetResponse:
+    properties:
+      event: optional<root.Event>
+      message: optional<string>
+      ok: boolean
+
+  EventsListRequestBetweenItem:
+    discriminated: false
+    union:
+      - string
+      - datetime
+
+  EventsListRequestEventType:
+    enum:
+      - name: DeviceConnected
+        value: device.connected
+      - name: DeviceUnmanagedConnected
+        value: device.unmanaged.connected
+      - name: DeviceDisconnected
+        value: device.disconnected
+      - name: DeviceUnmanagedDisconnected
+        value: device.unmanaged.disconnected
+      - name: DeviceConvertedToUnmanaged
+        value: device.converted_to_unmanaged
+      - name: DeviceUnmanagedConvertedToManaged
+        value: device.unmanaged.converted_to_managed
+      - name: DeviceRemoved
+        value: device.removed
+      - name: DeviceTampered
+        value: device.tampered
+      - name: DeviceLowBattery
+        value: device.low_battery
+      - name: DeviceBatteryStatusChanged
+        value: device.battery_status_changed
+      - name: DeviceThirdPartyIntegrationDetected
+        value: device.third_party_integration_detected
+      - name: DeviceThirdPartyIntegrationNoLongerDetected
+        value: device.third_party_integration_no_longer_detected
+      - name: DeviceSaltoPrivacyModeActivated
+        value: device.salto.privacy_mode_activated
+      - name: DeviceSaltoPrivacyModeDeactivated
+        value: device.salto.privacy_mode_deactivated
+      - name: DeviceConnectionBecameFlaky
+        value: device.connection_became_flaky
+      - name: DeviceConnectionStabilized
+        value: device.connection_stabilized
+      - name: DeviceErrorSubscriptionRequired
+        value: device.error.subscription_required
+      - name: DeviceErrorSubscriptionRequiredResolved
+        value: device.error.subscription_required.resolved
+      - name: AccessCodeCreated
+        value: access_code.created
+      - name: AccessCodeChanged
+        value: access_code.changed
+      - name: AccessCodeScheduledOnDevice
+        value: access_code.scheduled_on_device
+      - name: AccessCodeSetOnDevice
+        value: access_code.set_on_device
+      - name: AccessCodeDeleted
+        value: access_code.deleted
+      - name: AccessCodeRemovedFromDevice
+        value: access_code.removed_from_device
+      - name: AccessCodeFailedToSetOnDevice
+        value: access_code.failed_to_set_on_device
+      - name: AccessCodeDelayInSettingOnDevice
+        value: access_code.delay_in_setting_on_device
+      - name: AccessCodeFailedToRemoveFromDevice
+        value: access_code.failed_to_remove_from_device
+      - name: AccessCodeDelayInRemovingFromDevice
+        value: access_code.delay_in_removing_from_device
+      - name: AccessCodeDeletedExternalToSeam
+        value: access_code.deleted_external_to_seam
+      - name: AccessCodeModifiedExternalToSeam
+        value: access_code.modified_external_to_seam
+      - name: AccessCodeUnmanagedConvertedToManaged
+        value: access_code.unmanaged.converted_to_managed
+      - name: AccessCodeUnmanagedFailedToConvertToManaged
+        value: access_code.unmanaged.failed_to_convert_to_managed
+      - name: AccessCodeUnmanagedCreated
+        value: access_code.unmanaged.created
+      - name: AccessCodeUnmanagedRemoved
+        value: access_code.unmanaged.removed
+      - name: LockLocked
+        value: lock.locked
+      - name: LockUnlocked
+        value: lock.unlocked
+      - name: ConnectedAccountConnected
+        value: connected_account.connected
+      - name: ConnectedAccountSuccessfulLogin
+        value: connected_account.successful_login
+      - name: ConnectedAccountCreated
+        value: connected_account.created
+      - name: ConnectedAccountDeleted
+        value: connected_account.deleted
+      - name: ConnectedAccountDisconnected
+        value: connected_account.disconnected
+      - name: ConnectedAccountCompletedFirstSync
+        value: connected_account.completed_first_sync
+      - name: NoiseSensorNoiseThresholdTriggered
+        value: noise_sensor.noise_threshold_triggered
+      - name: AccessCodeBackupAccessCodePulled
+        value: access_code.backup_access_code_pulled
+
+  EventsListRequestEventTypesItem:
+    enum:
+      - name: DeviceConnected
+        value: device.connected
+      - name: DeviceUnmanagedConnected
+        value: device.unmanaged.connected
+      - name: DeviceDisconnected
+        value: device.disconnected
+      - name: DeviceUnmanagedDisconnected
+        value: device.unmanaged.disconnected
+      - name: DeviceConvertedToUnmanaged
+        value: device.converted_to_unmanaged
+      - name: DeviceUnmanagedConvertedToManaged
+        value: device.unmanaged.converted_to_managed
+      - name: DeviceRemoved
+        value: device.removed
+      - name: DeviceTampered
+        value: device.tampered
+      - name: DeviceLowBattery
+        value: device.low_battery
+      - name: DeviceBatteryStatusChanged
+        value: device.battery_status_changed
+      - name: DeviceThirdPartyIntegrationDetected
+        value: device.third_party_integration_detected
+      - name: DeviceThirdPartyIntegrationNoLongerDetected
+        value: device.third_party_integration_no_longer_detected
+      - name: DeviceSaltoPrivacyModeActivated
+        value: device.salto.privacy_mode_activated
+      - name: DeviceSaltoPrivacyModeDeactivated
+        value: device.salto.privacy_mode_deactivated
+      - name: DeviceConnectionBecameFlaky
+        value: device.connection_became_flaky
+      - name: DeviceConnectionStabilized
+        value: device.connection_stabilized
+      - name: DeviceErrorSubscriptionRequired
+        value: device.error.subscription_required
+      - name: DeviceErrorSubscriptionRequiredResolved
+        value: device.error.subscription_required.resolved
+      - name: AccessCodeCreated
+        value: access_code.created
+      - name: AccessCodeChanged
+        value: access_code.changed
+      - name: AccessCodeScheduledOnDevice
+        value: access_code.scheduled_on_device
+      - name: AccessCodeSetOnDevice
+        value: access_code.set_on_device
+      - name: AccessCodeDeleted
+        value: access_code.deleted
+      - name: AccessCodeRemovedFromDevice
+        value: access_code.removed_from_device
+      - name: AccessCodeFailedToSetOnDevice
+        value: access_code.failed_to_set_on_device
+      - name: AccessCodeDelayInSettingOnDevice
+        value: access_code.delay_in_setting_on_device
+      - name: AccessCodeFailedToRemoveFromDevice
+        value: access_code.failed_to_remove_from_device
+      - name: AccessCodeDelayInRemovingFromDevice
+        value: access_code.delay_in_removing_from_device
+      - name: AccessCodeDeletedExternalToSeam
+        value: access_code.deleted_external_to_seam
+      - name: AccessCodeModifiedExternalToSeam
+        value: access_code.modified_external_to_seam
+      - name: AccessCodeUnmanagedConvertedToManaged
+        value: access_code.unmanaged.converted_to_managed
+      - name: AccessCodeUnmanagedFailedToConvertToManaged
+        value: access_code.unmanaged.failed_to_convert_to_managed
+      - name: AccessCodeUnmanagedCreated
+        value: access_code.unmanaged.created
+      - name: AccessCodeUnmanagedRemoved
+        value: access_code.unmanaged.removed
+      - name: LockLocked
+        value: lock.locked
+      - name: LockUnlocked
+        value: lock.unlocked
+      - name: ConnectedAccountConnected
+        value: connected_account.connected
+      - name: ConnectedAccountSuccessfulLogin
+        value: connected_account.successful_login
+      - name: ConnectedAccountCreated
+        value: connected_account.created
+      - name: ConnectedAccountDeleted
+        value: connected_account.deleted
+      - name: ConnectedAccountDisconnected
+        value: connected_account.disconnected
+      - name: ConnectedAccountCompletedFirstSync
+        value: connected_account.completed_first_sync
+      - name: NoiseSensorNoiseThresholdTriggered
+        value: noise_sensor.noise_threshold_triggered
+      - name: AccessCodeBackupAccessCodePulled
+        value: access_code.backup_access_code_pulled
+
+  EventsListResponse:
+    properties:
+      events: optional<list<root.Event>>
+      message: optional<string>
+      ok: boolean
+
 service:
   auth: false
   base-path: ""
@@ -16,16 +217,12 @@ service:
         name: EventsGetRequest
         body:
           properties:
-            event_id:
-              type: optional<string>
-            event_type:
-              type: optional<string>
-            device_id:
-              type: optional<string>
+            event_id: optional<string>
+            event_type: optional<string>
+            device_id: optional<string>
       response:
         docs: OK
-        type: root.EventsGetResponse
-        property: event
+        type: EventsGetResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -39,28 +236,18 @@ service:
         name: EventsListRequest
         body:
           properties:
-            since:
-              type: optional<string>
-            between:
-              type: optional<list<root.EventsListRequestBetweenItem>>
-            device_id:
-              type: optional<string>
-            device_ids:
-              type: optional<list<string>>
-            access_code_id:
-              type: optional<string>
-            access_code_ids:
-              type: optional<list<string>>
-            event_type:
-              type: optional<root.EventsListRequestEventType>
-            event_types:
-              type: optional<list<root.EventsListRequestEventTypesItem>>
-            connected_account_id:
-              type: optional<string>
+            since: optional<string>
+            between: optional<list<EventsListRequestBetweenItem>>
+            device_id: optional<string>
+            device_ids: optional<list<string>>
+            access_code_id: optional<string>
+            access_code_ids: optional<list<string>>
+            event_type: optional<EventsListRequestEventType>
+            event_types: optional<list<EventsListRequestEventTypesItem>>
+            connected_account_id: optional<string>
       response:
         docs: OK
-        type: root.EventsListResponse
-        property: events
+        type: EventsListResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

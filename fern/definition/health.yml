@@ -3,6 +3,20 @@
 imports:
   root: __package__.yml
 
+types:
+  HealthGetHealthResponse:
+    properties:
+      ok: boolean
+      msg: literal<"I’m one with the Force. The Force is with me.">
+      last_service_evaluation_at: optional<string>
+      service_health_statuses: list<root.ServiceHealth>
+
+  HealthGetServiceHealthResponse:
+    properties:
+      ok: boolean
+      last_service_evaluation_at: string
+      service_health: root.ServiceHealth
+
 service:
   auth: false
   base-path: ""
@@ -14,7 +28,7 @@ service:
       display-name: /health/get_health
       response:
         docs: OK
-        type: root.HealthGetHealthResponse
+        type: HealthGetHealthResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -31,7 +45,7 @@ service:
             service: string
       response:
         docs: OK
-        type: root.HealthGetServiceHealthResponse
+        type: HealthGetServiceHealthResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

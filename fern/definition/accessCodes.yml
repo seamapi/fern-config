@@ -120,6 +120,7 @@ service:
       response:
         docs: OK
         type: AccessCodesCreateResponse
+        property: access_code
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -152,6 +153,7 @@ service:
       response:
         docs: OK
         type: AccessCodesCreateMultipleResponse
+        property: access_codes
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -171,6 +173,7 @@ service:
       response:
         docs: OK
         type: AccessCodesDeleteResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -188,6 +191,7 @@ service:
       response:
         docs: OK
         type: AccessCodesGenerateCodeResponse
+        property: generated_code
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -207,6 +211,7 @@ service:
       response:
         docs: OK
         type: AccessCodesGetResponse
+        property: access_code
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -226,6 +231,7 @@ service:
       response:
         docs: OK
         type: AccessCodesListResponse
+        property: access_codes
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -243,6 +249,7 @@ service:
       response:
         docs: OK
         type: AccessCodesPullBackupAccessCodeResponse
+        property: backup_access_code
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -277,6 +284,7 @@ service:
       response:
         docs: OK
         type: AccessCodesUpdateResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

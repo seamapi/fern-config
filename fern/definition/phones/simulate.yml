@@ -51,6 +51,7 @@ service:
       response:
         docs: OK
         type: SimulateCreateSandboxPhoneResponse
+        property: phone
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

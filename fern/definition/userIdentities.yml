@@ -179,6 +179,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesListResponse
+        property: user_identities
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

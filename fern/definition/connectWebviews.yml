@@ -106,6 +106,7 @@ service:
       response:
         docs: OK
         type: ConnectWebviewsCreateResponse
+        property: connect_webview
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -140,6 +141,7 @@ service:
       response:
         docs: OK
         type: ConnectWebviewsGetResponse
+        property: connect_webview
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -157,6 +159,7 @@ service:
       response:
         docs: OK
         type: ConnectWebviewsListResponse
+        property: connect_webviews
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

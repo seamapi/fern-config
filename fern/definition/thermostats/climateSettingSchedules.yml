@@ -71,6 +71,7 @@ service:
       response:
         docs: OK
         type: ClimateSettingSchedulesCreateResponse
+        property: climate_setting_schedule
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -106,6 +107,7 @@ service:
       response:
         docs: OK
         type: ClimateSettingSchedulesGetResponse
+        property: climate_setting_schedule
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -124,6 +126,7 @@ service:
       response:
         docs: OK
         type: ClimateSettingSchedulesListResponse
+        property: climate_setting_schedules
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -153,6 +156,7 @@ service:
       response:
         docs: OK
         type: ClimateSettingSchedulesUpdateResponse
+        property: climate_setting_schedule
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

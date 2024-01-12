@@ -26,6 +26,7 @@ service:
       response:
         docs: OK
         type: PhonesListResponse
+        property: phones
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

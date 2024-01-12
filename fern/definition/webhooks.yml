@@ -41,6 +41,7 @@ service:
       response:
         docs: OK
         type: WebhooksCreateResponse
+        property: webhook
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -75,6 +76,7 @@ service:
       response:
         docs: OK
         type: WebhooksGetResponse
+        property: webhook
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -87,6 +89,7 @@ service:
       response:
         docs: OK
         type: WebhooksListResponse
+        property: webhooks
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

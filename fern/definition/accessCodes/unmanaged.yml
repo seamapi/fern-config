@@ -66,6 +66,7 @@ service:
       response:
         docs: OK
         type: UnmanagedDeleteResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -85,6 +86,7 @@ service:
       response:
         docs: OK
         type: UnmanagedGetResponse
+        property: access_code
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -103,6 +105,7 @@ service:
       response:
         docs: OK
         type: UnmanagedListResponse
+        property: access_codes
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -207,6 +207,7 @@ service:
       response:
         docs: OK
         type: ThermostatsGetResponse
+        property: thermostat
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -277,6 +278,7 @@ service:
       response:
         docs: OK
         type: ThermostatsListResponse
+        property: thermostats
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

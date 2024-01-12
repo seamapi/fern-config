@@ -223,6 +223,7 @@ service:
       response:
         docs: OK
         type: EventsGetResponse
+        property: event
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -248,6 +249,7 @@ service:
       response:
         docs: OK
         type: EventsListResponse
+        property: events
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -28,6 +28,7 @@ service:
       response:
         docs: OK
         type: SimulateCreateUnmanagedAccessCodeResponse
+        property: access_code
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

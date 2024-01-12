@@ -147,6 +147,7 @@ service:
       response:
         docs: OK
         type: LocksGetResponse
+        property: device
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -175,6 +176,7 @@ service:
       response:
         docs: OK
         type: LocksListResponse
+        property: devices
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -193,6 +195,7 @@ service:
       response:
         docs: OK
         type: LocksLockDoorResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -211,6 +214,7 @@ service:
       response:
         docs: OK
         type: LocksUnlockDoorResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

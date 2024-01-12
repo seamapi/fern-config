@@ -64,6 +64,7 @@ service:
       response:
         docs: OK
         type: WorkspacesGetResponse
+        property: workspace
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -76,6 +77,7 @@ service:
       response:
         docs: OK
         type: WorkspacesListResponse
+        property: workspaces
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -88,6 +90,7 @@ service:
       response:
         docs: OK
         type: WorkspacesResetSandboxResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

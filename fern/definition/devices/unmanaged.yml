@@ -139,6 +139,7 @@ service:
       response:
         docs: OK
         type: UnmanagedGetResponse
+        property: device
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -167,6 +168,7 @@ service:
       response:
         docs: OK
         type: UnmanagedListResponse
+        property: devices
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

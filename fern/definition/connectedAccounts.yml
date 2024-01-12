@@ -69,6 +69,7 @@ service:
       response:
         docs: OK
         type: ConnectedAccountsGetResponse
+        property: connected_account
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -81,6 +82,7 @@ service:
       response:
         docs: OK
         type: ConnectedAccountsListResponse
+        property: connected_accounts
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -99,6 +101,7 @@ service:
       response:
         docs: OK
         type: ConnectedAccountsUpdateResponse
+        property: connected_account
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

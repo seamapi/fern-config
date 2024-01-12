@@ -1,3 +1,5 @@
+openapi: openapi/openapi.json
+openapi-overrides: openapi/overrides.yml
 groups:
   java-sdk:
     generators:

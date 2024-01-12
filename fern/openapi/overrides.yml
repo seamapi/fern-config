@@ -19,33 +19,74 @@ paths:
             schema: 
               required: 
                 - device_id
+  /devices/unmanaged/list: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                device_type: 
+                  x-fern-type-name: DeviceType
+                device_types: 
+                  items: 
+                    x-fern-type-name: DeviceType
+                manufacturer: 
+                  x-fern-type-name: Manufacturer
   /devices/list: 
     post: 
       requestBody: 
         content: 
           application/json: 
             schema: 
-              device_type: 
-                x-fern-type-name: DeviceType
+              properties: 
+                device_type: 
+                  x-fern-type-name: DeviceType
+                device_types: 
+                  items: 
+                    x-fern-type-name: DeviceType
+                manufacturer: 
+                  x-fern-type-name: Manufacturer
   /locks/list: 
     post: 
       requestBody: 
         content: 
           application/json: 
             schema: 
-              device_type: 
-                x-fern-type-name: DeviceType
+              properties: 
+                device_type: 
+                  x-fern-type-name: DeviceType
+                device_types: 
+                  items: 
+                    x-fern-type-name: DeviceType
+                manufacturer: 
+                  x-fern-type-name: Manufacturer
   /thermostats/list: 
     post: 
       requestBody: 
         content: 
           application/json: 
             schema: 
-              device_type: 
-                x-fern-type-name: DeviceType
+              properties: 
+                device_type: 
+                  x-fern-type-name: DeviceType
+                device_types: 
+                  items: 
+                    x-fern-type-name: DeviceType                  
+                manufacturer: 
+                  x-fern-type-name: Manufacturer
   /workspaces/reset_sandbox: 
     post: 
       x-fern-sdk-return-value: action_attempt
+  /devices/list_device_providers: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                provider_category:
+                  x-fern-type-name: ProviderCategory
 components: 
   schemas: 
     device: 
@@ -56,3 +97,8 @@ components:
       properties: 
         device_type: 
           x-fern-type-name: DeviceType
+        device_provider: 
+          properties: 
+            provider_categories: 
+              items: 
+                x-fern-type-name: ProviderCategory

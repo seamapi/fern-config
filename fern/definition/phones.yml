@@ -1,30 +1,32 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-types:
-  SimulateTriggerNoiseThresholdResponse:
-    properties:
-      ok: boolean
-
 imports:
-  root: ../__package__.yml
+  root: __package__.yml
+
+types:
+  PhonesListResponse:
+    properties:
+      phones: list<root.Phone>
+      ok: boolean
 
 service:
   auth: false
   base-path: ""
   endpoints:
-    trigger_noise_threshold:
-      path: /noise_sensors/simulate/trigger_noise_threshold
+    list:
+      path: /phones/list
       method: POST
       auth: true
-      display-name: /noise_sensors/simulate/trigger_noise_threshold
+      display-name: /phones/list
       request:
-        name: SimulateTriggerNoiseThresholdRequest
+        name: PhonesListRequest
         body:
           properties:
-            device_id: string
+            owner_user_identity_id: optional<string>
       response:
         docs: OK
-        type: SimulateTriggerNoiseThresholdResponse
+        type: PhonesListResponse
+        property: phones
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -3,10 +3,147 @@
 imports:
   root: ../__package__.yml
 
+types:
+  UnmanagedGetResponse:
+    properties:
+      device: root.UnmanagedDevice
+      ok: boolean
+
+  UnmanagedListRequestDeviceType:
+    enum:
+      - akuvox_lock
+      - august_lock
+      - brivo_access_point
+      - butterflymx_panel
+      - avigilon_alta_entry
+      - doorking_lock
+      - genie_door
+      - igloo_lock
+      - linear_lock
+      - lockly_lock
+      - kwikset_lock
+      - nuki_lock
+      - salto_lock
+      - schlage_lock
+      - seam_relay
+      - smartthings_lock
+      - wyze_lock
+      - yale_lock
+      - two_n_intercom
+      - controlbyweb_device
+      - ttlock_lock
+      - igloohome_lock
+      - hubitat_lock
+      - four_suites_door
+      - dormakaba_oracode_door
+      - noiseaware_activity_zone
+      - minut_sensor
+      - ecobee_thermostat
+      - nest_thermostat
+      - ios_phone
+      - android_phone
+
+  UnmanagedListRequestDeviceTypesItem:
+    enum:
+      - akuvox_lock
+      - august_lock
+      - brivo_access_point
+      - butterflymx_panel
+      - avigilon_alta_entry
+      - doorking_lock
+      - genie_door
+      - igloo_lock
+      - linear_lock
+      - lockly_lock
+      - kwikset_lock
+      - nuki_lock
+      - salto_lock
+      - schlage_lock
+      - seam_relay
+      - smartthings_lock
+      - wyze_lock
+      - yale_lock
+      - two_n_intercom
+      - controlbyweb_device
+      - ttlock_lock
+      - igloohome_lock
+      - hubitat_lock
+      - four_suites_door
+      - dormakaba_oracode_door
+      - noiseaware_activity_zone
+      - minut_sensor
+      - ecobee_thermostat
+      - nest_thermostat
+      - ios_phone
+      - android_phone
+
+  UnmanagedListRequestManufacturer:
+    enum:
+      - akuvox
+      - august
+      - avigilon_alta
+      - brivo
+      - butterflymx
+      - doorking
+      - four_suites
+      - genie
+      - igloo
+      - keywe
+      - kwikset
+      - linear
+      - lockly
+      - nuki
+      - philia
+      - salto
+      - samsung
+      - schlage
+      - seam
+      - unknown
+      - wyze
+      - yale
+      - minut
+      - two_n
+      - ttlock
+      - nest
+      - igloohome
+      - ecobee
+      - hubitat
+      - controlbyweb
+      - smartthings
+      - dormakaba_oracode
+
+  UnmanagedListResponse:
+    properties:
+      devices: list<root.UnmanagedDevice>
+      ok: boolean
+
+  UnmanagedUpdateResponse:
+    properties:
+      ok: boolean
+
 service:
   auth: false
   base-path: ""
   endpoints:
+    get:
+      path: /devices/unmanaged/get
+      method: POST
+      auth: true
+      display-name: /devices/unmanaged/get
+      request:
+        name: UnmanagedGetRequest
+        body:
+          properties:
+            device_id: optional<string>
+            name: optional<string>
+      response:
+        docs: OK
+        type: UnmanagedGetResponse
+        property: device
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
     list:
       path: /devices/unmanaged/list
       method: POST
@@ -17,26 +154,21 @@ service:
         body:
           properties:
             connected_account_id:
+              docs: List all devices owned by this connected account
               type: optional<string>
-            connected_account_ids:
-              type: optional<list<string>>
-            connect_webview_id:
-              type: optional<string>
-            device_type:
-              type: optional<root.DeviceType>
-            device_types:
-              type: optional<list<root.DeviceType>>
-            manufacturer:
-              type: optional<root.Manufacturer>
-            device_ids:
-              type: optional<list<string>>
-            limit:
-              type: optional<double>
-            created_before:
-              type: optional<datetime>
+            connected_account_ids: optional<list<string>>
+            connect_webview_id: optional<string>
+            device_type: optional<UnmanagedListRequestDeviceType>
+            device_types: optional<list<UnmanagedListRequestDeviceTypesItem>>
+            manufacturer: optional<UnmanagedListRequestManufacturer>
+            device_ids: optional<list<string>>
+            limit: optional<double>
+            created_before: optional<datetime>
+            user_identifier_key: optional<string>
       response:
         docs: OK
-        type: root.UnmanagedListResponse
+        type: UnmanagedListResponse
+        property: devices
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -51,10 +183,10 @@ service:
         body:
           properties:
             device_id: string
-            is_managed: boolean
+            is_managed: string
       response:
         docs: OK
-        type: root.UnmanagedUpdateResponse
+        type: UnmanagedUpdateResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

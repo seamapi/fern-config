@@ -1,5 +1,39 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+types:
+  ConnectedAccountsDeleteResponse:
+    properties:
+      ok: boolean
+
+  ConnectedAccountsGetRequestConnectedAccountId:
+    properties:
+      connected_account_id: string
+
+  ConnectedAccountsGetRequestEmail:
+    properties:
+      email: string
+
+  ConnectedAccountsGetRequest:
+    discriminated: false
+    union:
+      - ConnectedAccountsGetRequestConnectedAccountId
+      - ConnectedAccountsGetRequestEmail
+
+  ConnectedAccountsGetResponse:
+    properties:
+      connected_account: root.ConnectedAccount
+      ok: boolean
+
+  ConnectedAccountsListResponse:
+    properties:
+      connected_accounts: list<root.ConnectedAccount>
+      ok: boolean
+
+  ConnectedAccountsUpdateResponse:
+    properties:
+      connected_account: root.ConnectedAccount
+      ok: boolean
+
 imports:
   root: __package__.yml
 
@@ -9,7 +43,7 @@ service:
   endpoints:
     delete:
       path: /connected_accounts/delete
-      method: DELETE
+      method: POST
       auth: true
       display-name: /connected_accounts/delete
       request:
@@ -17,10 +51,10 @@ service:
         body:
           properties:
             connected_account_id: string
+            sync: optional<boolean>
       response:
         docs: OK
-        type: root.ConnectedAccountsDeleteResponse
-        property: ok
+        type: ConnectedAccountsDeleteResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -31,11 +65,10 @@ service:
       auth: true
       display-name: /connected_accounts/get
       request:
-        body:
-          type: root.ConnectedAccountsGetRequest
+        body: ConnectedAccountsGetRequest
       response:
         docs: OK
-        type: root.ConnectedAccountsGetResponse
+        type: ConnectedAccountsGetResponse
         property: connected_account
       errors:
         - root.BadRequestError
@@ -48,8 +81,27 @@ service:
       display-name: /connected_accounts/list
       response:
         docs: OK
-        type: root.ConnectedAccountsListResponse
+        type: ConnectedAccountsListResponse
         property: connected_accounts
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    update:
+      path: /connected_accounts/update
+      method: POST
+      auth: true
+      display-name: /connected_accounts/update
+      request:
+        name: ConnectedAccountsUpdateRequest
+        body:
+          properties:
+            connected_account_id: string
+            automatically_manage_new_devices: optional<boolean>
+      response:
+        docs: OK
+        type: ConnectedAccountsUpdateResponse
+        property: connected_account
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

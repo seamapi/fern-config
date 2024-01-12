@@ -81,6 +81,7 @@ service:
         body:
           properties:
             acs_system_id: optional<string>
+            acs_credential_id: optional<string>
       response:
         docs: OK
         type: EntrancesListResponse

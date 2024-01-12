@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  NetworksGetResponseNetwork:
+    properties:
+      network_id: string
+      workspace_id: string
+      display_name: string
+      created_at: datetime
+
+  NetworksGetResponse:
+    properties:
+      network: NetworksGetResponseNetwork
+      ok: boolean
+
+  NetworksListResponseNetworksItem:
+    properties:
+      network_id: string
+      workspace_id: string
+      display_name: string
+      created_at: datetime
+
+  NetworksListResponse:
+    properties:
+      networks: list<NetworksListResponseNetworksItem>
+      ok: boolean
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    get:
+      path: /networks/get
+      method: POST
+      auth: true
+      display-name: /networks/get
+      request:
+        name: NetworksGetRequest
+        body:
+          properties:
+            network_id: string
+      response:
+        docs: OK
+        type: NetworksGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /networks/list
+      method: POST
+      auth: true
+      display-name: /networks/list
+      request:
+        name: NetworksListRequest
+        body:
+          properties: {}
+      response:
+        docs: OK
+        type: NetworksListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

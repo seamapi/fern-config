@@ -1,5 +1,29 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+types:
+  UnmanagedConvertToManagedResponse:
+    properties:
+      ok: boolean
+
+  UnmanagedDeleteResponse:
+    properties:
+      action_attempt: root.ActionAttempt
+      ok: boolean
+
+  UnmanagedGetResponse:
+    properties:
+      access_code: root.UnmanagedAccessCode
+      ok: boolean
+
+  UnmanagedListResponse:
+    properties:
+      access_codes: list<root.UnmanagedAccessCode>
+      ok: boolean
+
+  UnmanagedUpdateResponse:
+    properties:
+      ok: boolean
+
 imports:
   root: ../__package__.yml
 
@@ -17,20 +41,20 @@ service:
         body:
           properties:
             access_code_id: string
-            force:
-              type: optional<boolean>
-            sync:
-              type: optional<boolean>
+            is_external_modification_allowed: optional<boolean>
+            allow_external_modification: optional<boolean>
+            force: optional<boolean>
+            sync: optional<boolean>
       response:
         docs: OK
-        type: root.UnmanagedConvertToManagedResponse
+        type: UnmanagedConvertToManagedResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
 
     delete:
       path: /access_codes/unmanaged/delete
-      method: DELETE
+      method: POST
       auth: true
       display-name: /access_codes/unmanaged/delete
       request:
@@ -38,11 +62,11 @@ service:
         body:
           properties:
             access_code_id: string
-            sync:
-              type: optional<boolean>
+            sync: optional<boolean>
       response:
         docs: OK
-        type: root.UnmanagedDeleteResponse
+        type: UnmanagedDeleteResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -56,15 +80,13 @@ service:
         name: UnmanagedGetRequest
         body:
           properties:
-            device_id:
-              type: optional<string>
-            access_code_id:
-              type: optional<string>
-            code:
-              type: optional<string>
+            device_id: optional<string>
+            access_code_id: optional<string>
+            code: optional<string>
       response:
         docs: OK
-        type: root.UnmanagedGetResponse
+        type: UnmanagedGetResponse
+        property: access_code
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -79,9 +101,11 @@ service:
         body:
           properties:
             device_id: string
+            user_identifier_key: optional<string>
       response:
         docs: OK
-        type: root.UnmanagedListResponse
+        type: UnmanagedListResponse
+        property: access_codes
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -97,11 +121,12 @@ service:
           properties:
             access_code_id: string
             is_managed: boolean
-            force:
-              type: optional<boolean>
+            allow_external_modification: optional<boolean>
+            is_external_modification_allowed: optional<boolean>
+            force: optional<boolean>
       response:
         docs: OK
-        type: root.UnmanagedUpdateResponse
+        type: UnmanagedUpdateResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

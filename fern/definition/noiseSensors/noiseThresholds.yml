@@ -3,6 +3,33 @@
 imports:
   root: ../__package__.yml
 
+types:
+  NoiseThresholdsCreateResponse:
+    properties:
+      action_attempt: root.ActionAttempt
+      noise_threshold: root.NoiseThreshold
+      ok: boolean
+
+  NoiseThresholdsDeleteResponse:
+    properties:
+      action_attempt: root.ActionAttempt
+      ok: boolean
+
+  NoiseThresholdsGetResponse:
+    properties:
+      noise_threshold: root.NoiseThreshold
+      ok: boolean
+
+  NoiseThresholdsListResponse:
+    properties:
+      noise_thresholds: list<root.NoiseThreshold>
+      ok: boolean
+
+  NoiseThresholdsUpdateResponse:
+    properties:
+      action_attempt: root.ActionAttempt
+      ok: boolean
+
 service:
   auth: false
   base-path: ""
@@ -17,19 +44,15 @@ service:
         body:
           properties:
             device_id: string
-            sync:
-              type: optional<boolean>
-            name:
-              type: optional<string>
+            sync: optional<boolean>
+            name: optional<string>
             starts_daily_at: string
             ends_daily_at: string
-            noise_threshold_decibels:
-              type: optional<double>
-            noise_threshold_nrs:
-              type: optional<double>
+            noise_threshold_decibels: optional<double>
+            noise_threshold_nrs: optional<double>
       response:
         docs: OK
-        type: root.NoiseThresholdsCreateResponse
+        type: NoiseThresholdsCreateResponse
         property: action_attempt
       errors:
         - root.BadRequestError
@@ -37,7 +60,7 @@ service:
 
     delete:
       path: /noise_sensors/noise_thresholds/delete
-      method: DELETE
+      method: POST
       auth: true
       display-name: /noise_sensors/noise_thresholds/delete
       request:
@@ -46,11 +69,10 @@ service:
           properties:
             noise_threshold_id: string
             device_id: string
-            sync:
-              type: optional<boolean>
+            sync: optional<boolean>
       response:
         docs: OK
-        type: root.NoiseThresholdsDeleteResponse
+        type: NoiseThresholdsDeleteResponse
         property: action_attempt
       errors:
         - root.BadRequestError
@@ -68,7 +90,7 @@ service:
             noise_threshold_id: string
       response:
         docs: OK
-        type: root.NoiseThresholdsGetResponse
+        type: NoiseThresholdsGetResponse
         property: noise_threshold
       errors:
         - root.BadRequestError
@@ -84,9 +106,10 @@ service:
         body:
           properties:
             device_id: string
+            is_programmed: optional<boolean>
       response:
         docs: OK
-        type: root.NoiseThresholdsListResponse
+        type: NoiseThresholdsListResponse
         property: noise_thresholds
       errors:
         - root.BadRequestError
@@ -103,21 +126,15 @@ service:
           properties:
             noise_threshold_id: string
             device_id: string
-            sync:
-              type: optional<boolean>
-            name:
-              type: optional<string>
-            starts_daily_at:
-              type: optional<string>
-            ends_daily_at:
-              type: optional<string>
-            noise_threshold_decibels:
-              type: optional<double>
-            noise_threshold_nrs:
-              type: optional<double>
+            sync: optional<boolean>
+            name: optional<string>
+            starts_daily_at: optional<string>
+            ends_daily_at: optional<string>
+            noise_threshold_decibels: optional<double>
+            noise_threshold_nrs: optional<double>
       response:
         docs: OK
-        type: root.NoiseThresholdsUpdateResponse
+        type: NoiseThresholdsUpdateResponse
         property: action_attempt
       errors:
         - root.BadRequestError

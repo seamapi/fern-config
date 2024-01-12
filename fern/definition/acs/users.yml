@@ -102,6 +102,23 @@ service:
         - root.BadRequestError
         - root.UnauthorizedError
 
+    list_accessible_entrances:
+      path: /acs/users/list_accessible_entrances
+      method: POST
+      auth: true
+      display-name: /acs/users/list_accessible_entrances
+      request:
+        name: UsersListAccessibleEntrancesRequest
+        body:
+          properties:
+            acs_user_id: string
+      response:
+        docs: OK
+        type: UsersListAccessibleEntrancesResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
     remove_from_access_group:
       path: /acs/users/remove_from_access_group
       method: POST
@@ -160,6 +177,7 @@ service:
         name: UsersUpdateRequest
         body:
           properties:
+            access_schedule: optional<UsersUpdateRequestAccessSchedule>
             acs_user_id: string
             full_name: optional<string>
             email:
@@ -200,6 +218,18 @@ types:
       acs_users: list<root.AcsUser>
       ok: boolean
 
+  UsersListAccessibleEntrancesResponseAcsEntrancesItem:
+    properties:
+      acs_entrance_id: string
+      display_name: string
+      acs_system_id: string
+      created_at: datetime
+
+  UsersListAccessibleEntrancesResponse:
+    properties:
+      acs_entrances: list<UsersListAccessibleEntrancesResponseAcsEntrancesItem>
+      ok: boolean
+
   UsersSuspendResponse:
     properties:
       ok: boolean
@@ -207,6 +237,11 @@ types:
   UsersUnsuspendResponse:
     properties:
       ok: boolean
+
+  UsersUpdateRequestAccessSchedule:
+    properties:
+      starts_at: datetime
+      ends_at: datetime
 
   UsersUpdateResponse:
     properties:

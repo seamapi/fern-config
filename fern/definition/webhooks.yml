@@ -3,6 +3,26 @@
 imports:
   root: __package__.yml
 
+types:
+  WebhooksCreateResponse:
+    properties:
+      webhook: root.Webhook
+      ok: boolean
+
+  WebhooksDeleteResponse:
+    properties:
+      ok: boolean
+
+  WebhooksGetResponse:
+    properties:
+      webhook: root.Webhook
+      ok: boolean
+
+  WebhooksListResponse:
+    properties:
+      webhooks: list<root.Webhook>
+      ok: boolean
+
 service:
   auth: false
   base-path: ""
@@ -17,18 +37,18 @@ service:
         body:
           properties:
             url: string
-            event_types:
-              type: optional<list<string>>
+            event_types: optional<list<string>>
       response:
         docs: OK
-        type: root.WebhooksCreateResponse
+        type: WebhooksCreateResponse
+        property: webhook
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
 
     delete:
       path: /webhooks/delete
-      method: DELETE
+      method: POST
       auth: true
       display-name: /webhooks/delete
       request:
@@ -38,7 +58,7 @@ service:
             webhook_id: string
       response:
         docs: OK
-        type: root.WebhooksDeleteResponse
+        type: WebhooksDeleteResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -55,19 +75,21 @@ service:
             webhook_id: string
       response:
         docs: OK
-        type: root.WebhooksGetResponse
+        type: WebhooksGetResponse
+        property: webhook
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
 
     list:
       path: /webhooks/list
-      method: GET
+      method: POST
       auth: true
       display-name: /webhooks/list
       response:
         docs: OK
-        type: root.WebhooksListResponse
+        type: WebhooksListResponse
+        property: webhooks
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

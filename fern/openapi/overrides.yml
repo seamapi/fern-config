@@ -10,7 +10,7 @@ paths:
                   items: 
                     x-fern-type-name: AcceptedProvider
                 provider_category: 
-                  x-fern-type-name: ProviderCategory
+                  $ref: "#/components/schemas/ProviderCategory"
   /access_codes/list: 
     post: 
       requestBody: 
@@ -19,40 +19,165 @@ paths:
             schema: 
               required: 
                 - device_id
+  /devices/unmanaged/list: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                device_type: 
+                  $ref: "#/components/schemas/DeviceType"
+                device_types: 
+                  items: 
+                    $ref: "#/components/schemas/DeviceType"
+                manufacturer: 
+                  $ref: "#/components/schemas/Manufacturer"
   /devices/list: 
     post: 
       requestBody: 
         content: 
           application/json: 
             schema: 
-              device_type: 
-                x-fern-type-name: DeviceType
+              properties: 
+                device_type: 
+                  $ref: "#/components/schemas/DeviceType"
+                device_types: 
+                  items: 
+                    $ref: "#/components/schemas/DeviceType"
+                manufacturer: 
+                  $ref: "#/components/schemas/Manufacturer"
   /locks/list: 
     post: 
       requestBody: 
         content: 
           application/json: 
             schema: 
-              device_type: 
-                x-fern-type-name: DeviceType
+              properties: 
+                device_type: 
+                  $ref: "#/components/schemas/DeviceType"
+                device_types: 
+                  items: 
+                    $ref: "#/components/schemas/DeviceType"
+                manufacturer: 
+                  $ref: "#/components/schemas/Manufacturer"
   /thermostats/list: 
     post: 
       requestBody: 
         content: 
           application/json: 
             schema: 
-              device_type: 
-                x-fern-type-name: DeviceType
+              properties: 
+                device_type: 
+                  $ref: "#/components/schemas/DeviceType"
+                device_types: 
+                  items: 
+                    $ref: "#/components/schemas/DeviceType"            
+                manufacturer: 
+                  $ref: "#/components/schemas/Manufacturer"
   /workspaces/reset_sandbox: 
     post: 
       x-fern-sdk-return-value: action_attempt
+  /devices/list_device_providers: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                provider_category:
+                  $ref: "#/components/schemas/ProviderCategory"
 components: 
   schemas: 
+    DeviceType: 
+      oneOf:
+        - type: string
+          enum:
+          - akuvox_lock
+          - august_lock
+          - brivo_access_point
+          - butterflymx_panel
+          - avigilon_alta_entry
+          - doorking_lock
+          - genie_door
+          - igloo_lock
+          - linear_lock
+          - lockly_lock
+          - kwikset_lock
+          - nuki_lock
+          - salto_lock
+          - schlage_lock
+          - seam_relay
+          - smartthings_lock
+          - wyze_lock
+          - yale_lock
+          - two_n_intercom
+          - controlbyweb_device
+          - ttlock_lock
+          - igloohome_lock
+          - hubitat_lock
+          - four_suites_door
+          - dormakaba_oracode_door
+        - type: string
+          enum:
+          - noiseaware_activity_zone
+          - minut_sensor
+        - type: string
+          enum:
+          - ecobee_thermostat
+          - nest_thermostat
+        - type: string
+          enum:
+          - ios_phone
+          - android_phone
+    Manufacturer:
+      type: string
+      enum:
+      - akuvox
+      - august
+      - avigilon_alta
+      - brivo
+      - butterflymx
+      - doorking
+      - four_suites
+      - genie
+      - igloo
+      - keywe
+      - kwikset
+      - linear
+      - lockly
+      - nuki
+      - philia
+      - salto
+      - samsung
+      - schlage
+      - seam
+      - unknown
+      - wyze
+      - yale
+      - minut
+      - two_n
+      - ttlock
+      - nest
+      - igloohome
+      - ecobee
+      - hubitat
+      - controlbyweb
+      - smartthings
+      - dormakaba_oracode
+    ProviderCategory: 
+      type: "string"
+      enum: ["stable", "consumer_smartlocks"]
     device: 
       properties: 
         device_type: 
-          x-fern-type-name: DeviceType
+          $ref: "#/components/schemas/DeviceType"
     unmanaged_device: 
       properties: 
         device_type: 
-          x-fern-type-name: DeviceType
+          $ref: "#/components/schemas/DeviceType"
+        device_provider: 
+          properties: 
+            provider_categories: 
+              items: 
+                $ref: "#/components/schemas/ProviderCategory"

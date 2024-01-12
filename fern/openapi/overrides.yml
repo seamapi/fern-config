@@ -43,6 +43,9 @@ paths:
             schema: 
               device_type: 
                 x-fern-type-name: DeviceType
+  /workspaces/reset_sandbox: 
+    post: 
+      x-fern-sdk-return-value: action_attempt
 components: 
   schemas: 
     device: 

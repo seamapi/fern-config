@@ -9244,7 +9244,8 @@
       "api_key": {
         "type": "http",
         "scheme": "bearer",
-        "bearerFormat": "API Key"
+        "bearerFormat": "API Key",
+        "x-fern-token-variable-name": "apiKey"
       },
       "seam_workspace": {
         "type": "apiKey",

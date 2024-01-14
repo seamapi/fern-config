@@ -1,0 +1,90 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  EntrancesGetResponseAcsEntrance:
+    properties:
+      acs_entrance_id: string
+      display_name: string
+      acs_system_id: string
+      created_at: datetime
+
+  EntrancesGetResponse:
+    properties:
+      acs_entrance: EntrancesGetResponseAcsEntrance
+      ok: boolean
+
+  EntrancesGrantAccessResponse:
+    properties:
+      ok: boolean
+
+  EntrancesListResponseAcsEntrancesItem:
+    properties:
+      acs_entrance_id: string
+      display_name: string
+      acs_system_id: string
+      created_at: datetime
+
+  EntrancesListResponse:
+    properties:
+      acs_entrances: list<EntrancesListResponseAcsEntrancesItem>
+      ok: boolean
+
+imports:
+  root: ../__package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    get:
+      path: /acs/entrances/get
+      method: POST
+      auth: true
+      display-name: /acs/entrances/get
+      request:
+        name: EntrancesGetRequest
+        body:
+          properties:
+            acs_entrance_id: string
+      response:
+        docs: OK
+        type: EntrancesGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    grant_access:
+      path: /acs/entrances/grant_access
+      method: POST
+      auth: true
+      display-name: /acs/entrances/grant_access
+      request:
+        name: EntrancesGrantAccessRequest
+        body:
+          properties:
+            acs_entrance_id: string
+            acs_user_id: string
+      response:
+        docs: OK
+        type: EntrancesGrantAccessResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /acs/entrances/list
+      method: POST
+      auth: true
+      display-name: /acs/entrances/list
+      request:
+        name: EntrancesListRequest
+        body:
+          properties:
+            acs_system_id: optional<string>
+            acs_credential_id: optional<string>
+      response:
+        docs: OK
+        type: EntrancesListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

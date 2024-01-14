@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+types:
+  ActionAttemptsGetResponse:
+    properties:
+      action_attempt: root.ActionAttempt
+      ok: boolean
+
+  ActionAttemptsListResponse:
+    properties:
+      action_attempts: list<root.ActionAttempt>
+      ok: boolean
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    get:
+      path: /action_attempts/get
+      method: POST
+      auth: true
+      display-name: /action_attempts/get
+      request:
+        name: ActionAttemptsGetRequest
+        body:
+          properties:
+            action_attempt_id: string
+      response:
+        docs: OK
+        type: ActionAttemptsGetResponse
+        property: action_attempt
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /action_attempts/list
+      method: POST
+      auth: true
+      display-name: /action_attempts/list
+      request:
+        name: ActionAttemptsListRequest
+        body:
+          properties:
+            action_attempt_ids: list<string>
+      response:
+        docs: OK
+        type: ActionAttemptsListResponse
+        property: action_attempts
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

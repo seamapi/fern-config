@@ -1,4 +1,47 @@
 paths: 
+  /access_codes/create: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                max_time_rounding: 
+                  $ref: "#/components/schemas/MaxTimeRounding"
+  /access_codes/create_multiple: 
+    put: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                max_time_rounding: 
+                  $ref: "#/components/schemas/MaxTimeRounding"
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                max_time_rounding: 
+                  $ref: "#/components/schemas/MaxTimeRounding"
+  /access_codes/update: 
+    put: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                max_time_rounding: 
+                  $ref: "#/components/schemas/MaxTimeRounding"
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                max_time_rounding: 
+                  $ref: "#/components/schemas/MaxTimeRounding"    
   /connect_webviews/create: 
     post: 
       requestBody: 
@@ -11,6 +54,8 @@ paths:
                     x-fern-type-name: AcceptedProvider
                 provider_category: 
                   $ref: "#/components/schemas/ProviderCategory"
+                device_selection_mode: 
+                  $ref: "#/components/schemas/SelectionMode"
   /access_codes/list: 
     post: 
       requestBody: 
@@ -78,6 +123,15 @@ paths:
   /workspaces/reset_sandbox: 
     post: 
       x-fern-sdk-return-value: action_attempt
+  /workspaces/create: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                webview_logo_shape: 
+                  x-fern-type-name: webview_logo_shape
   /devices/list_device_providers: 
     post: 
       requestBody: 
@@ -87,6 +141,39 @@ paths:
               properties: 
                 provider_category:
                   $ref: "#/components/schemas/ProviderCategory"
+  /events/list: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                event_type: 
+                  $ref: "#/components/schemas/EventType"
+                event_types: 
+                  items: 
+                    $ref: "#/components/schemas/EventType"
+  /phones/simulate/create_sandbox_phone: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                phone_metadata: 
+                  properties: 
+                    operating_system: 
+                      $ref: "#/components/schemas/PhoneOperatingSystem"
+  /thermostats/set_fan_mode: 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                fan_mode: 
+                  $ref: "#/components/schemas/FanMode"
+
 components: 
   schemas: 
     DeviceType: 
@@ -181,3 +268,73 @@ components:
             provider_categories: 
               items: 
                 $ref: "#/components/schemas/ProviderCategory"
+    SelectionMode: 
+      type: string
+      enum: ["none", "single", "multiple"]
+    connect_webview: 
+      properties: 
+        device_selection_mode: 
+          $ref: "#/components/schemas/SelectionMode"
+    MaxTimeRounding: 
+      default: 1hour
+      type: string
+      enum: ["1hour", "1day", "1h", "1d"]
+    EventType: 
+      type: string
+      enum:
+      - device.connected
+      - device.unmanaged.connected
+      - device.disconnected
+      - device.unmanaged.disconnected
+      - device.converted_to_unmanaged
+      - device.unmanaged.converted_to_managed
+      - device.removed
+      - device.tampered
+      - device.low_battery
+      - device.battery_status_changed
+      - device.third_party_integration_detected
+      - device.third_party_integration_no_longer_detected
+      - device.salto.privacy_mode_activated
+      - device.salto.privacy_mode_deactivated
+      - device.connection_became_flaky
+      - device.connection_stabilized
+      - device.error.subscription_required
+      - device.error.subscription_required.resolved
+      - access_code.created
+      - access_code.changed
+      - access_code.scheduled_on_device
+      - access_code.set_on_device
+      - access_code.deleted
+      - access_code.removed_from_device
+      - access_code.failed_to_set_on_device
+      - access_code.delay_in_setting_on_device
+      - access_code.failed_to_remove_from_device
+      - access_code.delay_in_removing_from_device
+      - access_code.deleted_external_to_seam
+      - access_code.modified_external_to_seam
+      - access_code.unmanaged.converted_to_managed
+      - access_code.unmanaged.failed_to_convert_to_managed
+      - access_code.unmanaged.created
+      - access_code.unmanaged.removed
+      - lock.locked
+      - lock.unlocked
+      - connected_account.connected
+      - connected_account.successful_login
+      - connected_account.created
+      - connected_account.deleted
+      - connected_account.disconnected
+      - connected_account.completed_first_sync
+      - noise_sensor.noise_threshold_triggered
+      - access_code.backup_access_code_pulled
+    PhoneOperatingSystem: 
+      type: string
+      enum: ["android", "ios"]
+    FanMode: 
+      type: string
+      enum: ["auto", "on"] 
+    FanModeSetting: 
+      type: string
+      enum: ["auto", "on"]
+    HvacModeSetting: 
+      type: string
+      enum: ["off", "heat", "cool", "heat_cool"]

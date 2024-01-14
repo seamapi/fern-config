@@ -1,0 +1,69 @@
+name: ci
+
+on: [push]
+
+jobs:
+  fern-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Check Fern API is valid
+        run: fern check
+
+      - name: Check Underlying Fern Definition is up-to-date
+        run: |
+          fern write-definition
+          git --no-pager diff --exit-code
+
+  fern-generate-java:
+    needs: fern-check
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/java@')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+
+      - name: Download Fern
+        run: npm install -g fern-api
+
+      - name: Release Java SDK
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+        run: |
+          tag=${{ github.ref_name }}
+          prefix="java@"
+          SDK_VERSION="${tag#$prefix}"
+          fern generate --group java-sdk --version "$SDK_VERSION" --log-level debug
+
+  fern-generate-go:
+    needs: fern-check
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/go@')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+
+      - name: Download Fern
+        run: npm install -g fern-api
+
+      - name: Release Go SDK
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          tag=${{ github.ref_name }}
+          prefix="go@"
+          SDK_VERSION="${tag#$prefix}"
+          fern generate --group go-sdk --version "$SDK_VERSION" --log-level debug

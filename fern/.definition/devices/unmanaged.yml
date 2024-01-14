@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: ../__package__.yml
+
+types:
+  UnmanagedGetResponse:
+    properties:
+      device: root.UnmanagedDevice
+      ok: boolean
+
+  UnmanagedListResponse:
+    properties:
+      devices: list<root.UnmanagedDevice>
+      ok: boolean
+
+  UnmanagedUpdateResponse:
+    properties:
+      ok: boolean
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    get:
+      path: /devices/unmanaged/get
+      method: POST
+      auth: true
+      display-name: /devices/unmanaged/get
+      request:
+        name: UnmanagedGetRequest
+        body:
+          properties:
+            device_id: optional<string>
+            name: optional<string>
+      response:
+        docs: OK
+        type: UnmanagedGetResponse
+        property: device
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /devices/unmanaged/list
+      method: POST
+      auth: true
+      display-name: /devices/unmanaged/list
+      request:
+        name: UnmanagedListRequest
+        body:
+          properties:
+            connected_account_id:
+              docs: List all devices owned by this connected account
+              type: optional<string>
+            connected_account_ids: optional<list<string>>
+            connect_webview_id: optional<string>
+            device_type: optional<root.DeviceType>
+            device_types: optional<list<root.DeviceType>>
+            manufacturer: optional<root.Manufacturer>
+            device_ids: optional<list<string>>
+            limit: optional<double>
+            created_before: optional<datetime>
+            user_identifier_key: optional<string>
+      response:
+        docs: OK
+        type: UnmanagedListResponse
+        property: devices
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    update:
+      path: /devices/unmanaged/update
+      method: POST
+      auth: true
+      display-name: /devices/unmanaged/update
+      request:
+        name: UnmanagedUpdateRequest
+        body:
+          properties:
+            device_id: string
+            is_managed: boolean
+      response:
+        docs: OK
+        type: UnmanagedUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

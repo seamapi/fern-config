@@ -1,0 +1,272 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  UserIdentitiesAddAcsUserResponse:
+    properties:
+      ok: boolean
+
+  UserIdentitiesCreateResponseUserIdentity:
+    properties:
+      user_identity_id: string
+      user_identity_key: optional<string>
+      email_address: optional<string>
+      phone_number: optional<string>
+      display_name: string
+      full_name: optional<string>
+      created_at: datetime
+      workspace_id: string
+
+  UserIdentitiesCreateResponse:
+    properties:
+      user_identity: UserIdentitiesCreateResponseUserIdentity
+      ok: boolean
+
+  UserIdentitiesGetRequestUserIdentityId:
+    properties:
+      user_identity_id: string
+
+  UserIdentitiesGetRequestUserIdentityKey:
+    properties:
+      user_identity_key: string
+
+  UserIdentitiesGetRequest:
+    discriminated: false
+    union:
+      - UserIdentitiesGetRequestUserIdentityId
+      - UserIdentitiesGetRequestUserIdentityKey
+
+  UserIdentitiesGetResponseUserIdentity:
+    properties:
+      user_identity_id: string
+      user_identity_key: optional<string>
+      email_address: optional<string>
+      phone_number: optional<string>
+      display_name: string
+      full_name: optional<string>
+      created_at: datetime
+      workspace_id: string
+
+  UserIdentitiesGetResponse:
+    properties:
+      user_identity: UserIdentitiesGetResponseUserIdentity
+      ok: boolean
+
+  UserIdentitiesGrantAccessToDeviceResponse:
+    properties:
+      ok: boolean
+
+  UserIdentitiesListResponseUserIdentitiesItem:
+    properties:
+      user_identity_id: string
+      user_identity_key: optional<string>
+      email_address: optional<string>
+      phone_number: optional<string>
+      display_name: string
+      full_name: optional<string>
+      created_at: datetime
+      workspace_id: string
+
+  UserIdentitiesListResponse:
+    properties:
+      user_identities: list<UserIdentitiesListResponseUserIdentitiesItem>
+      ok: boolean
+
+  UserIdentitiesListAccessibleDevicesResponse:
+    properties:
+      accessible_devices: list<root.Device>
+      ok: boolean
+
+  UserIdentitiesListAcsSystemsResponse:
+    properties:
+      acs_systems: list<root.AcsSystem>
+      ok: boolean
+
+  UserIdentitiesListAcsUsersResponse:
+    properties:
+      acs_users: list<root.AcsUser>
+      ok: boolean
+
+  UserIdentitiesRemoveAcsUserResponse:
+    properties:
+      ok: boolean
+
+  UserIdentitiesRevokeAccessToDeviceResponse:
+    properties:
+      ok: boolean
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    add_acs_user:
+      path: /user_identities/add_acs_user
+      method: POST
+      auth: true
+      display-name: /user_identities/add_acs_user
+      request:
+        name: UserIdentitiesAddAcsUserRequest
+        body:
+          properties:
+            user_identity_id: string
+            acs_user_id: string
+      response:
+        docs: OK
+        type: UserIdentitiesAddAcsUserResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    create:
+      path: /user_identities/create
+      method: POST
+      auth: true
+      display-name: /user_identities/create
+      request:
+        name: UserIdentitiesCreateRequest
+        body:
+          properties:
+            user_identity_key: optional<string>
+            email_address: optional<string>
+            phone_number: optional<string>
+            full_name: optional<string>
+      response:
+        docs: OK
+        type: UserIdentitiesCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    get:
+      path: /user_identities/get
+      method: POST
+      auth: true
+      display-name: /user_identities/get
+      request:
+        body: UserIdentitiesGetRequest
+      response:
+        docs: OK
+        type: UserIdentitiesGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    grant_access_to_device:
+      path: /user_identities/grant_access_to_device
+      method: POST
+      auth: true
+      display-name: /user_identities/grant_access_to_device
+      request:
+        name: UserIdentitiesGrantAccessToDeviceRequest
+        body:
+          properties:
+            user_identity_id: string
+            device_id: string
+      response:
+        docs: OK
+        type: UserIdentitiesGrantAccessToDeviceResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /user_identities/list
+      method: POST
+      auth: true
+      display-name: /user_identities/list
+      response:
+        docs: OK
+        type: UserIdentitiesListResponse
+        property: user_identities
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list_accessible_devices:
+      path: /user_identities/list_accessible_devices
+      method: POST
+      auth: true
+      display-name: /user_identities/list_accessible_devices
+      request:
+        name: UserIdentitiesListAccessibleDevicesRequest
+        body:
+          properties:
+            user_identity_id: string
+      response:
+        docs: OK
+        type: UserIdentitiesListAccessibleDevicesResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list_acs_systems:
+      path: /user_identities/list_acs_systems
+      method: POST
+      auth: true
+      display-name: /user_identities/list_acs_systems
+      request:
+        name: UserIdentitiesListAcsSystemsRequest
+        body:
+          properties:
+            user_identity_id: string
+      response:
+        docs: OK
+        type: UserIdentitiesListAcsSystemsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list_acs_users:
+      path: /user_identities/list_acs_users
+      method: POST
+      auth: true
+      display-name: /user_identities/list_acs_users
+      request:
+        name: UserIdentitiesListAcsUsersRequest
+        body:
+          properties:
+            user_identity_id: string
+      response:
+        docs: OK
+        type: UserIdentitiesListAcsUsersResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    remove_acs_user:
+      path: /user_identities/remove_acs_user
+      method: POST
+      auth: true
+      display-name: /user_identities/remove_acs_user
+      request:
+        name: UserIdentitiesRemoveAcsUserRequest
+        body:
+          properties:
+            user_identity_id: string
+            acs_user_id: string
+      response:
+        docs: OK
+        type: UserIdentitiesRemoveAcsUserResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    revoke_access_to_device:
+      path: /user_identities/revoke_access_to_device
+      method: POST
+      auth: true
+      display-name: /user_identities/revoke_access_to_device
+      request:
+        name: UserIdentitiesRevokeAccessToDeviceRequest
+        body:
+          properties:
+            user_identity_id: string
+            device_id: string
+      response:
+        docs: OK
+        type: UserIdentitiesRevokeAccessToDeviceResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

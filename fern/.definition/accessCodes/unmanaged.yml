@@ -1,0 +1,132 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  UnmanagedConvertToManagedResponse:
+    properties:
+      ok: boolean
+
+  UnmanagedDeleteResponse:
+    properties:
+      action_attempt: root.ActionAttempt
+      ok: boolean
+
+  UnmanagedGetResponse:
+    properties:
+      access_code: root.UnmanagedAccessCode
+      ok: boolean
+
+  UnmanagedListResponse:
+    properties:
+      access_codes: list<root.UnmanagedAccessCode>
+      ok: boolean
+
+  UnmanagedUpdateResponse:
+    properties:
+      ok: boolean
+
+imports:
+  root: ../__package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    convert_to_managed:
+      path: /access_codes/unmanaged/convert_to_managed
+      method: POST
+      auth: true
+      display-name: /access_codes/unmanaged/convert_to_managed
+      request:
+        name: UnmanagedConvertToManagedRequest
+        body:
+          properties:
+            access_code_id: string
+            is_external_modification_allowed: optional<boolean>
+            allow_external_modification: optional<boolean>
+            force: optional<boolean>
+            sync: optional<boolean>
+      response:
+        docs: OK
+        type: UnmanagedConvertToManagedResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    delete:
+      path: /access_codes/unmanaged/delete
+      method: POST
+      auth: true
+      display-name: /access_codes/unmanaged/delete
+      request:
+        name: UnmanagedDeleteRequest
+        body:
+          properties:
+            access_code_id: string
+            sync: optional<boolean>
+      response:
+        docs: OK
+        type: UnmanagedDeleteResponse
+        property: action_attempt
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    get:
+      path: /access_codes/unmanaged/get
+      method: POST
+      auth: true
+      display-name: /access_codes/unmanaged/get
+      request:
+        name: UnmanagedGetRequest
+        body:
+          properties:
+            device_id: optional<string>
+            access_code_id: optional<string>
+            code: optional<string>
+      response:
+        docs: OK
+        type: UnmanagedGetResponse
+        property: access_code
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /access_codes/unmanaged/list
+      method: POST
+      auth: true
+      display-name: /access_codes/unmanaged/list
+      request:
+        name: UnmanagedListRequest
+        body:
+          properties:
+            device_id: string
+            user_identifier_key: optional<string>
+      response:
+        docs: OK
+        type: UnmanagedListResponse
+        property: access_codes
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    update:
+      path: /access_codes/unmanaged/update
+      method: POST
+      auth: true
+      display-name: /access_codes/unmanaged/update
+      request:
+        name: UnmanagedUpdateRequest
+        body:
+          properties:
+            access_code_id: string
+            is_managed: boolean
+            allow_external_modification: optional<boolean>
+            is_external_modification_allowed: optional<boolean>
+            force: optional<boolean>
+      response:
+        docs: OK
+        type: UnmanagedUpdateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

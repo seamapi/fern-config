@@ -1,0 +1,1781 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  AccessCodeType:
+    enum:
+      - time_bound
+      - ongoing
+    docs: >-
+      Nature of the access code. Values are "ongoing" for access codes that are
+      active continuously until deactivated manually or "time_bound" for access
+      codes that have a specific duration.
+
+  AccessCodeStatus:
+    enum:
+      - setting
+      - set
+      - unset
+      - removing
+      - unknown
+    docs: |2-
+          Current status of the access code within the operational lifecycle. Values are "setting," a transitional phase that indicates that the code is being configured or activated; "set", which indicates that the code is active and operational; "unset," which indicates a deactivated or unused state, either before activation or after deliberate deactivation; "removing," which indicates a transitional period in which the code is being deleted or made inactive; and "unknown," which indicates an indeterminate state, due to reasons such as system errors or incomplete data, that highlights a potential need for system review or troubleshooting.
+
+  AccessCode:
+    properties:
+      common_code_key:
+        docs: >-
+          Unique identifier for a group of access codes that share the same
+          code.
+        type: optional<string>
+      is_scheduled_on_device:
+        docs: >-
+          Indicates whether the code is set on the device according to a
+          preconfigured schedule.
+        type: optional<boolean>
+      type:
+        type: AccessCodeType
+        docs: >-
+          Nature of the access code. Values are "ongoing" for access codes that
+          are active continuously until deactivated manually or "time_bound" for
+          access codes that have a specific duration.
+      is_waiting_for_code_assignment:
+        docs: Indicates whether the access code is waiting for a code assignment.
+        type: optional<boolean>
+      access_code_id:
+        type: string
+        docs: Unique identifier for the access code.
+      device_id:
+        type: string
+        docs: Unique identifier for the device associated with the access code.
+      name:
+        docs: >-
+          Name of the access code. Enables administrators and users to identify
+          the access code easily, especially when there are numerous access
+          codes.
+        type: optional<string>
+      code:
+        docs: Code used for access. Typically, a numeric or alphanumeric string.
+        type: optional<string>
+      created_at:
+        type: datetime
+        docs: Date and time at which the access code was created.
+      errors: optional<unknown>
+      warnings: optional<unknown>
+      is_managed:
+        type: boolean
+        docs: Indicates whether Seam manages the access code.
+      starts_at:
+        docs: Date and time at which the time-bound access code becomes active.
+        type: optional<datetime>
+      ends_at:
+        docs: Date and time after which the time-bound access code becomes inactive.
+        type: optional<datetime>
+      status:
+        type: AccessCodeStatus
+        docs: |2-
+              Current status of the access code within the operational lifecycle. Values are "setting," a transitional phase that indicates that the code is being configured or activated; "set", which indicates that the code is active and operational; "unset," which indicates a deactivated or unused state, either before activation or after deliberate deactivation; "removing," which indicates a transitional period in which the code is being deleted or made inactive; and "unknown," which indicates an indeterminate state, due to reasons such as system errors or incomplete data, that highlights a potential need for system review or troubleshooting.
+      is_backup_access_code_available:
+        type: boolean
+        docs: >-
+          Indicates whether a backup access code is available for use if the
+          primary access code is lost or compromised.
+      is_backup:
+        docs: Indicates whether the access code is a backup code.
+        type: optional<boolean>
+      pulled_backup_access_code_id:
+        docs: >-
+          Identifier of the pulled backup access code. Used to associate the
+          pulled backup access code with the original access code.
+        type: optional<string>
+      is_external_modification_allowed:
+        type: boolean
+        docs: >-
+          Indicates whether changes to the access code from external sources are
+          permitted.
+      is_one_time_use:
+        type: boolean
+        docs: >-
+          Indicates whether the access code can only be used once. If "true,"
+          the code becomes invalid after the first use.
+      is_offline_access_code:
+        type: boolean
+        docs: >-
+          Indicates whether the access code is intended for use in offline
+          scenarios. If "true," this code can be created on a device without a
+          network connection.
+
+  UnmanagedAccessCodeType:
+    enum:
+      - time_bound
+      - ongoing
+    docs: >-
+      Nature of the access code. Values are "ongoing" for access codes that are
+      active continuously until deactivated manually or "time_bound" for access
+      codes that have a specific duration.
+
+  UnmanagedAccessCode:
+    properties:
+      type:
+        type: UnmanagedAccessCodeType
+        docs: >-
+          Nature of the access code. Values are "ongoing" for access codes that
+          are active continuously until deactivated manually or "time_bound" for
+          access codes that have a specific duration.
+      access_code_id:
+        type: string
+        docs: Unique identifier for the access code.
+      device_id:
+        type: string
+        docs: Unique identifier for the device associated with the access code.
+      name:
+        docs: >-
+          Name of the access code. Enables administrators and users to identify
+          the access code easily, especially when there are numerous access
+          codes.
+        type: optional<string>
+      code:
+        docs: Code used for access. Typically, a numeric or alphanumeric string.
+        type: optional<string>
+      created_at:
+        type: datetime
+        docs: Date and time at which the access code was created.
+      errors: optional<unknown>
+      warnings: optional<unknown>
+      is_managed: boolean
+      starts_at:
+        docs: Date and time at which the time-bound access code becomes active.
+        type: optional<datetime>
+      ends_at:
+        docs: Date and time after which the time-bound access code becomes inactive.
+        type: optional<datetime>
+      status: literal<"set">
+
+  ActionAttemptSuccess:
+    properties:
+      action_type: string
+      action_attempt_id: string
+      result: optional<unknown>
+      error: optional<string>
+
+  ActionAttemptPending:
+    properties:
+      action_type: string
+      action_attempt_id: string
+      result: optional<string>
+      error: optional<string>
+
+  ActionAttemptErrorError:
+    properties:
+      type: string
+      message: string
+
+  ActionAttemptError:
+    properties:
+      action_type: string
+      action_attempt_id: string
+      result: optional<string>
+      error: ActionAttemptErrorError
+
+  ActionAttempt:
+    discriminant: status
+    base-properties: {}
+    union:
+      success: ActionAttemptSuccess
+      pending: ActionAttemptPending
+      error: ActionAttemptError
+
+  ClientSession:
+    properties:
+      client_session_id: string
+      user_identifier_key: optional<string>
+      created_at: datetime
+      token: string
+      device_count: double
+      connected_account_ids: list<string>
+      connect_webview_ids: list<string>
+      user_identity_ids: list<string>
+      workspace_id: string
+
+  ClimateSettingSchedule:
+    properties:
+      climate_setting_schedule_id: string
+      schedule_type: literal<"time_bound">
+      device_id: string
+      name: optional<string>
+      schedule_starts_at: string
+      schedule_ends_at: string
+      created_at: datetime
+      errors: optional<unknown>
+      automatic_heating_enabled: optional<boolean>
+      automatic_cooling_enabled: optional<boolean>
+      hvac_mode_setting: optional<HvacModeSetting>
+      cooling_set_point_celsius: optional<double>
+      heating_set_point_celsius: optional<double>
+      cooling_set_point_fahrenheit: optional<double>
+      heating_set_point_fahrenheit: optional<double>
+      manual_override_allowed: optional<boolean>
+
+  ConnectWebviewStatus:
+    enum:
+      - pending
+      - failed
+      - authorized
+
+  ConnectWebviewCustomMetadataValue:
+    discriminated: false
+    union:
+      - string
+      - boolean
+
+  ConnectWebview:
+    properties:
+      connect_webview_id: string
+      connected_account_id: optional<string>
+      url: string
+      workspace_id: string
+      device_selection_mode: SelectionMode
+      accepted_providers: list<string>
+      accepted_devices: list<string>
+      any_provider_allowed: boolean
+      any_device_allowed: boolean
+      created_at: datetime
+      login_successful: boolean
+      status: ConnectWebviewStatus
+      custom_redirect_url: optional<string>
+      custom_redirect_failure_url: optional<string>
+      custom_metadata: map<string, ConnectWebviewCustomMetadataValue>
+      automatically_manage_new_devices: boolean
+      wait_for_device_creation: boolean
+      authorized_at: optional<datetime>
+      selected_provider: optional<string>
+
+  ConnectedAccountUserIdentifier:
+    properties:
+      username: optional<string>
+      api_url: optional<string>
+      email: optional<string>
+      phone: optional<string>
+      exclusive: optional<boolean>
+
+  ConnectedAccountCustomMetadataValue:
+    discriminated: false
+    union:
+      - string
+      - boolean
+
+  ConnectedAccount:
+    properties:
+      connected_account_id: optional<string>
+      created_at: optional<datetime>
+      user_identifier: optional<ConnectedAccountUserIdentifier>
+      account_type: optional<string>
+      account_type_display_name: string
+      errors: optional<unknown>
+      warnings: optional<unknown>
+      custom_metadata: optional<map<string, ConnectedAccountCustomMetadataValue>>
+      automatically_manage_new_devices: boolean
+
+  DeviceCapabilitiesSupportedItem:
+    enum:
+      - access_code
+      - lock
+      - noise_detection
+      - thermostat
+      - battery
+      - phone
+
+  DevicePropertiesModel:
+    properties:
+      display_name:
+        type: string
+        docs: Display name of the device model.
+      manufacturer_display_name:
+        type: string
+        docs: >-
+          Display name that corresponds to the manufacturer-specific terminology
+          for the device.
+      offline_access_codes_supported:
+        docs: Indicates whether the device supports offline access codes.
+        type: optional<boolean>
+      online_access_codes_supported:
+        docs: Indicates whether the device supports online access codes.
+        type: optional<boolean>
+      accessory_keypad_supported:
+        docs: Indicates whether the device supports an accessory keypad.
+        type: optional<boolean>
+
+  DevicePropertiesBatteryStatus:
+    enum:
+      - critical
+      - low
+      - good
+      - full
+
+  DevicePropertiesBattery:
+    docs: >-
+      Represents the current status of the battery charge level. Values are
+      "critical," which indicates an extremely low level, suggesting imminent
+      shutdown or an urgent need for charging; "low," which signifies that the
+      battery is under the preferred threshold and should be charged soon;
+      "good," which denotes a satisfactory charge level, adequate for normal use
+      without the immediate need for recharging; and "full," which represents a
+      battery that is fully charged, providing the maximum duration of usage.
+    properties:
+      level: double
+      status: DevicePropertiesBatteryStatus
+
+  DevicePropertiesAugustMetadata:
+    properties:
+      lock_id: string
+      lock_name: string
+      house_name: string
+      has_keypad: boolean
+      keypad_battery_level: optional<string>
+      model: optional<string>
+      house_id: optional<string>
+
+  DevicePropertiesAvigilonAltaMetadata:
+    properties:
+      entry_name: string
+      org_name: string
+      zone_id: double
+      zone_name: string
+      site_id: double
+      site_name: string
+
+  DevicePropertiesSchlageMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      access_code_length: double
+      model: optional<string>
+
+  DevicePropertiesSmartthingsMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      model: optional<string>
+      location_id: optional<string>
+
+  DevicePropertiesLocklyMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      model: optional<string>
+
+  DevicePropertiesNukiMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      keypad_battery_critical: optional<boolean>
+
+  DevicePropertiesKwiksetMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      model_number: string
+
+  DevicePropertiesSaltoMetadata:
+    properties:
+      lock_id: string
+      customer_reference: string
+      lock_type: string
+      battery_level: string
+      locked_state: string
+      model: optional<string>
+
+  DevicePropertiesGenieMetadata:
+    properties:
+      device_name: string
+      door_name: string
+
+  DevicePropertiesBrivoMetadata:
+    properties:
+      device_name: string
+
+  DevicePropertiesIglooMetadata:
+    properties:
+      device_id: string
+      bridge_id: string
+      model: optional<string>
+
+  DevicePropertiesNoiseawareMetadataDeviceModel:
+    enum:
+      - indoor
+      - outdoor
+
+  DevicePropertiesNoiseawareMetadata:
+    properties:
+      device_model: DevicePropertiesNoiseawareMetadataDeviceModel
+      noise_level_nrs: double
+      noise_level_decibel: double
+      device_name: string
+      device_id: string
+
+  DevicePropertiesMinutMetadataLatestSensorValuesTemperature:
+    properties:
+      time: string
+      value: double
+
+  DevicePropertiesMinutMetadataLatestSensorValuesSound:
+    properties:
+      time: string
+      value: double
+
+  DevicePropertiesMinutMetadataLatestSensorValuesHumidity:
+    properties:
+      time: string
+      value: double
+
+  DevicePropertiesMinutMetadataLatestSensorValuesPressure:
+    properties:
+      time: string
+      value: double
+
+  DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ:
+    properties:
+      time: string
+      value: double
+
+  DevicePropertiesMinutMetadataLatestSensorValues:
+    properties:
+      temperature: DevicePropertiesMinutMetadataLatestSensorValuesTemperature
+      sound: DevicePropertiesMinutMetadataLatestSensorValuesSound
+      humidity: DevicePropertiesMinutMetadataLatestSensorValuesHumidity
+      pressure: DevicePropertiesMinutMetadataLatestSensorValuesPressure
+      accelerometer_z: DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ
+
+  DevicePropertiesMinutMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      latest_sensor_values: DevicePropertiesMinutMetadataLatestSensorValues
+
+  DevicePropertiesFourSuitesMetadata:
+    properties:
+      device_id: double
+      device_name: string
+      reclose_delay_in_seconds: double
+
+  DevicePropertiesTwoNMetadata:
+    properties:
+      device_id: double
+      device_name: string
+
+  DevicePropertiesControlbywebMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      relay_name: optional<string>
+
+  DevicePropertiesTtlockMetadata:
+    properties:
+      lock_id: double
+      lock_alias: string
+
+  DevicePropertiesSeamBridgeMetadataUnlockMethod:
+    enum:
+      - bridge
+      - doorking
+
+  DevicePropertiesSeamBridgeMetadata:
+    properties:
+      unlock_method: optional<DevicePropertiesSeamBridgeMetadataUnlockMethod>
+      device_num: double
+      name: string
+
+  DevicePropertiesIgloohomeMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      bridge_id: optional<string>
+      bridge_name: optional<string>
+
+  DevicePropertiesNestMetadata:
+    properties:
+      nest_device_id: string
+      device_name: string
+      custom_name: string
+
+  DevicePropertiesEcobeeMetadata:
+    properties:
+      ecobee_device_id: string
+      device_name: string
+
+  DevicePropertiesHubitatMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      device_label: string
+
+  DevicePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem:
+    properties:
+      name: string
+      prefix: double
+      check_in_time: string
+      check_out_time: string
+      is_24_hour: boolean
+      is_biweekly_mode: boolean
+      is_one_shot: boolean
+      is_master: boolean
+      ext_dormakaba_oracode_user_level_prefix: double
+      dormakaba_oracode_user_level_id: string
+
+  DevicePropertiesDormakabaOracodeMetadata:
+    properties:
+      door_id: double
+      door_name: string
+      device_id: optional<double>
+      site_id: double
+      site_name: string
+      iana_timezone: optional<string>
+      predefined_time_slots: >-
+        optional<list<DevicePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem>>
+
+  DevicePropertiesWyzeMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      product_name: string
+      product_type: string
+      product_model: string
+      device_info_model: string
+
+  DevicePropertiesCodeConstraintsItemZeroConstraintType:
+    enum:
+      - no_zeros
+      - cannot_start_with_12
+      - no_triple_consecutive_ints
+      - cannot_specify_pin_code
+      - pin_code_matches_existing_set
+      - start_date_in_future
+
+  DevicePropertiesCodeConstraintsItemZero:
+    properties:
+      constraint_type: DevicePropertiesCodeConstraintsItemZeroConstraintType
+
+  DevicePropertiesCodeConstraintsItemMaxLength:
+    properties:
+      constraint_type: literal<"name_length">
+      min_length: optional<double>
+      max_length: optional<double>
+
+  DevicePropertiesCodeConstraintsItem:
+    discriminated: false
+    union:
+      - DevicePropertiesCodeConstraintsItemZero
+      - DevicePropertiesCodeConstraintsItemMaxLength
+
+  DevicePropertiesKeypadBattery:
+    properties:
+      level: double
+
+  DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem:
+    properties:
+      endpoint_id: string
+      is_active: boolean
+
+  DevicePropertiesAssaAbloyCredentialServiceMetadata:
+    properties:
+      has_active_endpoint: boolean
+      endpoints: list<DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem>
+
+  DeviceProperties:
+    docs: Properties of the device.
+    properties:
+      online:
+        type: boolean
+        docs: Indicates whether the device is online.
+      name:
+        type: string
+        docs: >-
+          Name of the device. Enables administrators and users to identify the
+          device easily, especially when there are numerous devices.
+      model: DevicePropertiesModel
+      has_direct_power:
+        docs: Indicates whether the device has direct power.
+        type: optional<boolean>
+      battery_level:
+        docs: >-
+          Indicates the battery level of the device as a decimal value between 0
+          and 1, inclusive.
+        type: optional<double>
+      battery:
+        docs: >-
+          Represents the current status of the battery charge level. Values are
+          "critical," which indicates an extremely low level, suggesting
+          imminent shutdown or an urgent need for charging; "low," which
+          signifies that the battery is under the preferred threshold and should
+          be charged soon; "good," which denotes a satisfactory charge level,
+          adequate for normal use without the immediate need for recharging; and
+          "full," which represents a battery that is fully charged, providing
+          the maximum duration of usage.
+        type: optional<DevicePropertiesBattery>
+      manufacturer:
+        docs: Manufacturer of the device.
+        type: optional<string>
+      image_url:
+        docs: Image URL for the device.
+        type: optional<string>
+      image_alt_text:
+        docs: Alt text for the device image.
+        type: optional<string>
+      serial_number:
+        docs: Serial number of the device.
+        type: optional<string>
+      online_access_codes_enabled:
+        docs: >-
+          Indicates whether it is currently possible to use online access codes
+          for the device.
+        type: optional<boolean>
+      offline_access_codes_enabled:
+        docs: >-
+          Indicates whether it is currently possible to use offline access codes
+          for the device.
+        type: optional<boolean>
+      supports_accessory_keypad:
+        docs: Deprecated. Use model.accessory_keypad_supported.
+        type: optional<boolean>
+      supports_offline_access_codes:
+        docs: Deprecated. Use offline_access_codes_enabled.
+        type: optional<boolean>
+      august_metadata: optional<DevicePropertiesAugustMetadata>
+      avigilon_alta_metadata: optional<DevicePropertiesAvigilonAltaMetadata>
+      schlage_metadata: optional<DevicePropertiesSchlageMetadata>
+      smartthings_metadata: optional<DevicePropertiesSmartthingsMetadata>
+      lockly_metadata: optional<DevicePropertiesLocklyMetadata>
+      nuki_metadata: optional<DevicePropertiesNukiMetadata>
+      kwikset_metadata: optional<DevicePropertiesKwiksetMetadata>
+      salto_metadata: optional<DevicePropertiesSaltoMetadata>
+      genie_metadata: optional<DevicePropertiesGenieMetadata>
+      brivo_metadata: optional<DevicePropertiesBrivoMetadata>
+      igloo_metadata: optional<DevicePropertiesIglooMetadata>
+      noiseaware_metadata: optional<DevicePropertiesNoiseawareMetadata>
+      minut_metadata: optional<DevicePropertiesMinutMetadata>
+      four_suites_metadata: optional<DevicePropertiesFourSuitesMetadata>
+      two_n_metadata: optional<DevicePropertiesTwoNMetadata>
+      controlbyweb_metadata: optional<DevicePropertiesControlbywebMetadata>
+      ttlock_metadata: optional<DevicePropertiesTtlockMetadata>
+      seam_bridge_metadata: optional<DevicePropertiesSeamBridgeMetadata>
+      igloohome_metadata: optional<DevicePropertiesIgloohomeMetadata>
+      nest_metadata: optional<DevicePropertiesNestMetadata>
+      ecobee_metadata: optional<DevicePropertiesEcobeeMetadata>
+      hubitat_metadata: optional<DevicePropertiesHubitatMetadata>
+      dormakaba_oracode_metadata: optional<DevicePropertiesDormakabaOracodeMetadata>
+      wyze_metadata: optional<DevicePropertiesWyzeMetadata>
+      code_constraints: optional<list<DevicePropertiesCodeConstraintsItem>>
+      supported_code_lengths: optional<list<double>>
+      max_active_codes_supported: optional<double>
+      supports_backup_access_code_pool: optional<boolean>
+      has_native_entry_events: optional<boolean>
+      locked: optional<boolean>
+      keypad_battery: optional<DevicePropertiesKeypadBattery>
+      door_open: optional<boolean>
+      assa_abloy_credential_service_metadata: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
+
+  DeviceLocation:
+    docs: Location information for the device.
+    properties:
+      location_name:
+        docs: Name of the device location.
+        type: optional<string>
+      timezone:
+        docs: Time zone of the device location.
+        type: optional<string>
+
+  DeviceErrorsItem:
+    properties:
+      error_code: string
+      message: string
+
+  DeviceWarningsItem:
+    properties:
+      warning_code: string
+      message: string
+
+  Device:
+    properties:
+      device_id:
+        type: string
+        docs: Unique identifier for the device.
+      device_type:
+        type: DeviceType
+        docs: Type of the device.
+      capabilities_supported:
+        docs: >-
+          Collection of capabilities that the device supports when connected to
+          Seam. Values are "access_code," which indicates that the device can
+          manage and utilize digital PIN codes for secure access; "lock," which
+          indicates that the device controls a door locking mechanism, enabling
+          the remote opening and closing of doors and other entry points;
+          "noise_detection," which indicates that the device supports monitoring
+          and responding to ambient noise levels; "thermostat," which indicates
+          that the device can regulate and adjust indoor temperatures; and
+          "battery," which indicates that the device can manage battery life and
+          health.
+        type: list<DeviceCapabilitiesSupportedItem>
+      properties:
+        type: DeviceProperties
+        docs: Properties of the device.
+      location:
+        docs: Location information for the device.
+        type: optional<DeviceLocation>
+      connected_account_id:
+        type: string
+        docs: Unique identifier for the account associated with the device.
+      workspace_id:
+        type: string
+        docs: Unique identifier for the Seam workspace associated with the device.
+      errors:
+        docs: >-
+          Array of errors associated with the device. Each error object within
+          the array contains two fields: "error_code" and "message."
+          "error_code" is a string that uniquely identifies the type of error,
+          enabling quick recognition and categorization of the issue. "message"
+          provides a more detailed description of the error, offering insights
+          into the issue and potentially how to rectify it.
+        type: list<DeviceErrorsItem>
+      warnings:
+        docs: >-
+          Array of warnings associated with the device. Each warning object
+          within the array contains two fields: "warning_code" and "message."
+          "warning_code" is a string that uniquely identifies the type of
+          warning, enabling quick recognition and categorization of the issue.
+          "message" provides a more detailed description of the warning,
+          offering insights into the issue and potentially how to rectify it.
+        type: list<DeviceWarningsItem>
+      created_at:
+        type: datetime
+        docs: Date and time at which the device object was created.
+      is_managed:
+        type: boolean
+        docs: Indicates whether Seam manages the device.
+
+  UnmanagedDeviceCapabilitiesSupportedItem:
+    enum:
+      - access_code
+      - lock
+      - noise_detection
+      - thermostat
+      - battery
+      - phone
+
+  UnmanagedDeviceErrorsItem:
+    properties:
+      error_code: string
+      message: string
+
+  UnmanagedDeviceWarningsItem:
+    properties:
+      warning_code: string
+      message: string
+
+  UnmanagedDevicePropertiesBatteryStatus:
+    enum:
+      - critical
+      - low
+      - good
+      - full
+
+  UnmanagedDevicePropertiesBattery:
+    docs: >-
+      Represents the current status of the battery charge level. Values are
+      "critical," which indicates an extremely low level, suggesting imminent
+      shutdown or an urgent need for charging; "low," which signifies that the
+      battery is under the preferred threshold and should be charged soon;
+      "good," which denotes a satisfactory charge level, adequate for normal use
+      without the immediate need for recharging; and "full," which represents a
+      battery that is fully charged, providing the maximum duration of usage.
+    properties:
+      level: double
+      status: UnmanagedDevicePropertiesBatteryStatus
+
+  UnmanagedDevicePropertiesModel:
+    properties:
+      display_name:
+        type: string
+        docs: Display name of the device model.
+      manufacturer_display_name:
+        type: string
+        docs: >-
+          Display name that corresponds to the manufacturer-specific terminology
+          for the device.
+      offline_access_codes_supported:
+        docs: Indicates whether the device supports offline access codes.
+        type: optional<boolean>
+      online_access_codes_supported:
+        docs: Indicates whether the device supports online access codes.
+        type: optional<boolean>
+      accessory_keypad_supported:
+        docs: Indicates whether the device supports an accessory keypad.
+        type: optional<boolean>
+
+  UnmanagedDeviceProperties:
+    properties:
+      name:
+        type: string
+        docs: >-
+          Name of the device. Enables administrators and users to identify the
+          device easily, especially when there are numerous devices.
+      online:
+        type: boolean
+        docs: Indicates whether the device is online.
+      manufacturer:
+        docs: Manufacturer of the device.
+        type: optional<string>
+      image_url:
+        docs: Image URL for the device.
+        type: optional<string>
+      image_alt_text:
+        docs: Alt text for the device image.
+        type: optional<string>
+      battery_level:
+        docs: >-
+          Indicates the battery level of the device as a decimal value between 0
+          and 1, inclusive.
+        type: optional<double>
+      battery:
+        docs: >-
+          Represents the current status of the battery charge level. Values are
+          "critical," which indicates an extremely low level, suggesting
+          imminent shutdown or an urgent need for charging; "low," which
+          signifies that the battery is under the preferred threshold and should
+          be charged soon; "good," which denotes a satisfactory charge level,
+          adequate for normal use without the immediate need for recharging; and
+          "full," which represents a battery that is fully charged, providing
+          the maximum duration of usage.
+        type: optional<UnmanagedDevicePropertiesBattery>
+      online_access_codes_enabled:
+        docs: >-
+          Indicates whether it is currently possible to use online access codes
+          for the device.
+        type: optional<boolean>
+      offline_access_codes_enabled:
+        docs: >-
+          Indicates whether it is currently possible to use offline access codes
+          for the device.
+        type: optional<boolean>
+      model: UnmanagedDevicePropertiesModel
+
+  UnmanagedDeviceDeviceProvider:
+    properties:
+      provider_categories: optional<unknown>
+
+  UnmanagedDevice:
+    properties:
+      device_id:
+        type: string
+        docs: Unique identifier for the device.
+      device_type:
+        type: DeviceType
+        docs: Type of the device.
+      connected_account_id:
+        type: string
+        docs: Unique identifier for the account associated with the device.
+      capabilities_supported:
+        docs: >-
+          Collection of capabilities that the device supports when connected to
+          Seam. Values are "access_code," which indicates that the device can
+          manage and utilize digital PIN codes for secure access; "lock," which
+          indicates that the device controls a door locking mechanism, enabling
+          the remote opening and closing of doors and other entry points;
+          "noise_detection," which indicates that the device supports monitoring
+          and responding to ambient noise levels; "thermostat," which indicates
+          that the device can regulate and adjust indoor temperatures; and
+          "battery," which indicates that the device can manage battery life and
+          health.
+        type: list<UnmanagedDeviceCapabilitiesSupportedItem>
+      workspace_id:
+        type: string
+        docs: Unique identifier for the Seam workspace associated with the device.
+      errors:
+        docs: >-
+          Array of errors associated with the device. Each error object within
+          the array contains two fields: "error_code" and "message."
+          "error_code" is a string that uniquely identifies the type of error,
+          enabling quick recognition and categorization of the issue. "message"
+          provides a more detailed description of the error, offering insights
+          into the issue and potentially how to rectify it.
+        type: list<UnmanagedDeviceErrorsItem>
+      warnings:
+        docs: >-
+          Array of warnings associated with the device. Each warning object
+          within the array contains two fields: "warning_code" and "message."
+          "warning_code" is a string that uniquely identifies the type of
+          warning, enabling quick recognition and categorization of the issue.
+          "message" provides a more detailed description of the warning,
+          offering insights into the issue and potentially how to rectify it.
+        type: list<UnmanagedDeviceWarningsItem>
+      created_at:
+        type: datetime
+        docs: Date and time at which the device object was created.
+      is_managed: boolean
+      properties: UnmanagedDeviceProperties
+      device_provider: optional<UnmanagedDeviceDeviceProvider>
+
+  DeviceProviderProviderCategoriesItem:
+    enum:
+      - stable
+      - consumer_smartlocks
+
+  DeviceProvider:
+    properties:
+      device_provider_name: string
+      display_name: string
+      image_url: string
+      provider_categories: list<DeviceProviderProviderCategoriesItem>
+
+  Event:
+    properties:
+      event_id: string
+      device_id: optional<string>
+      event_type: string
+      workspace_id: string
+      created_at: datetime
+      occurred_at: datetime
+
+  NoiseThreshold:
+    properties:
+      noise_threshold_id: string
+      device_id: string
+      name: string
+      noise_threshold_nrs: optional<double>
+      starts_daily_at: string
+      ends_daily_at: string
+      noise_threshold_decibels: double
+
+  ServiceHealthStatus:
+    enum:
+      - healthy
+      - degraded
+      - down
+
+  ServiceHealth:
+    properties:
+      service: string
+      status: ServiceHealthStatus
+      description: string
+
+  Webhook:
+    properties:
+      webhook_id: string
+      url: string
+      event_types: optional<list<string>>
+      secret: optional<string>
+
+  Workspace:
+    properties:
+      workspace_id: string
+      name: string
+      is_sandbox: boolean
+      connect_partner_name: optional<string>
+
+  AcsSystemExternalType:
+    enum:
+      - pti_site
+      - alta_org
+      - salto_site
+      - brivo_account
+      - hid_credential_manager_organization
+      - visionline_system
+      - assa_abloy_credential_service
+
+  AcsSystemSystemType:
+    enum:
+      - pti_site
+      - alta_org
+      - salto_site
+      - brivo_account
+      - hid_credential_manager_organization
+      - visionline_system
+      - assa_abloy_credential_service
+    docs: "deprecated: use external_type"
+
+  AcsSystem:
+    properties:
+      acs_system_id: string
+      external_type: AcsSystemExternalType
+      external_type_display_name: string
+      system_type:
+        type: AcsSystemSystemType
+        docs: "deprecated: use external_type"
+      system_type_display_name:
+        type: string
+        docs: "deprecated: use external_type_display_name"
+      name: string
+      created_at: datetime
+      workspace_id: string
+      connected_account_ids: list<string>
+
+  AcsAccessGroupAccessGroupType:
+    enum:
+      - pti_unit
+      - pti_access_level
+      - salto_access_group
+      - brivo_group
+    docs: "deprecated: use external_type"
+
+  AcsAccessGroupExternalType:
+    enum:
+      - pti_unit
+      - pti_access_level
+      - salto_access_group
+      - brivo_group
+
+  AcsAccessGroup:
+    properties:
+      acs_access_group_id: string
+      acs_system_id: string
+      workspace_id: string
+      name: string
+      access_group_type:
+        type: AcsAccessGroupAccessGroupType
+        docs: "deprecated: use external_type"
+      access_group_type_display_name:
+        type: string
+        docs: "deprecated: use external_type_display_name"
+      external_type: AcsAccessGroupExternalType
+      external_type_display_name: string
+      created_at: datetime
+
+  AcsUserExternalType:
+    enum:
+      - pti_user
+      - brivo_user
+      - hid_credential_manager_user
+      - salto_site_user
+
+  AcsUserAccessSchedule:
+    properties:
+      starts_at: datetime
+      ends_at: datetime
+
+  AcsUser:
+    properties:
+      acs_user_id: string
+      acs_system_id: string
+      hid_acs_system_id: optional<string>
+      workspace_id: string
+      created_at: datetime
+      display_name: string
+      external_type: optional<AcsUserExternalType>
+      external_type_display_name: optional<string>
+      is_suspended: boolean
+      access_schedule: optional<AcsUserAccessSchedule>
+      user_identity_id: optional<string>
+      user_identity_email_address: optional<string>
+      user_identity_phone_number: optional<string>
+      full_name: optional<string>
+      email:
+        docs: "Deprecated: use email_address."
+        type: optional<string>
+      email_address: optional<string>
+      phone_number: optional<string>
+
+  EnrollmentAutomation:
+    properties:
+      credential_manager_acs_system_id: string
+      user_identity_id: string
+      created_at: datetime
+      workspace_id: string
+      enrollment_automation_id: string
+
+  PhoneDeviceType:
+    enum:
+      - android_phone
+      - ios_phone
+
+  PhoneCapabilitiesSupportedItem:
+    enum:
+      - access_code
+      - lock
+      - noise_detection
+      - thermostat
+      - battery
+      - phone
+
+  PhonePropertiesModel:
+    properties:
+      display_name:
+        type: string
+        docs: Display name of the device model.
+      manufacturer_display_name:
+        type: string
+        docs: >-
+          Display name that corresponds to the manufacturer-specific terminology
+          for the device.
+      offline_access_codes_supported:
+        docs: Indicates whether the device supports offline access codes.
+        type: optional<boolean>
+      online_access_codes_supported:
+        docs: Indicates whether the device supports online access codes.
+        type: optional<boolean>
+      accessory_keypad_supported:
+        docs: Indicates whether the device supports an accessory keypad.
+        type: optional<boolean>
+
+  PhonePropertiesBatteryStatus:
+    enum:
+      - critical
+      - low
+      - good
+      - full
+
+  PhonePropertiesBattery:
+    docs: >-
+      Represents the current status of the battery charge level. Values are
+      "critical," which indicates an extremely low level, suggesting imminent
+      shutdown or an urgent need for charging; "low," which signifies that the
+      battery is under the preferred threshold and should be charged soon;
+      "good," which denotes a satisfactory charge level, adequate for normal use
+      without the immediate need for recharging; and "full," which represents a
+      battery that is fully charged, providing the maximum duration of usage.
+    properties:
+      level: double
+      status: PhonePropertiesBatteryStatus
+
+  PhonePropertiesAugustMetadata:
+    properties:
+      lock_id: string
+      lock_name: string
+      house_name: string
+      has_keypad: boolean
+      keypad_battery_level: optional<string>
+      model: optional<string>
+      house_id: optional<string>
+
+  PhonePropertiesAvigilonAltaMetadata:
+    properties:
+      entry_name: string
+      org_name: string
+      zone_id: double
+      zone_name: string
+      site_id: double
+      site_name: string
+
+  PhonePropertiesSchlageMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      access_code_length: double
+      model: optional<string>
+
+  PhonePropertiesSmartthingsMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      model: optional<string>
+      location_id: optional<string>
+
+  PhonePropertiesLocklyMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      model: optional<string>
+
+  PhonePropertiesNukiMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      keypad_battery_critical: optional<boolean>
+
+  PhonePropertiesKwiksetMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      model_number: string
+
+  PhonePropertiesSaltoMetadata:
+    properties:
+      lock_id: string
+      customer_reference: string
+      lock_type: string
+      battery_level: string
+      locked_state: string
+      model: optional<string>
+
+  PhonePropertiesGenieMetadata:
+    properties:
+      device_name: string
+      door_name: string
+
+  PhonePropertiesBrivoMetadata:
+    properties:
+      device_name: string
+
+  PhonePropertiesIglooMetadata:
+    properties:
+      device_id: string
+      bridge_id: string
+      model: optional<string>
+
+  PhonePropertiesNoiseawareMetadataDeviceModel:
+    enum:
+      - indoor
+      - outdoor
+
+  PhonePropertiesNoiseawareMetadata:
+    properties:
+      device_model: PhonePropertiesNoiseawareMetadataDeviceModel
+      noise_level_nrs: double
+      noise_level_decibel: double
+      device_name: string
+      device_id: string
+
+  PhonePropertiesMinutMetadataLatestSensorValuesTemperature:
+    properties:
+      time: string
+      value: double
+
+  PhonePropertiesMinutMetadataLatestSensorValuesSound:
+    properties:
+      time: string
+      value: double
+
+  PhonePropertiesMinutMetadataLatestSensorValuesHumidity:
+    properties:
+      time: string
+      value: double
+
+  PhonePropertiesMinutMetadataLatestSensorValuesPressure:
+    properties:
+      time: string
+      value: double
+
+  PhonePropertiesMinutMetadataLatestSensorValuesAccelerometerZ:
+    properties:
+      time: string
+      value: double
+
+  PhonePropertiesMinutMetadataLatestSensorValues:
+    properties:
+      temperature: PhonePropertiesMinutMetadataLatestSensorValuesTemperature
+      sound: PhonePropertiesMinutMetadataLatestSensorValuesSound
+      humidity: PhonePropertiesMinutMetadataLatestSensorValuesHumidity
+      pressure: PhonePropertiesMinutMetadataLatestSensorValuesPressure
+      accelerometer_z: PhonePropertiesMinutMetadataLatestSensorValuesAccelerometerZ
+
+  PhonePropertiesMinutMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      latest_sensor_values: PhonePropertiesMinutMetadataLatestSensorValues
+
+  PhonePropertiesFourSuitesMetadata:
+    properties:
+      device_id: double
+      device_name: string
+      reclose_delay_in_seconds: double
+
+  PhonePropertiesTwoNMetadata:
+    properties:
+      device_id: double
+      device_name: string
+
+  PhonePropertiesControlbywebMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      relay_name: optional<string>
+
+  PhonePropertiesTtlockMetadata:
+    properties:
+      lock_id: double
+      lock_alias: string
+
+  PhonePropertiesSeamBridgeMetadataUnlockMethod:
+    enum:
+      - bridge
+      - doorking
+
+  PhonePropertiesSeamBridgeMetadata:
+    properties:
+      unlock_method: optional<PhonePropertiesSeamBridgeMetadataUnlockMethod>
+      device_num: double
+      name: string
+
+  PhonePropertiesIgloohomeMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      bridge_id: optional<string>
+      bridge_name: optional<string>
+
+  PhonePropertiesNestMetadata:
+    properties:
+      nest_device_id: string
+      device_name: string
+      custom_name: string
+
+  PhonePropertiesEcobeeMetadata:
+    properties:
+      ecobee_device_id: string
+      device_name: string
+
+  PhonePropertiesHubitatMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      device_label: string
+
+  PhonePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem:
+    properties:
+      name: string
+      prefix: double
+      check_in_time: string
+      check_out_time: string
+      is_24_hour: boolean
+      is_biweekly_mode: boolean
+      is_one_shot: boolean
+      is_master: boolean
+      ext_dormakaba_oracode_user_level_prefix: double
+      dormakaba_oracode_user_level_id: string
+
+  PhonePropertiesDormakabaOracodeMetadata:
+    properties:
+      door_id: double
+      door_name: string
+      device_id: optional<double>
+      site_id: double
+      site_name: string
+      iana_timezone: optional<string>
+      predefined_time_slots: >-
+        optional<list<PhonePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem>>
+
+  PhonePropertiesWyzeMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      product_name: string
+      product_type: string
+      product_model: string
+      device_info_model: string
+
+  PhonePropertiesCodeConstraintsItemZeroConstraintType:
+    enum:
+      - no_zeros
+      - cannot_start_with_12
+      - no_triple_consecutive_ints
+      - cannot_specify_pin_code
+      - pin_code_matches_existing_set
+      - start_date_in_future
+
+  PhonePropertiesCodeConstraintsItemZero:
+    properties:
+      constraint_type: PhonePropertiesCodeConstraintsItemZeroConstraintType
+
+  PhonePropertiesCodeConstraintsItemMaxLength:
+    properties:
+      constraint_type: literal<"name_length">
+      min_length: optional<double>
+      max_length: optional<double>
+
+  PhonePropertiesCodeConstraintsItem:
+    discriminated: false
+    union:
+      - PhonePropertiesCodeConstraintsItemZero
+      - PhonePropertiesCodeConstraintsItemMaxLength
+
+  PhonePropertiesKeypadBattery:
+    properties:
+      level: double
+
+  PhonePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem:
+    properties:
+      endpoint_id: string
+      is_active: boolean
+
+  PhonePropertiesAssaAbloyCredentialServiceMetadata:
+    properties:
+      has_active_endpoint: boolean
+      endpoints: list<PhonePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem>
+
+  PhoneProperties:
+    docs: Properties of the device.
+    properties:
+      online:
+        type: boolean
+        docs: Indicates whether the device is online.
+      name:
+        type: string
+        docs: >-
+          Name of the device. Enables administrators and users to identify the
+          device easily, especially when there are numerous devices.
+      model: PhonePropertiesModel
+      has_direct_power:
+        docs: Indicates whether the device has direct power.
+        type: optional<boolean>
+      battery_level:
+        docs: >-
+          Indicates the battery level of the device as a decimal value between 0
+          and 1, inclusive.
+        type: optional<double>
+      battery:
+        docs: >-
+          Represents the current status of the battery charge level. Values are
+          "critical," which indicates an extremely low level, suggesting
+          imminent shutdown or an urgent need for charging; "low," which
+          signifies that the battery is under the preferred threshold and should
+          be charged soon; "good," which denotes a satisfactory charge level,
+          adequate for normal use without the immediate need for recharging; and
+          "full," which represents a battery that is fully charged, providing
+          the maximum duration of usage.
+        type: optional<PhonePropertiesBattery>
+      manufacturer:
+        docs: Manufacturer of the device.
+        type: optional<string>
+      image_url:
+        docs: Image URL for the device.
+        type: optional<string>
+      image_alt_text:
+        docs: Alt text for the device image.
+        type: optional<string>
+      serial_number:
+        docs: Serial number of the device.
+        type: optional<string>
+      online_access_codes_enabled:
+        docs: >-
+          Indicates whether it is currently possible to use online access codes
+          for the device.
+        type: optional<boolean>
+      offline_access_codes_enabled:
+        docs: >-
+          Indicates whether it is currently possible to use offline access codes
+          for the device.
+        type: optional<boolean>
+      supports_accessory_keypad:
+        docs: Deprecated. Use model.accessory_keypad_supported.
+        type: optional<boolean>
+      supports_offline_access_codes:
+        docs: Deprecated. Use offline_access_codes_enabled.
+        type: optional<boolean>
+      august_metadata: optional<PhonePropertiesAugustMetadata>
+      avigilon_alta_metadata: optional<PhonePropertiesAvigilonAltaMetadata>
+      schlage_metadata: optional<PhonePropertiesSchlageMetadata>
+      smartthings_metadata: optional<PhonePropertiesSmartthingsMetadata>
+      lockly_metadata: optional<PhonePropertiesLocklyMetadata>
+      nuki_metadata: optional<PhonePropertiesNukiMetadata>
+      kwikset_metadata: optional<PhonePropertiesKwiksetMetadata>
+      salto_metadata: optional<PhonePropertiesSaltoMetadata>
+      genie_metadata: optional<PhonePropertiesGenieMetadata>
+      brivo_metadata: optional<PhonePropertiesBrivoMetadata>
+      igloo_metadata: optional<PhonePropertiesIglooMetadata>
+      noiseaware_metadata: optional<PhonePropertiesNoiseawareMetadata>
+      minut_metadata: optional<PhonePropertiesMinutMetadata>
+      four_suites_metadata: optional<PhonePropertiesFourSuitesMetadata>
+      two_n_metadata: optional<PhonePropertiesTwoNMetadata>
+      controlbyweb_metadata: optional<PhonePropertiesControlbywebMetadata>
+      ttlock_metadata: optional<PhonePropertiesTtlockMetadata>
+      seam_bridge_metadata: optional<PhonePropertiesSeamBridgeMetadata>
+      igloohome_metadata: optional<PhonePropertiesIgloohomeMetadata>
+      nest_metadata: optional<PhonePropertiesNestMetadata>
+      ecobee_metadata: optional<PhonePropertiesEcobeeMetadata>
+      hubitat_metadata: optional<PhonePropertiesHubitatMetadata>
+      dormakaba_oracode_metadata: optional<PhonePropertiesDormakabaOracodeMetadata>
+      wyze_metadata: optional<PhonePropertiesWyzeMetadata>
+      code_constraints: optional<list<PhonePropertiesCodeConstraintsItem>>
+      supported_code_lengths: optional<list<double>>
+      max_active_codes_supported: optional<double>
+      supports_backup_access_code_pool: optional<boolean>
+      has_native_entry_events: optional<boolean>
+      locked: optional<boolean>
+      keypad_battery: optional<PhonePropertiesKeypadBattery>
+      door_open: optional<boolean>
+      assa_abloy_credential_service_metadata: optional<PhonePropertiesAssaAbloyCredentialServiceMetadata>
+
+  PhoneLocation:
+    docs: Location information for the device.
+    properties:
+      location_name:
+        docs: Name of the device location.
+        type: optional<string>
+      timezone:
+        docs: Time zone of the device location.
+        type: optional<string>
+
+  PhoneErrorsItem:
+    properties:
+      error_code: string
+      message: string
+
+  PhoneWarningsItem:
+    properties:
+      warning_code: string
+      message: string
+
+  PhoneAssaAbloyCredentialServiceMetadataEndpointsItem:
+    properties:
+      endpoint_id: string
+      is_active: boolean
+
+  PhoneAssaAbloyCredentialServiceMetadata:
+    properties:
+      has_active_endpoint: boolean
+      endpoints: list<PhoneAssaAbloyCredentialServiceMetadataEndpointsItem>
+
+  Phone:
+    properties:
+      device_id:
+        type: string
+        docs: Unique identifier for the device.
+      device_type: PhoneDeviceType
+      capabilities_supported:
+        docs: >-
+          Collection of capabilities that the device supports when connected to
+          Seam. Values are "access_code," which indicates that the device can
+          manage and utilize digital PIN codes for secure access; "lock," which
+          indicates that the device controls a door locking mechanism, enabling
+          the remote opening and closing of doors and other entry points;
+          "noise_detection," which indicates that the device supports monitoring
+          and responding to ambient noise levels; "thermostat," which indicates
+          that the device can regulate and adjust indoor temperatures; and
+          "battery," which indicates that the device can manage battery life and
+          health.
+        type: list<PhoneCapabilitiesSupportedItem>
+      properties:
+        type: PhoneProperties
+        docs: Properties of the device.
+      location:
+        docs: Location information for the device.
+        type: optional<PhoneLocation>
+      workspace_id:
+        type: string
+        docs: Unique identifier for the Seam workspace associated with the device.
+      errors:
+        docs: >-
+          Array of errors associated with the device. Each error object within
+          the array contains two fields: "error_code" and "message."
+          "error_code" is a string that uniquely identifies the type of error,
+          enabling quick recognition and categorization of the issue. "message"
+          provides a more detailed description of the error, offering insights
+          into the issue and potentially how to rectify it.
+        type: list<PhoneErrorsItem>
+      warnings:
+        docs: >-
+          Array of warnings associated with the device. Each warning object
+          within the array contains two fields: "warning_code" and "message."
+          "warning_code" is a string that uniquely identifies the type of
+          warning, enabling quick recognition and categorization of the issue.
+          "message" provides a more detailed description of the warning,
+          offering insights into the issue and potentially how to rectify it.
+        type: list<PhoneWarningsItem>
+      created_at:
+        type: datetime
+        docs: Date and time at which the device object was created.
+      is_managed:
+        type: boolean
+        docs: Indicates whether Seam manages the device.
+      assa_abloy_credential_service_metadata: optional<PhoneAssaAbloyCredentialServiceMetadata>
+
+  DeviceType:
+    enum:
+      - akuvox_lock
+      - august_lock
+      - brivo_access_point
+      - butterflymx_panel
+      - avigilon_alta_entry
+      - doorking_lock
+      - genie_door
+      - igloo_lock
+      - linear_lock
+      - lockly_lock
+      - kwikset_lock
+      - nuki_lock
+      - salto_lock
+      - schlage_lock
+      - seam_relay
+      - smartthings_lock
+      - wyze_lock
+      - yale_lock
+      - two_n_intercom
+      - controlbyweb_device
+      - ttlock_lock
+      - igloohome_lock
+      - hubitat_lock
+      - four_suites_door
+      - dormakaba_oracode_door
+      - noiseaware_activity_zone
+      - minut_sensor
+      - ecobee_thermostat
+      - nest_thermostat
+      - ios_phone
+      - android_phone
+
+  Manufacturer:
+    enum:
+      - akuvox
+      - august
+      - avigilon_alta
+      - brivo
+      - butterflymx
+      - doorking
+      - four_suites
+      - genie
+      - igloo
+      - keywe
+      - kwikset
+      - linear
+      - lockly
+      - nuki
+      - philia
+      - salto
+      - samsung
+      - schlage
+      - seam
+      - unknown
+      - wyze
+      - yale
+      - minut
+      - two_n
+      - ttlock
+      - nest
+      - igloohome
+      - ecobee
+      - hubitat
+      - controlbyweb
+      - smartthings
+      - dormakaba_oracode
+
+  ProviderCategory:
+    enum:
+      - stable
+      - consumer_smartlocks
+
+  SelectionMode:
+    enum:
+      - none
+      - single
+      - multiple
+
+  MaxTimeRounding:
+    enum:
+      - name: OneHour
+        value: 1hour
+      - name: OneDay
+        value: 1day
+      - name: OneH
+        value: 1h
+      - name: OneD
+        value: 1d
+
+  EventType:
+    enum:
+      - name: DeviceConnected
+        value: device.connected
+      - name: DeviceUnmanagedConnected
+        value: device.unmanaged.connected
+      - name: DeviceDisconnected
+        value: device.disconnected
+      - name: DeviceUnmanagedDisconnected
+        value: device.unmanaged.disconnected
+      - name: DeviceConvertedToUnmanaged
+        value: device.converted_to_unmanaged
+      - name: DeviceUnmanagedConvertedToManaged
+        value: device.unmanaged.converted_to_managed
+      - name: DeviceRemoved
+        value: device.removed
+      - name: DeviceTampered
+        value: device.tampered
+      - name: DeviceLowBattery
+        value: device.low_battery
+      - name: DeviceBatteryStatusChanged
+        value: device.battery_status_changed
+      - name: DeviceThirdPartyIntegrationDetected
+        value: device.third_party_integration_detected
+      - name: DeviceThirdPartyIntegrationNoLongerDetected
+        value: device.third_party_integration_no_longer_detected
+      - name: DeviceSaltoPrivacyModeActivated
+        value: device.salto.privacy_mode_activated
+      - name: DeviceSaltoPrivacyModeDeactivated
+        value: device.salto.privacy_mode_deactivated
+      - name: DeviceConnectionBecameFlaky
+        value: device.connection_became_flaky
+      - name: DeviceConnectionStabilized
+        value: device.connection_stabilized
+      - name: DeviceErrorSubscriptionRequired
+        value: device.error.subscription_required
+      - name: DeviceErrorSubscriptionRequiredResolved
+        value: device.error.subscription_required.resolved
+      - name: AccessCodeCreated
+        value: access_code.created
+      - name: AccessCodeChanged
+        value: access_code.changed
+      - name: AccessCodeScheduledOnDevice
+        value: access_code.scheduled_on_device
+      - name: AccessCodeSetOnDevice
+        value: access_code.set_on_device
+      - name: AccessCodeDeleted
+        value: access_code.deleted
+      - name: AccessCodeRemovedFromDevice
+        value: access_code.removed_from_device
+      - name: AccessCodeFailedToSetOnDevice
+        value: access_code.failed_to_set_on_device
+      - name: AccessCodeDelayInSettingOnDevice
+        value: access_code.delay_in_setting_on_device
+      - name: AccessCodeFailedToRemoveFromDevice
+        value: access_code.failed_to_remove_from_device
+      - name: AccessCodeDelayInRemovingFromDevice
+        value: access_code.delay_in_removing_from_device
+      - name: AccessCodeDeletedExternalToSeam
+        value: access_code.deleted_external_to_seam
+      - name: AccessCodeModifiedExternalToSeam
+        value: access_code.modified_external_to_seam
+      - name: AccessCodeUnmanagedConvertedToManaged
+        value: access_code.unmanaged.converted_to_managed
+      - name: AccessCodeUnmanagedFailedToConvertToManaged
+        value: access_code.unmanaged.failed_to_convert_to_managed
+      - name: AccessCodeUnmanagedCreated
+        value: access_code.unmanaged.created
+      - name: AccessCodeUnmanagedRemoved
+        value: access_code.unmanaged.removed
+      - name: LockLocked
+        value: lock.locked
+      - name: LockUnlocked
+        value: lock.unlocked
+      - name: ConnectedAccountConnected
+        value: connected_account.connected
+      - name: ConnectedAccountSuccessfulLogin
+        value: connected_account.successful_login
+      - name: ConnectedAccountCreated
+        value: connected_account.created
+      - name: ConnectedAccountDeleted
+        value: connected_account.deleted
+      - name: ConnectedAccountDisconnected
+        value: connected_account.disconnected
+      - name: ConnectedAccountCompletedFirstSync
+        value: connected_account.completed_first_sync
+      - name: NoiseSensorNoiseThresholdTriggered
+        value: noise_sensor.noise_threshold_triggered
+      - name: AccessCodeBackupAccessCodePulled
+        value: access_code.backup_access_code_pulled
+
+  PhoneOperatingSystem:
+    enum:
+      - android
+      - ios
+
+  FanMode:
+    enum:
+      - auto
+      - "on"
+
+  FanModeSetting:
+    enum:
+      - auto
+      - "on"
+
+  HvacModeSetting:
+    enum:
+      - "off"
+      - heat
+      - cool
+      - heat_cool
+
+errors:
+  BadRequestError:
+    status-code: 400
+    type: unknown
+
+  UnauthorizedError:
+    status-code: 401
+    type: unknown

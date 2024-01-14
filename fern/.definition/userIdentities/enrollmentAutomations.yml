@@ -1,0 +1,88 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: ../__package__.yml
+
+types:
+  EnrollmentAutomationsGetResponse:
+    properties:
+      enrollment_automation: root.EnrollmentAutomation
+      ok: boolean
+
+  EnrollmentAutomationsLaunchResponseEnrollmentAutomation:
+    properties:
+      acs_credential_provisioning_automation_id: string
+      credential_manager_acs_system_id: string
+      user_identity_id: string
+      created_at: datetime
+      workspace_id: string
+      enrollment_automation_id: string
+
+  EnrollmentAutomationsLaunchResponse:
+    properties:
+      enrollment_automation: EnrollmentAutomationsLaunchResponseEnrollmentAutomation
+      ok: boolean
+
+  EnrollmentAutomationsListResponse:
+    properties:
+      enrollment_automations: list<root.EnrollmentAutomation>
+      ok: boolean
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    get:
+      path: /user_identities/enrollment_automations/get
+      method: POST
+      auth: true
+      display-name: /user_identities/enrollment_automations/get
+      request:
+        name: EnrollmentAutomationsGetRequest
+        body:
+          properties:
+            enrollment_automation_id: string
+      response:
+        docs: OK
+        type: EnrollmentAutomationsGetResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    launch:
+      path: /user_identities/enrollment_automations/launch
+      method: POST
+      auth: true
+      display-name: /user_identities/enrollment_automations/launch
+      request:
+        name: EnrollmentAutomationsLaunchRequest
+        body:
+          properties:
+            user_identity_id: string
+            credential_manager_acs_system_id: string
+            acs_credential_pool_id: optional<string>
+            create_credential_manager_user: optional<boolean>
+            credential_manager_acs_user_id: optional<string>
+      response:
+        docs: OK
+        type: EnrollmentAutomationsLaunchResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list:
+      path: /user_identities/enrollment_automations/list
+      method: POST
+      auth: true
+      display-name: /user_identities/enrollment_automations/list
+      request:
+        name: EnrollmentAutomationsListRequest
+        body:
+          properties:
+            user_identity_id: string
+      response:
+        docs: OK
+        type: EnrollmentAutomationsListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError

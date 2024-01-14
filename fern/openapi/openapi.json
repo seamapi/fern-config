@@ -3765,8 +3765,7 @@
                       "automatic_heating_enabled": { "type": "boolean" },
                       "automatic_cooling_enabled": { "type": "boolean" },
                       "hvac_mode_setting": {
-                        "type": "string",
-                        "enum": ["off", "heat", "cool", "heat_cool"]
+                        "$ref": "#/components/schemas/HvacModeSetting"
                       },
                       "cooling_set_point_celsius": { "type": "number" },
                       "heating_set_point_celsius": { "type": "number" },
@@ -3821,8 +3820,7 @@
                       "automatic_heating_enabled": { "type": "boolean" },
                       "automatic_cooling_enabled": { "type": "boolean" },
                       "hvac_mode_setting": {
-                        "type": "string",
-                        "enum": ["off", "heat", "cool", "heat_cool"]
+                        "$ref": "#/components/schemas/HvacModeSetting"
                       },
                       "cooling_set_point_celsius": { "type": "number" },
                       "heating_set_point_celsius": { "type": "number" },
@@ -8618,8 +8616,7 @@
                   "automatic_heating_enabled": { "type": "boolean" },
                   "automatic_cooling_enabled": { "type": "boolean" },
                   "hvac_mode_setting": {
-                    "type": "string",
-                    "enum": ["off", "heat", "cool", "heat_cool"]
+                    "$ref": "#/components/schemas/HvacModeSetting"
                   },
                   "cooling_set_point_celsius": { "type": "number" },
                   "heating_set_point_celsius": { "type": "number" },
@@ -8885,8 +8882,7 @@
                   "automatic_heating_enabled": { "type": "boolean" },
                   "automatic_cooling_enabled": { "type": "boolean" },
                   "hvac_mode_setting": {
-                    "type": "string",
-                    "enum": ["off", "heat", "cool", "heat_cool"]
+                    "$ref": "#/components/schemas/HvacModeSetting"
                   },
                   "cooling_set_point_celsius": { "type": "number" },
                   "heating_set_point_celsius": { "type": "number" },
@@ -8954,8 +8950,7 @@
                   "automatic_heating_enabled": { "type": "boolean" },
                   "automatic_cooling_enabled": { "type": "boolean" },
                   "hvac_mode_setting": {
-                    "type": "string",
-                    "enum": ["off", "heat", "cool", "heat_cool"]
+                    "$ref": "#/components/schemas/HvacModeSetting"
                   },
                   "cooling_set_point_celsius": { "type": "number" },
                   "heating_set_point_celsius": { "type": "number" },
@@ -9021,8 +9016,7 @@
                   "automatic_heating_enabled": { "type": "boolean" },
                   "automatic_cooling_enabled": { "type": "boolean" },
                   "hvac_mode_setting": {
-                    "type": "string",
-                    "enum": ["off", "heat", "cool", "heat_cool"]
+                    "$ref": "#/components/schemas/HvacModeSetting"
                   },
                   "cooling_set_point_celsius": { "type": "number" },
                   "heating_set_point_celsius": { "type": "number" },
@@ -9566,8 +9560,7 @@
           "automatic_heating_enabled": { "type": "boolean" },
           "automatic_cooling_enabled": { "type": "boolean" },
           "hvac_mode_setting": {
-            "type": "string",
-            "enum": ["off", "heat", "cool", "heat_cool"]
+            "$ref": "#/components/schemas/HvacModeSetting"
           },
           "cooling_set_point_celsius": { "type": "number" },
           "heating_set_point_celsius": { "type": "number" },
@@ -10347,8 +10340,7 @@
                               "available_hvac_mode_settings": {
                                 "type": "array",
                                 "items": {
-                                  "type": "string",
-                                  "enum": ["off", "heat", "cool", "heat_cool"]
+                                  "$ref": "#/components/schemas/HvacModeSetting"
                                 }
                               },
                               "is_heating_available": {
@@ -10379,8 +10371,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -10415,8 +10406,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -10474,8 +10464,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -10553,8 +10542,7 @@
                               "available_hvac_mode_settings": {
                                 "type": "array",
                                 "items": {
-                                  "type": "string",
-                                  "enum": ["off", "heat", "cool", "heat_cool"]
+                                  "$ref": "#/components/schemas/HvacModeSetting"
                                 }
                               },
                               "is_heating_available": {
@@ -10585,8 +10573,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -10621,8 +10608,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -10680,8 +10666,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -10740,10 +10725,7 @@
                               },
                               "available_hvac_mode_settings": {
                                 "type": "array",
-                                "items": {
-                                  "type": "string",
-                                  "enum": ["off", "heat", "cool", "heat_cool"]
-                                }
+                                "items": {}
                               },
                               "is_heating_available": {
                                 "type": "boolean",
@@ -10773,8 +10755,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -10809,8 +10790,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -10868,8 +10848,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -12092,8 +12071,7 @@
                               "available_hvac_mode_settings": {
                                 "type": "array",
                                 "items": {
-                                  "type": "string",
-                                  "enum": ["off", "heat", "cool", "heat_cool"]
+                                  "$ref": "#/components/schemas/HvacModeSetting"
                                 }
                               },
                               "is_heating_available": {
@@ -12124,8 +12102,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -12160,8 +12137,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -12219,8 +12195,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -12298,8 +12273,7 @@
                               "available_hvac_mode_settings": {
                                 "type": "array",
                                 "items": {
-                                  "type": "string",
-                                  "enum": ["off", "heat", "cool", "heat_cool"]
+                                  "$ref": "#/components/schemas/HvacModeSetting"
                                 }
                               },
                               "is_heating_available": {
@@ -12330,8 +12304,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -12366,8 +12339,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -12425,8 +12397,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -12486,8 +12457,7 @@
                               "available_hvac_mode_settings": {
                                 "type": "array",
                                 "items": {
-                                  "type": "string",
-                                  "enum": ["off", "heat", "cool", "heat_cool"]
+                                  "$ref": "#/components/schemas/HvacModeSetting"
                                 }
                               },
                               "is_heating_available": {
@@ -12518,8 +12488,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -12554,8 +12523,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"
@@ -12613,8 +12581,7 @@
                                     "type": "boolean"
                                   },
                                   "hvac_mode_setting": {
-                                    "type": "string",
-                                    "enum": ["off", "heat", "cool", "heat_cool"]
+                                    "$ref": "#/components/schemas/HvacModeSetting"
                                   },
                                   "cooling_set_point_celsius": {
                                     "type": "number"

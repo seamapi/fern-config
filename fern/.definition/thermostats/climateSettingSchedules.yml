@@ -1,9 +1,13 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-imports:
-  root: ../__package__.yml
-
 types:
+  ClimateSettingSchedulesCreateRequestHvacModeSetting:
+    enum:
+      - "off"
+      - heat
+      - cool
+      - heat_cool
+
   ClimateSettingSchedulesCreateResponse:
     properties:
       climate_setting_schedule: root.ClimateSettingSchedule
@@ -23,10 +27,20 @@ types:
       climate_setting_schedules: list<root.ClimateSettingSchedule>
       ok: boolean
 
+  ClimateSettingSchedulesUpdateRequestHvacModeSetting:
+    enum:
+      - "off"
+      - heat
+      - cool
+      - heat_cool
+
   ClimateSettingSchedulesUpdateResponse:
     properties:
       climate_setting_schedule: root.ClimateSettingSchedule
       ok: boolean
+
+imports:
+  root: ../__package__.yml
 
 service:
   auth: false
@@ -48,7 +62,7 @@ service:
             schedule_ends_at: string
             automatic_heating_enabled: optional<boolean>
             automatic_cooling_enabled: optional<boolean>
-            hvac_mode_setting: optional<root.HvacModeSetting>
+            hvac_mode_setting: optional<ClimateSettingSchedulesCreateRequestHvacModeSetting>
             cooling_set_point_celsius: optional<double>
             heating_set_point_celsius: optional<double>
             cooling_set_point_fahrenheit: optional<double>
@@ -133,7 +147,7 @@ service:
             schedule_ends_at: optional<string>
             automatic_heating_enabled: optional<boolean>
             automatic_cooling_enabled: optional<boolean>
-            hvac_mode_setting: optional<root.HvacModeSetting>
+            hvac_mode_setting: optional<ClimateSettingSchedulesUpdateRequestHvacModeSetting>
             cooling_set_point_celsius: optional<double>
             heating_set_point_celsius: optional<double>
             cooling_set_point_fahrenheit: optional<double>

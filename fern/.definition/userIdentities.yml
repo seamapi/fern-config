@@ -21,6 +21,10 @@ types:
       user_identity: UserIdentitiesCreateResponseUserIdentity
       ok: boolean
 
+  UserIdentitiesDeleteResponse:
+    properties:
+      ok: boolean
+
   UserIdentitiesGetRequestUserIdentityId:
     properties:
       user_identity_id: string
@@ -135,6 +139,23 @@ service:
       response:
         docs: OK
         type: UserIdentitiesCreateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    delete:
+      path: /user_identities/delete
+      method: POST
+      auth: true
+      display-name: /user_identities/delete
+      request:
+        name: UserIdentitiesDeleteRequest
+        body:
+          properties:
+            user_identity_id: string
+      response:
+        docs: OK
+        type: UserIdentitiesDeleteResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

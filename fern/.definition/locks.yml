@@ -10,6 +10,13 @@ types:
       device: root.Device
       ok: boolean
 
+  LocksListRequestCustomMetadataHasValue:
+    discriminated: false
+    union:
+      - string
+      - boolean
+      - optional<string>
+
   LocksListResponse:
     properties:
       locks: list<root.Device>
@@ -70,6 +77,9 @@ service:
             limit: optional<double>
             created_before: optional<datetime>
             user_identifier_key: optional<string>
+            custom_metadata_has: >-
+              optional<map<string,
+              optional<LocksListRequestCustomMetadataHasValue>>>
       response:
         docs: OK
         type: LocksListResponse

@@ -18,6 +18,13 @@ types:
     properties:
       ok: boolean
 
+  ThermostatsListRequestCustomMetadataHasValue:
+    discriminated: false
+    union:
+      - string
+      - boolean
+      - optional<string>
+
   ThermostatsListResponse:
     properties:
       thermostats: list<root.Device>
@@ -36,11 +43,18 @@ types:
     properties:
       ok: boolean
 
+  ThermostatsUpdateRequestDefaultClimateSettingHvacModeSetting:
+    enum:
+      - "off"
+      - heat
+      - cool
+      - heat_cool
+
   ThermostatsUpdateRequestDefaultClimateSetting:
     properties:
       automatic_heating_enabled: optional<boolean>
       automatic_cooling_enabled: optional<boolean>
-      hvac_mode_setting: optional<root.HvacModeSetting>
+      hvac_mode_setting: optional<ThermostatsUpdateRequestDefaultClimateSettingHvacModeSetting>
       cooling_set_point_celsius: optional<double>
       heating_set_point_celsius: optional<double>
       cooling_set_point_fahrenheit: optional<double>
@@ -160,6 +174,9 @@ service:
             limit: optional<double>
             created_before: optional<datetime>
             user_identifier_key: optional<string>
+            custom_metadata_has: >-
+              optional<map<string,
+              optional<ThermostatsListRequestCustomMetadataHasValue>>>
       response:
         docs: OK
         type: ThermostatsListResponse

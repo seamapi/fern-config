@@ -42,12 +42,14 @@ types:
       - seam_bridge
       - yale_access
       - hid_cm
+      - google_nest
 
   ConnectWebviewsCreateRequestCustomMetadataValue:
     discriminated: false
     union:
       - string
       - boolean
+      - optional<string>
 
   ConnectWebviewsCreateResponse:
     properties:
@@ -62,6 +64,13 @@ types:
     properties:
       connect_webview: root.ConnectWebview
       ok: boolean
+
+  ConnectWebviewsListRequestCustomMetadataHasValue:
+    discriminated: false
+    union:
+      - string
+      - boolean
+      - optional<string>
 
   ConnectWebviewsListResponse:
     properties:
@@ -88,7 +97,7 @@ service:
             provider_category: optional<root.ProviderCategory>
             custom_metadata: >-
               optional<map<string,
-              ConnectWebviewsCreateRequestCustomMetadataValue>>
+              optional<ConnectWebviewsCreateRequestCustomMetadataValue>>>
             automatically_manage_new_devices: optional<boolean>
             wait_for_device_creation: optional<boolean>
       response:
@@ -144,6 +153,13 @@ service:
         body:
           properties:
             user_identifier_key: optional<string>
+            custom_metadata_has:
+              docs: >-
+                Returns devices where the webview's custom_metadata contains all
+                of the provided key/value pairs.
+              type: >-
+                optional<map<string,
+                optional<ConnectWebviewsListRequestCustomMetadataHasValue>>>
       response:
         docs: OK
         type: ConnectWebviewsListResponse

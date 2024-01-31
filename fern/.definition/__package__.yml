@@ -196,6 +196,13 @@ types:
       user_identity_ids: list<string>
       workspace_id: string
 
+  ClimateSettingScheduleHvacModeSetting:
+    enum:
+      - "off"
+      - heat
+      - cool
+      - heat_cool
+
   ClimateSettingSchedule:
     properties:
       climate_setting_schedule_id: string
@@ -208,7 +215,7 @@ types:
       errors: optional<unknown>
       automatic_heating_enabled: optional<boolean>
       automatic_cooling_enabled: optional<boolean>
-      hvac_mode_setting: optional<HvacModeSetting>
+      hvac_mode_setting: optional<ClimateSettingScheduleHvacModeSetting>
       cooling_set_point_celsius: optional<double>
       heating_set_point_celsius: optional<double>
       cooling_set_point_fahrenheit: optional<double>
@@ -226,6 +233,7 @@ types:
     union:
       - string
       - boolean
+      - optional<string>
 
   ConnectWebview:
     properties:
@@ -243,7 +251,7 @@ types:
       status: ConnectWebviewStatus
       custom_redirect_url: optional<string>
       custom_redirect_failure_url: optional<string>
-      custom_metadata: map<string, ConnectWebviewCustomMetadataValue>
+      custom_metadata: map<string, optional<ConnectWebviewCustomMetadataValue>>
       automatically_manage_new_devices: boolean
       wait_for_device_creation: boolean
       authorized_at: optional<datetime>
@@ -262,6 +270,7 @@ types:
     union:
       - string
       - boolean
+      - optional<string>
 
   ConnectedAccount:
     properties:
@@ -272,7 +281,7 @@ types:
       account_type_display_name: string
       errors: optional<unknown>
       warnings: optional<unknown>
-      custom_metadata: optional<map<string, ConnectedAccountCustomMetadataValue>>
+      custom_metadata: optional<map<string, optional<ConnectedAccountCustomMetadataValue>>>
       automatically_manage_new_devices: boolean
 
   DeviceCapabilitiesSupportedItem:
@@ -323,6 +332,16 @@ types:
     properties:
       level: double
       status: DevicePropertiesBatteryStatus
+
+  DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem:
+    properties:
+      endpoint_id: string
+      is_active: boolean
+
+  DevicePropertiesAssaAbloyCredentialServiceMetadata:
+    properties:
+      has_active_endpoint: boolean
+      endpoints: list<DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem>
 
   DevicePropertiesAugustMetadata:
     properties:
@@ -570,16 +589,6 @@ types:
     properties:
       level: double
 
-  DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem:
-    properties:
-      endpoint_id: string
-      is_active: boolean
-
-  DevicePropertiesAssaAbloyCredentialServiceMetadata:
-    properties:
-      has_active_endpoint: boolean
-      endpoints: list<DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem>
-
   DeviceProperties:
     docs: Properties of the device.
     properties:
@@ -639,6 +648,7 @@ types:
       supports_offline_access_codes:
         docs: Deprecated. Use offline_access_codes_enabled.
         type: optional<boolean>
+      assa_abloy_credential_service_metadata: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
       august_metadata: optional<DevicePropertiesAugustMetadata>
       avigilon_alta_metadata: optional<DevicePropertiesAvigilonAltaMetadata>
       schlage_metadata: optional<DevicePropertiesSchlageMetadata>
@@ -663,6 +673,7 @@ types:
       hubitat_metadata: optional<DevicePropertiesHubitatMetadata>
       dormakaba_oracode_metadata: optional<DevicePropertiesDormakabaOracodeMetadata>
       wyze_metadata: optional<DevicePropertiesWyzeMetadata>
+      _experimental_supported_code_from_access_codes_lengths: optional<list<double>>
       code_constraints: optional<list<DevicePropertiesCodeConstraintsItem>>
       supported_code_lengths: optional<list<double>>
       max_active_codes_supported: optional<double>
@@ -671,7 +682,6 @@ types:
       locked: optional<boolean>
       keypad_battery: optional<DevicePropertiesKeypadBattery>
       door_open: optional<boolean>
-      assa_abloy_credential_service_metadata: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
 
   DeviceLocation:
     docs: Location information for the device.
@@ -692,6 +702,13 @@ types:
     properties:
       warning_code: string
       message: string
+
+  DeviceCustomMetadataValue:
+    discriminated: false
+    union:
+      - string
+      - boolean
+      - optional<string>
 
   Device:
     properties:
@@ -750,6 +767,7 @@ types:
       is_managed:
         type: boolean
         docs: Indicates whether Seam manages the device.
+      custom_metadata: optional<map<string, optional<DeviceCustomMetadataValue>>>
 
   UnmanagedDeviceCapabilitiesSupportedItem:
     enum:
@@ -1094,292 +1112,6 @@ types:
       - battery
       - phone
 
-  PhonePropertiesModel:
-    properties:
-      display_name:
-        type: string
-        docs: Display name of the device model.
-      manufacturer_display_name:
-        type: string
-        docs: >-
-          Display name that corresponds to the manufacturer-specific terminology
-          for the device.
-      offline_access_codes_supported:
-        docs: Indicates whether the device supports offline access codes.
-        type: optional<boolean>
-      online_access_codes_supported:
-        docs: Indicates whether the device supports online access codes.
-        type: optional<boolean>
-      accessory_keypad_supported:
-        docs: Indicates whether the device supports an accessory keypad.
-        type: optional<boolean>
-
-  PhonePropertiesBatteryStatus:
-    enum:
-      - critical
-      - low
-      - good
-      - full
-
-  PhonePropertiesBattery:
-    docs: >-
-      Represents the current status of the battery charge level. Values are
-      "critical," which indicates an extremely low level, suggesting imminent
-      shutdown or an urgent need for charging; "low," which signifies that the
-      battery is under the preferred threshold and should be charged soon;
-      "good," which denotes a satisfactory charge level, adequate for normal use
-      without the immediate need for recharging; and "full," which represents a
-      battery that is fully charged, providing the maximum duration of usage.
-    properties:
-      level: double
-      status: PhonePropertiesBatteryStatus
-
-  PhonePropertiesAugustMetadata:
-    properties:
-      lock_id: string
-      lock_name: string
-      house_name: string
-      has_keypad: boolean
-      keypad_battery_level: optional<string>
-      model: optional<string>
-      house_id: optional<string>
-
-  PhonePropertiesAvigilonAltaMetadata:
-    properties:
-      entry_name: string
-      org_name: string
-      zone_id: double
-      zone_name: string
-      site_id: double
-      site_name: string
-
-  PhonePropertiesSchlageMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      access_code_length: double
-      model: optional<string>
-
-  PhonePropertiesSmartthingsMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      model: optional<string>
-      location_id: optional<string>
-
-  PhonePropertiesLocklyMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      model: optional<string>
-
-  PhonePropertiesNukiMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      keypad_battery_critical: optional<boolean>
-
-  PhonePropertiesKwiksetMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      model_number: string
-
-  PhonePropertiesSaltoMetadata:
-    properties:
-      lock_id: string
-      customer_reference: string
-      lock_type: string
-      battery_level: string
-      locked_state: string
-      model: optional<string>
-
-  PhonePropertiesGenieMetadata:
-    properties:
-      device_name: string
-      door_name: string
-
-  PhonePropertiesBrivoMetadata:
-    properties:
-      device_name: string
-
-  PhonePropertiesIglooMetadata:
-    properties:
-      device_id: string
-      bridge_id: string
-      model: optional<string>
-
-  PhonePropertiesNoiseawareMetadataDeviceModel:
-    enum:
-      - indoor
-      - outdoor
-
-  PhonePropertiesNoiseawareMetadata:
-    properties:
-      device_model: PhonePropertiesNoiseawareMetadataDeviceModel
-      noise_level_nrs: double
-      noise_level_decibel: double
-      device_name: string
-      device_id: string
-
-  PhonePropertiesMinutMetadataLatestSensorValuesTemperature:
-    properties:
-      time: string
-      value: double
-
-  PhonePropertiesMinutMetadataLatestSensorValuesSound:
-    properties:
-      time: string
-      value: double
-
-  PhonePropertiesMinutMetadataLatestSensorValuesHumidity:
-    properties:
-      time: string
-      value: double
-
-  PhonePropertiesMinutMetadataLatestSensorValuesPressure:
-    properties:
-      time: string
-      value: double
-
-  PhonePropertiesMinutMetadataLatestSensorValuesAccelerometerZ:
-    properties:
-      time: string
-      value: double
-
-  PhonePropertiesMinutMetadataLatestSensorValues:
-    properties:
-      temperature: PhonePropertiesMinutMetadataLatestSensorValuesTemperature
-      sound: PhonePropertiesMinutMetadataLatestSensorValuesSound
-      humidity: PhonePropertiesMinutMetadataLatestSensorValuesHumidity
-      pressure: PhonePropertiesMinutMetadataLatestSensorValuesPressure
-      accelerometer_z: PhonePropertiesMinutMetadataLatestSensorValuesAccelerometerZ
-
-  PhonePropertiesMinutMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      latest_sensor_values: PhonePropertiesMinutMetadataLatestSensorValues
-
-  PhonePropertiesFourSuitesMetadata:
-    properties:
-      device_id: double
-      device_name: string
-      reclose_delay_in_seconds: double
-
-  PhonePropertiesTwoNMetadata:
-    properties:
-      device_id: double
-      device_name: string
-
-  PhonePropertiesControlbywebMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      relay_name: optional<string>
-
-  PhonePropertiesTtlockMetadata:
-    properties:
-      lock_id: double
-      lock_alias: string
-
-  PhonePropertiesSeamBridgeMetadataUnlockMethod:
-    enum:
-      - bridge
-      - doorking
-
-  PhonePropertiesSeamBridgeMetadata:
-    properties:
-      unlock_method: optional<PhonePropertiesSeamBridgeMetadataUnlockMethod>
-      device_num: double
-      name: string
-
-  PhonePropertiesIgloohomeMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      bridge_id: optional<string>
-      bridge_name: optional<string>
-
-  PhonePropertiesNestMetadata:
-    properties:
-      nest_device_id: string
-      device_name: string
-      custom_name: string
-
-  PhonePropertiesEcobeeMetadata:
-    properties:
-      ecobee_device_id: string
-      device_name: string
-
-  PhonePropertiesHubitatMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      device_label: string
-
-  PhonePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem:
-    properties:
-      name: string
-      prefix: double
-      check_in_time: string
-      check_out_time: string
-      is_24_hour: boolean
-      is_biweekly_mode: boolean
-      is_one_shot: boolean
-      is_master: boolean
-      ext_dormakaba_oracode_user_level_prefix: double
-      dormakaba_oracode_user_level_id: string
-
-  PhonePropertiesDormakabaOracodeMetadata:
-    properties:
-      door_id: double
-      door_name: string
-      device_id: optional<double>
-      site_id: double
-      site_name: string
-      iana_timezone: optional<string>
-      predefined_time_slots: >-
-        optional<list<PhonePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem>>
-
-  PhonePropertiesWyzeMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      product_name: string
-      product_type: string
-      product_model: string
-      device_info_model: string
-
-  PhonePropertiesCodeConstraintsItemZeroConstraintType:
-    enum:
-      - no_zeros
-      - cannot_start_with_12
-      - no_triple_consecutive_ints
-      - cannot_specify_pin_code
-      - pin_code_matches_existing_set
-      - start_date_in_future
-
-  PhonePropertiesCodeConstraintsItemZero:
-    properties:
-      constraint_type: PhonePropertiesCodeConstraintsItemZeroConstraintType
-
-  PhonePropertiesCodeConstraintsItemMaxLength:
-    properties:
-      constraint_type: literal<"name_length">
-      min_length: optional<double>
-      max_length: optional<double>
-
-  PhonePropertiesCodeConstraintsItem:
-    discriminated: false
-    union:
-      - PhonePropertiesCodeConstraintsItemZero
-      - PhonePropertiesCodeConstraintsItemMaxLength
-
-  PhonePropertiesKeypadBattery:
-    properties:
-      level: double
-
   PhonePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem:
     properties:
       endpoint_id: string
@@ -1391,96 +1123,7 @@ types:
       endpoints: list<PhonePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem>
 
   PhoneProperties:
-    docs: Properties of the device.
     properties:
-      online:
-        type: boolean
-        docs: Indicates whether the device is online.
-      name:
-        type: string
-        docs: >-
-          Name of the device. Enables administrators and users to identify the
-          device easily, especially when there are numerous devices.
-      model: PhonePropertiesModel
-      has_direct_power:
-        docs: Indicates whether the device has direct power.
-        type: optional<boolean>
-      battery_level:
-        docs: >-
-          Indicates the battery level of the device as a decimal value between 0
-          and 1, inclusive.
-        type: optional<double>
-      battery:
-        docs: >-
-          Represents the current status of the battery charge level. Values are
-          "critical," which indicates an extremely low level, suggesting
-          imminent shutdown or an urgent need for charging; "low," which
-          signifies that the battery is under the preferred threshold and should
-          be charged soon; "good," which denotes a satisfactory charge level,
-          adequate for normal use without the immediate need for recharging; and
-          "full," which represents a battery that is fully charged, providing
-          the maximum duration of usage.
-        type: optional<PhonePropertiesBattery>
-      manufacturer:
-        docs: Manufacturer of the device.
-        type: optional<string>
-      image_url:
-        docs: Image URL for the device.
-        type: optional<string>
-      image_alt_text:
-        docs: Alt text for the device image.
-        type: optional<string>
-      serial_number:
-        docs: Serial number of the device.
-        type: optional<string>
-      online_access_codes_enabled:
-        docs: >-
-          Indicates whether it is currently possible to use online access codes
-          for the device.
-        type: optional<boolean>
-      offline_access_codes_enabled:
-        docs: >-
-          Indicates whether it is currently possible to use offline access codes
-          for the device.
-        type: optional<boolean>
-      supports_accessory_keypad:
-        docs: Deprecated. Use model.accessory_keypad_supported.
-        type: optional<boolean>
-      supports_offline_access_codes:
-        docs: Deprecated. Use offline_access_codes_enabled.
-        type: optional<boolean>
-      august_metadata: optional<PhonePropertiesAugustMetadata>
-      avigilon_alta_metadata: optional<PhonePropertiesAvigilonAltaMetadata>
-      schlage_metadata: optional<PhonePropertiesSchlageMetadata>
-      smartthings_metadata: optional<PhonePropertiesSmartthingsMetadata>
-      lockly_metadata: optional<PhonePropertiesLocklyMetadata>
-      nuki_metadata: optional<PhonePropertiesNukiMetadata>
-      kwikset_metadata: optional<PhonePropertiesKwiksetMetadata>
-      salto_metadata: optional<PhonePropertiesSaltoMetadata>
-      genie_metadata: optional<PhonePropertiesGenieMetadata>
-      brivo_metadata: optional<PhonePropertiesBrivoMetadata>
-      igloo_metadata: optional<PhonePropertiesIglooMetadata>
-      noiseaware_metadata: optional<PhonePropertiesNoiseawareMetadata>
-      minut_metadata: optional<PhonePropertiesMinutMetadata>
-      four_suites_metadata: optional<PhonePropertiesFourSuitesMetadata>
-      two_n_metadata: optional<PhonePropertiesTwoNMetadata>
-      controlbyweb_metadata: optional<PhonePropertiesControlbywebMetadata>
-      ttlock_metadata: optional<PhonePropertiesTtlockMetadata>
-      seam_bridge_metadata: optional<PhonePropertiesSeamBridgeMetadata>
-      igloohome_metadata: optional<PhonePropertiesIgloohomeMetadata>
-      nest_metadata: optional<PhonePropertiesNestMetadata>
-      ecobee_metadata: optional<PhonePropertiesEcobeeMetadata>
-      hubitat_metadata: optional<PhonePropertiesHubitatMetadata>
-      dormakaba_oracode_metadata: optional<PhonePropertiesDormakabaOracodeMetadata>
-      wyze_metadata: optional<PhonePropertiesWyzeMetadata>
-      code_constraints: optional<list<PhonePropertiesCodeConstraintsItem>>
-      supported_code_lengths: optional<list<double>>
-      max_active_codes_supported: optional<double>
-      supports_backup_access_code_pool: optional<boolean>
-      has_native_entry_events: optional<boolean>
-      locked: optional<boolean>
-      keypad_battery: optional<PhonePropertiesKeypadBattery>
-      door_open: optional<boolean>
       assa_abloy_credential_service_metadata: optional<PhonePropertiesAssaAbloyCredentialServiceMetadata>
 
   PhoneLocation:
@@ -1503,15 +1146,12 @@ types:
       warning_code: string
       message: string
 
-  PhoneAssaAbloyCredentialServiceMetadataEndpointsItem:
-    properties:
-      endpoint_id: string
-      is_active: boolean
-
-  PhoneAssaAbloyCredentialServiceMetadata:
-    properties:
-      has_active_endpoint: boolean
-      endpoints: list<PhoneAssaAbloyCredentialServiceMetadataEndpointsItem>
+  PhoneCustomMetadataValue:
+    discriminated: false
+    union:
+      - string
+      - boolean
+      - optional<string>
 
   Phone:
     properties:
@@ -1532,9 +1172,7 @@ types:
           "battery," which indicates that the device can manage battery life and
           health.
         type: list<PhoneCapabilitiesSupportedItem>
-      properties:
-        type: PhoneProperties
-        docs: Properties of the device.
+      properties: PhoneProperties
       location:
         docs: Location information for the device.
         type: optional<PhoneLocation>
@@ -1565,7 +1203,7 @@ types:
       is_managed:
         type: boolean
         docs: Indicates whether Seam manages the device.
-      assa_abloy_credential_service_metadata: optional<PhoneAssaAbloyCredentialServiceMetadata>
+      custom_metadata: optional<map<string, optional<PhoneCustomMetadataValue>>>
 
   DeviceType:
     enum:

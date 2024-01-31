@@ -23,7 +23,7 @@ service:
   endpoints:
     get_health:
       path: /health/get_health
-      method: GET
+      method: POST
       auth: false
       display-name: /health/get_health
       response:

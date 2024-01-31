@@ -1,12 +1,31 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
+  EntrancesGetResponseAcsEntranceVisionlineMetadataProfilesItemVisionlineDoorProfileType:
+    enum:
+      - BLE
+      - commonDoor
+      - touch
+
+  EntrancesGetResponseAcsEntranceVisionlineMetadataProfilesItem:
+    properties:
+      visionline_door_profile_id: string
+      visionline_door_profile_type: >-
+        EntrancesGetResponseAcsEntranceVisionlineMetadataProfilesItemVisionlineDoorProfileType
+
+  EntrancesGetResponseAcsEntranceVisionlineMetadata:
+    properties:
+      door_name: string
+      profiles: >-
+        optional<list<EntrancesGetResponseAcsEntranceVisionlineMetadataProfilesItem>>
+
   EntrancesGetResponseAcsEntrance:
     properties:
       acs_entrance_id: string
       display_name: string
       acs_system_id: string
       created_at: datetime
+      visionline_metadata: optional<EntrancesGetResponseAcsEntranceVisionlineMetadata>
 
   EntrancesGetResponse:
     properties:
@@ -17,16 +36,71 @@ types:
     properties:
       ok: boolean
 
+  EntrancesListResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType:
+    enum:
+      - BLE
+      - commonDoor
+      - touch
+
+  EntrancesListResponseAcsEntrancesItemVisionlineMetadataProfilesItem:
+    properties:
+      visionline_door_profile_id: string
+      visionline_door_profile_type: >-
+        EntrancesListResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType
+
+  EntrancesListResponseAcsEntrancesItemVisionlineMetadata:
+    properties:
+      door_name: string
+      profiles: >-
+        optional<list<EntrancesListResponseAcsEntrancesItemVisionlineMetadataProfilesItem>>
+
   EntrancesListResponseAcsEntrancesItem:
     properties:
       acs_entrance_id: string
       display_name: string
       acs_system_id: string
       created_at: datetime
+      visionline_metadata: optional<EntrancesListResponseAcsEntrancesItemVisionlineMetadata>
 
   EntrancesListResponse:
     properties:
       acs_entrances: list<EntrancesListResponseAcsEntrancesItem>
+      ok: boolean
+
+  EntrancesListCredentialsWithAccessResponseAcsCredentialsItemAccessMethod:
+    enum:
+      - code
+      - card
+      - mobile_key
+
+  EntrancesListCredentialsWithAccessResponseAcsCredentialsItemExternalType:
+    enum:
+      - pti_card
+      - brivo_credential
+      - hid_credential
+      - visionline_card
+
+  EntrancesListCredentialsWithAccessResponseAcsCredentialsItem:
+    properties:
+      acs_credential_id: string
+      acs_user_id: optional<string>
+      acs_credential_pool_id: optional<string>
+      acs_system_id: string
+      display_name: string
+      code: optional<string>
+      access_method: EntrancesListCredentialsWithAccessResponseAcsCredentialsItemAccessMethod
+      external_type: >-
+        optional<EntrancesListCredentialsWithAccessResponseAcsCredentialsItemExternalType>
+      external_type_display_name: optional<string>
+      created_at: datetime
+      workspace_id: string
+      starts_at: optional<string>
+      ends_at: optional<string>
+      is_multi_phone_sync_credential: optional<boolean>
+
+  EntrancesListCredentialsWithAccessResponse:
+    properties:
+      acs_credentials: list<EntrancesListCredentialsWithAccessResponseAcsCredentialsItem>
       ok: boolean
 
 imports:
@@ -85,6 +159,25 @@ service:
       response:
         docs: OK
         type: EntrancesListResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    list_credentials_with_access:
+      path: /acs/entrances/list_credentials_with_access
+      method: POST
+      auth: true
+      display-name: /acs/entrances/list_credentials_with_access
+      request:
+        name: EntrancesListCredentialsWithAccessRequest
+        body:
+          properties:
+            acs_entrance_id: optional<string>
+            acs_entrance_ids: optional<list<string>>
+            include_if: optional<list<literal<"visionline_metadata.is_valid">>>
+      response:
+        docs: OK
+        type: EntrancesListCredentialsWithAccessResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -9641,6 +9641,12 @@
   },
   "components": {
     "securitySchemes": {
+      "api_key": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key",
+        "x-fern-token-variable-name": "apiKey"
+      },
       "seam_workspace": {
         "type": "apiKey",
         "in": "header",
@@ -9655,46 +9661,6 @@
         "type": "apiKey",
         "in": "header",
         "name": "client-session-token"
-      },
-      "access_token": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "API Token"
-      },
-      "pat_with_workspace": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "API Token"
-      },
-      "pat_without_workspace": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "API Token"
-      },
-      "client_session": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "Client Session Token"
-      },
-      "user_session": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "User Session Token"
-      },
-      "user_session_without_workspace": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "User Session Token"
-      },
-      "console_session": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "Console Session Token"
-      },
-      "api_key": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "API Key"
       }
     },
     "schemas": {

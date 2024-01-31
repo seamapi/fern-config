@@ -9,6 +9,13 @@ types:
       device: root.UnmanagedDevice
       ok: boolean
 
+  UnmanagedListRequestCustomMetadataHasValue:
+    discriminated: false
+    union:
+      - string
+      - boolean
+      - optional<string>
+
   UnmanagedListResponse:
     properties:
       devices: list<root.UnmanagedDevice>
@@ -62,6 +69,9 @@ service:
             limit: optional<double>
             created_before: optional<datetime>
             user_identifier_key: optional<string>
+            custom_metadata_has: >-
+              optional<map<string,
+              optional<UnmanagedListRequestCustomMetadataHasValue>>>
       response:
         docs: OK
         type: UnmanagedListResponse

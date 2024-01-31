@@ -24,10 +24,24 @@ types:
       connected_account: root.ConnectedAccount
       ok: boolean
 
+  ConnectedAccountsListRequestCustomMetadataHasValue:
+    discriminated: false
+    union:
+      - string
+      - boolean
+      - optional<string>
+
   ConnectedAccountsListResponse:
     properties:
       connected_accounts: list<root.ConnectedAccount>
       ok: boolean
+
+  ConnectedAccountsUpdateRequestCustomMetadataValue:
+    discriminated: false
+    union:
+      - string
+      - boolean
+      - optional<string>
 
   ConnectedAccountsUpdateResponse:
     properties:
@@ -79,6 +93,17 @@ service:
       method: POST
       auth: true
       display-name: /connected_accounts/list
+      request:
+        name: ConnectedAccountsListRequest
+        body:
+          properties:
+            custom_metadata_has:
+              docs: >-
+                Returns devices where the account's custom_metadata contains all
+                of the provided key/value pairs.
+              type: >-
+                optional<map<string,
+                optional<ConnectedAccountsListRequestCustomMetadataHasValue>>>
       response:
         docs: OK
         type: ConnectedAccountsListResponse
@@ -98,6 +123,9 @@ service:
           properties:
             connected_account_id: string
             automatically_manage_new_devices: optional<boolean>
+            custom_metadata: >-
+              optional<map<string,
+              optional<ConnectedAccountsUpdateRequestCustomMetadataValue>>>
       response:
         docs: OK
         type: ConnectedAccountsUpdateResponse

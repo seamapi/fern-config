@@ -53,7 +53,7 @@ service:
       response:
         docs: OK
         type: NoiseThresholdsCreateResponse
-        property: action_attempt
+        property: noise_threshold
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

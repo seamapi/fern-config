@@ -4185,9 +4185,9 @@
           "401": { "description": "Unauthorized" }
         },
         "security": [
-          { "seam_workspace": [], "access_token": [] },
-          { "seam_client_session_token": [] },
-          { "client_session_token": [] }
+          { "api_key": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] }
         ],
         "requestBody": {
           "content": {
@@ -5218,6 +5218,405 @@
         "operationId": "workspacesResetSandboxPost"
       }
     },
+    "/access_codes/simulate/create_unmanaged_access_code": {
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "simulate"],
+        "x-fern-sdk-method-name": "create_unmanaged_access_code",
+        "x-fern-sdk-return-value": "access_code",
+        "summary": "/access_codes/simulate/create_unmanaged_access_code",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_code": {
+                      "$ref": "#/components/schemas/unmanaged_access_code"
+                    },
+                    "ok": { "type": "boolean" }
+                  },
+                  "required": ["access_code", "ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "client_session": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_id": { "type": "string", "format": "uuid" },
+                  "name": { "type": "string" },
+                  "code": {
+                    "type": "string",
+                    "minLength": 4,
+                    "maxLength": 8,
+                    "pattern": "^\\d+$"
+                  }
+                },
+                "required": ["device_id", "name", "code"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesSimulateCreateUnmanagedAccessCodePost"
+      }
+    },
+    "/access_codes/unmanaged/convert_to_managed": {
+      "patch": {
+        "x-fern-ignore": true,
+        "summary": "/access_codes/unmanaged/convert_to_managed",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "client_session": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_code_id": { "type": "string", "format": "uuid" },
+                  "is_external_modification_allowed": { "type": "boolean" },
+                  "allow_external_modification": { "type": "boolean" },
+                  "force": { "type": "boolean" },
+                  "sync": { "default": false, "type": "boolean" }
+                },
+                "required": ["access_code_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedConvertToManagedPatch"
+      },
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
+        "x-fern-sdk-method-name": "convert_to_managed",
+        "summary": "/access_codes/unmanaged/convert_to_managed",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "client_session": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_code_id": { "type": "string", "format": "uuid" },
+                  "is_external_modification_allowed": { "type": "boolean" },
+                  "allow_external_modification": { "type": "boolean" },
+                  "force": { "type": "boolean" },
+                  "sync": { "default": false, "type": "boolean" }
+                },
+                "required": ["access_code_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedConvertToManagedPost"
+      }
+    },
+    "/access_codes/unmanaged/delete": {
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
+        "x-fern-sdk-method-name": "delete",
+        "x-fern-sdk-return-value": "action_attempt",
+        "summary": "/access_codes/unmanaged/delete",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action_attempt": {
+                      "$ref": "#/components/schemas/action_attempt"
+                    },
+                    "ok": { "type": "boolean" }
+                  },
+                  "required": ["action_attempt", "ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "client_session": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_code_id": { "type": "string", "format": "uuid" },
+                  "sync": { "default": false, "type": "boolean" }
+                },
+                "required": ["access_code_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedDeletePost"
+      }
+    },
+    "/access_codes/unmanaged/get": {
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
+        "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "access_code",
+        "summary": "/access_codes/unmanaged/get",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_code": {
+                      "$ref": "#/components/schemas/unmanaged_access_code"
+                    },
+                    "ok": { "type": "boolean" }
+                  },
+                  "required": ["access_code", "ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "client_session": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_id": { "type": "string", "format": "uuid" },
+                  "access_code_id": { "type": "string", "format": "uuid" },
+                  "code": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedGetPost"
+      }
+    },
+    "/access_codes/unmanaged/list": {
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
+        "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "access_codes",
+        "summary": "/access_codes/unmanaged/list",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_codes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/unmanaged_access_code"
+                      }
+                    },
+                    "ok": { "type": "boolean" }
+                  },
+                  "required": ["access_codes", "ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "client_session": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_id": { "type": "string", "format": "uuid" },
+                  "user_identifier_key": { "type": "string" }
+                },
+                "required": ["device_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedListPost"
+      }
+    },
+    "/access_codes/unmanaged/update": {
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
+        "x-fern-sdk-method-name": "update",
+        "summary": "/access_codes/unmanaged/update",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "client_session": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_code_id": { "type": "string", "format": "uuid" },
+                  "is_managed": { "type": "boolean" },
+                  "allow_external_modification": { "type": "boolean" },
+                  "is_external_modification_allowed": { "type": "boolean" },
+                  "force": { "type": "boolean" }
+                },
+                "required": ["access_code_id", "is_managed"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedUpdatePost"
+      },
+      "patch": {
+        "x-fern-ignore": true,
+        "summary": "/access_codes/unmanaged/update",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "client_session": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_code_id": { "type": "string", "format": "uuid" },
+                  "is_managed": { "type": "boolean" },
+                  "allow_external_modification": { "type": "boolean" },
+                  "is_external_modification_allowed": { "type": "boolean" },
+                  "force": { "type": "boolean" }
+                },
+                "required": ["access_code_id", "is_managed"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedUpdatePatch"
+      }
+    },
     "/acs/access_groups/add_user": {
       "post": {
         "x-fern-sdk-group-name": ["acs", "access_groups"],
@@ -5941,10 +6340,6 @@
                   },
                   "code": { "type": "string", "pattern": "^\\d+$" },
                   "is_multi_phone_sync_credential": { "type": "boolean" },
-                  "assa_abloy_credential_service_mobile_endpoint_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
                   "external_type": {
                     "type": "string",
                     "enum": [
@@ -5954,11 +6349,20 @@
                       "visionline_card"
                     ]
                   },
-                  "card_format": {
-                    "type": "string",
-                    "enum": ["TLCode", "rfid48"]
+                  "visionline_metadata": {
+                    "type": "object",
+                    "properties": {
+                      "assa_abloy_credential_service_mobile_endpoint_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "card_format": {
+                        "type": "string",
+                        "enum": ["TLCode", "rfid48"]
+                      },
+                      "is_override_key": { "type": "boolean" }
+                    }
                   },
-                  "is_override_key": { "type": "boolean" },
                   "starts_at": { "type": "string", "format": "date-time" },
                   "ends_at": { "type": "string", "format": "date-time" }
                 },
@@ -7664,405 +8068,6 @@
         "operationId": "acsUsersUpdatePatch"
       }
     },
-    "/access_codes/simulate/create_unmanaged_access_code": {
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "simulate"],
-        "x-fern-sdk-method-name": "create_unmanaged_access_code",
-        "x-fern-sdk-return-value": "access_code",
-        "summary": "/access_codes/simulate/create_unmanaged_access_code",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "access_code": {
-                      "$ref": "#/components/schemas/unmanaged_access_code"
-                    },
-                    "ok": { "type": "boolean" }
-                  },
-                  "required": ["access_code", "ok"]
-                }
-              }
-            }
-          },
-          "400": { "description": "Bad Request" },
-          "401": { "description": "Unauthorized" }
-        },
-        "security": [
-          { "client_session": [] },
-          { "pat_with_workspace": [] },
-          { "console_session": [] },
-          { "api_key": [] }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_id": { "type": "string", "format": "uuid" },
-                  "name": { "type": "string" },
-                  "code": {
-                    "type": "string",
-                    "minLength": 4,
-                    "maxLength": 8,
-                    "pattern": "^\\d+$"
-                  }
-                },
-                "required": ["device_id", "name", "code"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesSimulateCreateUnmanagedAccessCodePost"
-      }
-    },
-    "/access_codes/unmanaged/convert_to_managed": {
-      "patch": {
-        "x-fern-ignore": true,
-        "summary": "/access_codes/unmanaged/convert_to_managed",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": { "ok": { "type": "boolean" } },
-                  "required": ["ok"]
-                }
-              }
-            }
-          },
-          "400": { "description": "Bad Request" },
-          "401": { "description": "Unauthorized" }
-        },
-        "security": [
-          { "client_session": [] },
-          { "pat_with_workspace": [] },
-          { "console_session": [] },
-          { "api_key": [] }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "access_code_id": { "type": "string", "format": "uuid" },
-                  "is_external_modification_allowed": { "type": "boolean" },
-                  "allow_external_modification": { "type": "boolean" },
-                  "force": { "type": "boolean" },
-                  "sync": { "default": false, "type": "boolean" }
-                },
-                "required": ["access_code_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedConvertToManagedPatch"
-      },
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
-        "x-fern-sdk-method-name": "convert_to_managed",
-        "summary": "/access_codes/unmanaged/convert_to_managed",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": { "ok": { "type": "boolean" } },
-                  "required": ["ok"]
-                }
-              }
-            }
-          },
-          "400": { "description": "Bad Request" },
-          "401": { "description": "Unauthorized" }
-        },
-        "security": [
-          { "client_session": [] },
-          { "pat_with_workspace": [] },
-          { "console_session": [] },
-          { "api_key": [] }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "access_code_id": { "type": "string", "format": "uuid" },
-                  "is_external_modification_allowed": { "type": "boolean" },
-                  "allow_external_modification": { "type": "boolean" },
-                  "force": { "type": "boolean" },
-                  "sync": { "default": false, "type": "boolean" }
-                },
-                "required": ["access_code_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedConvertToManagedPost"
-      }
-    },
-    "/access_codes/unmanaged/delete": {
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
-        "x-fern-sdk-method-name": "delete",
-        "x-fern-sdk-return-value": "action_attempt",
-        "summary": "/access_codes/unmanaged/delete",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "action_attempt": {
-                      "$ref": "#/components/schemas/action_attempt"
-                    },
-                    "ok": { "type": "boolean" }
-                  },
-                  "required": ["action_attempt", "ok"]
-                }
-              }
-            }
-          },
-          "400": { "description": "Bad Request" },
-          "401": { "description": "Unauthorized" }
-        },
-        "security": [
-          { "client_session": [] },
-          { "pat_with_workspace": [] },
-          { "console_session": [] },
-          { "api_key": [] }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "access_code_id": { "type": "string", "format": "uuid" },
-                  "sync": { "default": false, "type": "boolean" }
-                },
-                "required": ["access_code_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedDeletePost"
-      }
-    },
-    "/access_codes/unmanaged/get": {
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
-        "x-fern-sdk-method-name": "get",
-        "x-fern-sdk-return-value": "access_code",
-        "summary": "/access_codes/unmanaged/get",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "access_code": {
-                      "$ref": "#/components/schemas/unmanaged_access_code"
-                    },
-                    "ok": { "type": "boolean" }
-                  },
-                  "required": ["access_code", "ok"]
-                }
-              }
-            }
-          },
-          "400": { "description": "Bad Request" },
-          "401": { "description": "Unauthorized" }
-        },
-        "security": [
-          { "client_session": [] },
-          { "pat_with_workspace": [] },
-          { "console_session": [] },
-          { "api_key": [] }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_id": { "type": "string", "format": "uuid" },
-                  "access_code_id": { "type": "string", "format": "uuid" },
-                  "code": { "type": "string" }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedGetPost"
-      }
-    },
-    "/access_codes/unmanaged/list": {
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
-        "x-fern-sdk-method-name": "list",
-        "x-fern-sdk-return-value": "access_codes",
-        "summary": "/access_codes/unmanaged/list",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "access_codes": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/unmanaged_access_code"
-                      }
-                    },
-                    "ok": { "type": "boolean" }
-                  },
-                  "required": ["access_codes", "ok"]
-                }
-              }
-            }
-          },
-          "400": { "description": "Bad Request" },
-          "401": { "description": "Unauthorized" }
-        },
-        "security": [
-          { "client_session": [] },
-          { "pat_with_workspace": [] },
-          { "console_session": [] },
-          { "api_key": [] }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_id": { "type": "string", "format": "uuid" },
-                  "user_identifier_key": { "type": "string" }
-                },
-                "required": ["device_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedListPost"
-      }
-    },
-    "/access_codes/unmanaged/update": {
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
-        "x-fern-sdk-method-name": "update",
-        "summary": "/access_codes/unmanaged/update",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": { "ok": { "type": "boolean" } },
-                  "required": ["ok"]
-                }
-              }
-            }
-          },
-          "400": { "description": "Bad Request" },
-          "401": { "description": "Unauthorized" }
-        },
-        "security": [
-          { "client_session": [] },
-          { "pat_with_workspace": [] },
-          { "console_session": [] },
-          { "api_key": [] }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "access_code_id": { "type": "string", "format": "uuid" },
-                  "is_managed": { "type": "boolean" },
-                  "allow_external_modification": { "type": "boolean" },
-                  "is_external_modification_allowed": { "type": "boolean" },
-                  "force": { "type": "boolean" }
-                },
-                "required": ["access_code_id", "is_managed"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedUpdatePost"
-      },
-      "patch": {
-        "x-fern-ignore": true,
-        "summary": "/access_codes/unmanaged/update",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": { "ok": { "type": "boolean" } },
-                  "required": ["ok"]
-                }
-              }
-            }
-          },
-          "400": { "description": "Bad Request" },
-          "401": { "description": "Unauthorized" }
-        },
-        "security": [
-          { "client_session": [] },
-          { "pat_with_workspace": [] },
-          { "console_session": [] },
-          { "api_key": [] }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "access_code_id": { "type": "string", "format": "uuid" },
-                  "is_managed": { "type": "boolean" },
-                  "allow_external_modification": { "type": "boolean" },
-                  "is_external_modification_allowed": { "type": "boolean" },
-                  "force": { "type": "boolean" }
-                },
-                "required": ["access_code_id", "is_managed"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedUpdatePatch"
-      }
-    },
     "/devices/unmanaged/get": {
       "post": {
         "x-fern-sdk-group-name": ["devices", "unmanaged"],
@@ -8465,7 +8470,7 @@
       "post": {
         "x-fern-sdk-group-name": ["noise_sensors", "noise_thresholds"],
         "x-fern-sdk-method-name": "create",
-        "x-fern-sdk-return-value": "action_attempt",
+        "x-fern-sdk-return-value": "noise_threshold",
         "summary": "/noise_sensors/noise_thresholds/create",
         "responses": {
           "200": {
@@ -9641,12 +9646,6 @@
   },
   "components": {
     "securitySchemes": {
-      "api_key": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "API Key",
-        "x-fern-token-variable-name": "apiKey"
-      },
       "seam_workspace": {
         "type": "apiKey",
         "in": "header",
@@ -9661,6 +9660,46 @@
         "type": "apiKey",
         "in": "header",
         "name": "client-session-token"
+      },
+      "access_token": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "pat_with_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "pat_without_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "client_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Client Session Token"
+      },
+      "user_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "User Session Token"
+      },
+      "user_session_without_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "User Session Token"
+      },
+      "console_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Console Session Token"
+      },
+      "api_key": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key"
       }
     },
     "schemas": {

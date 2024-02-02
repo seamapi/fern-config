@@ -9646,6 +9646,11 @@
   },
   "components": {
     "securitySchemes": {
+      "api_key": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key"
+      },
       "seam_workspace": {
         "type": "apiKey",
         "in": "header",
@@ -9695,11 +9700,6 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "Console Session Token"
-      },
-      "api_key": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "API Key"
       }
     },
     "schemas": {

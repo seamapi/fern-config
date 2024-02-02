@@ -1484,6 +1484,7 @@
                         "visionline",
                         "assa_abloy_credential_service",
                         "seam_bridge",
+                        "tedee",
                         "yale_access",
                         "hid_cm",
                         "google_nest"
@@ -6118,7 +6119,16 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
-                        "is_multi_phone_sync_credential": { "type": "boolean" }
+                        "is_multi_phone_sync_credential": { "type": "boolean" },
+                        "visionline_metadata": {
+                          "type": "object",
+                          "properties": {
+                            "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            }
+                          }
+                        }
                       },
                       "required": [
                         "acs_credential_id",
@@ -6208,7 +6218,16 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
-                        "is_multi_phone_sync_credential": { "type": "boolean" }
+                        "is_multi_phone_sync_credential": { "type": "boolean" },
+                        "visionline_metadata": {
+                          "type": "object",
+                          "properties": {
+                            "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            }
+                          }
+                        }
                       },
                       "required": [
                         "acs_credential_id",
@@ -6301,7 +6320,16 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
-                        "is_multi_phone_sync_credential": { "type": "boolean" }
+                        "is_multi_phone_sync_credential": { "type": "boolean" },
+                        "visionline_metadata": {
+                          "type": "object",
+                          "properties": {
+                            "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            }
+                          }
+                        }
                       },
                       "required": [
                         "acs_credential_id",
@@ -6360,7 +6388,11 @@
                         "type": "string",
                         "enum": ["TLCode", "rfid48"]
                       },
-                      "is_override_key": { "type": "boolean" }
+                      "is_override_key": { "type": "boolean" },
+                      "joiner_acs_credential_ids": {
+                        "type": "array",
+                        "items": { "type": "string", "format": "uuid" }
+                      }
                     }
                   },
                   "starts_at": { "type": "string", "format": "date-time" },
@@ -6467,7 +6499,16 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
-                        "is_multi_phone_sync_credential": { "type": "boolean" }
+                        "is_multi_phone_sync_credential": { "type": "boolean" },
+                        "visionline_metadata": {
+                          "type": "object",
+                          "properties": {
+                            "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            }
+                          }
+                        }
                       },
                       "required": [
                         "acs_credential_id",
@@ -6569,6 +6610,15 @@
                           "ends_at": { "type": "string" },
                           "is_multi_phone_sync_credential": {
                             "type": "boolean"
+                          },
+                          "visionline_metadata": {
+                            "type": "object",
+                            "properties": {
+                              "joiner_acs_credential_ids": {
+                                "type": "array",
+                                "items": { "type": "string", "format": "uuid" }
+                              }
+                            }
                           }
                         },
                         "required": [
@@ -6689,7 +6739,16 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
-                        "is_multi_phone_sync_credential": { "type": "boolean" }
+                        "is_multi_phone_sync_credential": { "type": "boolean" },
+                        "visionline_metadata": {
+                          "type": "object",
+                          "properties": {
+                            "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            }
+                          }
+                        }
                       },
                       "required": [
                         "acs_credential_id",
@@ -6779,7 +6838,16 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
-                        "is_multi_phone_sync_credential": { "type": "boolean" }
+                        "is_multi_phone_sync_credential": { "type": "boolean" },
+                        "visionline_metadata": {
+                          "type": "object",
+                          "properties": {
+                            "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            }
+                          }
+                        }
                       },
                       "required": [
                         "acs_credential_id",
@@ -6872,7 +6940,16 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
-                        "is_multi_phone_sync_credential": { "type": "boolean" }
+                        "is_multi_phone_sync_credential": { "type": "boolean" },
+                        "visionline_metadata": {
+                          "type": "object",
+                          "properties": {
+                            "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            }
+                          }
+                        }
                       },
                       "required": [
                         "acs_credential_id",
@@ -6962,7 +7039,16 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
-                        "is_multi_phone_sync_credential": { "type": "boolean" }
+                        "is_multi_phone_sync_credential": { "type": "boolean" },
+                        "visionline_metadata": {
+                          "type": "object",
+                          "properties": {
+                            "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            }
+                          }
+                        }
                       },
                       "required": [
                         "acs_credential_id",
@@ -7306,6 +7392,15 @@
                           "ends_at": { "type": "string" },
                           "is_multi_phone_sync_credential": {
                             "type": "boolean"
+                          },
+                          "visionline_metadata": {
+                            "type": "object",
+                            "properties": {
+                              "joiner_acs_credential_ids": {
+                                "type": "array",
+                                "items": { "type": "string", "format": "uuid" }
+                              }
+                            }
                           }
                         },
                         "required": [
@@ -7341,10 +7436,6 @@
                 "type": "object",
                 "properties": {
                   "acs_entrance_id": { "type": "string", "format": "uuid" },
-                  "acs_entrance_ids": {
-                    "type": "array",
-                    "items": { "type": "string", "format": "uuid" }
-                  },
                   "include_if": {
                     "type": "array",
                     "items": {
@@ -7352,7 +7443,8 @@
                       "enum": ["visionline_metadata.is_valid"]
                     }
                   }
-                }
+                },
+                "required": ["acs_entrance_id"]
               }
             }
           }
@@ -9646,11 +9738,6 @@
   },
   "components": {
     "securitySchemes": {
-      "api_key": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "API Key"
-      },
       "seam_workspace": {
         "type": "apiKey",
         "in": "header",
@@ -9665,6 +9752,46 @@
         "type": "apiKey",
         "in": "header",
         "name": "client-session-token"
+      },
+      "access_token": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "pat_with_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "pat_without_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "client_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Client Session Token"
+      },
+      "user_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "User Session Token"
+      },
+      "user_session_without_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "User Session Token"
+      },
+      "console_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Console Session Token"
+      },
+      "api_key": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key"
       }
     },
     "schemas": {

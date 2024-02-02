@@ -175,6 +175,9 @@ paths:
                   $ref: "#/components/schemas/FanMode"
 
 components: 
+  securitySchemes:
+    api_key: 
+      x-fern-token-variable-name: apiKey
   schemas: 
     DeviceType: 
       oneOf:

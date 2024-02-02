@@ -80,6 +80,10 @@ types:
       - hid_credential
       - visionline_card
 
+  EntrancesListCredentialsWithAccessResponseAcsCredentialsItemVisionlineMetadata:
+    properties:
+      joiner_acs_credential_ids: optional<list<string>>
+
   EntrancesListCredentialsWithAccessResponseAcsCredentialsItem:
     properties:
       acs_credential_id: string
@@ -97,6 +101,8 @@ types:
       starts_at: optional<string>
       ends_at: optional<string>
       is_multi_phone_sync_credential: optional<boolean>
+      visionline_metadata: >-
+        optional<EntrancesListCredentialsWithAccessResponseAcsCredentialsItemVisionlineMetadata>
 
   EntrancesListCredentialsWithAccessResponse:
     properties:
@@ -172,8 +178,7 @@ service:
         name: EntrancesListCredentialsWithAccessRequest
         body:
           properties:
-            acs_entrance_id: optional<string>
-            acs_entrance_ids: optional<list<string>>
+            acs_entrance_id: string
             include_if: optional<list<literal<"visionline_metadata.is_valid">>>
       response:
         docs: OK

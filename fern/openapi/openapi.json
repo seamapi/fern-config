@@ -10007,6 +10007,11 @@
   },
   "components": {
     "securitySchemes": {
+      "api_key": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key"
+      },
       "seam_workspace": {
         "type": "apiKey",
         "in": "header",
@@ -10021,11 +10026,6 @@
         "type": "apiKey",
         "in": "header",
         "name": "client-session-token"
-      },
-      "api_key": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "API Key"
       }
     },
     "schemas": {

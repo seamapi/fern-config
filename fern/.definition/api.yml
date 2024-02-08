@@ -6,15 +6,11 @@ environments:
   Default: https://connect.getseam.com
 default-environment: Default
 auth-schemes:
-  seam_workspace:
-    header: seam-workspace
-    name: apiKey
-    type: string
   BearerAuthScheme:
     scheme: bearer
     token:
       name: apiKey
-auth: seam_workspace
+auth: BearerAuthScheme
 headers:
   seam-client-session-token:
     type: string

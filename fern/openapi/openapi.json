@@ -149,6 +149,7 @@
                     "type": "string",
                     "enum": ["throw", "create_random_code"]
                   },
+                  "preferred_code_length": { "type": "number" },
                   "name": { "type": "string" },
                   "starts_at": { "type": "string" },
                   "ends_at": { "type": "string" },
@@ -231,6 +232,7 @@
                     "type": "string",
                     "enum": ["throw", "create_random_code"]
                   },
+                  "preferred_code_length": { "type": "number" },
                   "name": { "type": "string" },
                   "starts_at": { "type": "string" },
                   "ends_at": { "type": "string" },
@@ -1485,6 +1487,7 @@
                         "assa_abloy_credential_service",
                         "seam_bridge",
                         "tedee",
+                        "honeywell",
                         "yale_access",
                         "hid_cm",
                         "google_nest"
@@ -2104,7 +2107,8 @@
                           "igloohome_lock",
                           "hubitat_lock",
                           "four_suites_door",
-                          "dormakaba_oracode_door"
+                          "dormakaba_oracode_door",
+                          "tedee_lock"
                         ]
                       },
                       {
@@ -2152,7 +2156,8 @@
                             "igloohome_lock",
                             "hubitat_lock",
                             "four_suites_door",
-                            "dormakaba_oracode_door"
+                            "dormakaba_oracode_door",
+                            "tedee_lock"
                           ]
                         },
                         {
@@ -2204,7 +2209,8 @@
                       "hubitat",
                       "controlbyweb",
                       "smartthings",
-                      "dormakaba_oracode"
+                      "dormakaba_oracode",
+                      "tedee"
                     ]
                   },
                   "device_ids": {
@@ -2952,7 +2958,8 @@
                           "igloohome_lock",
                           "hubitat_lock",
                           "four_suites_door",
-                          "dormakaba_oracode_door"
+                          "dormakaba_oracode_door",
+                          "tedee_lock"
                         ]
                       },
                       {
@@ -3000,7 +3007,8 @@
                             "igloohome_lock",
                             "hubitat_lock",
                             "four_suites_door",
-                            "dormakaba_oracode_door"
+                            "dormakaba_oracode_door",
+                            "tedee_lock"
                           ]
                         },
                         {
@@ -3052,7 +3060,8 @@
                       "hubitat",
                       "controlbyweb",
                       "smartthings",
-                      "dormakaba_oracode"
+                      "dormakaba_oracode",
+                      "tedee"
                     ]
                   },
                   "device_ids": {
@@ -3633,7 +3642,8 @@
                           "igloohome_lock",
                           "hubitat_lock",
                           "four_suites_door",
-                          "dormakaba_oracode_door"
+                          "dormakaba_oracode_door",
+                          "tedee_lock"
                         ]
                       },
                       {
@@ -3681,7 +3691,8 @@
                             "igloohome_lock",
                             "hubitat_lock",
                             "four_suites_door",
-                            "dormakaba_oracode_door"
+                            "dormakaba_oracode_door",
+                            "tedee_lock"
                           ]
                         },
                         {
@@ -3733,7 +3744,8 @@
                       "hubitat",
                       "controlbyweb",
                       "smartthings",
-                      "dormakaba_oracode"
+                      "dormakaba_oracode",
+                      "tedee"
                     ]
                   },
                   "device_ids": {
@@ -4989,6 +5001,97 @@
         "operationId": "webhooksListGet"
       }
     },
+    "/webhooks/update": {
+      "post": {
+        "x-fern-sdk-group-name": ["webhooks"],
+        "x-fern-sdk-method-name": "update",
+        "summary": "/webhooks/update",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "seam_workspace": [], "access_token": [] },
+          { "seam_client_session_token": [] },
+          { "client_session_token": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "webhook_id": { "type": "string" },
+                  "event_types": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                },
+                "required": ["webhook_id", "event_types"]
+              }
+            }
+          }
+        },
+        "tags": ["/webhooks"],
+        "operationId": "webhooksUpdatePost"
+      },
+      "put": {
+        "x-fern-ignore": true,
+        "summary": "/webhooks/update",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "seam_workspace": [], "access_token": [] },
+          { "seam_client_session_token": [] },
+          { "client_session_token": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "webhook_id": { "type": "string" },
+                  "event_types": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                },
+                "required": ["webhook_id", "event_types"]
+              }
+            }
+          }
+        },
+        "tags": ["/webhooks"],
+        "operationId": "webhooksUpdatePut"
+      }
+    },
     "/workspaces/create": {
       "post": {
         "x-fern-sdk-group-name": ["workspaces"],
@@ -6096,6 +6199,10 @@
                           "format": "uuid"
                         },
                         "acs_system_id": { "type": "string", "format": "uuid" },
+                        "parent_acs_credential_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
                         "display_name": { "type": "string", "minLength": 1 },
                         "code": { "type": "string", "nullable": true },
                         "access_method": {
@@ -6124,6 +6231,14 @@
                           "type": "object",
                           "properties": {
                             "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "guest_acs_entrance_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "common_acs_entrance_ids": {
                               "type": "array",
                               "items": { "type": "string", "format": "uuid" }
                             }
@@ -6195,6 +6310,10 @@
                           "format": "uuid"
                         },
                         "acs_system_id": { "type": "string", "format": "uuid" },
+                        "parent_acs_credential_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
                         "display_name": { "type": "string", "minLength": 1 },
                         "code": { "type": "string", "nullable": true },
                         "access_method": {
@@ -6223,6 +6342,14 @@
                           "type": "object",
                           "properties": {
                             "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "guest_acs_entrance_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "common_acs_entrance_ids": {
                               "type": "array",
                               "items": { "type": "string", "format": "uuid" }
                             }
@@ -6297,6 +6424,10 @@
                           "format": "uuid"
                         },
                         "acs_system_id": { "type": "string", "format": "uuid" },
+                        "parent_acs_credential_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
                         "display_name": { "type": "string", "minLength": 1 },
                         "code": { "type": "string", "nullable": true },
                         "access_method": {
@@ -6325,6 +6456,14 @@
                           "type": "object",
                           "properties": {
                             "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "guest_acs_entrance_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "common_acs_entrance_ids": {
                               "type": "array",
                               "items": { "type": "string", "format": "uuid" }
                             }
@@ -6476,6 +6615,10 @@
                           "format": "uuid"
                         },
                         "acs_system_id": { "type": "string", "format": "uuid" },
+                        "parent_acs_credential_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
                         "display_name": { "type": "string", "minLength": 1 },
                         "code": { "type": "string", "nullable": true },
                         "access_method": {
@@ -6504,6 +6647,14 @@
                           "type": "object",
                           "properties": {
                             "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "guest_acs_entrance_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "common_acs_entrance_ids": {
                               "type": "array",
                               "items": { "type": "string", "format": "uuid" }
                             }
@@ -6582,6 +6733,10 @@
                             "type": "string",
                             "format": "uuid"
                           },
+                          "parent_acs_credential_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
                           "display_name": { "type": "string", "minLength": 1 },
                           "code": { "type": "string", "nullable": true },
                           "access_method": {
@@ -6615,6 +6770,14 @@
                             "type": "object",
                             "properties": {
                               "joiner_acs_credential_ids": {
+                                "type": "array",
+                                "items": { "type": "string", "format": "uuid" }
+                              },
+                              "guest_acs_entrance_ids": {
+                                "type": "array",
+                                "items": { "type": "string", "format": "uuid" }
+                              },
+                              "common_acs_entrance_ids": {
                                 "type": "array",
                                 "items": { "type": "string", "format": "uuid" }
                               }
@@ -6716,6 +6879,10 @@
                           "format": "uuid"
                         },
                         "acs_system_id": { "type": "string", "format": "uuid" },
+                        "parent_acs_credential_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
                         "display_name": { "type": "string", "minLength": 1 },
                         "code": { "type": "string", "nullable": true },
                         "access_method": {
@@ -6744,6 +6911,14 @@
                           "type": "object",
                           "properties": {
                             "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "guest_acs_entrance_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "common_acs_entrance_ids": {
                               "type": "array",
                               "items": { "type": "string", "format": "uuid" }
                             }
@@ -6815,6 +6990,10 @@
                           "format": "uuid"
                         },
                         "acs_system_id": { "type": "string", "format": "uuid" },
+                        "parent_acs_credential_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
                         "display_name": { "type": "string", "minLength": 1 },
                         "code": { "type": "string", "nullable": true },
                         "access_method": {
@@ -6843,6 +7022,14 @@
                           "type": "object",
                           "properties": {
                             "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "guest_acs_entrance_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "common_acs_entrance_ids": {
                               "type": "array",
                               "items": { "type": "string", "format": "uuid" }
                             }
@@ -6917,6 +7104,10 @@
                           "format": "uuid"
                         },
                         "acs_system_id": { "type": "string", "format": "uuid" },
+                        "parent_acs_credential_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
                         "display_name": { "type": "string", "minLength": 1 },
                         "code": { "type": "string", "nullable": true },
                         "access_method": {
@@ -6945,6 +7136,14 @@
                           "type": "object",
                           "properties": {
                             "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "guest_acs_entrance_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "common_acs_entrance_ids": {
                               "type": "array",
                               "items": { "type": "string", "format": "uuid" }
                             }
@@ -7016,6 +7215,10 @@
                           "format": "uuid"
                         },
                         "acs_system_id": { "type": "string", "format": "uuid" },
+                        "parent_acs_credential_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
                         "display_name": { "type": "string", "minLength": 1 },
                         "code": { "type": "string", "nullable": true },
                         "access_method": {
@@ -7044,6 +7247,14 @@
                           "type": "object",
                           "properties": {
                             "joiner_acs_credential_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "guest_acs_entrance_ids": {
+                              "type": "array",
+                              "items": { "type": "string", "format": "uuid" }
+                            },
+                            "common_acs_entrance_ids": {
                               "type": "array",
                               "items": { "type": "string", "format": "uuid" }
                             }
@@ -7364,6 +7575,10 @@
                             "type": "string",
                             "format": "uuid"
                           },
+                          "parent_acs_credential_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
                           "display_name": { "type": "string", "minLength": 1 },
                           "code": { "type": "string", "nullable": true },
                           "access_method": {
@@ -7397,6 +7612,14 @@
                             "type": "object",
                             "properties": {
                               "joiner_acs_credential_ids": {
+                                "type": "array",
+                                "items": { "type": "string", "format": "uuid" }
+                              },
+                              "guest_acs_entrance_ids": {
+                                "type": "array",
+                                "items": { "type": "string", "format": "uuid" }
+                              },
+                              "common_acs_entrance_ids": {
                                 "type": "array",
                                 "items": { "type": "string", "format": "uuid" }
                               }
@@ -7957,6 +8180,49 @@
         "operationId": "acsUsersRemoveFromAccessGroupPost"
       }
     },
+    "/acs/users/revoke_access_to_all_entrances": {
+      "post": {
+        "x-fern-sdk-group-name": ["acs", "users"],
+        "x-fern-sdk-method-name": "revoke_access_to_all_entrances",
+        "summary": "/acs/users/revoke_access_to_all_entrances",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "api_key": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "acs_user_id": { "type": "string", "format": "uuid" }
+                },
+                "required": ["acs_user_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/acs"],
+        "operationId": "acsUsersRevokeAccessToAllEntrancesPost"
+      }
+    },
     "/acs/users/suspend": {
       "post": {
         "x-fern-sdk-group-name": ["acs", "users"],
@@ -8289,7 +8555,8 @@
                           "igloohome_lock",
                           "hubitat_lock",
                           "four_suites_door",
-                          "dormakaba_oracode_door"
+                          "dormakaba_oracode_door",
+                          "tedee_lock"
                         ]
                       },
                       {
@@ -8337,7 +8604,8 @@
                             "igloohome_lock",
                             "hubitat_lock",
                             "four_suites_door",
-                            "dormakaba_oracode_door"
+                            "dormakaba_oracode_door",
+                            "tedee_lock"
                           ]
                         },
                         {
@@ -8389,7 +8657,8 @@
                       "hubitat",
                       "controlbyweb",
                       "smartthings",
-                      "dormakaba_oracode"
+                      "dormakaba_oracode",
+                      "tedee"
                     ]
                   },
                   "device_ids": {
@@ -10232,7 +10501,8 @@
                   "igloohome_lock",
                   "hubitat_lock",
                   "four_suites_door",
-                  "dormakaba_oracode_door"
+                  "dormakaba_oracode_door",
+                  "tedee_lock"
                 ]
               },
               {
@@ -10770,6 +11040,25 @@
                           "product_model",
                           "device_info_model"
                         ]
+                      },
+                      "tedee_metadata": {
+                        "type": "object",
+                        "properties": {
+                          "device_id": { "type": "number" },
+                          "serial_number": { "type": "string" },
+                          "device_name": { "type": "string" },
+                          "device_model": { "type": "string" },
+                          "bridge_id": { "type": "number" },
+                          "bridge_name": { "type": "string" }
+                        },
+                        "required": [
+                          "device_id",
+                          "serial_number",
+                          "device_name",
+                          "device_model",
+                          "bridge_id",
+                          "bridge_name"
+                        ]
                       }
                     }
                   }
@@ -10799,7 +11088,9 @@
                                     "no_triple_consecutive_ints",
                                     "cannot_specify_pin_code",
                                     "pin_code_matches_existing_set",
-                                    "start_date_in_future"
+                                    "start_date_in_future",
+                                    "no_ascending_or_descending_sequence",
+                                    "at_least_three_unique_digits"
                                   ]
                                 }
                               },
@@ -11467,7 +11758,8 @@
                   "igloohome_lock",
                   "hubitat_lock",
                   "four_suites_door",
-                  "dormakaba_oracode_door"
+                  "dormakaba_oracode_door",
+                  "tedee_lock"
                 ]
               },
               {

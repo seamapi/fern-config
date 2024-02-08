@@ -83,6 +83,8 @@ types:
   EntrancesListCredentialsWithAccessResponseAcsCredentialsItemVisionlineMetadata:
     properties:
       joiner_acs_credential_ids: optional<list<string>>
+      guest_acs_entrance_ids: optional<list<string>>
+      common_acs_entrance_ids: optional<list<string>>
 
   EntrancesListCredentialsWithAccessResponseAcsCredentialsItem:
     properties:
@@ -90,6 +92,7 @@ types:
       acs_user_id: optional<string>
       acs_credential_pool_id: optional<string>
       acs_system_id: string
+      parent_acs_credential_id: optional<string>
       display_name: string
       code: optional<string>
       access_method: EntrancesListCredentialsWithAccessResponseAcsCredentialsItemAccessMethod

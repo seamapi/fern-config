@@ -23,6 +23,10 @@ types:
       webhooks: list<root.Webhook>
       ok: boolean
 
+  WebhooksUpdateResponse:
+    properties:
+      ok: boolean
+
 service:
   auth: false
   base-path: ""
@@ -90,6 +94,24 @@ service:
         docs: OK
         type: WebhooksListResponse
         property: webhooks
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    update:
+      path: /webhooks/update
+      method: POST
+      auth: true
+      display-name: /webhooks/update
+      request:
+        name: WebhooksUpdateRequest
+        body:
+          properties:
+            webhook_id: string
+            event_types: list<string>
+      response:
+        docs: OK
+        type: WebhooksUpdateResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

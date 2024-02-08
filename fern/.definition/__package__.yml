@@ -560,6 +560,15 @@ types:
       product_model: string
       device_info_model: string
 
+  DevicePropertiesTedeeMetadata:
+    properties:
+      device_id: double
+      serial_number: string
+      device_name: string
+      device_model: string
+      bridge_id: double
+      bridge_name: string
+
   DevicePropertiesCodeConstraintsItemZeroConstraintType:
     enum:
       - no_zeros
@@ -568,6 +577,8 @@ types:
       - cannot_specify_pin_code
       - pin_code_matches_existing_set
       - start_date_in_future
+      - no_ascending_or_descending_sequence
+      - at_least_three_unique_digits
 
   DevicePropertiesCodeConstraintsItemZero:
     properties:
@@ -673,6 +684,7 @@ types:
       hubitat_metadata: optional<DevicePropertiesHubitatMetadata>
       dormakaba_oracode_metadata: optional<DevicePropertiesDormakabaOracodeMetadata>
       wyze_metadata: optional<DevicePropertiesWyzeMetadata>
+      tedee_metadata: optional<DevicePropertiesTedeeMetadata>
       _experimental_supported_code_from_access_codes_lengths: optional<list<double>>
       code_constraints: optional<list<DevicePropertiesCodeConstraintsItem>>
       supported_code_lengths: optional<list<double>>

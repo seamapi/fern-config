@@ -104,6 +104,7 @@ service:
             device_ids: list<string>
             behavior_when_code_cannot_be_shared: >-
               optional<AccessCodesCreateMultipleRequestBehaviorWhenCodeCannotBeShared>
+            preferred_code_length: optional<double>
             name: optional<string>
             starts_at: optional<string>
             ends_at: optional<string>

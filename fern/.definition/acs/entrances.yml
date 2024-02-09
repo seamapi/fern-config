@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
+  EntrancesGetResponseAcsEntranceVisionlineMetadataDoorCategory:
+    enum:
+      - entrance
+      - guest
+      - name: ElevatorReader
+        value: elevator reader
+      - common
+      - name: CommonPms
+        value: common (PMS)
+
   EntrancesGetResponseAcsEntranceVisionlineMetadataProfilesItemVisionlineDoorProfileType:
     enum:
       - BLE
@@ -16,6 +26,7 @@ types:
   EntrancesGetResponseAcsEntranceVisionlineMetadata:
     properties:
       door_name: string
+      door_category: EntrancesGetResponseAcsEntranceVisionlineMetadataDoorCategory
       profiles: >-
         optional<list<EntrancesGetResponseAcsEntranceVisionlineMetadataProfilesItem>>
 
@@ -36,6 +47,16 @@ types:
     properties:
       ok: boolean
 
+  EntrancesListResponseAcsEntrancesItemVisionlineMetadataDoorCategory:
+    enum:
+      - entrance
+      - guest
+      - name: ElevatorReader
+        value: elevator reader
+      - common
+      - name: CommonPms
+        value: common (PMS)
+
   EntrancesListResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType:
     enum:
       - BLE
@@ -51,6 +72,7 @@ types:
   EntrancesListResponseAcsEntrancesItemVisionlineMetadata:
     properties:
       door_name: string
+      door_category: EntrancesListResponseAcsEntrancesItemVisionlineMetadataDoorCategory
       profiles: >-
         optional<list<EntrancesListResponseAcsEntrancesItemVisionlineMetadataProfilesItem>>
 

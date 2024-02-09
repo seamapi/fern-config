@@ -235,6 +235,16 @@ types:
       acs_users: list<root.AcsUser>
       ok: boolean
 
+  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataDoorCategory:
+    enum:
+      - entrance
+      - guest
+      - name: ElevatorReader
+        value: elevator reader
+      - common
+      - name: CommonPms
+        value: common (PMS)
+
   UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType:
     enum:
       - BLE
@@ -250,6 +260,8 @@ types:
   UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadata:
     properties:
       door_name: string
+      door_category: >-
+        UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataDoorCategory
       profiles: >-
         optional<list<UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItem>>
 

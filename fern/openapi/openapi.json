@@ -6506,15 +6506,13 @@
                     "enum": ["code", "card", "mobile_key"]
                   },
                   "code": { "type": "string", "pattern": "^\\d+$" },
-                  "is_multi_phone_sync_credential": { "type": "boolean" },
+                  "is_multi_phone_sync_credential": {
+                    "default": false,
+                    "type": "boolean"
+                  },
                   "external_type": {
                     "type": "string",
-                    "enum": [
-                      "pti_card",
-                      "brivo_credential",
-                      "hid_credential",
-                      "visionline_card"
-                    ]
+                    "enum": ["visionline_card"]
                   },
                   "visionline_metadata": {
                     "type": "object",
@@ -7333,6 +7331,16 @@
                           "type": "object",
                           "properties": {
                             "door_name": { "type": "string" },
+                            "door_category": {
+                              "type": "string",
+                              "enum": [
+                                "entrance",
+                                "guest",
+                                "elevator reader",
+                                "common",
+                                "common (PMS)"
+                              ]
+                            },
                             "profiles": {
                               "type": "array",
                               "items": {
@@ -7353,7 +7361,7 @@
                               }
                             }
                           },
-                          "required": ["door_name"],
+                          "required": ["door_name", "door_category"],
                           "nullable": true
                         }
                       },
@@ -7478,6 +7486,16 @@
                             "type": "object",
                             "properties": {
                               "door_name": { "type": "string" },
+                              "door_category": {
+                                "type": "string",
+                                "enum": [
+                                  "entrance",
+                                  "guest",
+                                  "elevator reader",
+                                  "common",
+                                  "common (PMS)"
+                                ]
+                              },
                               "profiles": {
                                 "type": "array",
                                 "items": {
@@ -7498,7 +7516,7 @@
                                 }
                               }
                             },
-                            "required": ["door_name"],
+                            "required": ["door_name", "door_category"],
                             "nullable": true
                           }
                         },
@@ -8081,6 +8099,16 @@
                             "type": "object",
                             "properties": {
                               "door_name": { "type": "string" },
+                              "door_category": {
+                                "type": "string",
+                                "enum": [
+                                  "entrance",
+                                  "guest",
+                                  "elevator reader",
+                                  "common",
+                                  "common (PMS)"
+                                ]
+                              },
                               "profiles": {
                                 "type": "array",
                                 "items": {
@@ -8101,7 +8129,7 @@
                                 }
                               }
                             },
-                            "required": ["door_name"],
+                            "required": ["door_name", "door_category"],
                             "nullable": true
                           }
                         },

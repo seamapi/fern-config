@@ -98,6 +98,10 @@ types:
     properties:
       ok: boolean
 
+  UserIdentitiesUpdateResponse:
+    properties:
+      ok: boolean
+
 imports:
   root: __package__.yml
 
@@ -288,6 +292,27 @@ service:
       response:
         docs: OK
         type: UserIdentitiesRevokeAccessToDeviceResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
+    update:
+      path: /user_identities/update
+      method: POST
+      auth: true
+      display-name: /user_identities/update
+      request:
+        name: UserIdentitiesUpdateRequest
+        body:
+          properties:
+            user_identity_id: string
+            user_identity_key: optional<string>
+            email_address: optional<string>
+            phone_number: optional<string>
+            full_name: optional<string>
+      response:
+        docs: OK
+        type: UserIdentitiesUpdateResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

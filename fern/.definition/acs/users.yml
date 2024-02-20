@@ -1,5 +1,103 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+types:
+  UsersAddToAccessGroupResponse:
+    properties:
+      ok: boolean
+
+  UsersCreateRequestAccessSchedule:
+    properties:
+      starts_at: datetime
+      ends_at: datetime
+
+  UsersCreateResponse:
+    properties:
+      acs_user: root.AcsUser
+      ok: boolean
+
+  UsersDeleteResponse:
+    properties:
+      ok: boolean
+
+  UsersGetResponse:
+    properties:
+      acs_user: root.AcsUser
+      ok: boolean
+
+  UsersListResponse:
+    properties:
+      acs_users: list<root.AcsUser>
+      ok: boolean
+
+  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataDoorCategory:
+    enum:
+      - entrance
+      - guest
+      - name: ElevatorReader
+        value: elevator reader
+      - common
+      - name: CommonPms
+        value: common (PMS)
+
+  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType:
+    enum:
+      - BLE
+      - commonDoor
+      - touch
+
+  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItem:
+    properties:
+      visionline_door_profile_id: string
+      visionline_door_profile_type: >-
+        UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType
+
+  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadata:
+    properties:
+      door_name: string
+      door_category: >-
+        UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataDoorCategory
+      profiles: >-
+        optional<list<UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItem>>
+
+  UsersListAccessibleEntrancesResponseAcsEntrancesItem:
+    properties:
+      acs_entrance_id: string
+      display_name: string
+      acs_system_id: string
+      created_at: datetime
+      visionline_metadata: >-
+        optional<UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadata>
+
+  UsersListAccessibleEntrancesResponse:
+    properties:
+      acs_entrances: list<UsersListAccessibleEntrancesResponseAcsEntrancesItem>
+      ok: boolean
+
+  UsersRemoveFromAccessGroupResponse:
+    properties:
+      ok: boolean
+
+  UsersRevokeAccessToAllEntrancesResponse:
+    properties:
+      ok: boolean
+
+  UsersSuspendResponse:
+    properties:
+      ok: boolean
+
+  UsersUnsuspendResponse:
+    properties:
+      ok: boolean
+
+  UsersUpdateRequestAccessSchedule:
+    properties:
+      starts_at: datetime
+      ends_at: datetime
+
+  UsersUpdateResponse:
+    properties:
+      ok: boolean
+
 imports:
   root: ../__package__.yml
 
@@ -18,6 +116,9 @@ service:
           properties:
             acs_user_id: string
             acs_access_group_id: string
+      response:
+        docs: OK
+        type: UsersAddToAccessGroupResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -130,6 +231,9 @@ service:
           properties:
             acs_user_id: string
             acs_access_group_id: string
+      response:
+        docs: OK
+        type: UsersRemoveFromAccessGroupResponse
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -209,93 +313,3 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
-types:
-  UsersCreateRequestAccessSchedule:
-    properties:
-      starts_at: datetime
-      ends_at: datetime
-
-  UsersCreateResponse:
-    properties:
-      acs_user: root.AcsUser
-      ok: boolean
-
-  UsersDeleteResponse:
-    properties:
-      ok: boolean
-
-  UsersGetResponse:
-    properties:
-      acs_user: root.AcsUser
-      ok: boolean
-
-  UsersListResponse:
-    properties:
-      acs_users: list<root.AcsUser>
-      ok: boolean
-
-  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataDoorCategory:
-    enum:
-      - entrance
-      - guest
-      - name: ElevatorReader
-        value: elevator reader
-      - common
-      - name: CommonPms
-        value: common (PMS)
-
-  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType:
-    enum:
-      - BLE
-      - commonDoor
-      - touch
-
-  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItem:
-    properties:
-      visionline_door_profile_id: string
-      visionline_door_profile_type: >-
-        UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType
-
-  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadata:
-    properties:
-      door_name: string
-      door_category: >-
-        UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataDoorCategory
-      profiles: >-
-        optional<list<UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItem>>
-
-  UsersListAccessibleEntrancesResponseAcsEntrancesItem:
-    properties:
-      acs_entrance_id: string
-      display_name: string
-      acs_system_id: string
-      created_at: datetime
-      visionline_metadata: >-
-        optional<UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadata>
-
-  UsersListAccessibleEntrancesResponse:
-    properties:
-      acs_entrances: list<UsersListAccessibleEntrancesResponseAcsEntrancesItem>
-      ok: boolean
-
-  UsersRevokeAccessToAllEntrancesResponse:
-    properties:
-      ok: boolean
-
-  UsersSuspendResponse:
-    properties:
-      ok: boolean
-
-  UsersUnsuspendResponse:
-    properties:
-      ok: boolean
-
-  UsersUpdateRequestAccessSchedule:
-    properties:
-      starts_at: datetime
-      ends_at: datetime
-
-  UsersUpdateResponse:
-    properties:
-      ok: boolean

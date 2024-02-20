@@ -1,18 +1,39 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-imports:
-  root: __package__.yml
-
 types:
+  PhonesDeactivateResponse:
+    properties:
+      ok: boolean
+
   PhonesListResponse:
     properties:
       phones: list<root.Phone>
       ok: boolean
 
+imports:
+  root: __package__.yml
+
 service:
   auth: false
   base-path: ""
   endpoints:
+    deactivate:
+      path: /phones/deactivate
+      method: POST
+      auth: true
+      display-name: /phones/deactivate
+      request:
+        name: PhonesDeactivateRequest
+        body:
+          properties:
+            device_id: string
+      response:
+        docs: OK
+        type: PhonesDeactivateResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
     list:
       path: /phones/list
       method: POST

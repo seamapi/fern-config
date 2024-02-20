@@ -2117,7 +2117,11 @@
                       },
                       {
                         "type": "string",
-                        "enum": ["ecobee_thermostat", "nest_thermostat"]
+                        "enum": [
+                          "ecobee_thermostat",
+                          "nest_thermostat",
+                          "honeywell_thermostat"
+                        ]
                       },
                       {
                         "type": "string",
@@ -2166,7 +2170,11 @@
                         },
                         {
                           "type": "string",
-                          "enum": ["ecobee_thermostat", "nest_thermostat"]
+                          "enum": [
+                            "ecobee_thermostat",
+                            "nest_thermostat",
+                            "honeywell_thermostat"
+                          ]
                         },
                         {
                           "type": "string",
@@ -2210,7 +2218,8 @@
                       "controlbyweb",
                       "smartthings",
                       "dormakaba_oracode",
-                      "tedee"
+                      "tedee",
+                      "honeywell"
                     ]
                   },
                   "device_ids": {
@@ -2573,12 +2582,14 @@
                       "access_code.unmanaged.removed",
                       "lock.locked",
                       "lock.unlocked",
+                      "phone.deactivated",
                       "connected_account.connected",
                       "connected_account.successful_login",
                       "connected_account.created",
                       "connected_account.deleted",
                       "connected_account.disconnected",
                       "connected_account.completed_first_sync",
+                      "connected_account.completed_first_sync_after_reconnection",
                       "noise_sensor.noise_threshold_triggered",
                       "access_code.backup_access_code_pulled"
                     ]
@@ -2624,12 +2635,14 @@
                         "access_code.unmanaged.removed",
                         "lock.locked",
                         "lock.unlocked",
+                        "phone.deactivated",
                         "connected_account.connected",
                         "connected_account.successful_login",
                         "connected_account.created",
                         "connected_account.deleted",
                         "connected_account.disconnected",
                         "connected_account.completed_first_sync",
+                        "connected_account.completed_first_sync_after_reconnection",
                         "noise_sensor.noise_threshold_triggered",
                         "access_code.backup_access_code_pulled"
                       ]
@@ -2968,7 +2981,11 @@
                       },
                       {
                         "type": "string",
-                        "enum": ["ecobee_thermostat", "nest_thermostat"]
+                        "enum": [
+                          "ecobee_thermostat",
+                          "nest_thermostat",
+                          "honeywell_thermostat"
+                        ]
                       },
                       {
                         "type": "string",
@@ -3017,7 +3034,11 @@
                         },
                         {
                           "type": "string",
-                          "enum": ["ecobee_thermostat", "nest_thermostat"]
+                          "enum": [
+                            "ecobee_thermostat",
+                            "nest_thermostat",
+                            "honeywell_thermostat"
+                          ]
                         },
                         {
                           "type": "string",
@@ -3061,7 +3082,8 @@
                       "controlbyweb",
                       "smartthings",
                       "dormakaba_oracode",
-                      "tedee"
+                      "tedee",
+                      "honeywell"
                     ]
                   },
                   "device_ids": {
@@ -3323,6 +3345,48 @@
         },
         "tags": ["/networks"],
         "operationId": "networksListPost"
+      }
+    },
+    "/phones/deactivate": {
+      "post": {
+        "x-fern-sdk-group-name": ["phones"],
+        "x-fern-sdk-method-name": "deactivate",
+        "summary": "/phones/deactivate",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "client_session": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "device_id": { "type": "string" } },
+                "required": ["device_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/phones"],
+        "operationId": "phonesDeactivatePost"
       }
     },
     "/phones/list": {
@@ -3652,7 +3716,11 @@
                       },
                       {
                         "type": "string",
-                        "enum": ["ecobee_thermostat", "nest_thermostat"]
+                        "enum": [
+                          "ecobee_thermostat",
+                          "nest_thermostat",
+                          "honeywell_thermostat"
+                        ]
                       },
                       {
                         "type": "string",
@@ -3701,7 +3769,11 @@
                         },
                         {
                           "type": "string",
-                          "enum": ["ecobee_thermostat", "nest_thermostat"]
+                          "enum": [
+                            "ecobee_thermostat",
+                            "nest_thermostat",
+                            "honeywell_thermostat"
+                          ]
                         },
                         {
                           "type": "string",
@@ -3745,7 +3817,8 @@
                       "controlbyweb",
                       "smartthings",
                       "dormakaba_oracode",
-                      "tedee"
+                      "tedee",
+                      "honeywell"
                     ]
                   },
                   "device_ids": {
@@ -4791,6 +4864,121 @@
         },
         "tags": ["/user_identities"],
         "operationId": "userIdentitiesRevokeAccessToDevicePost"
+      }
+    },
+    "/user_identities/update": {
+      "post": {
+        "x-fern-sdk-group-name": ["user_identities"],
+        "x-fern-sdk-method-name": "update",
+        "summary": "/user_identities/update",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_identity_id": { "type": "string", "format": "uuid" },
+                  "user_identity_key": {
+                    "type": "string",
+                    "minLength": 1,
+                    "nullable": true
+                  },
+                  "email_address": {
+                    "type": "string",
+                    "format": "email",
+                    "nullable": true
+                  },
+                  "phone_number": { "type": "string", "nullable": true },
+                  "full_name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "nullable": true
+                  }
+                },
+                "required": ["user_identity_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/user_identities"],
+        "operationId": "userIdentitiesUpdatePost"
+      },
+      "patch": {
+        "x-fern-ignore": true,
+        "summary": "/user_identities/update",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_identity_id": { "type": "string", "format": "uuid" },
+                  "user_identity_key": {
+                    "type": "string",
+                    "minLength": 1,
+                    "nullable": true
+                  },
+                  "email_address": {
+                    "type": "string",
+                    "format": "email",
+                    "nullable": true
+                  },
+                  "phone_number": { "type": "string", "nullable": true },
+                  "full_name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "nullable": true
+                  }
+                },
+                "required": ["user_identity_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/user_identities"],
+        "operationId": "userIdentitiesUpdatePatch"
       }
     },
     "/webhooks/create": {
@@ -6226,6 +6414,28 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "error_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["error_code", "message"]
+                          }
+                        },
+                        "warnings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "warning_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["warning_code", "message"]
+                          }
+                        },
                         "is_multi_phone_sync_credential": { "type": "boolean" },
                         "visionline_metadata": {
                           "type": "object",
@@ -6251,7 +6461,9 @@
                         "display_name",
                         "access_method",
                         "created_at",
-                        "workspace_id"
+                        "workspace_id",
+                        "errors",
+                        "warnings"
                       ]
                     },
                     "ok": { "type": "boolean" }
@@ -6337,6 +6549,28 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "error_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["error_code", "message"]
+                          }
+                        },
+                        "warnings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "warning_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["warning_code", "message"]
+                          }
+                        },
                         "is_multi_phone_sync_credential": { "type": "boolean" },
                         "visionline_metadata": {
                           "type": "object",
@@ -6362,7 +6596,9 @@
                         "display_name",
                         "access_method",
                         "created_at",
-                        "workspace_id"
+                        "workspace_id",
+                        "errors",
+                        "warnings"
                       ]
                     },
                     "ok": { "type": "boolean" }
@@ -6451,6 +6687,28 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "error_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["error_code", "message"]
+                          }
+                        },
+                        "warnings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "warning_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["warning_code", "message"]
+                          }
+                        },
                         "is_multi_phone_sync_credential": { "type": "boolean" },
                         "visionline_metadata": {
                           "type": "object",
@@ -6476,7 +6734,9 @@
                         "display_name",
                         "access_method",
                         "created_at",
-                        "workspace_id"
+                        "workspace_id",
+                        "errors",
+                        "warnings"
                       ]
                     },
                     "ok": { "type": "boolean" }
@@ -6640,6 +6900,28 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "error_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["error_code", "message"]
+                          }
+                        },
+                        "warnings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "warning_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["warning_code", "message"]
+                          }
+                        },
                         "is_multi_phone_sync_credential": { "type": "boolean" },
                         "visionline_metadata": {
                           "type": "object",
@@ -6665,7 +6947,9 @@
                         "display_name",
                         "access_method",
                         "created_at",
-                        "workspace_id"
+                        "workspace_id",
+                        "errors",
+                        "warnings"
                       ]
                     },
                     "ok": { "type": "boolean" }
@@ -6761,6 +7045,28 @@
                           },
                           "starts_at": { "type": "string" },
                           "ends_at": { "type": "string" },
+                          "errors": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "error_code": { "type": "string" },
+                                "message": { "type": "string" }
+                              },
+                              "required": ["error_code", "message"]
+                            }
+                          },
+                          "warnings": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "warning_code": { "type": "string" },
+                                "message": { "type": "string" }
+                              },
+                              "required": ["warning_code", "message"]
+                            }
+                          },
                           "is_multi_phone_sync_credential": {
                             "type": "boolean"
                           },
@@ -6788,7 +7094,9 @@
                           "display_name",
                           "access_method",
                           "created_at",
-                          "workspace_id"
+                          "workspace_id",
+                          "errors",
+                          "warnings"
                         ]
                       }
                     },
@@ -6904,6 +7212,28 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "error_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["error_code", "message"]
+                          }
+                        },
+                        "warnings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "warning_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["warning_code", "message"]
+                          }
+                        },
                         "is_multi_phone_sync_credential": { "type": "boolean" },
                         "visionline_metadata": {
                           "type": "object",
@@ -6929,7 +7259,9 @@
                         "display_name",
                         "access_method",
                         "created_at",
-                        "workspace_id"
+                        "workspace_id",
+                        "errors",
+                        "warnings"
                       ]
                     },
                     "ok": { "type": "boolean" }
@@ -7015,6 +7347,28 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "error_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["error_code", "message"]
+                          }
+                        },
+                        "warnings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "warning_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["warning_code", "message"]
+                          }
+                        },
                         "is_multi_phone_sync_credential": { "type": "boolean" },
                         "visionline_metadata": {
                           "type": "object",
@@ -7040,7 +7394,9 @@
                         "display_name",
                         "access_method",
                         "created_at",
-                        "workspace_id"
+                        "workspace_id",
+                        "errors",
+                        "warnings"
                       ]
                     },
                     "ok": { "type": "boolean" }
@@ -7129,6 +7485,28 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "error_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["error_code", "message"]
+                          }
+                        },
+                        "warnings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "warning_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["warning_code", "message"]
+                          }
+                        },
                         "is_multi_phone_sync_credential": { "type": "boolean" },
                         "visionline_metadata": {
                           "type": "object",
@@ -7154,7 +7532,9 @@
                         "display_name",
                         "access_method",
                         "created_at",
-                        "workspace_id"
+                        "workspace_id",
+                        "errors",
+                        "warnings"
                       ]
                     },
                     "ok": { "type": "boolean" }
@@ -7240,6 +7620,28 @@
                         "workspace_id": { "type": "string", "format": "uuid" },
                         "starts_at": { "type": "string" },
                         "ends_at": { "type": "string" },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "error_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["error_code", "message"]
+                          }
+                        },
+                        "warnings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "warning_code": { "type": "string" },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["warning_code", "message"]
+                          }
+                        },
                         "is_multi_phone_sync_credential": { "type": "boolean" },
                         "visionline_metadata": {
                           "type": "object",
@@ -7265,7 +7667,9 @@
                         "display_name",
                         "access_method",
                         "created_at",
-                        "workspace_id"
+                        "workspace_id",
+                        "errors",
+                        "warnings"
                       ]
                     },
                     "ok": { "type": "boolean" }
@@ -7623,6 +8027,28 @@
                           },
                           "starts_at": { "type": "string" },
                           "ends_at": { "type": "string" },
+                          "errors": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "error_code": { "type": "string" },
+                                "message": { "type": "string" }
+                              },
+                              "required": ["error_code", "message"]
+                            }
+                          },
+                          "warnings": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "warning_code": { "type": "string" },
+                                "message": { "type": "string" }
+                              },
+                              "required": ["warning_code", "message"]
+                            }
+                          },
                           "is_multi_phone_sync_credential": {
                             "type": "boolean"
                           },
@@ -7650,7 +8076,9 @@
                           "display_name",
                           "access_method",
                           "created_at",
-                          "workspace_id"
+                          "workspace_id",
+                          "errors",
+                          "warnings"
                         ]
                       }
                     },
@@ -7795,7 +8223,18 @@
         "x-fern-sdk-method-name": "add_to_access_group",
         "summary": "/acs/users/add_to_access_group",
         "responses": {
-          "200": { "description": "OK" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
           "400": { "description": "Bad Request" },
           "401": { "description": "Unauthorized" }
         },
@@ -7825,7 +8264,18 @@
         "x-fern-ignore": true,
         "summary": "/acs/users/add_to_access_group",
         "responses": {
-          "200": { "description": "OK" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
           "400": { "description": "Bad Request" },
           "401": { "description": "Unauthorized" }
         },
@@ -8181,7 +8631,18 @@
         "x-fern-sdk-method-name": "remove_from_access_group",
         "summary": "/acs/users/remove_from_access_group",
         "responses": {
-          "200": { "description": "OK" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
           "400": { "description": "Bad Request" },
           "401": { "description": "Unauthorized" }
         },
@@ -8593,7 +9054,11 @@
                       },
                       {
                         "type": "string",
-                        "enum": ["ecobee_thermostat", "nest_thermostat"]
+                        "enum": [
+                          "ecobee_thermostat",
+                          "nest_thermostat",
+                          "honeywell_thermostat"
+                        ]
                       },
                       {
                         "type": "string",
@@ -8642,7 +9107,11 @@
                         },
                         {
                           "type": "string",
-                          "enum": ["ecobee_thermostat", "nest_thermostat"]
+                          "enum": [
+                            "ecobee_thermostat",
+                            "nest_thermostat",
+                            "honeywell_thermostat"
+                          ]
                         },
                         {
                           "type": "string",
@@ -8686,7 +9155,8 @@
                       "controlbyweb",
                       "smartthings",
                       "dormakaba_oracode",
-                      "tedee"
+                      "tedee",
+                      "honeywell"
                     ]
                   },
                   "device_ids": {
@@ -9833,6 +10303,52 @@
         "operationId": "thermostatsClimateSettingSchedulesUpdatePatch"
       }
     },
+    "/user_identities/enrollment_automations/delete": {
+      "post": {
+        "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
+        "x-fern-sdk-method-name": "delete",
+        "summary": "/user_identities/enrollment_automations/delete",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "pat_with_workspace": [] },
+          { "console_session": [] },
+          { "api_key": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enrollment_automation_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": ["enrollment_automation_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/user_identities"],
+        "operationId": "userIdentitiesEnrollmentAutomationsDeletePost"
+      }
+    },
     "/user_identities/enrollment_automations/get": {
       "post": {
         "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
@@ -10539,7 +11055,11 @@
               },
               {
                 "type": "string",
-                "enum": ["ecobee_thermostat", "nest_thermostat"]
+                "enum": [
+                  "ecobee_thermostat",
+                  "nest_thermostat",
+                  "honeywell_thermostat"
+                ]
               },
               { "type": "string", "enum": ["ios_phone", "android_phone"] }
             ],
@@ -10738,7 +11258,10 @@
                         "properties": {
                           "device_id": { "type": "string" },
                           "device_name": { "type": "string" },
-                          "access_code_length": { "type": "number" },
+                          "access_code_length": {
+                            "type": "number",
+                            "nullable": true
+                          },
                           "model": { "type": "string" }
                         },
                         "required": [
@@ -10988,6 +11511,14 @@
                           "device_name": { "type": "string" }
                         },
                         "required": ["ecobee_device_id", "device_name"]
+                      },
+                      "honeywell_metadata": {
+                        "type": "object",
+                        "properties": {
+                          "honeywell_device_id": { "type": "string" },
+                          "device_name": { "type": "string" }
+                        },
+                        "required": ["honeywell_device_id", "device_name"]
                       },
                       "hubitat_metadata": {
                         "type": "object",
@@ -11733,7 +12264,9 @@
               ],
               "nullable": true
             }
-          }
+          },
+          "can_remotely_unlock": { "type": "boolean" },
+          "can_program_online_access_codes": { "type": "boolean" }
         },
         "required": [
           "device_id",
@@ -11796,7 +12329,11 @@
               },
               {
                 "type": "string",
-                "enum": ["ecobee_thermostat", "nest_thermostat"]
+                "enum": [
+                  "ecobee_thermostat",
+                  "nest_thermostat",
+                  "honeywell_thermostat"
+                ]
               },
               { "type": "string", "enum": ["ios_phone", "android_phone"] }
             ],
@@ -12328,7 +12865,9 @@
               ],
               "nullable": true
             }
-          }
+          },
+          "can_remotely_unlock": { "type": "boolean" },
+          "can_program_online_access_codes": { "type": "boolean" }
         },
         "required": [
           "device_id",

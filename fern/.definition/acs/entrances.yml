@@ -102,6 +102,16 @@ types:
       - hid_credential
       - visionline_card
 
+  EntrancesListCredentialsWithAccessResponseAcsCredentialsItemErrorsItem:
+    properties:
+      error_code: string
+      message: string
+
+  EntrancesListCredentialsWithAccessResponseAcsCredentialsItemWarningsItem:
+    properties:
+      warning_code: string
+      message: string
+
   EntrancesListCredentialsWithAccessResponseAcsCredentialsItemVisionlineMetadata:
     properties:
       joiner_acs_credential_ids: optional<list<string>>
@@ -125,6 +135,10 @@ types:
       workspace_id: string
       starts_at: optional<string>
       ends_at: optional<string>
+      errors: >-
+        list<EntrancesListCredentialsWithAccessResponseAcsCredentialsItemErrorsItem>
+      warnings: >-
+        list<EntrancesListCredentialsWithAccessResponseAcsCredentialsItemWarningsItem>
       is_multi_phone_sync_credential: optional<boolean>
       visionline_metadata: >-
         optional<EntrancesListCredentialsWithAccessResponseAcsCredentialsItemVisionlineMetadata>

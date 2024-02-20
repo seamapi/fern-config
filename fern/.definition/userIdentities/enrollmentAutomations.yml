@@ -1,9 +1,10 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-imports:
-  root: ../__package__.yml
-
 types:
+  EnrollmentAutomationsDeleteResponse:
+    properties:
+      ok: boolean
+
   EnrollmentAutomationsGetResponse:
     properties:
       enrollment_automation: root.EnrollmentAutomation
@@ -28,10 +29,30 @@ types:
       enrollment_automations: list<root.EnrollmentAutomation>
       ok: boolean
 
+imports:
+  root: ../__package__.yml
+
 service:
   auth: false
   base-path: ""
   endpoints:
+    delete:
+      path: /user_identities/enrollment_automations/delete
+      method: POST
+      auth: true
+      display-name: /user_identities/enrollment_automations/delete
+      request:
+        name: EnrollmentAutomationsDeleteRequest
+        body:
+          properties:
+            enrollment_automation_id: string
+      response:
+        docs: OK
+        type: EnrollmentAutomationsDeleteResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+
     get:
       path: /user_identities/enrollment_automations/get
       method: POST

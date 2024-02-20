@@ -366,7 +366,7 @@ types:
     properties:
       device_id: string
       device_name: string
-      access_code_length: double
+      access_code_length: optional<double>
       model: optional<string>
 
   DevicePropertiesSmartthingsMetadata:
@@ -519,6 +519,11 @@ types:
   DevicePropertiesEcobeeMetadata:
     properties:
       ecobee_device_id: string
+      device_name: string
+
+  DevicePropertiesHoneywellMetadata:
+    properties:
+      honeywell_device_id: string
       device_name: string
 
   DevicePropertiesHubitatMetadata:
@@ -681,6 +686,7 @@ types:
       igloohome_metadata: optional<DevicePropertiesIgloohomeMetadata>
       nest_metadata: optional<DevicePropertiesNestMetadata>
       ecobee_metadata: optional<DevicePropertiesEcobeeMetadata>
+      honeywell_metadata: optional<DevicePropertiesHoneywellMetadata>
       hubitat_metadata: optional<DevicePropertiesHubitatMetadata>
       dormakaba_oracode_metadata: optional<DevicePropertiesDormakabaOracodeMetadata>
       wyze_metadata: optional<DevicePropertiesWyzeMetadata>
@@ -780,6 +786,8 @@ types:
         type: boolean
         docs: Indicates whether Seam manages the device.
       custom_metadata: optional<map<string, optional<DeviceCustomMetadataValue>>>
+      can_remotely_unlock: optional<boolean>
+      can_program_online_access_codes: optional<boolean>
 
   UnmanagedDeviceCapabilitiesSupportedItem:
     enum:
@@ -1216,6 +1224,8 @@ types:
         type: boolean
         docs: Indicates whether Seam manages the device.
       custom_metadata: optional<map<string, optional<PhoneCustomMetadataValue>>>
+      can_remotely_unlock: optional<boolean>
+      can_program_online_access_codes: optional<boolean>
 
   DeviceType:
     enum:

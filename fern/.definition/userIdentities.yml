@@ -201,6 +201,11 @@ service:
       method: POST
       auth: true
       display-name: /user_identities/list
+      request:
+        name: UserIdentitiesListRequest
+        body:
+          properties:
+            credential_manager_acs_system_id: optional<string>
       response:
         docs: OK
         type: UserIdentitiesListResponse

@@ -949,12 +949,16 @@ types:
         docs: Date and time at which the device object was created.
       is_managed: boolean
       properties: UnmanagedDeviceProperties
+      can_remotely_unlock: optional<boolean>
+      can_program_online_access_codes: optional<boolean>
       device_provider: optional<UnmanagedDeviceDeviceProvider>
 
   DeviceProviderProviderCategoriesItem:
     enum:
       - stable
       - consumer_smartlocks
+      - thermostats
+      - noise_sensors
 
   DeviceProvider:
     properties:

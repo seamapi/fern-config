@@ -1,8 +1,5 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   root: __package__.yml
-
 types:
   AcceptedProvider:
     enum:
@@ -45,43 +42,36 @@ types:
       - yale_access
       - hid_cm
       - google_nest
-
   ConnectWebviewsCreateRequestCustomMetadataValue:
     discriminated: false
     union:
       - string
       - boolean
       - optional<string>
-
   ConnectWebviewsCreateResponse:
     properties:
       connect_webview: root.ConnectWebview
       ok: boolean
-
   ConnectWebviewsDeleteResponse:
     properties:
       ok: boolean
-
   ConnectWebviewsGetResponse:
     properties:
       connect_webview: root.ConnectWebview
       ok: boolean
-
   ConnectWebviewsListRequestCustomMetadataHasValue:
     discriminated: false
     union:
       - string
       - boolean
       - optional<string>
-
   ConnectWebviewsListResponse:
     properties:
       connect_webviews: list<root.ConnectWebview>
       ok: boolean
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     create:
       path: /connect_webviews/create
@@ -109,7 +99,34 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request: {}
+          response:
+            body:
+              connect_webview:
+                connect_webview_id: connect_webview_id
+                connected_account_id: connected_account_id
+                url: url
+                workspace_id: workspace_id
+                device_selection_mode: none
+                accepted_providers:
+                  - accepted_providers
+                accepted_devices:
+                  - accepted_devices
+                any_provider_allowed: true
+                any_device_allowed: true
+                created_at: '2024-01-15T09:30:00Z'
+                login_successful: true
+                status: pending
+                custom_redirect_url: custom_redirect_url
+                custom_redirect_failure_url: custom_redirect_failure_url
+                custom_metadata:
+                  custom_metadata: custom_metadata
+                automatically_manage_new_devices: true
+                wait_for_device_creation: true
+                authorized_at: '2024-01-15T09:30:00Z'
+                selected_provider: selected_provider
+              ok: true
     delete:
       path: /connect_webviews/delete
       method: POST
@@ -126,7 +143,12 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            connect_webview_id: connect_webview_id
+          response:
+            body:
+              ok: true
     get:
       path: /connect_webviews/get
       method: POST
@@ -144,7 +166,35 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            connect_webview_id: connect_webview_id
+          response:
+            body:
+              connect_webview:
+                connect_webview_id: connect_webview_id
+                connected_account_id: connected_account_id
+                url: url
+                workspace_id: workspace_id
+                device_selection_mode: none
+                accepted_providers:
+                  - accepted_providers
+                accepted_devices:
+                  - accepted_devices
+                any_provider_allowed: true
+                any_device_allowed: true
+                created_at: '2024-01-15T09:30:00Z'
+                login_successful: true
+                status: pending
+                custom_redirect_url: custom_redirect_url
+                custom_redirect_failure_url: custom_redirect_failure_url
+                custom_metadata:
+                  custom_metadata: custom_metadata
+                automatically_manage_new_devices: true
+                wait_for_device_creation: true
+                authorized_at: '2024-01-15T09:30:00Z'
+                selected_provider: selected_provider
+              ok: true
     list:
       path: /connect_webviews/list
       method: POST
@@ -169,7 +219,33 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request: {}
+          response:
+            body:
+              connect_webviews:
+                - connect_webview_id: connect_webview_id
+                  connected_account_id: connected_account_id
+                  url: url
+                  workspace_id: workspace_id
+                  device_selection_mode: none
+                  accepted_providers:
+                    - accepted_providers
+                  accepted_devices:
+                    - accepted_devices
+                  any_provider_allowed: true
+                  any_device_allowed: true
+                  created_at: '2024-01-15T09:30:00Z'
+                  login_successful: true
+                  status: pending
+                  custom_redirect_url: custom_redirect_url
+                  custom_redirect_failure_url: custom_redirect_failure_url
+                  custom_metadata: {}
+                  automatically_manage_new_devices: true
+                  wait_for_device_creation: true
+                  authorized_at: '2024-01-15T09:30:00Z'
+                  selected_provider: selected_provider
+              ok: true
     view:
       path: /connect_webviews/view
       method: GET
@@ -185,5 +261,5 @@ service:
         - root.UnauthorizedError
       examples:
         - query-parameters:
-            connect_webview_id: connect-webview-id
-            auth_token: auth-token
+            connect_webview_id: connect_webview_id
+            auth_token: auth_token

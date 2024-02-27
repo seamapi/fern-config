@@ -1,35 +1,27 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 types:
   UnmanagedConvertToManagedResponse:
     properties:
       ok: boolean
-
   UnmanagedDeleteResponse:
     properties:
       action_attempt: root.ActionAttempt
       ok: boolean
-
   UnmanagedGetResponse:
     properties:
       access_code: root.UnmanagedAccessCode
       ok: boolean
-
   UnmanagedListResponse:
     properties:
       access_codes: list<root.UnmanagedAccessCode>
       ok: boolean
-
   UnmanagedUpdateResponse:
     properties:
       ok: boolean
-
 imports:
   root: ../__package__.yml
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     convert_to_managed:
       path: /access_codes/unmanaged/convert_to_managed
@@ -51,7 +43,12 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            access_code_id: access_code_id
+          response:
+            body:
+              ok: true
     delete:
       path: /access_codes/unmanaged/delete
       method: POST
@@ -70,7 +67,19 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            access_code_id: access_code_id
+          response:
+            body:
+              action_attempt:
+                status: success
+                action_type: action_attempt
+                action_attempt_id: action_attempt
+                result:
+                  key: value
+                error: action_attempt
+              ok: true
     get:
       path: /access_codes/unmanaged/get
       method: POST
@@ -90,7 +99,26 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request: {}
+          response:
+            body:
+              access_code:
+                type: time_bound
+                access_code_id: access_code_id
+                device_id: device_id
+                name: name
+                code: code
+                created_at: '2024-01-15T09:30:00Z'
+                errors:
+                  key: value
+                warnings:
+                  key: value
+                is_managed: true
+                starts_at: '2024-01-15T09:30:00Z'
+                ends_at: '2024-01-15T09:30:00Z'
+                status: set
+              ok: true
     list:
       path: /access_codes/unmanaged/list
       method: POST
@@ -109,7 +137,27 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            device_id: device_id
+          response:
+            body:
+              access_codes:
+                - type: time_bound
+                  access_code_id: access_code_id
+                  device_id: device_id
+                  name: name
+                  code: code
+                  created_at: '2024-01-15T09:30:00Z'
+                  errors:
+                    key: value
+                  warnings:
+                    key: value
+                  is_managed: true
+                  starts_at: '2024-01-15T09:30:00Z'
+                  ends_at: '2024-01-15T09:30:00Z'
+                  status: set
+              ok: true
     update:
       path: /access_codes/unmanaged/update
       method: POST
@@ -130,3 +178,10 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
+      examples:
+        - request:
+            access_code_id: access_code_id
+            is_managed: true
+          response:
+            body:
+              ok: true

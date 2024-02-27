@@ -1,10 +1,7 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 types:
   UserIdentitiesAddAcsUserResponse:
     properties:
       ok: boolean
-
   UserIdentitiesCreateResponseUserIdentity:
     properties:
       user_identity_id: string
@@ -15,30 +12,24 @@ types:
       full_name: optional<string>
       created_at: datetime
       workspace_id: string
-
   UserIdentitiesCreateResponse:
     properties:
       user_identity: UserIdentitiesCreateResponseUserIdentity
       ok: boolean
-
   UserIdentitiesDeleteResponse:
     properties:
       ok: boolean
-
   UserIdentitiesGetRequestUserIdentityId:
     properties:
       user_identity_id: string
-
   UserIdentitiesGetRequestUserIdentityKey:
     properties:
       user_identity_key: string
-
   UserIdentitiesGetRequest:
     discriminated: false
     union:
       - UserIdentitiesGetRequestUserIdentityId
       - UserIdentitiesGetRequestUserIdentityKey
-
   UserIdentitiesGetResponseUserIdentity:
     properties:
       user_identity_id: string
@@ -49,16 +40,13 @@ types:
       full_name: optional<string>
       created_at: datetime
       workspace_id: string
-
   UserIdentitiesGetResponse:
     properties:
       user_identity: UserIdentitiesGetResponseUserIdentity
       ok: boolean
-
   UserIdentitiesGrantAccessToDeviceResponse:
     properties:
       ok: boolean
-
   UserIdentitiesListResponseUserIdentitiesItem:
     properties:
       user_identity_id: string
@@ -69,45 +57,36 @@ types:
       full_name: optional<string>
       created_at: datetime
       workspace_id: string
-
   UserIdentitiesListResponse:
     properties:
       user_identities: list<UserIdentitiesListResponseUserIdentitiesItem>
       ok: boolean
-
   UserIdentitiesListAccessibleDevicesResponse:
     properties:
       accessible_devices: list<root.Device>
       ok: boolean
-
   UserIdentitiesListAcsSystemsResponse:
     properties:
       acs_systems: list<root.AcsSystem>
       ok: boolean
-
   UserIdentitiesListAcsUsersResponse:
     properties:
       acs_users: list<root.AcsUser>
       ok: boolean
-
   UserIdentitiesRemoveAcsUserResponse:
     properties:
       ok: boolean
-
   UserIdentitiesRevokeAccessToDeviceResponse:
     properties:
       ok: boolean
-
   UserIdentitiesUpdateResponse:
     properties:
       ok: boolean
-
 imports:
   root: __package__.yml
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     add_acs_user:
       path: /user_identities/add_acs_user
@@ -126,7 +105,13 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            user_identity_id: user_identity_id
+            acs_user_id: acs_user_id
+          response:
+            body:
+              ok: true
     create:
       path: /user_identities/create
       method: POST
@@ -146,7 +131,20 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request: {}
+          response:
+            body:
+              user_identity:
+                user_identity_id: user_identity_id
+                user_identity_key: user_identity_key
+                email_address: email_address
+                phone_number: phone_number
+                display_name: display_name
+                full_name: full_name
+                created_at: '2024-01-15T09:30:00Z'
+                workspace_id: workspace_id
+              ok: true
     delete:
       path: /user_identities/delete
       method: POST
@@ -163,7 +161,12 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            user_identity_id: user_identity_id
+          response:
+            body:
+              ok: true
     get:
       path: /user_identities/get
       method: POST
@@ -177,7 +180,21 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            user_identity_id: user_identity_id
+          response:
+            body:
+              user_identity:
+                user_identity_id: user_identity_id
+                user_identity_key: user_identity_key
+                email_address: email_address
+                phone_number: phone_number
+                display_name: display_name
+                full_name: full_name
+                created_at: '2024-01-15T09:30:00Z'
+                workspace_id: workspace_id
+              ok: true
     grant_access_to_device:
       path: /user_identities/grant_access_to_device
       method: POST
@@ -195,7 +212,13 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            user_identity_id: user_identity_id
+            device_id: device_id
+          response:
+            body:
+              ok: true
     list:
       path: /user_identities/list
       method: POST
@@ -213,7 +236,20 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request: {}
+          response:
+            body:
+              user_identities:
+                - user_identity_id: user_identity_id
+                  user_identity_key: user_identity_key
+                  email_address: email_address
+                  phone_number: phone_number
+                  display_name: display_name
+                  full_name: full_name
+                  created_at: '2024-01-15T09:30:00Z'
+                  workspace_id: workspace_id
+              ok: true
     list_accessible_devices:
       path: /user_identities/list_accessible_devices
       method: POST
@@ -230,7 +266,35 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            user_identity_id: user_identity_id
+          response:
+            body:
+              accessible_devices:
+                - device_id: device_id
+                  device_type: akuvox_lock
+                  capabilities_supported:
+                    - access_code
+                  properties:
+                    online: true
+                    name: name
+                    model:
+                      display_name: display_name
+                      manufacturer_display_name: manufacturer_display_name
+                  connected_account_id: connected_account_id
+                  workspace_id: workspace_id
+                  errors:
+                    - error_code: error_code
+                      message: message
+                  warnings:
+                    - warning_code: warning_code
+                      message: message
+                  created_at: '2024-01-15T09:30:00Z'
+                  is_managed: true
+                  can_remotely_unlock: true
+                  can_program_online_access_codes: true
+              ok: true
     list_acs_systems:
       path: /user_identities/list_acs_systems
       method: POST
@@ -247,7 +311,23 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            user_identity_id: user_identity_id
+          response:
+            body:
+              acs_systems:
+                - acs_system_id: acs_system_id
+                  external_type: pti_site
+                  external_type_display_name: external_type_display_name
+                  system_type: pti_site
+                  system_type_display_name: system_type_display_name
+                  name: name
+                  created_at: '2024-01-15T09:30:00Z'
+                  workspace_id: workspace_id
+                  connected_account_ids:
+                    - connected_account_ids
+              ok: true
     list_acs_users:
       path: /user_identities/list_acs_users
       method: POST
@@ -264,7 +344,32 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            user_identity_id: user_identity_id
+          response:
+            body:
+              acs_users:
+                - acs_user_id: acs_user_id
+                  acs_system_id: acs_system_id
+                  hid_acs_system_id: hid_acs_system_id
+                  workspace_id: workspace_id
+                  created_at: '2024-01-15T09:30:00Z'
+                  display_name: display_name
+                  external_type: pti_user
+                  external_type_display_name: external_type_display_name
+                  is_suspended: true
+                  access_schedule:
+                    starts_at: '2024-01-15T09:30:00Z'
+                    ends_at: '2024-01-15T09:30:00Z'
+                  user_identity_id: user_identity_id
+                  user_identity_email_address: user_identity_email_address
+                  user_identity_phone_number: user_identity_phone_number
+                  full_name: full_name
+                  email: email
+                  email_address: email_address
+                  phone_number: phone_number
+              ok: true
     remove_acs_user:
       path: /user_identities/remove_acs_user
       method: POST
@@ -282,7 +387,13 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            user_identity_id: user_identity_id
+            acs_user_id: acs_user_id
+          response:
+            body:
+              ok: true
     revoke_access_to_device:
       path: /user_identities/revoke_access_to_device
       method: POST
@@ -300,7 +411,13 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            user_identity_id: user_identity_id
+            device_id: device_id
+          response:
+            body:
+              ok: true
     update:
       path: /user_identities/update
       method: POST
@@ -321,3 +438,9 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
+      examples:
+        - request:
+            user_identity_id: user_identity_id
+          response:
+            body:
+              ok: true

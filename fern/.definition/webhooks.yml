@@ -1,35 +1,27 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   root: __package__.yml
-
 types:
   WebhooksCreateResponse:
     properties:
       webhook: root.Webhook
       ok: boolean
-
   WebhooksDeleteResponse:
     properties:
       ok: boolean
-
   WebhooksGetResponse:
     properties:
       webhook: root.Webhook
       ok: boolean
-
   WebhooksListResponse:
     properties:
       webhooks: list<root.Webhook>
       ok: boolean
-
   WebhooksUpdateResponse:
     properties:
       ok: boolean
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     create:
       path: /webhooks/create
@@ -49,7 +41,18 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            url: url
+          response:
+            body:
+              webhook:
+                webhook_id: webhook_id
+                url: url
+                event_types:
+                  - event_types
+                secret: secret
+              ok: true
     delete:
       path: /webhooks/delete
       method: POST
@@ -66,7 +69,12 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            webhook_id: webhook_id
+          response:
+            body:
+              ok: true
     get:
       path: /webhooks/get
       method: POST
@@ -84,7 +92,18 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            webhook_id: webhook_id
+          response:
+            body:
+              webhook:
+                webhook_id: webhook_id
+                url: url
+                event_types:
+                  - event_types
+                secret: secret
+              ok: true
     list:
       path: /webhooks/list
       method: POST
@@ -97,7 +116,16 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - response:
+            body:
+              webhooks:
+                - webhook_id: webhook_id
+                  url: url
+                  event_types:
+                    - event_types
+                  secret: secret
+              ok: true
     update:
       path: /webhooks/update
       method: POST
@@ -115,3 +143,11 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
+      examples:
+        - request:
+            webhook_id: webhook_id
+            event_types:
+              - event_types
+          response:
+            body:
+              ok: true

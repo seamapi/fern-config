@@ -1,59 +1,47 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 types:
   ConnectedAccountsDeleteResponse:
     properties:
       ok: boolean
-
   ConnectedAccountsGetRequestConnectedAccountId:
     properties:
       connected_account_id: string
-
   ConnectedAccountsGetRequestEmail:
     properties:
       email: string
-
   ConnectedAccountsGetRequest:
     discriminated: false
     union:
       - ConnectedAccountsGetRequestConnectedAccountId
       - ConnectedAccountsGetRequestEmail
-
   ConnectedAccountsGetResponse:
     properties:
       connected_account: root.ConnectedAccount
       ok: boolean
-
   ConnectedAccountsListRequestCustomMetadataHasValue:
     discriminated: false
     union:
       - string
       - boolean
       - optional<string>
-
   ConnectedAccountsListResponse:
     properties:
       connected_accounts: list<root.ConnectedAccount>
       ok: boolean
-
   ConnectedAccountsUpdateRequestCustomMetadataValue:
     discriminated: false
     union:
       - string
       - boolean
       - optional<string>
-
   ConnectedAccountsUpdateResponse:
     properties:
       connected_account: root.ConnectedAccount
       ok: boolean
-
 imports:
   root: __package__.yml
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     delete:
       path: /connected_accounts/delete
@@ -72,7 +60,12 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            connected_account_id: connected_account_id
+          response:
+            body:
+              ok: true
     get:
       path: /connected_accounts/get
       method: POST
@@ -87,7 +80,30 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            connected_account_id: connected_account_id
+          response:
+            body:
+              connected_account:
+                connected_account_id: connected_account_id
+                created_at: '2024-01-15T09:30:00Z'
+                user_identifier:
+                  username: username
+                  api_url: api_url
+                  email: email
+                  phone: phone
+                  exclusive: true
+                account_type: account_type
+                account_type_display_name: account_type_display_name
+                errors:
+                  key: value
+                warnings:
+                  key: value
+                custom_metadata:
+                  custom_metadata: custom_metadata
+                automatically_manage_new_devices: true
+              ok: true
     list:
       path: /connected_accounts/list
       method: POST
@@ -111,7 +127,21 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request: {}
+          response:
+            body:
+              connected_accounts:
+                - connected_account_id: connected_account_id
+                  created_at: '2024-01-15T09:30:00Z'
+                  account_type: account_type
+                  account_type_display_name: account_type_display_name
+                  errors:
+                    key: value
+                  warnings:
+                    key: value
+                  automatically_manage_new_devices: true
+              ok: true
     update:
       path: /connected_accounts/update
       method: POST
@@ -133,3 +163,27 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
+      examples:
+        - request:
+            connected_account_id: connected_account_id
+          response:
+            body:
+              connected_account:
+                connected_account_id: connected_account_id
+                created_at: '2024-01-15T09:30:00Z'
+                user_identifier:
+                  username: username
+                  api_url: api_url
+                  email: email
+                  phone: phone
+                  exclusive: true
+                account_type: account_type
+                account_type_display_name: account_type_display_name
+                errors:
+                  key: value
+                warnings:
+                  key: value
+                custom_metadata:
+                  custom_metadata: custom_metadata
+                automatically_manage_new_devices: true
+              ok: true

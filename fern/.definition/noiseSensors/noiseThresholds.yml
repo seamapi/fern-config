@@ -1,38 +1,30 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   root: ../__package__.yml
-
 types:
   NoiseThresholdsCreateResponse:
     properties:
       action_attempt: root.ActionAttempt
       noise_threshold: root.NoiseThreshold
       ok: boolean
-
   NoiseThresholdsDeleteResponse:
     properties:
       action_attempt: root.ActionAttempt
       ok: boolean
-
   NoiseThresholdsGetResponse:
     properties:
       noise_threshold: root.NoiseThreshold
       ok: boolean
-
   NoiseThresholdsListResponse:
     properties:
       noise_thresholds: list<root.NoiseThreshold>
       ok: boolean
-
   NoiseThresholdsUpdateResponse:
     properties:
       action_attempt: root.ActionAttempt
       ok: boolean
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     create:
       path: /noise_sensors/noise_thresholds/create
@@ -57,7 +49,29 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            device_id: device_id
+            starts_daily_at: starts_daily_at
+            ends_daily_at: ends_daily_at
+          response:
+            body:
+              action_attempt:
+                status: success
+                action_type: action_attempt
+                action_attempt_id: action_attempt
+                result:
+                  key: value
+                error: action_attempt
+              noise_threshold:
+                noise_threshold_id: noise_threshold_id
+                device_id: device_id
+                name: name
+                noise_threshold_nrs: 1.1
+                starts_daily_at: starts_daily_at
+                ends_daily_at: ends_daily_at
+                noise_threshold_decibels: 1.1
+              ok: true
     delete:
       path: /noise_sensors/noise_thresholds/delete
       method: POST
@@ -77,7 +91,20 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            noise_threshold_id: noise_threshold_id
+            device_id: device_id
+          response:
+            body:
+              action_attempt:
+                status: success
+                action_type: action_attempt
+                action_attempt_id: action_attempt
+                result:
+                  key: value
+                error: action_attempt
+              ok: true
     get:
       path: /noise_sensors/noise_thresholds/get
       method: POST
@@ -95,7 +122,20 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            noise_threshold_id: noise_threshold_id
+          response:
+            body:
+              noise_threshold:
+                noise_threshold_id: noise_threshold_id
+                device_id: device_id
+                name: name
+                noise_threshold_nrs: 1.1
+                starts_daily_at: starts_daily_at
+                ends_daily_at: ends_daily_at
+                noise_threshold_decibels: 1.1
+              ok: true
     list:
       path: /noise_sensors/noise_thresholds/list
       method: POST
@@ -114,7 +154,20 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            device_id: device_id
+          response:
+            body:
+              noise_thresholds:
+                - noise_threshold_id: noise_threshold_id
+                  device_id: device_id
+                  name: name
+                  noise_threshold_nrs: 1.1
+                  starts_daily_at: starts_daily_at
+                  ends_daily_at: ends_daily_at
+                  noise_threshold_decibels: 1.1
+              ok: true
     update:
       path: /noise_sensors/noise_thresholds/update
       method: POST
@@ -139,3 +192,17 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
+      examples:
+        - request:
+            noise_threshold_id: noise_threshold_id
+            device_id: device_id
+          response:
+            body:
+              action_attempt:
+                status: success
+                action_type: action_attempt
+                action_attempt_id: action_attempt
+                result:
+                  key: value
+                error: action_attempt
+              ok: true

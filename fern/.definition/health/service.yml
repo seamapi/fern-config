@@ -1,18 +1,14 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   root: ../__package__.yml
-
 types:
   ServiceByServiceNameResponse:
     properties:
       ok: boolean
       last_service_evaluation_at: string
       service_health: root.ServiceHealth
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     by_service_name:
       path: /health/service/[service_name]
@@ -30,3 +26,14 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
+      examples:
+        - request:
+            service_name: service_name
+          response:
+            body:
+              ok: true
+              last_service_evaluation_at: last_service_evaluation_at
+              service_health:
+                service: service
+                status: healthy
+                description: description

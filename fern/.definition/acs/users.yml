@@ -1,56 +1,45 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 types:
   UsersAddToAccessGroupResponse:
     properties:
       ok: boolean
-
   UsersCreateRequestAccessSchedule:
     properties:
       starts_at: datetime
       ends_at: datetime
-
   UsersCreateResponse:
     properties:
       acs_user: root.AcsUser
       ok: boolean
-
   UsersDeleteResponse:
     properties:
       ok: boolean
-
   UsersGetResponse:
     properties:
       acs_user: root.AcsUser
       ok: boolean
-
   UsersListResponse:
     properties:
       acs_users: list<root.AcsUser>
       ok: boolean
-
   UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataDoorCategory:
     enum:
       - entrance
       - guest
-      - name: ElevatorReader
-        value: elevator reader
+      - value: elevator reader
+        name: ElevatorReader
       - common
-      - name: CommonPms
-        value: common (PMS)
-
+      - value: common (PMS)
+        name: CommonPms
   UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType:
     enum:
       - BLE
       - commonDoor
       - touch
-
   UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItem:
     properties:
       visionline_door_profile_id: string
       visionline_door_profile_type: >-
         UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType
-
   UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadata:
     properties:
       door_name: string
@@ -58,7 +47,6 @@ types:
         UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataDoorCategory
       profiles: >-
         optional<list<UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItem>>
-
   UsersListAccessibleEntrancesResponseAcsEntrancesItem:
     properties:
       acs_entrance_id: string
@@ -67,43 +55,34 @@ types:
       created_at: datetime
       visionline_metadata: >-
         optional<UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadata>
-
   UsersListAccessibleEntrancesResponse:
     properties:
       acs_entrances: list<UsersListAccessibleEntrancesResponseAcsEntrancesItem>
       ok: boolean
-
   UsersRemoveFromAccessGroupResponse:
     properties:
       ok: boolean
-
   UsersRevokeAccessToAllEntrancesResponse:
     properties:
       ok: boolean
-
   UsersSuspendResponse:
     properties:
       ok: boolean
-
   UsersUnsuspendResponse:
     properties:
       ok: boolean
-
   UsersUpdateRequestAccessSchedule:
     properties:
       starts_at: datetime
       ends_at: datetime
-
   UsersUpdateResponse:
     properties:
       ok: boolean
-
 imports:
   root: ../__package__.yml
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     add_to_access_group:
       path: /acs/users/add_to_access_group
@@ -122,7 +101,13 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            acs_user_id: acs_user_id
+            acs_access_group_id: acs_access_group_id
+          response:
+            body:
+              ok: true
     create:
       path: /acs/users/create
       method: POST
@@ -138,7 +123,7 @@ service:
             access_schedule: optional<UsersCreateRequestAccessSchedule>
             full_name: optional<string>
             email:
-              docs: "Deprecated: use email_address."
+              docs: 'Deprecated: use email_address.'
               type: optional<string>
             phone_number: optional<string>
             email_address: optional<string>
@@ -148,7 +133,32 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            acs_system_id: acs_system_id
+          response:
+            body:
+              acs_user:
+                acs_user_id: acs_user_id
+                acs_system_id: acs_system_id
+                hid_acs_system_id: hid_acs_system_id
+                workspace_id: workspace_id
+                created_at: '2024-01-15T09:30:00Z'
+                display_name: display_name
+                external_type: pti_user
+                external_type_display_name: external_type_display_name
+                is_suspended: true
+                access_schedule:
+                  starts_at: '2024-01-15T09:30:00Z'
+                  ends_at: '2024-01-15T09:30:00Z'
+                user_identity_id: user_identity_id
+                user_identity_email_address: user_identity_email_address
+                user_identity_phone_number: user_identity_phone_number
+                full_name: full_name
+                email: email
+                email_address: email_address
+                phone_number: phone_number
+              ok: true
     delete:
       path: /acs/users/delete
       method: POST
@@ -165,7 +175,12 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            acs_user_id: acs_user_id
+          response:
+            body:
+              ok: true
     get:
       path: /acs/users/get
       method: POST
@@ -182,7 +197,32 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            acs_user_id: acs_user_id
+          response:
+            body:
+              acs_user:
+                acs_user_id: acs_user_id
+                acs_system_id: acs_system_id
+                hid_acs_system_id: hid_acs_system_id
+                workspace_id: workspace_id
+                created_at: '2024-01-15T09:30:00Z'
+                display_name: display_name
+                external_type: pti_user
+                external_type_display_name: external_type_display_name
+                is_suspended: true
+                access_schedule:
+                  starts_at: '2024-01-15T09:30:00Z'
+                  ends_at: '2024-01-15T09:30:00Z'
+                user_identity_id: user_identity_id
+                user_identity_email_address: user_identity_email_address
+                user_identity_phone_number: user_identity_phone_number
+                full_name: full_name
+                email: email
+                email_address: email_address
+                phone_number: phone_number
+              ok: true
     list:
       path: /acs/users/list
       method: POST
@@ -202,7 +242,31 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request: {}
+          response:
+            body:
+              acs_users:
+                - acs_user_id: acs_user_id
+                  acs_system_id: acs_system_id
+                  hid_acs_system_id: hid_acs_system_id
+                  workspace_id: workspace_id
+                  created_at: '2024-01-15T09:30:00Z'
+                  display_name: display_name
+                  external_type: pti_user
+                  external_type_display_name: external_type_display_name
+                  is_suspended: true
+                  access_schedule:
+                    starts_at: '2024-01-15T09:30:00Z'
+                    ends_at: '2024-01-15T09:30:00Z'
+                  user_identity_id: user_identity_id
+                  user_identity_email_address: user_identity_email_address
+                  user_identity_phone_number: user_identity_phone_number
+                  full_name: full_name
+                  email: email
+                  email_address: email_address
+                  phone_number: phone_number
+              ok: true
     list_accessible_entrances:
       path: /acs/users/list_accessible_entrances
       method: POST
@@ -219,7 +283,20 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            acs_user_id: acs_user_id
+          response:
+            body:
+              acs_entrances:
+                - acs_entrance_id: acs_entrance_id
+                  display_name: display_name
+                  acs_system_id: acs_system_id
+                  created_at: '2024-01-15T09:30:00Z'
+                  visionline_metadata:
+                    door_name: door_name
+                    door_category: entrance
+              ok: true
     remove_from_access_group:
       path: /acs/users/remove_from_access_group
       method: POST
@@ -237,7 +314,13 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            acs_user_id: acs_user_id
+            acs_access_group_id: acs_access_group_id
+          response:
+            body:
+              ok: true
     revoke_access_to_all_entrances:
       path: /acs/users/revoke_access_to_all_entrances
       method: POST
@@ -254,7 +337,12 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            acs_user_id: acs_user_id
+          response:
+            body:
+              ok: true
     suspend:
       path: /acs/users/suspend
       method: POST
@@ -271,7 +359,12 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            acs_user_id: acs_user_id
+          response:
+            body:
+              ok: true
     unsuspend:
       path: /acs/users/unsuspend
       method: POST
@@ -288,7 +381,12 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            acs_user_id: acs_user_id
+          response:
+            body:
+              ok: true
     update:
       path: /acs/users/update
       method: POST
@@ -302,7 +400,7 @@ service:
             acs_user_id: string
             full_name: optional<string>
             email:
-              docs: "Deprecated: use email_address."
+              docs: 'Deprecated: use email_address.'
               type: optional<string>
             phone_number: optional<string>
             email_address: optional<string>
@@ -313,3 +411,9 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
+      examples:
+        - request:
+            acs_user_id: acs_user_id
+          response:
+            body:
+              ok: true

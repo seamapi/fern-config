@@ -1,37 +1,29 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 types:
   webview_logo_shape:
     enum:
       - circle
       - square
-
   WorkspacesCreateResponse:
     properties:
       workspace: root.Workspace
       ok: boolean
-
   WorkspacesGetResponse:
     properties:
       workspace: optional<root.Workspace>
       ok: boolean
-
   WorkspacesListResponse:
     properties:
       workspaces: list<root.Workspace>
       ok: boolean
-
   WorkspacesResetSandboxResponse:
     properties:
       action_attempt: root.ActionAttempt
       ok: boolean
-
 imports:
   root: __package__.yml
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     create:
       path: /workspaces/create
@@ -55,7 +47,18 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            name: name
+            connect_partner_name: connect_partner_name
+          response:
+            body:
+              workspace:
+                workspace_id: workspace_id
+                name: name
+                is_sandbox: true
+                connect_partner_name: connect_partner_name
+              ok: true
     get:
       path: /workspaces/get
       method: POST
@@ -68,7 +71,15 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - response:
+            body:
+              workspace:
+                workspace_id: workspace_id
+                name: name
+                is_sandbox: true
+                connect_partner_name: connect_partner_name
+              ok: true
     list:
       path: /workspaces/list
       method: POST
@@ -81,7 +92,15 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - response:
+            body:
+              workspaces:
+                - workspace_id: workspace_id
+                  name: name
+                  is_sandbox: true
+                  connect_partner_name: connect_partner_name
+              ok: true
     reset_sandbox:
       path: /workspaces/reset_sandbox
       method: POST
@@ -94,3 +113,14 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
+      examples:
+        - response:
+            body:
+              action_attempt:
+                status: success
+                action_type: action_attempt
+                action_attempt_id: action_attempt
+                result:
+                  key: value
+                error: action_attempt
+              ok: true

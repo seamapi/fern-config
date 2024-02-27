@@ -1,17 +1,13 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   root: ../__package__.yml
-
 types:
   SimulateCreateUnmanagedAccessCodeResponse:
     properties:
       access_code: root.UnmanagedAccessCode
       ok: boolean
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     create_unmanaged_access_code:
       path: /access_codes/simulate/create_unmanaged_access_code
@@ -32,3 +28,26 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
+      examples:
+        - request:
+            device_id: device_id
+            name: name
+            code: code
+          response:
+            body:
+              access_code:
+                type: time_bound
+                access_code_id: access_code_id
+                device_id: device_id
+                name: name
+                code: code
+                created_at: '2024-01-15T09:30:00Z'
+                errors:
+                  key: value
+                warnings:
+                  key: value
+                is_managed: true
+                starts_at: '2024-01-15T09:30:00Z'
+                ends_at: '2024-01-15T09:30:00Z'
+                status: set
+              ok: true

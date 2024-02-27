@@ -1,21 +1,16 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 types:
   PhonesDeactivateResponse:
     properties:
       ok: boolean
-
   PhonesListResponse:
     properties:
       phones: list<root.Phone>
       ok: boolean
-
 imports:
   root: __package__.yml
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     deactivate:
       path: /phones/deactivate
@@ -33,7 +28,12 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
-
+      examples:
+        - request:
+            device_id: device_id
+          response:
+            body:
+              ok: true
     list:
       path: /phones/list
       method: POST
@@ -51,3 +51,25 @@ service:
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
+      examples:
+        - request: {}
+          response:
+            body:
+              phones:
+                - device_id: device_id
+                  device_type: android_phone
+                  capabilities_supported:
+                    - access_code
+                  properties: {}
+                  workspace_id: workspace_id
+                  errors:
+                    - error_code: error_code
+                      message: message
+                  warnings:
+                    - warning_code: warning_code
+                      message: message
+                  created_at: '2024-01-15T09:30:00Z'
+                  is_managed: true
+                  can_remotely_unlock: true
+                  can_program_online_access_codes: true
+              ok: true

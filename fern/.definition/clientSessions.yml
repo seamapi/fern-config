@@ -155,6 +155,7 @@ service:
             user_identifier_key: optional<string>
             connect_webview_id: optional<string>
             without_user_identifier_key: optional<boolean>
+            user_identity_id: optional<string>
       response:
         docs: OK
         type: ClientSessionsListResponse

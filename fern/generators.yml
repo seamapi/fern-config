@@ -20,7 +20,10 @@ groups:
   go-sdk:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.9.3
+        version: 0.17.0
         github:
           repository: seamapi/go
           mode: pull-request
+        config: 
+          includeLegacyClientOptions: true
+      

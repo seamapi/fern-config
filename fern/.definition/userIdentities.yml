@@ -327,6 +327,8 @@ service:
                   workspace_id: workspace_id
                   connected_account_ids:
                     - connected_account_ids
+                  image_url: image_url
+                  image_alt_text: image_alt_text
               ok: true
     list_acs_users:
       path: /user_identities/list_acs_users

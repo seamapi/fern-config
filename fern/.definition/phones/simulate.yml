@@ -32,7 +32,6 @@ service:
         name: SimulateCreateSandboxPhoneRequest
         body:
           properties:
-            assa_abloy_credential_service_acs_system_id: string
             custom_sdk_installation_id: optional<string>
             user_identity_id: string
             phone_metadata: optional<SimulateCreateSandboxPhoneRequestPhoneMetadata>
@@ -46,7 +45,6 @@ service:
         - root.UnauthorizedError
       examples:
         - request:
-            assa_abloy_credential_service_acs_system_id: assa_abloy_credential_service_acs_system_id
             user_identity_id: user_identity_id
           response:
             body:

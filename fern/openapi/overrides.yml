@@ -1,4 +1,22 @@
 paths: 
+  "/acs/credentials/list": 
+    post: 
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                acs_user_id: 
+                  type: string
+                  format: uuid
+                acs_system_id: 
+                  type: string
+                  format: uuid
+                user_identity_id: 
+                  type: string
+                  format: uuid
+                is_multi_phone_sync_credential: 
+                  type: boolean
   /access_codes/create: 
     post: 
       requestBody: 

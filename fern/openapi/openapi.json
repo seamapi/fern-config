@@ -3999,7 +3999,8 @@
                       "noise_sensor.noise_threshold_triggered",
                       "access_code.backup_access_code_pulled",
                       "acs_user.deleted",
-                      "acs_credential.deleted"
+                      "acs_credential.deleted",
+                      "enrollment_automation.deleted"
                     ]
                   },
                   "event_types": {
@@ -4054,7 +4055,8 @@
                         "noise_sensor.noise_threshold_triggered",
                         "access_code.backup_access_code_pulled",
                         "acs_user.deleted",
-                        "acs_credential.deleted"
+                        "acs_credential.deleted",
+                        "enrollment_automation.deleted"
                       ]
                     }
                   },
@@ -14965,10 +14967,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "assa_abloy_credential_service_acs_system_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
                   "custom_sdk_installation_id": {
                     "type": "string"
                   },
@@ -15034,7 +15032,6 @@
                   }
                 },
                 "required": [
-                  "assa_abloy_credential_service_acs_system_id",
                   "user_identity_id"
                 ]
               }
@@ -19208,6 +19205,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "image_url": {
+            "type": "string"
+          },
+          "image_alt_text": {
+            "type": "string"
           }
         },
         "required": [
@@ -19219,7 +19222,9 @@
           "name",
           "created_at",
           "workspace_id",
-          "connected_account_ids"
+          "connected_account_ids",
+          "image_url",
+          "image_alt_text"
         ]
       },
       "acs_access_group": {

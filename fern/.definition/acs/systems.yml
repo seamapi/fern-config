@@ -45,6 +45,8 @@ service:
                 workspace_id: workspace_id
                 connected_account_ids:
                   - connected_account_ids
+                image_url: image_url
+                image_alt_text: image_alt_text
               ok: true
     list:
       path: /acs/systems/list
@@ -77,4 +79,6 @@ service:
                   workspace_id: workspace_id
                   connected_account_ids:
                     - connected_account_ids
+                  image_url: image_url
+                  image_alt_text: image_alt_text
               ok: true

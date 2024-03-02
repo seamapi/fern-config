@@ -19017,6 +19017,18 @@
             "type": "string",
             "format": "uuid"
           },
+          "acs_credential_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "acs_user_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "enrollment_automation_id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "event_type": {
             "type": "string"
           },

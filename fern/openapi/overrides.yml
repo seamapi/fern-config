@@ -347,6 +347,9 @@ components:
       - connected_account.completed_first_sync
       - noise_sensor.noise_threshold_triggered
       - access_code.backup_access_code_pulled
+      - enrollment_automation.deleted
+      - acs_user.deleted
+      - acs_credential.deleted
     PhoneOperatingSystem: 
       type: string
       enum: ["android", "ios"]

@@ -54,7 +54,7 @@ The publish command currently runs in a GitHub workflow (see [ci.yml](.github/wo
 1. Commit the changes to the `fern-config` repository, including updates to `openapi.json` and any generated files. Push your branch to GitHub, open, and merge your branch into main. If checks fail, seek advice on `#fern-seam` Slack channel.
 
 #### Releasing
-1. After your PR is merged, go to the fern-config releases page on GitHub at https://github.com/seamapi/fern-config/releases.
+1. After your PR is merged, go to the `fern-config` releases page on GitHub at https://github.com/seamapi/fern-config/releases.
 1. Draft a new release, choose a tag (`go@` or `java@` followed by the next version number, e.g., `go@0.2.9`), and create the new tag.
 1. Generate release notes, set as the latest release, and publish the release.
 1. Wait for Fern to open a new PR in the [`seamapi/go`](https://github.com/seamapi/go) or [`seamapi/java`](https://github.com/seamapi/java) repository. If this doesn't happen, check the last commit's action logs on main for errors and ask on `#fern-seam` for help.

@@ -46,6 +46,9 @@ service:
               event:
                 event_id: event_id
                 device_id: device_id
+                acs_credential_id: acs_credential_id
+                acs_user_id: acs_user_id
+                enrollment_automation_id: enrollment_automation_id
                 event_type: event_type
                 workspace_id: workspace_id
                 created_at: '2024-01-15T09:30:00Z'
@@ -84,6 +87,9 @@ service:
               events:
                 - event_id: event_id
                   device_id: device_id
+                  acs_credential_id: acs_credential_id
+                  acs_user_id: acs_user_id
+                  enrollment_automation_id: enrollment_automation_id
                   event_type: event_type
                   workspace_id: workspace_id
                   created_at: '2024-01-15T09:30:00Z'

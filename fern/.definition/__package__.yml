@@ -891,6 +891,9 @@ types:
     properties:
       event_id: string
       device_id: optional<string>
+      acs_credential_id: optional<string>
+      acs_user_id: optional<string>
+      enrollment_automation_id: optional<string>
       event_type: string
       workspace_id: string
       created_at: datetime
@@ -1303,6 +1306,12 @@ types:
         name: NoiseSensorNoiseThresholdTriggered
       - value: access_code.backup_access_code_pulled
         name: AccessCodeBackupAccessCodePulled
+      - value: enrollment_automation.deleted
+        name: EnrollmentAutomationDeleted
+      - value: acs_user.deleted
+        name: AcsUserDeleted
+      - value: acs_credential.deleted
+        name: AcsCredentialDeleted
   PhoneOperatingSystem:
     enum:
       - android

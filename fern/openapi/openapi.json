@@ -19025,6 +19025,10 @@
             "type": "string",
             "format": "uuid"
           },
+          "client_session_id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "enrollment_automation_id": {
             "type": "string",
             "format": "uuid"

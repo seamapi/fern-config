@@ -893,6 +893,7 @@ types:
       device_id: optional<string>
       acs_credential_id: optional<string>
       acs_user_id: optional<string>
+      client_session_id: optional<string>
       enrollment_automation_id: optional<string>
       event_type: string
       workspace_id: string
@@ -1312,6 +1313,10 @@ types:
         name: AcsUserDeleted
       - value: acs_credential.deleted
         name: AcsCredentialDeleted
+      - value: phone.deactivated
+        name: PhoneDeactivated
+      - value: client_session.deleted
+        name: ClientSessionDeleted
   PhoneOperatingSystem:
     enum:
       - android

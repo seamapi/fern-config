@@ -48,6 +48,7 @@ service:
                 device_id: device_id
                 acs_credential_id: acs_credential_id
                 acs_user_id: acs_user_id
+                client_session_id: client_session_id
                 enrollment_automation_id: enrollment_automation_id
                 event_type: event_type
                 workspace_id: workspace_id
@@ -89,6 +90,7 @@ service:
                   device_id: device_id
                   acs_credential_id: acs_credential_id
                   acs_user_id: acs_user_id
+                  client_session_id: client_session_id
                   enrollment_automation_id: enrollment_automation_id
                   event_type: event_type
                   workspace_id: workspace_id

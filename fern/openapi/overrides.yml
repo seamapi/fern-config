@@ -350,6 +350,8 @@ components:
       - enrollment_automation.deleted
       - acs_user.deleted
       - acs_credential.deleted
+      - phone.deactivated
+      - client_session.deleted
     PhoneOperatingSystem: 
       type: string
       enum: ["android", "ios"]

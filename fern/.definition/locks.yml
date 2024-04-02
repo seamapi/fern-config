@@ -12,6 +12,18 @@ types:
       - string
       - boolean
       - optional<string>
+  LocksListRequestIncludeIfItem:
+    enum:
+      - can_remotely_unlock
+      - can_remotely_lock
+      - can_program_online_access_codes
+      - can_simulate_removal
+  LocksListRequestExcludeIfItem:
+    enum:
+      - can_remotely_unlock
+      - can_remotely_lock
+      - can_program_online_access_codes
+      - can_simulate_removal
   LocksListResponse:
     properties:
       locks: list<root.Device>
@@ -54,11 +66,17 @@ service:
               lock:
                 device_id: device_id
                 device_type: akuvox_lock
+                nickname: nickname
+                display_name: display_name
                 capabilities_supported:
                   - access_code
                 properties:
                   online: true
                   name: name
+                  accessory_keypad:
+                    is_connected: true
+                  appearance:
+                    name: name
                   model:
                     display_name: display_name
                     manufacturer_display_name: manufacturer_display_name
@@ -173,8 +191,8 @@ service:
                   ecobee_metadata:
                     ecobee_device_id: ecobee_device_id
                     device_name: device_name
-                  honeywell_metadata:
-                    honeywell_device_id: honeywell_device_id
+                  honeywell_resideo_metadata:
+                    honeywell_resideo_device_id: honeywell_resideo_device_id
                     device_name: device_name
                   hubitat_metadata:
                     device_id: device_id
@@ -228,15 +246,23 @@ service:
                 custom_metadata:
                   custom_metadata: custom_metadata
                 can_remotely_unlock: true
+                can_remotely_lock: true
                 can_program_online_access_codes: true
+                can_simulate_removal: true
               device:
                 device_id: device_id
                 device_type: akuvox_lock
+                nickname: nickname
+                display_name: display_name
                 capabilities_supported:
                   - access_code
                 properties:
                   online: true
                   name: name
+                  accessory_keypad:
+                    is_connected: true
+                  appearance:
+                    name: name
                   model:
                     display_name: display_name
                     manufacturer_display_name: manufacturer_display_name
@@ -351,8 +377,8 @@ service:
                   ecobee_metadata:
                     ecobee_device_id: ecobee_device_id
                     device_name: device_name
-                  honeywell_metadata:
-                    honeywell_device_id: honeywell_device_id
+                  honeywell_resideo_metadata:
+                    honeywell_resideo_device_id: honeywell_resideo_device_id
                     device_name: device_name
                   hubitat_metadata:
                     device_id: device_id
@@ -406,7 +432,9 @@ service:
                 custom_metadata:
                   custom_metadata: custom_metadata
                 can_remotely_unlock: true
+                can_remotely_lock: true
                 can_program_online_access_codes: true
+                can_simulate_removal: true
               ok: true
     list:
       path: /locks/list
@@ -432,6 +460,8 @@ service:
             custom_metadata_has: >-
               optional<map<string,
               optional<LocksListRequestCustomMetadataHasValue>>>
+            include_if: optional<list<LocksListRequestIncludeIfItem>>
+            exclude_if: optional<list<LocksListRequestExcludeIfItem>>
       response:
         docs: OK
         type: LocksListResponse
@@ -446,11 +476,15 @@ service:
               locks:
                 - device_id: device_id
                   device_type: akuvox_lock
+                  nickname: nickname
+                  display_name: display_name
                   capabilities_supported:
                     - access_code
                   properties:
                     online: true
                     name: name
+                    appearance:
+                      name: name
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
@@ -465,15 +499,21 @@ service:
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
                   can_remotely_unlock: true
+                  can_remotely_lock: true
                   can_program_online_access_codes: true
+                  can_simulate_removal: true
               devices:
                 - device_id: device_id
                   device_type: akuvox_lock
+                  nickname: nickname
+                  display_name: display_name
                   capabilities_supported:
                     - access_code
                   properties:
                     online: true
                     name: name
+                    appearance:
+                      name: name
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
@@ -488,7 +528,9 @@ service:
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
                   can_remotely_unlock: true
+                  can_remotely_lock: true
                   can_program_online_access_codes: true
+                  can_simulate_removal: true
               ok: true
     lock_door:
       path: /locks/lock_door

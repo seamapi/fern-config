@@ -11,6 +11,18 @@ types:
       - string
       - boolean
       - optional<string>
+  UnmanagedListRequestIncludeIfItem:
+    enum:
+      - can_remotely_unlock
+      - can_remotely_lock
+      - can_program_online_access_codes
+      - can_simulate_removal
+  UnmanagedListRequestExcludeIfItem:
+    enum:
+      - can_remotely_unlock
+      - can_remotely_lock
+      - can_program_online_access_codes
+      - can_simulate_removal
   UnmanagedListResponse:
     properties:
       devices: list<root.UnmanagedDevice>
@@ -75,7 +87,9 @@ service:
                     display_name: display_name
                     manufacturer_display_name: manufacturer_display_name
                 can_remotely_unlock: true
+                can_remotely_lock: true
                 can_program_online_access_codes: true
+                can_simulate_removal: true
                 device_provider:
                   provider_categories:
                     key: value
@@ -104,6 +118,8 @@ service:
             custom_metadata_has: >-
               optional<map<string,
               optional<UnmanagedListRequestCustomMetadataHasValue>>>
+            include_if: optional<list<UnmanagedListRequestIncludeIfItem>>
+            exclude_if: optional<list<UnmanagedListRequestExcludeIfItem>>
       response:
         docs: OK
         type: UnmanagedListResponse
@@ -137,7 +153,9 @@ service:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
                   can_remotely_unlock: true
+                  can_remotely_lock: true
                   can_program_online_access_codes: true
+                  can_simulate_removal: true
               ok: true
     update:
       path: /devices/unmanaged/update

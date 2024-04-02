@@ -274,11 +274,15 @@ service:
               accessible_devices:
                 - device_id: device_id
                   device_type: akuvox_lock
+                  nickname: nickname
+                  display_name: display_name
                   capabilities_supported:
                     - access_code
                   properties:
                     online: true
                     name: name
+                    appearance:
+                      name: name
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
@@ -293,7 +297,9 @@ service:
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
                   can_remotely_unlock: true
+                  can_remotely_lock: true
                   can_program_online_access_codes: true
+                  can_simulate_removal: true
               ok: true
     list_acs_systems:
       path: /user_identities/list_acs_systems
@@ -329,6 +335,7 @@ service:
                     - connected_account_ids
                   image_url: image_url
                   image_alt_text: image_alt_text
+                  can_automate_enrollment: true
               ok: true
     list_acs_users:
       path: /user_identities/list_acs_users

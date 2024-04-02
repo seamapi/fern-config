@@ -12,6 +12,18 @@ types:
       - string
       - boolean
       - optional<string>
+  DevicesListRequestIncludeIfItem:
+    enum:
+      - can_remotely_unlock
+      - can_remotely_lock
+      - can_program_online_access_codes
+      - can_simulate_removal
+  DevicesListRequestExcludeIfItem:
+    enum:
+      - can_remotely_unlock
+      - can_remotely_lock
+      - can_program_online_access_codes
+      - can_simulate_removal
   DevicesListResponse:
     properties:
       devices: list<root.Device>
@@ -85,11 +97,17 @@ service:
               device:
                 device_id: device_id
                 device_type: akuvox_lock
+                nickname: nickname
+                display_name: display_name
                 capabilities_supported:
                   - access_code
                 properties:
                   online: true
                   name: name
+                  accessory_keypad:
+                    is_connected: true
+                  appearance:
+                    name: name
                   model:
                     display_name: display_name
                     manufacturer_display_name: manufacturer_display_name
@@ -204,8 +222,8 @@ service:
                   ecobee_metadata:
                     ecobee_device_id: ecobee_device_id
                     device_name: device_name
-                  honeywell_metadata:
-                    honeywell_device_id: honeywell_device_id
+                  honeywell_resideo_metadata:
+                    honeywell_resideo_device_id: honeywell_resideo_device_id
                     device_name: device_name
                   hubitat_metadata:
                     device_id: device_id
@@ -259,7 +277,9 @@ service:
                 custom_metadata:
                   custom_metadata: custom_metadata
                 can_remotely_unlock: true
+                can_remotely_lock: true
                 can_program_online_access_codes: true
+                can_simulate_removal: true
               ok: true
     list:
       path: /devices/list
@@ -285,6 +305,8 @@ service:
             custom_metadata_has: >-
               optional<map<string,
               optional<DevicesListRequestCustomMetadataHasValue>>>
+            include_if: optional<list<DevicesListRequestIncludeIfItem>>
+            exclude_if: optional<list<DevicesListRequestExcludeIfItem>>
       response:
         docs: OK
         type: DevicesListResponse
@@ -299,11 +321,15 @@ service:
               devices:
                 - device_id: device_id
                   device_type: akuvox_lock
+                  nickname: nickname
+                  display_name: display_name
                   capabilities_supported:
                     - access_code
                   properties:
                     online: true
                     name: name
+                    appearance:
+                      name: name
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
@@ -318,7 +344,9 @@ service:
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
                   can_remotely_unlock: true
+                  can_remotely_lock: true
                   can_program_online_access_codes: true
+                  can_simulate_removal: true
               ok: true
     list_device_providers:
       path: /devices/list_device_providers
@@ -342,7 +370,7 @@ service:
           response:
             body:
               device_providers:
-                - device_provider_name: device_provider_name
+                - device_provider_name: akuvox
                   display_name: display_name
                   image_url: image_url
                   provider_categories:

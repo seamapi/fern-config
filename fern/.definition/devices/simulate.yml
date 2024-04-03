@@ -1,0 +1,32 @@
+types:
+  SimulateRemoveResponse:
+    properties:
+      ok: boolean
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    remove:
+      path: /devices/simulate/remove
+      method: POST
+      auth: true
+      display-name: /devices/simulate/remove
+      request:
+        name: SimulateRemoveRequest
+        body:
+          properties:
+            device_id: string
+      response:
+        docs: OK
+        type: SimulateRemoveResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+      examples:
+        - request:
+            device_id: device_id
+          response:
+            body:
+              ok: true

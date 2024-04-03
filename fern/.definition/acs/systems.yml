@@ -47,6 +47,7 @@ service:
                   - connected_account_ids
                 image_url: image_url
                 image_alt_text: image_alt_text
+                can_automate_enrollment: true
               ok: true
     list:
       path: /acs/systems/list
@@ -81,4 +82,5 @@ service:
                     - connected_account_ids
                   image_url: image_url
                   image_alt_text: image_alt_text
+                  can_automate_enrollment: true
               ok: true

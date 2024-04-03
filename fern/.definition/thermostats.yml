@@ -1,6 +1,9 @@
+imports:
+  root: __package__.yml
 types:
   ThermostatsCoolResponse:
     properties:
+      action_attempt: root.ActionAttempt
       ok: boolean
   ThermostatsGetResponse:
     properties:
@@ -8,9 +11,11 @@ types:
       ok: boolean
   ThermostatsHeatResponse:
     properties:
+      action_attempt: root.ActionAttempt
       ok: boolean
   ThermostatsHeatCoolResponse:
     properties:
+      action_attempt: root.ActionAttempt
       ok: boolean
   ThermostatsListRequestCustomMetadataHasValue:
     discriminated: false
@@ -18,12 +23,25 @@ types:
       - string
       - boolean
       - optional<string>
+  ThermostatsListRequestIncludeIfItem:
+    enum:
+      - can_remotely_unlock
+      - can_remotely_lock
+      - can_program_online_access_codes
+      - can_simulate_removal
+  ThermostatsListRequestExcludeIfItem:
+    enum:
+      - can_remotely_unlock
+      - can_remotely_lock
+      - can_program_online_access_codes
+      - can_simulate_removal
   ThermostatsListResponse:
     properties:
       thermostats: list<root.Device>
       ok: boolean
   ThermostatsOffResponse:
     properties:
+      action_attempt: root.ActionAttempt
       ok: boolean
   ThermostatsSetFanModeRequestFanModeSetting:
     enum:
@@ -31,6 +49,7 @@ types:
       - 'on'
   ThermostatsSetFanModeResponse:
     properties:
+      action_attempt: root.ActionAttempt
       ok: boolean
   ThermostatsUpdateRequestDefaultClimateSettingHvacModeSetting:
     enum:
@@ -51,8 +70,6 @@ types:
   ThermostatsUpdateResponse:
     properties:
       ok: boolean
-imports:
-  root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -73,6 +90,7 @@ service:
       response:
         docs: OK
         type: ThermostatsCoolResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -81,6 +99,13 @@ service:
             device_id: device_id
           response:
             body:
+              action_attempt:
+                status: success
+                action_type: action_attempt
+                action_attempt_id: action_attempt
+                result:
+                  key: value
+                error: action_attempt
               ok: true
     get:
       path: /thermostats/get
@@ -107,11 +132,17 @@ service:
               thermostat:
                 device_id: device_id
                 device_type: akuvox_lock
+                nickname: nickname
+                display_name: display_name
                 capabilities_supported:
                   - access_code
                 properties:
                   online: true
                   name: name
+                  accessory_keypad:
+                    is_connected: true
+                  appearance:
+                    name: name
                   model:
                     display_name: display_name
                     manufacturer_display_name: manufacturer_display_name
@@ -226,8 +257,8 @@ service:
                   ecobee_metadata:
                     ecobee_device_id: ecobee_device_id
                     device_name: device_name
-                  honeywell_metadata:
-                    honeywell_device_id: honeywell_device_id
+                  honeywell_resideo_metadata:
+                    honeywell_resideo_device_id: honeywell_resideo_device_id
                     device_name: device_name
                   hubitat_metadata:
                     device_id: device_id
@@ -281,7 +312,9 @@ service:
                 custom_metadata:
                   custom_metadata: custom_metadata
                 can_remotely_unlock: true
+                can_remotely_lock: true
                 can_program_online_access_codes: true
+                can_simulate_removal: true
               ok: true
     heat:
       path: /thermostats/heat
@@ -299,6 +332,7 @@ service:
       response:
         docs: OK
         type: ThermostatsHeatResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -307,6 +341,13 @@ service:
             device_id: device_id
           response:
             body:
+              action_attempt:
+                status: success
+                action_type: action_attempt
+                action_attempt_id: action_attempt
+                result:
+                  key: value
+                error: action_attempt
               ok: true
     heat_cool:
       path: /thermostats/heat_cool
@@ -326,6 +367,7 @@ service:
       response:
         docs: OK
         type: ThermostatsHeatCoolResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -334,6 +376,13 @@ service:
             device_id: device_id
           response:
             body:
+              action_attempt:
+                status: success
+                action_type: action_attempt
+                action_attempt_id: action_attempt
+                result:
+                  key: value
+                error: action_attempt
               ok: true
     list:
       path: /thermostats/list
@@ -359,6 +408,8 @@ service:
             custom_metadata_has: >-
               optional<map<string,
               optional<ThermostatsListRequestCustomMetadataHasValue>>>
+            include_if: optional<list<ThermostatsListRequestIncludeIfItem>>
+            exclude_if: optional<list<ThermostatsListRequestExcludeIfItem>>
       response:
         docs: OK
         type: ThermostatsListResponse
@@ -373,11 +424,15 @@ service:
               thermostats:
                 - device_id: device_id
                   device_type: akuvox_lock
+                  nickname: nickname
+                  display_name: display_name
                   capabilities_supported:
                     - access_code
                   properties:
                     online: true
                     name: name
+                    appearance:
+                      name: name
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
@@ -392,7 +447,9 @@ service:
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
                   can_remotely_unlock: true
+                  can_remotely_lock: true
                   can_program_online_access_codes: true
+                  can_simulate_removal: true
               ok: true
     'off':
       path: /thermostats/off
@@ -408,6 +465,7 @@ service:
       response:
         docs: OK
         type: ThermostatsOffResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -416,6 +474,13 @@ service:
             device_id: device_id
           response:
             body:
+              action_attempt:
+                status: success
+                action_type: action_attempt
+                action_attempt_id: action_attempt
+                result:
+                  key: value
+                error: action_attempt
               ok: true
     set_fan_mode:
       path: /thermostats/set_fan_mode
@@ -433,6 +498,7 @@ service:
       response:
         docs: OK
         type: ThermostatsSetFanModeResponse
+        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -441,6 +507,13 @@ service:
             device_id: device_id
           response:
             body:
+              action_attempt:
+                status: success
+                action_type: action_attempt
+                action_attempt_id: action_attempt
+                result:
+                  key: value
+                error: action_attempt
               ok: true
     update:
       path: /thermostats/update

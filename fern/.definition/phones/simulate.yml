@@ -51,6 +51,8 @@ service:
               phone:
                 device_id: device_id
                 device_type: android_phone
+                nickname: nickname
+                display_name: display_name
                 capabilities_supported:
                   - access_code
                 properties:
@@ -74,5 +76,7 @@ service:
                 custom_metadata:
                   custom_metadata: custom_metadata
                 can_remotely_unlock: true
+                can_remotely_lock: true
                 can_program_online_access_codes: true
+                can_simulate_removal: true
               ok: true

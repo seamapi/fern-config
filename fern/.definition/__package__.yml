@@ -275,8 +275,24 @@ types:
       - thermostat
       - battery
       - phone
+  DevicePropertiesAccessoryKeypad:
+    docs: Represents the accessory keypad state.
+    properties:
+      is_connected:
+        type: boolean
+        docs: Indicates if the accessory_keypad is connected to the device.
+  DevicePropertiesAppearance:
+    properties:
+      name:
+        type: string
+        docs: >-
+          Name of the device as seen from the provider API and application, not
+          settable through Seam.
   DevicePropertiesModel:
     properties:
+      can_connect_accessory_keypad:
+        docs: Indicates whether the device can connect a accessory keypad.
+        type: optional<boolean>
       display_name:
         type: string
         docs: Display name of the device model.
@@ -285,6 +301,9 @@ types:
         docs: >-
           Display name that corresponds to the manufacturer-specific terminology
           for the device.
+      has_built_in_keypad:
+        docs: Indicates whether the device has a built in accessory keypad.
+        type: optional<boolean>
       offline_access_codes_supported:
         docs: Indicates whether the device supports offline access codes.
         type: optional<boolean>
@@ -469,9 +488,9 @@ types:
     properties:
       ecobee_device_id: string
       device_name: string
-  DevicePropertiesHoneywellMetadata:
+  DevicePropertiesHoneywellResideoMetadata:
     properties:
-      honeywell_device_id: string
+      honeywell_resideo_device_id: string
       device_name: string
   DevicePropertiesHubitatMetadata:
     properties:
@@ -516,6 +535,7 @@ types:
       device_model: string
       bridge_id: double
       bridge_name: string
+      keypad_id: optional<double>
   DevicePropertiesCodeConstraintsItemZeroConstraintType:
     enum:
       - no_zeros
@@ -550,9 +570,17 @@ types:
         docs: Indicates whether the device is online.
       name:
         type: string
-        docs: >-
-          Name of the device. Enables administrators and users to identify the
-          device easily, especially when there are numerous devices.
+        docs: |2-
+
+                ---
+                deprecated: use device.display_name instead
+                ---
+                Name of the device.
+                
+      accessory_keypad:
+        docs: Represents the accessory keypad state.
+        type: optional<DevicePropertiesAccessoryKeypad>
+      appearance: DevicePropertiesAppearance
       model: DevicePropertiesModel
       has_direct_power:
         docs: Indicates whether the device has direct power.
@@ -596,10 +624,20 @@ types:
           for the device.
         type: optional<boolean>
       supports_accessory_keypad:
-        docs: Deprecated. Use model.accessory_keypad_supported.
+        docs: |2-
+
+                ---
+                deprecated: use model.accessory_keypad_supported
+                ---
+                
         type: optional<boolean>
       supports_offline_access_codes:
-        docs: Deprecated. Use offline_access_codes_enabled.
+        docs: |2-
+
+                ---
+                deprecated: use offline_access_codes_enabled
+                ---
+                
         type: optional<boolean>
       assa_abloy_credential_service_metadata: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
       august_metadata: optional<DevicePropertiesAugustMetadata>
@@ -623,7 +661,7 @@ types:
       igloohome_metadata: optional<DevicePropertiesIgloohomeMetadata>
       nest_metadata: optional<DevicePropertiesNestMetadata>
       ecobee_metadata: optional<DevicePropertiesEcobeeMetadata>
-      honeywell_metadata: optional<DevicePropertiesHoneywellMetadata>
+      honeywell_resideo_metadata: optional<DevicePropertiesHoneywellResideoMetadata>
       hubitat_metadata: optional<DevicePropertiesHubitatMetadata>
       dormakaba_oracode_metadata: optional<DevicePropertiesDormakabaOracodeMetadata>
       wyze_metadata: optional<DevicePropertiesWyzeMetadata>
@@ -668,6 +706,16 @@ types:
       device_type:
         type: DeviceType
         docs: Type of the device.
+      nickname:
+        docs: Optional nickname to describe the device, settable through Seam
+        type: optional<string>
+      display_name:
+        type: string
+        docs: >-
+          Display name of the device, defaults to nickname (if it is set) or
+          properties.appearance.name otherwise. Enables administrators and users
+          to identify the device easily, especially when there are numerous
+          devices.
       capabilities_supported:
         docs: >-
           Collection of capabilities that the device supports when connected to
@@ -719,7 +767,9 @@ types:
         docs: Indicates whether Seam manages the device.
       custom_metadata: optional<map<string, optional<DeviceCustomMetadataValue>>>
       can_remotely_unlock: optional<boolean>
+      can_remotely_lock: optional<boolean>
       can_program_online_access_codes: optional<boolean>
+      can_simulate_removal: optional<boolean>
   UnmanagedDeviceCapabilitiesSupportedItem:
     enum:
       - access_code
@@ -756,6 +806,9 @@ types:
       status: UnmanagedDevicePropertiesBatteryStatus
   UnmanagedDevicePropertiesModel:
     properties:
+      can_connect_accessory_keypad:
+        docs: Indicates whether the device can connect a accessory keypad.
+        type: optional<boolean>
       display_name:
         type: string
         docs: Display name of the device model.
@@ -764,6 +817,9 @@ types:
         docs: >-
           Display name that corresponds to the manufacturer-specific terminology
           for the device.
+      has_built_in_keypad:
+        docs: Indicates whether the device has a built in accessory keypad.
+        type: optional<boolean>
       offline_access_codes_supported:
         docs: Indicates whether the device supports offline access codes.
         type: optional<boolean>
@@ -777,9 +833,13 @@ types:
     properties:
       name:
         type: string
-        docs: >-
-          Name of the device. Enables administrators and users to identify the
-          device easily, especially when there are numerous devices.
+        docs: |2-
+
+                ---
+                deprecated: use device.display_name instead
+                ---
+                Name of the device.
+                
       online:
         type: boolean
         docs: Indicates whether the device is online.
@@ -873,17 +933,59 @@ types:
       is_managed: boolean
       properties: UnmanagedDeviceProperties
       can_remotely_unlock: optional<boolean>
+      can_remotely_lock: optional<boolean>
       can_program_online_access_codes: optional<boolean>
+      can_simulate_removal: optional<boolean>
       device_provider: optional<UnmanagedDeviceDeviceProvider>
+  DeviceProviderDeviceProviderName:
+    enum:
+      - akuvox
+      - august
+      - avigilon_alta
+      - brivo
+      - butterflymx
+      - schlage
+      - smartthings
+      - yale
+      - genie
+      - doorking
+      - salto
+      - lockly
+      - ttlock
+      - linear
+      - noiseaware
+      - nuki
+      - seam_relay_admin
+      - igloo
+      - kwikset
+      - minut
+      - my_2n
+      - controlbyweb
+      - nest
+      - igloohome
+      - ecobee
+      - hubitat
+      - four_suites
+      - dormakaba_oracode
+      - pti
+      - wyze
+      - seam_passport
+      - visionline
+      - assa_abloy_credential_service
+      - seam_bridge
+      - tedee
+      - honeywell_resideo
+      - latch
   DeviceProviderProviderCategoriesItem:
     enum:
       - stable
       - consumer_smartlocks
       - thermostats
       - noise_sensors
+      - access_control_systems
   DeviceProvider:
     properties:
-      device_provider_name: string
+      device_provider_name: DeviceProviderDeviceProviderName
       display_name: string
       image_url: string
       provider_categories: list<DeviceProviderProviderCategoriesItem>
@@ -891,10 +993,6 @@ types:
     properties:
       event_id: string
       device_id: optional<string>
-      acs_credential_id: optional<string>
-      acs_user_id: optional<string>
-      client_session_id: optional<string>
-      enrollment_automation_id: optional<string>
       event_type: string
       workspace_id: string
       created_at: datetime
@@ -939,6 +1037,7 @@ types:
       - hid_credential_manager_organization
       - visionline_system
       - assa_abloy_credential_service
+      - latch_building
   AcsSystemSystemType:
     enum:
       - pti_site
@@ -948,7 +1047,13 @@ types:
       - hid_credential_manager_organization
       - visionline_system
       - assa_abloy_credential_service
-    docs: 'deprecated: use external_type'
+      - latch_building
+    docs: |2-
+
+            ---
+            deprecated: use external_type
+            ---
+            
   AcsSystem:
     properties:
       acs_system_id: string
@@ -956,23 +1061,39 @@ types:
       external_type_display_name: string
       system_type:
         type: AcsSystemSystemType
-        docs: 'deprecated: use external_type'
+        docs: |2-
+
+                ---
+                deprecated: use external_type
+                ---
+                
       system_type_display_name:
         type: string
-        docs: 'deprecated: use external_type_display_name'
+        docs: |2-
+
+                ---
+                deprecated: use external_type_display_name
+                ---
+                
       name: string
       created_at: datetime
       workspace_id: string
       connected_account_ids: list<string>
       image_url: string
       image_alt_text: string
+      can_automate_enrollment: optional<boolean>
   AcsAccessGroupAccessGroupType:
     enum:
       - pti_unit
       - pti_access_level
       - salto_access_group
       - brivo_group
-    docs: 'deprecated: use external_type'
+    docs: |2-
+
+          ---
+          deprecated: use external_type
+          ---
+        
   AcsAccessGroupExternalType:
     enum:
       - pti_unit
@@ -987,10 +1108,20 @@ types:
       name: string
       access_group_type:
         type: AcsAccessGroupAccessGroupType
-        docs: 'deprecated: use external_type'
+        docs: |2-
+
+              ---
+              deprecated: use external_type
+              ---
+            
       access_group_type_display_name:
         type: string
-        docs: 'deprecated: use external_type_display_name'
+        docs: |2-
+
+              ---
+              deprecated: use external_type_display_name
+              ---
+              
       external_type: AcsAccessGroupExternalType
       external_type_display_name: string
       created_at: datetime
@@ -1021,7 +1152,12 @@ types:
       user_identity_phone_number: optional<string>
       full_name: optional<string>
       email:
-        docs: 'Deprecated: use email_address.'
+        docs: |2-
+
+              ---
+              deprecated: use email_address.
+              ---
+              
         type: optional<string>
       email_address: optional<string>
       phone_number: optional<string>
@@ -1084,6 +1220,16 @@ types:
         type: string
         docs: Unique identifier for the device.
       device_type: PhoneDeviceType
+      nickname:
+        docs: Optional nickname to describe the device, settable through Seam
+        type: optional<string>
+      display_name:
+        type: string
+        docs: >-
+          Display name of the device, defaults to nickname (if it is set) or
+          properties.appearance.name otherwise. Enables administrators and users
+          to identify the device easily, especially when there are numerous
+          devices.
       capabilities_supported:
         docs: >-
           Collection of capabilities that the device supports when connected to
@@ -1130,7 +1276,9 @@ types:
         docs: Indicates whether Seam manages the device.
       custom_metadata: optional<map<string, optional<PhoneCustomMetadataValue>>>
       can_remotely_unlock: optional<boolean>
+      can_remotely_lock: optional<boolean>
       can_program_online_access_codes: optional<boolean>
+      can_simulate_removal: optional<boolean>
   DeviceType:
     enum:
       - akuvox_lock

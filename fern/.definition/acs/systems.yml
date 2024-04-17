@@ -26,6 +26,7 @@ service:
       response:
         docs: OK
         type: SystemsGetResponse
+        property: acs_system
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -48,6 +49,9 @@ service:
                 image_url: image_url
                 image_alt_text: image_alt_text
                 can_automate_enrollment: true
+                can_create_acs_access_groups: true
+                can_remove_acs_users_from_acs_access_groups: true
+                can_add_acs_users_to_acs_access_groups: true
               ok: true
     list:
       path: /acs/systems/list
@@ -62,6 +66,7 @@ service:
       response:
         docs: OK
         type: SystemsListResponse
+        property: acs_systems
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -83,4 +88,7 @@ service:
                   image_url: image_url
                   image_alt_text: image_alt_text
                   can_automate_enrollment: true
+                  can_create_acs_access_groups: true
+                  can_remove_acs_users_from_acs_access_groups: true
+                  can_add_acs_users_to_acs_access_groups: true
               ok: true

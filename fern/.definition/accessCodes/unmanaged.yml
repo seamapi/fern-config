@@ -63,7 +63,6 @@ service:
       response:
         docs: OK
         type: UnmanagedDeleteResponse
-        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -10,17 +10,18 @@ types:
     union:
       - string
       - boolean
-      - optional<string>
   UnmanagedListRequestIncludeIfItem:
     enum:
       - can_remotely_unlock
       - can_remotely_lock
+      - can_program_offline_access_codes
       - can_program_online_access_codes
       - can_simulate_removal
   UnmanagedListRequestExcludeIfItem:
     enum:
       - can_remotely_unlock
       - can_remotely_lock
+      - can_program_offline_access_codes
       - can_program_online_access_codes
       - can_simulate_removal
   UnmanagedListResponse:
@@ -72,6 +73,8 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
                 is_managed: true
                 properties:
+                  accessory_keypad:
+                    is_connected: true
                   name: name
                   online: true
                   manufacturer: manufacturer
@@ -88,6 +91,7 @@ service:
                     manufacturer_display_name: manufacturer_display_name
                 can_remotely_unlock: true
                 can_remotely_lock: true
+                can_program_offline_access_codes: true
                 can_program_online_access_codes: true
                 can_simulate_removal: true
                 device_provider:
@@ -115,9 +119,7 @@ service:
             limit: optional<double>
             created_before: optional<datetime>
             user_identifier_key: optional<string>
-            custom_metadata_has: >-
-              optional<map<string,
-              optional<UnmanagedListRequestCustomMetadataHasValue>>>
+            custom_metadata_has: optional<map<string, UnmanagedListRequestCustomMetadataHasValue>>
             include_if: optional<list<UnmanagedListRequestIncludeIfItem>>
             exclude_if: optional<list<UnmanagedListRequestExcludeIfItem>>
       response:
@@ -154,6 +156,7 @@ service:
                       manufacturer_display_name: manufacturer_display_name
                   can_remotely_unlock: true
                   can_remotely_lock: true
+                  can_program_offline_access_codes: true
                   can_program_online_access_codes: true
                   can_simulate_removal: true
               ok: true

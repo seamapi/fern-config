@@ -1,26 +1,14 @@
-types:
-  NetworksGetResponseNetwork:
-    properties:
-      network_id: string
-      workspace_id: string
-      display_name: string
-      created_at: datetime
-  NetworksGetResponse:
-    properties:
-      network: NetworksGetResponseNetwork
-      ok: boolean
-  NetworksListResponseNetworksItem:
-    properties:
-      network_id: string
-      workspace_id: string
-      display_name: string
-      created_at: datetime
-  NetworksListResponse:
-    properties:
-      networks: list<NetworksListResponseNetworksItem>
-      ok: boolean
 imports:
   root: __package__.yml
+types:
+  NetworksGetResponse:
+    properties:
+      network: root.Network
+      ok: boolean
+  NetworksListResponse:
+    properties:
+      networks: list<root.Network>
+      ok: boolean
 service:
   auth: false
   base-path: ''
@@ -38,6 +26,7 @@ service:
       response:
         docs: OK
         type: NetworksGetResponse
+        property: network
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -64,6 +53,7 @@ service:
       response:
         docs: OK
         type: NetworksListResponse
+        property: networks
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

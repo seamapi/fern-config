@@ -1,147 +1,21 @@
+imports:
+  root: ../__package__.yml
 types:
-  EntrancesGetResponseAcsEntranceLatchMetadata:
-    properties:
-      accessibility_type: string
-      name: string
-      type: string
-      is_connected: boolean
-  EntrancesGetResponseAcsEntranceVisionlineMetadataDoorCategory:
-    enum:
-      - entrance
-      - guest
-      - value: elevator reader
-        name: ElevatorReader
-      - common
-      - value: common (PMS)
-        name: CommonPms
-  EntrancesGetResponseAcsEntranceVisionlineMetadataProfilesItemVisionlineDoorProfileType:
-    enum:
-      - BLE
-      - commonDoor
-      - touch
-  EntrancesGetResponseAcsEntranceVisionlineMetadataProfilesItem:
-    properties:
-      visionline_door_profile_id: string
-      visionline_door_profile_type: >-
-        EntrancesGetResponseAcsEntranceVisionlineMetadataProfilesItemVisionlineDoorProfileType
-  EntrancesGetResponseAcsEntranceVisionlineMetadata:
-    properties:
-      door_name: string
-      door_category: EntrancesGetResponseAcsEntranceVisionlineMetadataDoorCategory
-      profiles: >-
-        optional<list<EntrancesGetResponseAcsEntranceVisionlineMetadataProfilesItem>>
-  EntrancesGetResponseAcsEntrance:
-    properties:
-      acs_entrance_id: string
-      display_name: string
-      acs_system_id: string
-      created_at: datetime
-      latch_metadata: optional<EntrancesGetResponseAcsEntranceLatchMetadata>
-      visionline_metadata: optional<EntrancesGetResponseAcsEntranceVisionlineMetadata>
   EntrancesGetResponse:
     properties:
-      acs_entrance: EntrancesGetResponseAcsEntrance
+      acs_entrance: root.AcsEntrance
       ok: boolean
   EntrancesGrantAccessResponse:
     properties:
       ok: boolean
-  EntrancesListResponseAcsEntrancesItemLatchMetadata:
-    properties:
-      accessibility_type: string
-      name: string
-      type: string
-      is_connected: boolean
-  EntrancesListResponseAcsEntrancesItemVisionlineMetadataDoorCategory:
-    enum:
-      - entrance
-      - guest
-      - value: elevator reader
-        name: ElevatorReader
-      - common
-      - value: common (PMS)
-        name: CommonPms
-  EntrancesListResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType:
-    enum:
-      - BLE
-      - commonDoor
-      - touch
-  EntrancesListResponseAcsEntrancesItemVisionlineMetadataProfilesItem:
-    properties:
-      visionline_door_profile_id: string
-      visionline_door_profile_type: >-
-        EntrancesListResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType
-  EntrancesListResponseAcsEntrancesItemVisionlineMetadata:
-    properties:
-      door_name: string
-      door_category: EntrancesListResponseAcsEntrancesItemVisionlineMetadataDoorCategory
-      profiles: >-
-        optional<list<EntrancesListResponseAcsEntrancesItemVisionlineMetadataProfilesItem>>
-  EntrancesListResponseAcsEntrancesItem:
-    properties:
-      acs_entrance_id: string
-      display_name: string
-      acs_system_id: string
-      created_at: datetime
-      latch_metadata: optional<EntrancesListResponseAcsEntrancesItemLatchMetadata>
-      visionline_metadata: optional<EntrancesListResponseAcsEntrancesItemVisionlineMetadata>
   EntrancesListResponse:
     properties:
-      acs_entrances: list<EntrancesListResponseAcsEntrancesItem>
+      acs_entrances: list<root.AcsEntrance>
       ok: boolean
-  EntrancesListCredentialsWithAccessResponseAcsCredentialsItemAccessMethod:
-    enum:
-      - code
-      - card
-      - mobile_key
-  EntrancesListCredentialsWithAccessResponseAcsCredentialsItemExternalType:
-    enum:
-      - pti_card
-      - brivo_credential
-      - hid_credential
-      - visionline_card
-  EntrancesListCredentialsWithAccessResponseAcsCredentialsItemErrorsItem:
-    properties:
-      error_code: string
-      message: string
-  EntrancesListCredentialsWithAccessResponseAcsCredentialsItemWarningsItem:
-    properties:
-      warning_code: string
-      message: string
-  EntrancesListCredentialsWithAccessResponseAcsCredentialsItemVisionlineMetadata:
-    properties:
-      joiner_acs_credential_ids: optional<list<string>>
-      guest_acs_entrance_ids: optional<list<string>>
-      common_acs_entrance_ids: optional<list<string>>
-  EntrancesListCredentialsWithAccessResponseAcsCredentialsItem:
-    properties:
-      acs_credential_id: string
-      acs_user_id: optional<string>
-      acs_credential_pool_id: optional<string>
-      acs_system_id: string
-      parent_acs_credential_id: optional<string>
-      display_name: string
-      code: optional<string>
-      access_method: EntrancesListCredentialsWithAccessResponseAcsCredentialsItemAccessMethod
-      external_type: >-
-        optional<EntrancesListCredentialsWithAccessResponseAcsCredentialsItemExternalType>
-      external_type_display_name: optional<string>
-      created_at: datetime
-      workspace_id: string
-      starts_at: optional<string>
-      ends_at: optional<string>
-      errors: >-
-        list<EntrancesListCredentialsWithAccessResponseAcsCredentialsItemErrorsItem>
-      warnings: >-
-        list<EntrancesListCredentialsWithAccessResponseAcsCredentialsItemWarningsItem>
-      is_multi_phone_sync_credential: optional<boolean>
-      visionline_metadata: >-
-        optional<EntrancesListCredentialsWithAccessResponseAcsCredentialsItemVisionlineMetadata>
   EntrancesListCredentialsWithAccessResponse:
     properties:
-      acs_credentials: list<EntrancesListCredentialsWithAccessResponseAcsCredentialsItem>
+      acs_credentials: list<root.AcsCredential>
       ok: boolean
-imports:
-  root: ../__package__.yml
 service:
   auth: false
   base-path: ''
@@ -159,6 +33,7 @@ service:
       response:
         docs: OK
         type: EntrancesGetResponse
+        property: acs_entrance
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -174,8 +49,8 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
                 latch_metadata:
                   accessibility_type: accessibility_type
-                  name: name
-                  type: type
+                  door_name: door_name
+                  door_type: door_type
                   is_connected: true
                 visionline_metadata:
                   door_name: door_name
@@ -222,6 +97,7 @@ service:
       response:
         docs: OK
         type: EntrancesListResponse
+        property: acs_entrances
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -236,8 +112,8 @@ service:
                   created_at: '2024-01-15T09:30:00Z'
                   latch_metadata:
                     accessibility_type: accessibility_type
-                    name: name
-                    type: type
+                    door_name: door_name
+                    door_type: door_type
                     is_connected: true
                   visionline_metadata:
                     door_name: door_name
@@ -257,6 +133,7 @@ service:
       response:
         docs: OK
         type: EntrancesListCredentialsWithAccessResponse
+        property: acs_credentials
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -287,4 +164,6 @@ service:
                     - warning_code: warning_code
                       message: message
                   is_multi_phone_sync_credential: true
+                  visionline_metadata:
+                    card_function_type: guest
               ok: true

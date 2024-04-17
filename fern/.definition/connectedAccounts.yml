@@ -22,7 +22,6 @@ types:
     union:
       - string
       - boolean
-      - optional<string>
   ConnectedAccountsListResponse:
     properties:
       connected_accounts: list<root.ConnectedAccount>
@@ -119,7 +118,7 @@ service:
                 of the provided key/value pairs.
               type: >-
                 optional<map<string,
-                optional<ConnectedAccountsListRequestCustomMetadataHasValue>>>
+                ConnectedAccountsListRequestCustomMetadataHasValue>>
       response:
         docs: OK
         type: ConnectedAccountsListResponse
@@ -140,6 +139,8 @@ service:
                     key: value
                   warnings:
                     key: value
+                  custom_metadata:
+                    custom_metadata: custom_metadata
                   automatically_manage_new_devices: true
               ok: true
     update:

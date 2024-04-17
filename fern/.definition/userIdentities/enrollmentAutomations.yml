@@ -63,6 +63,7 @@ service:
       response:
         docs: OK
         type: EnrollmentAutomationsGetResponse
+        property: enrollment_automation
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -95,6 +96,7 @@ service:
       response:
         docs: OK
         type: EnrollmentAutomationsLaunchResponse
+        property: enrollment_automation
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -125,6 +127,7 @@ service:
       response:
         docs: OK
         type: EnrollmentAutomationsListResponse
+        property: enrollment_automations
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

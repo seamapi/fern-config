@@ -221,7 +221,6 @@ service:
       response:
         docs: OK
         type: ClimateSettingSchedulesUpdateResponse
-        property: climate_setting_schedule
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

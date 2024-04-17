@@ -2,19 +2,9 @@ types:
   UserIdentitiesAddAcsUserResponse:
     properties:
       ok: boolean
-  UserIdentitiesCreateResponseUserIdentity:
-    properties:
-      user_identity_id: string
-      user_identity_key: optional<string>
-      email_address: optional<string>
-      phone_number: optional<string>
-      display_name: string
-      full_name: optional<string>
-      created_at: datetime
-      workspace_id: string
   UserIdentitiesCreateResponse:
     properties:
-      user_identity: UserIdentitiesCreateResponseUserIdentity
+      user_identity: root.UserIdentity
       ok: boolean
   UserIdentitiesDeleteResponse:
     properties:
@@ -30,40 +20,28 @@ types:
     union:
       - UserIdentitiesGetRequestUserIdentityId
       - UserIdentitiesGetRequestUserIdentityKey
-  UserIdentitiesGetResponseUserIdentity:
-    properties:
-      user_identity_id: string
-      user_identity_key: optional<string>
-      email_address: optional<string>
-      phone_number: optional<string>
-      display_name: string
-      full_name: optional<string>
-      created_at: datetime
-      workspace_id: string
   UserIdentitiesGetResponse:
     properties:
-      user_identity: UserIdentitiesGetResponseUserIdentity
+      user_identity: root.UserIdentity
       ok: boolean
   UserIdentitiesGrantAccessToDeviceResponse:
     properties:
       ok: boolean
-  UserIdentitiesListResponseUserIdentitiesItem:
-    properties:
-      user_identity_id: string
-      user_identity_key: optional<string>
-      email_address: optional<string>
-      phone_number: optional<string>
-      display_name: string
-      full_name: optional<string>
-      created_at: datetime
-      workspace_id: string
   UserIdentitiesListResponse:
     properties:
-      user_identities: list<UserIdentitiesListResponseUserIdentitiesItem>
+      user_identities: list<root.UserIdentity>
       ok: boolean
   UserIdentitiesListAccessibleDevicesResponse:
     properties:
-      accessible_devices: list<root.Device>
+      devices: list<root.Device>
+      accessible_devices:
+        docs: |2-
+
+                ---
+                deprecated: use devices.
+                ---
+              
+        type: list<root.Device>
       ok: boolean
   UserIdentitiesListAcsSystemsResponse:
     properties:
@@ -128,6 +106,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesCreateResponse
+        property: user_identity
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -177,6 +156,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesGetResponse
+        property: user_identity
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -263,6 +243,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesListAccessibleDevicesResponse
+        property: devices
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -271,6 +252,38 @@ service:
             user_identity_id: user_identity_id
           response:
             body:
+              devices:
+                - device_id: device_id
+                  device_type: akuvox_lock
+                  nickname: nickname
+                  display_name: display_name
+                  capabilities_supported:
+                    - access_code
+                  properties:
+                    online: true
+                    name: name
+                    appearance:
+                      name: name
+                    model:
+                      display_name: display_name
+                      manufacturer_display_name: manufacturer_display_name
+                  connected_account_id: connected_account_id
+                  workspace_id: workspace_id
+                  errors:
+                    - error_code: error_code
+                      message: message
+                  warnings:
+                    - warning_code: warning_code
+                      message: message
+                  created_at: '2024-01-15T09:30:00Z'
+                  is_managed: true
+                  custom_metadata:
+                    custom_metadata: custom_metadata
+                  can_remotely_unlock: true
+                  can_remotely_lock: true
+                  can_program_offline_access_codes: true
+                  can_program_online_access_codes: true
+                  can_simulate_removal: true
               accessible_devices:
                 - device_id: device_id
                   device_type: akuvox_lock
@@ -296,8 +309,11 @@ service:
                       message: message
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
+                  custom_metadata:
+                    custom_metadata: custom_metadata
                   can_remotely_unlock: true
                   can_remotely_lock: true
+                  can_program_offline_access_codes: true
                   can_program_online_access_codes: true
                   can_simulate_removal: true
               ok: true
@@ -314,6 +330,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesListAcsSystemsResponse
+        property: acs_systems
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -336,6 +353,9 @@ service:
                   image_url: image_url
                   image_alt_text: image_alt_text
                   can_automate_enrollment: true
+                  can_create_acs_access_groups: true
+                  can_remove_acs_users_from_acs_access_groups: true
+                  can_add_acs_users_to_acs_access_groups: true
               ok: true
     list_acs_users:
       path: /user_identities/list_acs_users
@@ -350,6 +370,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesListAcsUsersResponse
+        property: acs_users
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -372,6 +393,7 @@ service:
                     starts_at: '2024-01-15T09:30:00Z'
                     ends_at: '2024-01-15T09:30:00Z'
                   user_identity_id: user_identity_id
+                  user_identity_full_name: user_identity_full_name
                   user_identity_email_address: user_identity_email_address
                   user_identity_phone_number: user_identity_phone_number
                   full_name: full_name

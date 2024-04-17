@@ -1038,6 +1038,11 @@ types:
       event_id: string
       device_id: optional<string>
       action_attempt_id: optional<string>
+      acs_credential_id: optional<string>
+      acs_user_id: optional<string>
+      acs_system_id: optional<string>
+      client_session_id: optional<string>
+      enrollment_automation_id: optional<string>
       event_type: string
       workspace_id: string
       created_at: datetime

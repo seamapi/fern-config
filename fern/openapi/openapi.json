@@ -2037,374 +2037,6 @@
         "operationId": "clientSessionsRevokePost"
       }
     },
-    "/connect_webviews/create": {
-      "post": {
-        "x-fern-sdk-group-name": ["connect_webviews"],
-        "x-fern-sdk-method-name": "create",
-        "x-fern-sdk-return-value": "connect_webview",
-        "summary": "/connect_webviews/create",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "connect_webview": {
-                      "$ref": "#/components/schemas/connect_webview"
-                    },
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["connect_webview", "ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_selection_mode": {
-                    "type": "string",
-                    "enum": ["none", "single", "multiple"]
-                  },
-                  "custom_redirect_url": {
-                    "type": "string"
-                  },
-                  "custom_redirect_failure_url": {
-                    "type": "string"
-                  },
-                  "accepted_providers": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "enum": [
-                        "akuvox",
-                        "august",
-                        "avigilon_alta",
-                        "brivo",
-                        "butterflymx",
-                        "schlage",
-                        "smartthings",
-                        "yale",
-                        "genie",
-                        "doorking",
-                        "salto",
-                        "lockly",
-                        "ttlock",
-                        "linear",
-                        "noiseaware",
-                        "nuki",
-                        "seam_relay_admin",
-                        "igloo",
-                        "kwikset",
-                        "minut",
-                        "my_2n",
-                        "controlbyweb",
-                        "nest",
-                        "igloohome",
-                        "ecobee",
-                        "hubitat",
-                        "four_suites",
-                        "dormakaba_oracode",
-                        "pti",
-                        "wyze",
-                        "seam_passport",
-                        "visionline",
-                        "assa_abloy_credential_service",
-                        "seam_bridge",
-                        "tedee",
-                        "honeywell_resideo",
-                        "latch",
-                        "yale_access",
-                        "hid_cm",
-                        "google_nest"
-                      ]
-                    }
-                  },
-                  "provider_category": {
-                    "type": "string",
-                    "enum": [
-                      "stable",
-                      "consumer_smartlocks",
-                      "thermostats",
-                      "noise_sensors",
-                      "access_control_systems",
-                      "internal_beta"
-                    ]
-                  },
-                  "custom_metadata": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "oneOf": [
-                        {
-                          "type": "string",
-                          "maxLength": 500
-                        },
-                        {
-                          "type": "boolean"
-                        },
-                        {
-                          "type": "string",
-                          "format": "null",
-                          "nullable": true
-                        }
-                      ],
-                      "nullable": true
-                    }
-                  },
-                  "automatically_manage_new_devices": {
-                    "default": true,
-                    "type": "boolean"
-                  },
-                  "wait_for_device_creation": {
-                    "default": false,
-                    "type": "boolean"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["/connect_webviews"],
-        "operationId": "connectWebviewsCreatePost"
-      }
-    },
-    "/connect_webviews/delete": {
-      "post": {
-        "x-fern-sdk-group-name": ["connect_webviews"],
-        "x-fern-sdk-method-name": "delete",
-        "summary": "/connect_webviews/delete",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "api_key": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "connect_webview_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  }
-                },
-                "required": ["connect_webview_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/connect_webviews"],
-        "operationId": "connectWebviewsDeletePost"
-      }
-    },
-    "/connect_webviews/get": {
-      "post": {
-        "x-fern-sdk-group-name": ["connect_webviews"],
-        "x-fern-sdk-method-name": "get",
-        "x-fern-sdk-return-value": "connect_webview",
-        "summary": "/connect_webviews/get",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "connect_webview": {
-                      "$ref": "#/components/schemas/connect_webview"
-                    },
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["connect_webview", "ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "connect_webview_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  }
-                },
-                "required": ["connect_webview_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/connect_webviews"],
-        "operationId": "connectWebviewsGetPost"
-      }
-    },
-    "/connect_webviews/list": {
-      "post": {
-        "x-fern-sdk-group-name": ["connect_webviews"],
-        "x-fern-sdk-method-name": "list",
-        "x-fern-sdk-return-value": "connect_webviews",
-        "summary": "/connect_webviews/list",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "connect_webviews": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/connect_webview"
-                      }
-                    },
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["connect_webviews", "ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user_identifier_key": {
-                    "type": "string"
-                  },
-                  "custom_metadata_has": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "boolean"
-                        }
-                      ]
-                    },
-                    "description": "Returns devices where the webview's custom_metadata contains all of the provided key/value pairs."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["/connect_webviews"],
-        "operationId": "connectWebviewsListPost"
-      }
-    },
     "/connected_accounts/delete": {
       "post": {
         "x-fern-sdk-group-name": ["connected_accounts"],
@@ -3691,6 +3323,374 @@
         },
         "tags": ["/events"],
         "operationId": "eventsListPost"
+      }
+    },
+    "/connect_webviews/create": {
+      "post": {
+        "x-fern-sdk-group-name": ["connect_webviews"],
+        "x-fern-sdk-method-name": "create",
+        "x-fern-sdk-return-value": "connect_webview",
+        "summary": "/connect_webviews/create",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "connect_webview": {
+                      "$ref": "#/components/schemas/connect_webview"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["connect_webview", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_selection_mode": {
+                    "type": "string",
+                    "enum": ["none", "single", "multiple"]
+                  },
+                  "custom_redirect_url": {
+                    "type": "string"
+                  },
+                  "custom_redirect_failure_url": {
+                    "type": "string"
+                  },
+                  "accepted_providers": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "akuvox",
+                        "august",
+                        "avigilon_alta",
+                        "brivo",
+                        "butterflymx",
+                        "schlage",
+                        "smartthings",
+                        "yale",
+                        "genie",
+                        "doorking",
+                        "salto",
+                        "lockly",
+                        "ttlock",
+                        "linear",
+                        "noiseaware",
+                        "nuki",
+                        "seam_relay_admin",
+                        "igloo",
+                        "kwikset",
+                        "minut",
+                        "my_2n",
+                        "controlbyweb",
+                        "nest",
+                        "igloohome",
+                        "ecobee",
+                        "hubitat",
+                        "four_suites",
+                        "dormakaba_oracode",
+                        "pti",
+                        "wyze",
+                        "seam_passport",
+                        "visionline",
+                        "assa_abloy_credential_service",
+                        "seam_bridge",
+                        "tedee",
+                        "honeywell_resideo",
+                        "latch",
+                        "yale_access",
+                        "hid_cm",
+                        "google_nest"
+                      ]
+                    }
+                  },
+                  "provider_category": {
+                    "type": "string",
+                    "enum": [
+                      "stable",
+                      "consumer_smartlocks",
+                      "thermostats",
+                      "noise_sensors",
+                      "access_control_systems",
+                      "internal_beta"
+                    ]
+                  },
+                  "custom_metadata": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "maxLength": 500
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "string",
+                          "format": "null",
+                          "nullable": true
+                        }
+                      ],
+                      "nullable": true
+                    }
+                  },
+                  "automatically_manage_new_devices": {
+                    "default": true,
+                    "type": "boolean"
+                  },
+                  "wait_for_device_creation": {
+                    "default": false,
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["/connect_webviews"],
+        "operationId": "connectWebviewsCreatePost"
+      }
+    },
+    "/connect_webviews/delete": {
+      "post": {
+        "x-fern-sdk-group-name": ["connect_webviews"],
+        "x-fern-sdk-method-name": "delete",
+        "summary": "/connect_webviews/delete",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "connect_webview_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": ["connect_webview_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/connect_webviews"],
+        "operationId": "connectWebviewsDeletePost"
+      }
+    },
+    "/connect_webviews/get": {
+      "post": {
+        "x-fern-sdk-group-name": ["connect_webviews"],
+        "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "connect_webview",
+        "summary": "/connect_webviews/get",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "connect_webview": {
+                      "$ref": "#/components/schemas/connect_webview"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["connect_webview", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "connect_webview_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": ["connect_webview_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/connect_webviews"],
+        "operationId": "connectWebviewsGetPost"
+      }
+    },
+    "/connect_webviews/list": {
+      "post": {
+        "x-fern-sdk-group-name": ["connect_webviews"],
+        "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "connect_webviews",
+        "summary": "/connect_webviews/list",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "connect_webviews": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/connect_webview"
+                      }
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["connect_webviews", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_identifier_key": {
+                    "type": "string"
+                  },
+                  "custom_metadata_has": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "boolean"
+                        }
+                      ]
+                    },
+                    "description": "Returns devices where the webview's custom_metadata contains all of the provided key/value pairs."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["/connect_webviews"],
+        "operationId": "connectWebviewsListPost"
       }
     },
     "/locks/get": {
@@ -11664,6 +11664,319 @@
         "operationId": "phonesSimulateCreateSandboxPhonePost"
       }
     },
+    "/user_identities/enrollment_automations/delete": {
+      "post": {
+        "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
+        "x-fern-sdk-method-name": "delete",
+        "summary": "/user_identities/enrollment_automations/delete",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enrollment_automation_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": ["enrollment_automation_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/user_identities"],
+        "operationId": "userIdentitiesEnrollmentAutomationsDeletePost"
+      }
+    },
+    "/user_identities/enrollment_automations/get": {
+      "post": {
+        "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
+        "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "enrollment_automation",
+        "summary": "/user_identities/enrollment_automations/get",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enrollment_automation": {
+                      "$ref": "#/components/schemas/enrollment_automation"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["enrollment_automation", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enrollment_automation_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": ["enrollment_automation_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/user_identities"],
+        "operationId": "userIdentitiesEnrollmentAutomationsGetPost"
+      }
+    },
+    "/user_identities/enrollment_automations/launch": {
+      "post": {
+        "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
+        "x-fern-sdk-method-name": "launch",
+        "x-fern-sdk-return-value": "enrollment_automation",
+        "summary": "/user_identities/enrollment_automations/launch",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enrollment_automation": {
+                      "type": "object",
+                      "properties": {
+                        "acs_credential_provisioning_automation_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "credential_manager_acs_system_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "user_identity_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "workspace_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "enrollment_automation_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      },
+                      "required": [
+                        "acs_credential_provisioning_automation_id",
+                        "credential_manager_acs_system_id",
+                        "user_identity_id",
+                        "created_at",
+                        "workspace_id",
+                        "enrollment_automation_id"
+                      ]
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["enrollment_automation", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_identity_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "credential_manager_acs_system_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "acs_credential_pool_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "create_credential_manager_user": {
+                    "type": "boolean"
+                  },
+                  "credential_manager_acs_user_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": [
+                  "user_identity_id",
+                  "credential_manager_acs_system_id"
+                ]
+              }
+            }
+          }
+        },
+        "tags": ["/user_identities"],
+        "operationId": "userIdentitiesEnrollmentAutomationsLaunchPost"
+      }
+    },
+    "/user_identities/enrollment_automations/list": {
+      "post": {
+        "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
+        "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "enrollment_automations",
+        "summary": "/user_identities/enrollment_automations/list",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enrollment_automations": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/enrollment_automation"
+                      }
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["enrollment_automations", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_identity_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": ["user_identity_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/user_identities"],
+        "operationId": "userIdentitiesEnrollmentAutomationsListPost"
+      }
+    },
     "/thermostats/climate_setting_schedules/create": {
       "post": {
         "x-fern-sdk-group-name": ["thermostats", "climate_setting_schedules"],
@@ -12346,319 +12659,6 @@
         },
         "tags": ["/thermostats"],
         "operationId": "thermostatsClimateSettingSchedulesUpdatePatch"
-      }
-    },
-    "/user_identities/enrollment_automations/delete": {
-      "post": {
-        "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
-        "x-fern-sdk-method-name": "delete",
-        "summary": "/user_identities/enrollment_automations/delete",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "enrollment_automation_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  }
-                },
-                "required": ["enrollment_automation_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/user_identities"],
-        "operationId": "userIdentitiesEnrollmentAutomationsDeletePost"
-      }
-    },
-    "/user_identities/enrollment_automations/get": {
-      "post": {
-        "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
-        "x-fern-sdk-method-name": "get",
-        "x-fern-sdk-return-value": "enrollment_automation",
-        "summary": "/user_identities/enrollment_automations/get",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "enrollment_automation": {
-                      "$ref": "#/components/schemas/enrollment_automation"
-                    },
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["enrollment_automation", "ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "enrollment_automation_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  }
-                },
-                "required": ["enrollment_automation_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/user_identities"],
-        "operationId": "userIdentitiesEnrollmentAutomationsGetPost"
-      }
-    },
-    "/user_identities/enrollment_automations/launch": {
-      "post": {
-        "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
-        "x-fern-sdk-method-name": "launch",
-        "x-fern-sdk-return-value": "enrollment_automation",
-        "summary": "/user_identities/enrollment_automations/launch",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "enrollment_automation": {
-                      "type": "object",
-                      "properties": {
-                        "acs_credential_provisioning_automation_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "credential_manager_acs_system_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "user_identity_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "enrollment_automation_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        }
-                      },
-                      "required": [
-                        "acs_credential_provisioning_automation_id",
-                        "credential_manager_acs_system_id",
-                        "user_identity_id",
-                        "created_at",
-                        "workspace_id",
-                        "enrollment_automation_id"
-                      ]
-                    },
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["enrollment_automation", "ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user_identity_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "credential_manager_acs_system_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "acs_credential_pool_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "create_credential_manager_user": {
-                    "type": "boolean"
-                  },
-                  "credential_manager_acs_user_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  }
-                },
-                "required": [
-                  "user_identity_id",
-                  "credential_manager_acs_system_id"
-                ]
-              }
-            }
-          }
-        },
-        "tags": ["/user_identities"],
-        "operationId": "userIdentitiesEnrollmentAutomationsLaunchPost"
-      }
-    },
-    "/user_identities/enrollment_automations/list": {
-      "post": {
-        "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
-        "x-fern-sdk-method-name": "list",
-        "x-fern-sdk-return-value": "enrollment_automations",
-        "summary": "/user_identities/enrollment_automations/list",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "enrollment_automations": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/enrollment_automation"
-                      }
-                    },
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["enrollment_automations", "ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user_identity_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  }
-                },
-                "required": ["user_identity_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/user_identities"],
-        "operationId": "userIdentitiesEnrollmentAutomationsListPost"
       }
     }
   },
@@ -15413,6 +15413,26 @@
             "format": "uuid"
           },
           "action_attempt_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "acs_credential_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "acs_user_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "acs_system_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "client_session_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "enrollment_automation_id": {
             "type": "string",
             "format": "uuid"
           },

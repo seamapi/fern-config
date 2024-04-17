@@ -11,17 +11,18 @@ types:
     union:
       - string
       - boolean
-      - optional<string>
   DevicesListRequestIncludeIfItem:
     enum:
       - can_remotely_unlock
       - can_remotely_lock
+      - can_program_offline_access_codes
       - can_program_online_access_codes
       - can_simulate_removal
   DevicesListRequestExcludeIfItem:
     enum:
       - can_remotely_unlock
       - can_remotely_lock
+      - can_program_offline_access_codes
       - can_program_online_access_codes
       - can_simulate_removal
   DevicesListResponse:
@@ -141,6 +142,7 @@ service:
                     zone_name: zone_name
                     site_id: 1.1
                     site_name: site_name
+                    entry_relays_total_count: 1.1
                   schlage_metadata:
                     device_id: device_id
                     device_name: device_name
@@ -232,6 +234,7 @@ service:
                   dormakaba_oracode_metadata:
                     door_id: 1.1
                     door_name: door_name
+                    door_is_wireless: true
                     site_id: 1.1
                     site_name: site_name
                   wyze_metadata:
@@ -278,6 +281,7 @@ service:
                   custom_metadata: custom_metadata
                 can_remotely_unlock: true
                 can_remotely_lock: true
+                can_program_offline_access_codes: true
                 can_program_online_access_codes: true
                 can_simulate_removal: true
               ok: true
@@ -302,9 +306,7 @@ service:
             limit: optional<double>
             created_before: optional<datetime>
             user_identifier_key: optional<string>
-            custom_metadata_has: >-
-              optional<map<string,
-              optional<DevicesListRequestCustomMetadataHasValue>>>
+            custom_metadata_has: optional<map<string, DevicesListRequestCustomMetadataHasValue>>
             include_if: optional<list<DevicesListRequestIncludeIfItem>>
             exclude_if: optional<list<DevicesListRequestExcludeIfItem>>
       response:
@@ -343,8 +345,11 @@ service:
                       message: message
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
+                  custom_metadata:
+                    custom_metadata: custom_metadata
                   can_remotely_unlock: true
                   can_remotely_lock: true
+                  can_program_offline_access_codes: true
                   can_program_online_access_codes: true
                   can_simulate_removal: true
               ok: true

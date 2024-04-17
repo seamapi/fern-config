@@ -454,7 +454,6 @@
       "post": {
         "x-fern-sdk-group-name": ["access_codes"],
         "x-fern-sdk-method-name": "delete",
-        "x-fern-sdk-return-value": "action_attempt",
         "summary": "/access_codes/delete",
         "responses": {
           "200": {
@@ -1061,7 +1060,6 @@
       "post": {
         "x-fern-sdk-group-name": ["access_codes"],
         "x-fern-sdk-method-name": "update",
-        "x-fern-sdk-return-value": "action_attempt",
         "summary": "/access_codes/update",
         "responses": {
           "200": {
@@ -2074,14 +2072,16 @@
         },
         "security": [
           {
-            "seam_workspace": [],
-            "access_token": []
+            "client_session": []
           },
           {
-            "seam_client_session_token": []
+            "pat_with_workspace": []
           },
           {
-            "client_session_token": []
+            "console_session": []
+          },
+          {
+            "api_key": []
           }
         ],
         "requestBody": {
@@ -2180,9 +2180,11 @@
                     }
                   },
                   "automatically_manage_new_devices": {
+                    "default": true,
                     "type": "boolean"
                   },
                   "wait_for_device_creation": {
+                    "default": false,
                     "type": "boolean"
                   }
                 }
@@ -2289,14 +2291,16 @@
         },
         "security": [
           {
-            "seam_workspace": [],
-            "access_token": []
+            "client_session": []
           },
           {
-            "seam_client_session_token": []
+            "pat_with_workspace": []
           },
           {
-            "client_session_token": []
+            "console_session": []
+          },
+          {
+            "api_key": []
           }
         ],
         "requestBody": {
@@ -2357,14 +2361,16 @@
         },
         "security": [
           {
-            "seam_workspace": [],
-            "access_token": []
+            "client_session": []
           },
           {
-            "seam_client_session_token": []
+            "pat_with_workspace": []
           },
           {
-            "client_session_token": []
+            "console_session": []
+          },
+          {
+            "api_key": []
           }
         ],
         "requestBody": {
@@ -2381,19 +2387,12 @@
                     "additionalProperties": {
                       "oneOf": [
                         {
-                          "type": "string",
-                          "maxLength": 500
+                          "type": "string"
                         },
                         {
                           "type": "boolean"
-                        },
-                        {
-                          "type": "string",
-                          "format": "null",
-                          "nullable": true
                         }
-                      ],
-                      "nullable": true
+                      ]
                     },
                     "description": "Returns devices where the webview's custom_metadata contains all of the provided key/value pairs."
                   }
@@ -2404,45 +2403,6 @@
         },
         "tags": ["/connect_webviews"],
         "operationId": "connectWebviewsListPost"
-      }
-    },
-    "/connect_webviews/view": {
-      "get": {
-        "x-fern-sdk-group-name": ["connect_webviews"],
-        "x-fern-sdk-method-name": "view",
-        "summary": "/connect_webviews/view",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "parameters": [
-          {
-            "name": "connect_webview_id",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "required": true
-          },
-          {
-            "name": "auth_token",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "tags": ["/connect_webviews"],
-        "operationId": "connectWebviewsViewGet"
       }
     },
     "/connected_accounts/delete": {
@@ -2645,19 +2605,12 @@
                     "additionalProperties": {
                       "oneOf": [
                         {
-                          "type": "string",
-                          "maxLength": 500
+                          "type": "string"
                         },
                         {
                           "type": "boolean"
-                        },
-                        {
-                          "type": "string",
-                          "format": "null",
-                          "nullable": true
                         }
-                      ],
-                      "nullable": true
+                      ]
                     },
                     "description": "Returns devices where the account's custom_metadata contains all of the provided key/value pairs."
                   }
@@ -3127,19 +3080,12 @@
                     "additionalProperties": {
                       "oneOf": [
                         {
-                          "type": "string",
-                          "maxLength": 500
+                          "type": "string"
                         },
                         {
                           "type": "boolean"
-                        },
-                        {
-                          "type": "string",
-                          "format": "null",
-                          "nullable": true
                         }
-                      ],
-                      "nullable": true
+                      ]
                     }
                   },
                   "include_if": {
@@ -3149,6 +3095,7 @@
                       "enum": [
                         "can_remotely_unlock",
                         "can_remotely_lock",
+                        "can_program_offline_access_codes",
                         "can_program_online_access_codes",
                         "can_simulate_removal"
                       ]
@@ -3161,6 +3108,7 @@
                       "enum": [
                         "can_remotely_unlock",
                         "can_remotely_lock",
+                        "can_program_offline_access_codes",
                         "can_program_online_access_codes",
                         "can_simulate_removal"
                       ]
@@ -3630,6 +3578,8 @@
                       "device.connection_stabilized",
                       "device.error.subscription_required",
                       "device.error.subscription_required.resolved",
+                      "device.accessory_keypad_connected",
+                      "device.accessory_keypad_disconnected",
                       "access_code.created",
                       "access_code.changed",
                       "access_code.scheduled_on_device",
@@ -3688,6 +3638,8 @@
                         "device.connection_stabilized",
                         "device.error.subscription_required",
                         "device.error.subscription_required.resolved",
+                        "device.accessory_keypad_connected",
+                        "device.accessory_keypad_disconnected",
                         "access_code.created",
                         "access_code.changed",
                         "access_code.scheduled_on_device",
@@ -3739,241 +3691,6 @@
         },
         "tags": ["/events"],
         "operationId": "eventsListPost"
-      }
-    },
-    "/health/get_health": {
-      "post": {
-        "x-fern-sdk-group-name": ["health"],
-        "x-fern-sdk-method-name": "get_health",
-        "summary": "/health/get_health",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    },
-                    "msg": {
-                      "type": "string",
-                      "enum": ["I’m one with the Force. The Force is with me."]
-                    },
-                    "last_service_evaluation_at": {
-                      "type": "string"
-                    },
-                    "service_health_statuses": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/service_health"
-                      }
-                    }
-                  },
-                  "required": ["ok", "msg", "service_health_statuses"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "tags": ["/health"],
-        "operationId": "healthGetHealthPost"
-      },
-      "get": {
-        "x-fern-ignore": true,
-        "summary": "/health/get_health",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    },
-                    "msg": {
-                      "type": "string",
-                      "enum": ["I’m one with the Force. The Force is with me."]
-                    },
-                    "last_service_evaluation_at": {
-                      "type": "string"
-                    },
-                    "service_health_statuses": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/service_health"
-                      }
-                    }
-                  },
-                  "required": ["ok", "msg", "service_health_statuses"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "tags": ["/health"],
-        "operationId": "healthGetHealthGet"
-      }
-    },
-    "/health/get_service_health": {
-      "post": {
-        "x-fern-sdk-group-name": ["health"],
-        "x-fern-sdk-method-name": "get_service_health",
-        "summary": "/health/get_service_health",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    },
-                    "last_service_evaluation_at": {
-                      "type": "string"
-                    },
-                    "service_health": {
-                      "$ref": "#/components/schemas/service_health"
-                    }
-                  },
-                  "required": [
-                    "ok",
-                    "last_service_evaluation_at",
-                    "service_health"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "service": {
-                    "type": "string"
-                  }
-                },
-                "required": ["service"]
-              }
-            }
-          }
-        },
-        "tags": ["/health"],
-        "operationId": "healthGetServiceHealthPost"
-      }
-    },
-    "/health": {
-      "post": {
-        "x-fern-ignore": true,
-        "summary": "/health",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    },
-                    "msg": {
-                      "type": "string",
-                      "enum": ["I’m one with the Force. The Force is with me."]
-                    },
-                    "last_service_evaluation_at": {
-                      "type": "string"
-                    },
-                    "service_health_statuses": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/service_health"
-                      }
-                    }
-                  },
-                  "required": ["ok", "msg", "service_health_statuses"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "tags": ["/health"],
-        "operationId": "healthPost"
-      },
-      "get": {
-        "x-fern-ignore": true,
-        "summary": "/health",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    },
-                    "msg": {
-                      "type": "string",
-                      "enum": ["I’m one with the Force. The Force is with me."]
-                    },
-                    "last_service_evaluation_at": {
-                      "type": "string"
-                    },
-                    "service_health_statuses": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/service_health"
-                      }
-                    }
-                  },
-                  "required": ["ok", "msg", "service_health_statuses"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "tags": ["/health"],
-        "operationId": "healthGet"
       }
     },
     "/locks/get": {
@@ -4295,19 +4012,12 @@
                     "additionalProperties": {
                       "oneOf": [
                         {
-                          "type": "string",
-                          "maxLength": 500
+                          "type": "string"
                         },
                         {
                           "type": "boolean"
-                        },
-                        {
-                          "type": "string",
-                          "format": "null",
-                          "nullable": true
                         }
-                      ],
-                      "nullable": true
+                      ]
                     }
                   },
                   "include_if": {
@@ -4317,6 +4027,7 @@
                       "enum": [
                         "can_remotely_unlock",
                         "can_remotely_lock",
+                        "can_program_offline_access_codes",
                         "can_program_online_access_codes",
                         "can_simulate_removal"
                       ]
@@ -4329,6 +4040,7 @@
                       "enum": [
                         "can_remotely_unlock",
                         "can_remotely_lock",
+                        "can_program_offline_access_codes",
                         "can_program_online_access_codes",
                         "can_simulate_removal"
                       ]
@@ -4489,6 +4201,7 @@
       "post": {
         "x-fern-sdk-group-name": ["networks"],
         "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "network",
         "summary": "/networks/get",
         "responses": {
           "200": {
@@ -4499,30 +4212,7 @@
                   "type": "object",
                   "properties": {
                     "network": {
-                      "type": "object",
-                      "properties": {
-                        "network_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "display_name": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        }
-                      },
-                      "required": [
-                        "network_id",
-                        "workspace_id",
-                        "display_name",
-                        "created_at"
-                      ]
+                      "$ref": "#/components/schemas/network"
                     },
                     "ok": {
                       "type": "boolean"
@@ -4575,6 +4265,7 @@
       "post": {
         "x-fern-sdk-group-name": ["networks"],
         "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "networks",
         "summary": "/networks/list",
         "responses": {
           "200": {
@@ -4587,30 +4278,7 @@
                     "networks": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "network_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "workspace_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "display_name": {
-                            "type": "string"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        },
-                        "required": [
-                          "network_id",
-                          "workspace_id",
-                          "display_name",
-                          "created_at"
-                        ]
+                        "$ref": "#/components/schemas/network"
                       }
                     },
                     "ok": {
@@ -5329,19 +4997,12 @@
                     "additionalProperties": {
                       "oneOf": [
                         {
-                          "type": "string",
-                          "maxLength": 500
+                          "type": "string"
                         },
                         {
                           "type": "boolean"
-                        },
-                        {
-                          "type": "string",
-                          "format": "null",
-                          "nullable": true
                         }
-                      ],
-                      "nullable": true
+                      ]
                     }
                   },
                   "include_if": {
@@ -5351,6 +5012,7 @@
                       "enum": [
                         "can_remotely_unlock",
                         "can_remotely_lock",
+                        "can_program_offline_access_codes",
                         "can_program_online_access_codes",
                         "can_simulate_removal"
                       ]
@@ -5363,6 +5025,7 @@
                       "enum": [
                         "can_remotely_unlock",
                         "can_remotely_lock",
+                        "can_program_offline_access_codes",
                         "can_program_online_access_codes",
                         "can_simulate_removal"
                       ]
@@ -5839,6 +5502,7 @@
       "post": {
         "x-fern-sdk-group-name": ["user_identities"],
         "x-fern-sdk-method-name": "create",
+        "x-fern-sdk-return-value": "user_identity",
         "summary": "/user_identities/create",
         "responses": {
           "200": {
@@ -5849,54 +5513,7 @@
                   "type": "object",
                   "properties": {
                     "user_identity": {
-                      "type": "object",
-                      "properties": {
-                        "user_identity_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "user_identity_key": {
-                          "type": "string",
-                          "minLength": 1,
-                          "nullable": true
-                        },
-                        "email_address": {
-                          "type": "string",
-                          "format": "email",
-                          "nullable": true
-                        },
-                        "phone_number": {
-                          "type": "string",
-                          "nullable": true
-                        },
-                        "display_name": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "full_name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "nullable": true
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        }
-                      },
-                      "required": [
-                        "user_identity_id",
-                        "user_identity_key",
-                        "email_address",
-                        "phone_number",
-                        "display_name",
-                        "full_name",
-                        "created_at",
-                        "workspace_id"
-                      ]
+                      "$ref": "#/components/schemas/user_identity"
                     },
                     "ok": {
                       "type": "boolean"
@@ -6023,6 +5640,7 @@
       "post": {
         "x-fern-sdk-group-name": ["user_identities"],
         "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "user_identity",
         "summary": "/user_identities/get",
         "responses": {
           "200": {
@@ -6033,54 +5651,7 @@
                   "type": "object",
                   "properties": {
                     "user_identity": {
-                      "type": "object",
-                      "properties": {
-                        "user_identity_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "user_identity_key": {
-                          "type": "string",
-                          "minLength": 1,
-                          "nullable": true
-                        },
-                        "email_address": {
-                          "type": "string",
-                          "format": "email",
-                          "nullable": true
-                        },
-                        "phone_number": {
-                          "type": "string",
-                          "nullable": true
-                        },
-                        "display_name": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "full_name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "nullable": true
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        }
-                      },
-                      "required": [
-                        "user_identity_id",
-                        "user_identity_key",
-                        "email_address",
-                        "phone_number",
-                        "display_name",
-                        "full_name",
-                        "created_at",
-                        "workspace_id"
-                      ]
+                      "$ref": "#/components/schemas/user_identity"
                     },
                     "ok": {
                       "type": "boolean"
@@ -6284,54 +5855,7 @@
                     "user_identities": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "user_identity_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "user_identity_key": {
-                            "type": "string",
-                            "minLength": 1,
-                            "nullable": true
-                          },
-                          "email_address": {
-                            "type": "string",
-                            "format": "email",
-                            "nullable": true
-                          },
-                          "phone_number": {
-                            "type": "string",
-                            "nullable": true
-                          },
-                          "display_name": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "full_name": {
-                            "type": "string",
-                            "minLength": 1,
-                            "nullable": true
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "workspace_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          }
-                        },
-                        "required": [
-                          "user_identity_id",
-                          "user_identity_key",
-                          "email_address",
-                          "phone_number",
-                          "display_name",
-                          "full_name",
-                          "created_at",
-                          "workspace_id"
-                        ]
+                        "$ref": "#/components/schemas/user_identity"
                       }
                     },
                     "ok": {
@@ -6387,6 +5911,7 @@
       "post": {
         "x-fern-sdk-group-name": ["user_identities"],
         "x-fern-sdk-method-name": "list_accessible_devices",
+        "x-fern-sdk-return-value": "devices",
         "summary": "/user_identities/list_accessible_devices",
         "responses": {
           "200": {
@@ -6396,17 +5921,24 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "accessible_devices": {
+                    "devices": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/device"
                       }
                     },
+                    "accessible_devices": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/device"
+                      },
+                      "description": "\n      ---\n      deprecated: use devices.\n      ---\n    "
+                    },
                     "ok": {
                       "type": "boolean"
                     }
                   },
-                  "required": ["accessible_devices", "ok"]
+                  "required": ["devices", "accessible_devices", "ok"]
                 }
               }
             }
@@ -6453,6 +5985,7 @@
       "post": {
         "x-fern-sdk-group-name": ["user_identities"],
         "x-fern-sdk-method-name": "list_acs_systems",
+        "x-fern-sdk-return-value": "acs_systems",
         "summary": "/user_identities/list_acs_systems",
         "responses": {
           "200": {
@@ -6522,6 +6055,7 @@
       "post": {
         "x-fern-sdk-group-name": ["user_identities"],
         "x-fern-sdk-method-name": "list_acs_users",
+        "x-fern-sdk-return-value": "acs_users",
         "summary": "/user_identities/list_acs_users",
         "responses": {
           "200": {
@@ -7289,6 +6823,7 @@
       "post": {
         "x-fern-sdk-group-name": ["workspaces"],
         "x-fern-sdk-method-name": "create",
+        "x-fern-sdk-return-value": "workspace",
         "summary": "/workspaces/create",
         "responses": {
           "200": {
@@ -7574,7 +7109,7 @@
       "post": {
         "x-fern-sdk-group-name": ["workspaces"],
         "x-fern-sdk-method-name": "reset_sandbox",
-        "x-fern-sdk-return-value": "message",
+        "x-fern-sdk-return-value": "action_attempt",
         "summary": "/workspaces/reset_sandbox",
         "responses": {
           "200": {
@@ -7847,7 +7382,6 @@
       "post": {
         "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
         "x-fern-sdk-method-name": "delete",
-        "x-fern-sdk-return-value": "action_attempt",
         "summary": "/access_codes/unmanaged/delete",
         "responses": {
           "200": {
@@ -8342,6 +7876,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "access_groups"],
         "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "acs_access_group",
         "summary": "/acs/access_groups/get",
         "responses": {
           "200": {
@@ -8408,6 +7943,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "access_groups"],
         "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "acs_access_groups",
         "summary": "/acs/access_groups/list",
         "responses": {
           "200": {
@@ -8477,6 +8013,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "access_groups"],
         "x-fern-sdk-method-name": "list_users",
+        "x-fern-sdk-return-value": "acs_users",
         "summary": "/acs/access_groups/list_users",
         "responses": {
           "200": {
@@ -8610,6 +8147,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "credential_pools"],
         "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "acs_credential_pools",
         "summary": "/acs/credential_pools/list",
         "responses": {
           "200": {
@@ -8622,45 +8160,7 @@
                     "acs_credential_pools": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "acs_credential_pool_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "acs_system_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "display_name": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "external_type": {
-                            "type": "string",
-                            "enum": ["hid_part_number"]
-                          },
-                          "external_type_display_name": {
-                            "type": "string"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "workspace_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          }
-                        },
-                        "required": [
-                          "acs_credential_pool_id",
-                          "acs_system_id",
-                          "display_name",
-                          "external_type",
-                          "external_type_display_name",
-                          "created_at",
-                          "workspace_id"
-                        ]
+                        "$ref": "#/components/schemas/acs_credential_pool"
                       }
                     },
                     "ok": {
@@ -8714,6 +8214,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "credential_provisioning_automations"],
         "x-fern-sdk-method-name": "launch",
+        "x-fern-sdk-return-value": "acs_credential_provisioning_automation",
         "summary": "/acs/credential_provisioning_automations/launch",
         "responses": {
           "200": {
@@ -8724,36 +8225,7 @@
                   "type": "object",
                   "properties": {
                     "acs_credential_provisioning_automation": {
-                      "type": "object",
-                      "properties": {
-                        "acs_credential_provisioning_automation_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "credential_manager_acs_system_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "user_identity_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        }
-                      },
-                      "required": [
-                        "acs_credential_provisioning_automation_id",
-                        "credential_manager_acs_system_id",
-                        "user_identity_id",
-                        "created_at",
-                        "workspace_id"
-                      ]
+                      "$ref": "#/components/schemas/acs_credential_provisioning_automation"
                     },
                     "ok": {
                       "type": "boolean"
@@ -8834,136 +8306,7 @@
                   "type": "object",
                   "properties": {
                     "acs_credential": {
-                      "type": "object",
-                      "properties": {
-                        "acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_user_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_credential_pool_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_system_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "parent_acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "display_name": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "code": {
-                          "type": "string",
-                          "nullable": true
-                        },
-                        "access_method": {
-                          "type": "string",
-                          "enum": ["code", "card", "mobile_key"]
-                        },
-                        "external_type": {
-                          "type": "string",
-                          "enum": [
-                            "pti_card",
-                            "brivo_credential",
-                            "hid_credential",
-                            "visionline_card"
-                          ]
-                        },
-                        "external_type_display_name": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "starts_at": {
-                          "type": "string"
-                        },
-                        "ends_at": {
-                          "type": "string"
-                        },
-                        "errors": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "error_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["error_code", "message"]
-                          }
-                        },
-                        "warnings": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "warning_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["warning_code", "message"]
-                          }
-                        },
-                        "is_multi_phone_sync_credential": {
-                          "type": "boolean"
-                        },
-                        "visionline_metadata": {
-                          "type": "object",
-                          "properties": {
-                            "joiner_acs_credential_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "guest_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "common_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "required": [
-                        "acs_credential_id",
-                        "acs_system_id",
-                        "display_name",
-                        "access_method",
-                        "created_at",
-                        "workspace_id",
-                        "errors",
-                        "warnings"
-                      ]
+                      "$ref": "#/components/schemas/acs_credential"
                     },
                     "ok": {
                       "type": "boolean"
@@ -9027,136 +8370,7 @@
                   "type": "object",
                   "properties": {
                     "acs_credential": {
-                      "type": "object",
-                      "properties": {
-                        "acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_user_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_credential_pool_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_system_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "parent_acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "display_name": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "code": {
-                          "type": "string",
-                          "nullable": true
-                        },
-                        "access_method": {
-                          "type": "string",
-                          "enum": ["code", "card", "mobile_key"]
-                        },
-                        "external_type": {
-                          "type": "string",
-                          "enum": [
-                            "pti_card",
-                            "brivo_credential",
-                            "hid_credential",
-                            "visionline_card"
-                          ]
-                        },
-                        "external_type_display_name": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "starts_at": {
-                          "type": "string"
-                        },
-                        "ends_at": {
-                          "type": "string"
-                        },
-                        "errors": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "error_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["error_code", "message"]
-                          }
-                        },
-                        "warnings": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "warning_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["warning_code", "message"]
-                          }
-                        },
-                        "is_multi_phone_sync_credential": {
-                          "type": "boolean"
-                        },
-                        "visionline_metadata": {
-                          "type": "object",
-                          "properties": {
-                            "joiner_acs_credential_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "guest_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "common_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "required": [
-                        "acs_credential_id",
-                        "acs_system_id",
-                        "display_name",
-                        "access_method",
-                        "created_at",
-                        "workspace_id",
-                        "errors",
-                        "warnings"
-                      ]
+                      "$ref": "#/components/schemas/acs_credential"
                     },
                     "ok": {
                       "type": "boolean"
@@ -9213,6 +8427,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "credentials"],
         "x-fern-sdk-method-name": "create",
+        "x-fern-sdk-return-value": "acs_credential",
         "summary": "/acs/credentials/create",
         "responses": {
           "200": {
@@ -9223,136 +8438,7 @@
                   "type": "object",
                   "properties": {
                     "acs_credential": {
-                      "type": "object",
-                      "properties": {
-                        "acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_user_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_credential_pool_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_system_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "parent_acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "display_name": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "code": {
-                          "type": "string",
-                          "nullable": true
-                        },
-                        "access_method": {
-                          "type": "string",
-                          "enum": ["code", "card", "mobile_key"]
-                        },
-                        "external_type": {
-                          "type": "string",
-                          "enum": [
-                            "pti_card",
-                            "brivo_credential",
-                            "hid_credential",
-                            "visionline_card"
-                          ]
-                        },
-                        "external_type_display_name": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "starts_at": {
-                          "type": "string"
-                        },
-                        "ends_at": {
-                          "type": "string"
-                        },
-                        "errors": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "error_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["error_code", "message"]
-                          }
-                        },
-                        "warnings": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "warning_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["warning_code", "message"]
-                          }
-                        },
-                        "is_multi_phone_sync_credential": {
-                          "type": "boolean"
-                        },
-                        "visionline_metadata": {
-                          "type": "object",
-                          "properties": {
-                            "joiner_acs_credential_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "guest_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "common_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "required": [
-                        "acs_credential_id",
-                        "acs_system_id",
-                        "display_name",
-                        "access_method",
-                        "created_at",
-                        "workspace_id",
-                        "errors",
-                        "warnings"
-                      ]
+                      "$ref": "#/components/schemas/acs_credential"
                     },
                     "ok": {
                       "type": "boolean"
@@ -9426,7 +8512,16 @@
                         "type": "string",
                         "enum": ["TLCode", "rfid48"]
                       },
+                      "card_function_type": {
+                        "default": "guest",
+                        "type": "string",
+                        "enum": ["guest", "staff"]
+                      },
                       "is_override_key": {
+                        "type": "boolean",
+                        "description": "\n          ---\n          deprecated: use override.\n          ---\n        "
+                      },
+                      "override": {
                         "type": "boolean"
                       },
                       "joiner_acs_credential_ids": {
@@ -9520,6 +8615,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "credentials"],
         "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "acs_credential",
         "summary": "/acs/credentials/get",
         "responses": {
           "200": {
@@ -9530,136 +8626,7 @@
                   "type": "object",
                   "properties": {
                     "acs_credential": {
-                      "type": "object",
-                      "properties": {
-                        "acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_user_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_credential_pool_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_system_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "parent_acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "display_name": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "code": {
-                          "type": "string",
-                          "nullable": true
-                        },
-                        "access_method": {
-                          "type": "string",
-                          "enum": ["code", "card", "mobile_key"]
-                        },
-                        "external_type": {
-                          "type": "string",
-                          "enum": [
-                            "pti_card",
-                            "brivo_credential",
-                            "hid_credential",
-                            "visionline_card"
-                          ]
-                        },
-                        "external_type_display_name": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "starts_at": {
-                          "type": "string"
-                        },
-                        "ends_at": {
-                          "type": "string"
-                        },
-                        "errors": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "error_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["error_code", "message"]
-                          }
-                        },
-                        "warnings": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "warning_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["warning_code", "message"]
-                          }
-                        },
-                        "is_multi_phone_sync_credential": {
-                          "type": "boolean"
-                        },
-                        "visionline_metadata": {
-                          "type": "object",
-                          "properties": {
-                            "joiner_acs_credential_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "guest_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "common_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "required": [
-                        "acs_credential_id",
-                        "acs_system_id",
-                        "display_name",
-                        "access_method",
-                        "created_at",
-                        "workspace_id",
-                        "errors",
-                        "warnings"
-                      ]
+                      "$ref": "#/components/schemas/acs_credential"
                     },
                     "ok": {
                       "type": "boolean"
@@ -9712,6 +8679,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "credentials"],
         "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "acs_credentials",
         "summary": "/acs/credentials/list",
         "responses": {
           "200": {
@@ -9724,136 +8692,7 @@
                     "acs_credentials": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "acs_credential_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "acs_user_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "acs_credential_pool_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "acs_system_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "parent_acs_credential_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "display_name": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "code": {
-                            "type": "string",
-                            "nullable": true
-                          },
-                          "access_method": {
-                            "type": "string",
-                            "enum": ["code", "card", "mobile_key"]
-                          },
-                          "external_type": {
-                            "type": "string",
-                            "enum": [
-                              "pti_card",
-                              "brivo_credential",
-                              "hid_credential",
-                              "visionline_card"
-                            ]
-                          },
-                          "external_type_display_name": {
-                            "type": "string"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "workspace_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "starts_at": {
-                            "type": "string"
-                          },
-                          "ends_at": {
-                            "type": "string"
-                          },
-                          "errors": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "error_code": {
-                                  "type": "string"
-                                },
-                                "message": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": ["error_code", "message"]
-                            }
-                          },
-                          "warnings": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "warning_code": {
-                                  "type": "string"
-                                },
-                                "message": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": ["warning_code", "message"]
-                            }
-                          },
-                          "is_multi_phone_sync_credential": {
-                            "type": "boolean"
-                          },
-                          "visionline_metadata": {
-                            "type": "object",
-                            "properties": {
-                              "joiner_acs_credential_ids": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string",
-                                  "format": "uuid"
-                                }
-                              },
-                              "guest_acs_entrance_ids": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string",
-                                  "format": "uuid"
-                                }
-                              },
-                              "common_acs_entrance_ids": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string",
-                                  "format": "uuid"
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "required": [
-                          "acs_credential_id",
-                          "acs_system_id",
-                          "display_name",
-                          "access_method",
-                          "created_at",
-                          "workspace_id",
-                          "errors",
-                          "warnings"
-                        ]
+                        "$ref": "#/components/schemas/acs_credential"
                       }
                     },
                     "ok": {
@@ -9970,136 +8809,7 @@
                   "type": "object",
                   "properties": {
                     "acs_credential": {
-                      "type": "object",
-                      "properties": {
-                        "acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_user_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_credential_pool_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_system_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "parent_acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "display_name": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "code": {
-                          "type": "string",
-                          "nullable": true
-                        },
-                        "access_method": {
-                          "type": "string",
-                          "enum": ["code", "card", "mobile_key"]
-                        },
-                        "external_type": {
-                          "type": "string",
-                          "enum": [
-                            "pti_card",
-                            "brivo_credential",
-                            "hid_credential",
-                            "visionline_card"
-                          ]
-                        },
-                        "external_type_display_name": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "starts_at": {
-                          "type": "string"
-                        },
-                        "ends_at": {
-                          "type": "string"
-                        },
-                        "errors": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "error_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["error_code", "message"]
-                          }
-                        },
-                        "warnings": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "warning_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["warning_code", "message"]
-                          }
-                        },
-                        "is_multi_phone_sync_credential": {
-                          "type": "boolean"
-                        },
-                        "visionline_metadata": {
-                          "type": "object",
-                          "properties": {
-                            "joiner_acs_credential_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "guest_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "common_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "required": [
-                        "acs_credential_id",
-                        "acs_system_id",
-                        "display_name",
-                        "access_method",
-                        "created_at",
-                        "workspace_id",
-                        "errors",
-                        "warnings"
-                      ]
+                      "$ref": "#/components/schemas/acs_credential"
                     },
                     "ok": {
                       "type": "boolean"
@@ -10163,136 +8873,7 @@
                   "type": "object",
                   "properties": {
                     "acs_credential": {
-                      "type": "object",
-                      "properties": {
-                        "acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_user_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_credential_pool_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_system_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "parent_acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "display_name": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "code": {
-                          "type": "string",
-                          "nullable": true
-                        },
-                        "access_method": {
-                          "type": "string",
-                          "enum": ["code", "card", "mobile_key"]
-                        },
-                        "external_type": {
-                          "type": "string",
-                          "enum": [
-                            "pti_card",
-                            "brivo_credential",
-                            "hid_credential",
-                            "visionline_card"
-                          ]
-                        },
-                        "external_type_display_name": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "starts_at": {
-                          "type": "string"
-                        },
-                        "ends_at": {
-                          "type": "string"
-                        },
-                        "errors": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "error_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["error_code", "message"]
-                          }
-                        },
-                        "warnings": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "warning_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["warning_code", "message"]
-                          }
-                        },
-                        "is_multi_phone_sync_credential": {
-                          "type": "boolean"
-                        },
-                        "visionline_metadata": {
-                          "type": "object",
-                          "properties": {
-                            "joiner_acs_credential_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "guest_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "common_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "required": [
-                        "acs_credential_id",
-                        "acs_system_id",
-                        "display_name",
-                        "access_method",
-                        "created_at",
-                        "workspace_id",
-                        "errors",
-                        "warnings"
-                      ]
+                      "$ref": "#/components/schemas/acs_credential"
                     },
                     "ok": {
                       "type": "boolean"
@@ -10359,136 +8940,7 @@
                   "type": "object",
                   "properties": {
                     "acs_credential": {
-                      "type": "object",
-                      "properties": {
-                        "acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_user_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_credential_pool_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_system_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "parent_acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "display_name": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "code": {
-                          "type": "string",
-                          "nullable": true
-                        },
-                        "access_method": {
-                          "type": "string",
-                          "enum": ["code", "card", "mobile_key"]
-                        },
-                        "external_type": {
-                          "type": "string",
-                          "enum": [
-                            "pti_card",
-                            "brivo_credential",
-                            "hid_credential",
-                            "visionline_card"
-                          ]
-                        },
-                        "external_type_display_name": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "starts_at": {
-                          "type": "string"
-                        },
-                        "ends_at": {
-                          "type": "string"
-                        },
-                        "errors": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "error_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["error_code", "message"]
-                          }
-                        },
-                        "warnings": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "warning_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["warning_code", "message"]
-                          }
-                        },
-                        "is_multi_phone_sync_credential": {
-                          "type": "boolean"
-                        },
-                        "visionline_metadata": {
-                          "type": "object",
-                          "properties": {
-                            "joiner_acs_credential_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "guest_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "common_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "required": [
-                        "acs_credential_id",
-                        "acs_system_id",
-                        "display_name",
-                        "access_method",
-                        "created_at",
-                        "workspace_id",
-                        "errors",
-                        "warnings"
-                      ]
+                      "$ref": "#/components/schemas/acs_credential"
                     },
                     "ok": {
                       "type": "boolean"
@@ -10551,136 +9003,7 @@
                   "type": "object",
                   "properties": {
                     "acs_credential": {
-                      "type": "object",
-                      "properties": {
-                        "acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_user_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_credential_pool_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "acs_system_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "parent_acs_credential_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "display_name": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "code": {
-                          "type": "string",
-                          "nullable": true
-                        },
-                        "access_method": {
-                          "type": "string",
-                          "enum": ["code", "card", "mobile_key"]
-                        },
-                        "external_type": {
-                          "type": "string",
-                          "enum": [
-                            "pti_card",
-                            "brivo_credential",
-                            "hid_credential",
-                            "visionline_card"
-                          ]
-                        },
-                        "external_type_display_name": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "workspace_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "starts_at": {
-                          "type": "string"
-                        },
-                        "ends_at": {
-                          "type": "string"
-                        },
-                        "errors": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "error_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["error_code", "message"]
-                          }
-                        },
-                        "warnings": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "warning_code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["warning_code", "message"]
-                          }
-                        },
-                        "is_multi_phone_sync_credential": {
-                          "type": "boolean"
-                        },
-                        "visionline_metadata": {
-                          "type": "object",
-                          "properties": {
-                            "joiner_acs_credential_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "guest_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            },
-                            "common_acs_entrance_ids": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uuid"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "required": [
-                        "acs_credential_id",
-                        "acs_system_id",
-                        "display_name",
-                        "access_method",
-                        "created_at",
-                        "workspace_id",
-                        "errors",
-                        "warnings"
-                      ]
+                      "$ref": "#/components/schemas/acs_credential"
                     },
                     "ok": {
                       "type": "boolean"
@@ -10736,6 +9059,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "entrances"],
         "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "acs_entrance",
         "summary": "/acs/entrances/get",
         "responses": {
           "200": {
@@ -10746,95 +9070,7 @@
                   "type": "object",
                   "properties": {
                     "acs_entrance": {
-                      "type": "object",
-                      "properties": {
-                        "acs_entrance_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "display_name": {
-                          "type": "string"
-                        },
-                        "acs_system_id": {
-                          "type": "string",
-                          "format": "uuid"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "latch_metadata": {
-                          "type": "object",
-                          "properties": {
-                            "accessibility_type": {
-                              "type": "string"
-                            },
-                            "name": {
-                              "type": "string"
-                            },
-                            "type": {
-                              "type": "string"
-                            },
-                            "is_connected": {
-                              "type": "boolean"
-                            }
-                          },
-                          "required": [
-                            "accessibility_type",
-                            "name",
-                            "type",
-                            "is_connected"
-                          ],
-                          "nullable": true
-                        },
-                        "visionline_metadata": {
-                          "type": "object",
-                          "properties": {
-                            "door_name": {
-                              "type": "string"
-                            },
-                            "door_category": {
-                              "type": "string",
-                              "enum": [
-                                "entrance",
-                                "guest",
-                                "elevator reader",
-                                "common",
-                                "common (PMS)"
-                              ]
-                            },
-                            "profiles": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "visionline_door_profile_id": {
-                                    "type": "string"
-                                  },
-                                  "visionline_door_profile_type": {
-                                    "type": "string",
-                                    "enum": ["BLE", "commonDoor", "touch"]
-                                  }
-                                },
-                                "required": [
-                                  "visionline_door_profile_id",
-                                  "visionline_door_profile_type"
-                                ]
-                              }
-                            }
-                          },
-                          "required": ["door_name", "door_category"],
-                          "nullable": true
-                        }
-                      },
-                      "required": [
-                        "acs_entrance_id",
-                        "display_name",
-                        "acs_system_id",
-                        "created_at",
-                        "latch_metadata",
-                        "visionline_metadata"
-                      ]
+                      "$ref": "#/components/schemas/acs_entrance"
                     },
                     "ok": {
                       "type": "boolean"
@@ -10957,6 +9193,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "entrances"],
         "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "acs_entrances",
         "summary": "/acs/entrances/list",
         "responses": {
           "200": {
@@ -10969,95 +9206,7 @@
                     "acs_entrances": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "acs_entrance_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "display_name": {
-                            "type": "string"
-                          },
-                          "acs_system_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "latch_metadata": {
-                            "type": "object",
-                            "properties": {
-                              "accessibility_type": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              },
-                              "is_connected": {
-                                "type": "boolean"
-                              }
-                            },
-                            "required": [
-                              "accessibility_type",
-                              "name",
-                              "type",
-                              "is_connected"
-                            ],
-                            "nullable": true
-                          },
-                          "visionline_metadata": {
-                            "type": "object",
-                            "properties": {
-                              "door_name": {
-                                "type": "string"
-                              },
-                              "door_category": {
-                                "type": "string",
-                                "enum": [
-                                  "entrance",
-                                  "guest",
-                                  "elevator reader",
-                                  "common",
-                                  "common (PMS)"
-                                ]
-                              },
-                              "profiles": {
-                                "type": "array",
-                                "items": {
-                                  "type": "object",
-                                  "properties": {
-                                    "visionline_door_profile_id": {
-                                      "type": "string"
-                                    },
-                                    "visionline_door_profile_type": {
-                                      "type": "string",
-                                      "enum": ["BLE", "commonDoor", "touch"]
-                                    }
-                                  },
-                                  "required": [
-                                    "visionline_door_profile_id",
-                                    "visionline_door_profile_type"
-                                  ]
-                                }
-                              }
-                            },
-                            "required": ["door_name", "door_category"],
-                            "nullable": true
-                          }
-                        },
-                        "required": [
-                          "acs_entrance_id",
-                          "display_name",
-                          "acs_system_id",
-                          "created_at",
-                          "latch_metadata",
-                          "visionline_metadata"
-                        ]
+                        "$ref": "#/components/schemas/acs_entrance"
                       }
                     },
                     "ok": {
@@ -11117,6 +9266,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "entrances"],
         "x-fern-sdk-method-name": "list_credentials_with_access",
+        "x-fern-sdk-return-value": "acs_credentials",
         "summary": "/acs/entrances/list_credentials_with_access",
         "responses": {
           "200": {
@@ -11129,136 +9279,7 @@
                     "acs_credentials": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "acs_credential_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "acs_user_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "acs_credential_pool_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "acs_system_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "parent_acs_credential_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "display_name": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "code": {
-                            "type": "string",
-                            "nullable": true
-                          },
-                          "access_method": {
-                            "type": "string",
-                            "enum": ["code", "card", "mobile_key"]
-                          },
-                          "external_type": {
-                            "type": "string",
-                            "enum": [
-                              "pti_card",
-                              "brivo_credential",
-                              "hid_credential",
-                              "visionline_card"
-                            ]
-                          },
-                          "external_type_display_name": {
-                            "type": "string"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "workspace_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "starts_at": {
-                            "type": "string"
-                          },
-                          "ends_at": {
-                            "type": "string"
-                          },
-                          "errors": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "error_code": {
-                                  "type": "string"
-                                },
-                                "message": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": ["error_code", "message"]
-                            }
-                          },
-                          "warnings": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "warning_code": {
-                                  "type": "string"
-                                },
-                                "message": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": ["warning_code", "message"]
-                            }
-                          },
-                          "is_multi_phone_sync_credential": {
-                            "type": "boolean"
-                          },
-                          "visionline_metadata": {
-                            "type": "object",
-                            "properties": {
-                              "joiner_acs_credential_ids": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string",
-                                  "format": "uuid"
-                                }
-                              },
-                              "guest_acs_entrance_ids": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string",
-                                  "format": "uuid"
-                                }
-                              },
-                              "common_acs_entrance_ids": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string",
-                                  "format": "uuid"
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "required": [
-                          "acs_credential_id",
-                          "acs_system_id",
-                          "display_name",
-                          "access_method",
-                          "created_at",
-                          "workspace_id",
-                          "errors",
-                          "warnings"
-                        ]
+                        "$ref": "#/components/schemas/acs_credential"
                       }
                     },
                     "ok": {
@@ -11322,6 +9343,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "systems"],
         "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "acs_system",
         "summary": "/acs/systems/get",
         "responses": {
           "200": {
@@ -11385,6 +9407,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "systems"],
         "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "acs_systems",
         "summary": "/acs/systems/list",
         "responses": {
           "200": {
@@ -11578,6 +9601,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "users"],
         "x-fern-sdk-method-name": "create",
+        "x-fern-sdk-return-value": "acs_user",
         "summary": "/acs/users/create",
         "responses": {
           "200": {
@@ -11743,6 +9767,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "users"],
         "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "acs_user",
         "summary": "/acs/users/get",
         "responses": {
           "200": {
@@ -11806,6 +9831,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "users"],
         "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "acs_users",
         "summary": "/acs/users/list",
         "responses": {
           "200": {
@@ -11885,6 +9911,7 @@
       "post": {
         "x-fern-sdk-group-name": ["acs", "users"],
         "x-fern-sdk-method-name": "list_accessible_entrances",
+        "x-fern-sdk-return-value": "acs_entrances",
         "summary": "/acs/users/list_accessible_entrances",
         "responses": {
           "200": {
@@ -11897,95 +9924,7 @@
                     "acs_entrances": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "acs_entrance_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "display_name": {
-                            "type": "string"
-                          },
-                          "acs_system_id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "latch_metadata": {
-                            "type": "object",
-                            "properties": {
-                              "accessibility_type": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              },
-                              "is_connected": {
-                                "type": "boolean"
-                              }
-                            },
-                            "required": [
-                              "accessibility_type",
-                              "name",
-                              "type",
-                              "is_connected"
-                            ],
-                            "nullable": true
-                          },
-                          "visionline_metadata": {
-                            "type": "object",
-                            "properties": {
-                              "door_name": {
-                                "type": "string"
-                              },
-                              "door_category": {
-                                "type": "string",
-                                "enum": [
-                                  "entrance",
-                                  "guest",
-                                  "elevator reader",
-                                  "common",
-                                  "common (PMS)"
-                                ]
-                              },
-                              "profiles": {
-                                "type": "array",
-                                "items": {
-                                  "type": "object",
-                                  "properties": {
-                                    "visionline_door_profile_id": {
-                                      "type": "string"
-                                    },
-                                    "visionline_door_profile_type": {
-                                      "type": "string",
-                                      "enum": ["BLE", "commonDoor", "touch"]
-                                    }
-                                  },
-                                  "required": [
-                                    "visionline_door_profile_id",
-                                    "visionline_door_profile_type"
-                                  ]
-                                }
-                              }
-                            },
-                            "required": ["door_name", "door_category"],
-                            "nullable": true
-                          }
-                        },
-                        "required": [
-                          "acs_entrance_id",
-                          "display_name",
-                          "acs_system_id",
-                          "created_at",
-                          "latch_metadata",
-                          "visionline_metadata"
-                        ]
+                        "$ref": "#/components/schemas/acs_entrance"
                       }
                     },
                     "ok": {
@@ -12562,14 +10501,16 @@
         },
         "security": [
           {
-            "seam_workspace": [],
-            "access_token": []
+            "client_session": []
           },
           {
-            "seam_client_session_token": []
+            "pat_with_workspace": []
           },
           {
-            "client_session_token": []
+            "console_session": []
+          },
+          {
+            "api_key": []
           }
         ],
         "requestBody": {
@@ -12832,19 +10773,12 @@
                     "additionalProperties": {
                       "oneOf": [
                         {
-                          "type": "string",
-                          "maxLength": 500
+                          "type": "string"
                         },
                         {
                           "type": "boolean"
-                        },
-                        {
-                          "type": "string",
-                          "format": "null",
-                          "nullable": true
                         }
-                      ],
-                      "nullable": true
+                      ]
                     }
                   },
                   "include_if": {
@@ -12854,6 +10788,7 @@
                       "enum": [
                         "can_remotely_unlock",
                         "can_remotely_lock",
+                        "can_program_offline_access_codes",
                         "can_program_online_access_codes",
                         "can_simulate_removal"
                       ]
@@ -12866,6 +10801,7 @@
                       "enum": [
                         "can_remotely_unlock",
                         "can_remotely_lock",
+                        "can_program_offline_access_codes",
                         "can_program_online_access_codes",
                         "can_simulate_removal"
                       ]
@@ -13005,64 +10941,6 @@
         "operationId": "devicesUnmanagedUpdatePost"
       }
     },
-    "/health/service/[service_name]": {
-      "post": {
-        "x-fern-sdk-group-name": ["health", "service"],
-        "x-fern-sdk-method-name": "by_service_name",
-        "summary": "/health/service/[service_name]",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    },
-                    "last_service_evaluation_at": {
-                      "type": "string"
-                    },
-                    "service_health": {
-                      "$ref": "#/components/schemas/service_health"
-                    }
-                  },
-                  "required": [
-                    "ok",
-                    "last_service_evaluation_at",
-                    "service_health"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "service_name": {
-                    "type": "string"
-                  }
-                },
-                "required": ["service_name"]
-              }
-            }
-          }
-        },
-        "tags": ["/health"],
-        "operationId": "healthServiceByServiceNamePost"
-      }
-    },
     "/noise_sensors/noise_thresholds/create": {
       "post": {
         "x-fern-sdk-group-name": ["noise_sensors", "noise_thresholds"],
@@ -13153,7 +11031,6 @@
       "post": {
         "x-fern-sdk-group-name": ["noise_sensors", "noise_thresholds"],
         "x-fern-sdk-method-name": "delete",
-        "x-fern-sdk-return-value": "action_attempt",
         "summary": "/noise_sensors/noise_thresholds/delete",
         "responses": {
           "200": {
@@ -13442,7 +11319,6 @@
       "post": {
         "x-fern-sdk-group-name": ["noise_sensors", "noise_thresholds"],
         "x-fern-sdk-method-name": "update",
-        "x-fern-sdk-return-value": "action_attempt",
         "summary": "/noise_sensors/noise_thresholds/update",
         "responses": {
           "200": {
@@ -14269,7 +12145,6 @@
       "post": {
         "x-fern-sdk-group-name": ["thermostats", "climate_setting_schedules"],
         "x-fern-sdk-method-name": "update",
-        "x-fern-sdk-return-value": "climate_setting_schedule",
         "summary": "/thermostats/climate_setting_schedules/update",
         "responses": {
           "200": {
@@ -14537,6 +12412,7 @@
       "post": {
         "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
         "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "enrollment_automation",
         "summary": "/user_identities/enrollment_automations/get",
         "responses": {
           "200": {
@@ -14603,6 +12479,7 @@
       "post": {
         "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
         "x-fern-sdk-method-name": "launch",
+        "x-fern-sdk-return-value": "enrollment_automation",
         "summary": "/user_identities/enrollment_automations/launch",
         "responses": {
           "200": {
@@ -14718,6 +12595,7 @@
       "post": {
         "x-fern-sdk-group-name": ["user_identities", "enrollment_automations"],
         "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "enrollment_automations",
         "summary": "/user_identities/enrollment_automations/list",
         "responses": {
           "200": {
@@ -14786,11 +12664,6 @@
   },
   "components": {
     "securitySchemes": {
-      "api_key": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "API Key"
-      },
       "seam_workspace": {
         "type": "apiKey",
         "in": "header",
@@ -14805,6 +12678,46 @@
         "type": "apiKey",
         "in": "header",
         "name": "client-session-token"
+      },
+      "access_token": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "pat_with_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "pat_without_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "client_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Client Session Token"
+      },
+      "user_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "User Session Token"
+      },
+      "user_session_without_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "User Session Token"
+      },
+      "console_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Console Session Token"
+      },
+      "api_key": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key"
       }
     },
     "schemas": {
@@ -15238,17 +13151,22 @@
             "type": "string",
             "format": "uuid"
           },
-          "connected_account_id": {
+          "workspace_id": {
             "type": "string",
             "format": "uuid"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "connected_account_id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
           },
           "url": {
             "type": "string",
             "format": "uri"
-          },
-          "workspace_id": {
-            "type": "string",
-            "format": "uuid"
           },
           "device_selection_mode": {
             "type": "string",
@@ -15264,17 +13182,15 @@
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "\n      ---\n      deprecated: Unused. Will be removed.\n      ---\n      "
+          },
+          "any_device_allowed": {
+            "type": "boolean",
+            "description": "\n      ---\n      deprecated: Unused. Will be removed.\n      ---\n      "
           },
           "any_provider_allowed": {
             "type": "boolean"
-          },
-          "any_device_allowed": {
-            "type": "boolean"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
           },
           "login_successful": {
             "type": "boolean"
@@ -15298,19 +13214,12 @@
             "additionalProperties": {
               "oneOf": [
                 {
-                  "type": "string",
-                  "maxLength": 500
+                  "type": "string"
                 },
                 {
                   "type": "boolean"
-                },
-                {
-                  "type": "string",
-                  "format": "null",
-                  "nullable": true
                 }
-              ],
-              "nullable": true
+              ]
             }
           },
           "automatically_manage_new_devices": {
@@ -15331,14 +13240,15 @@
         },
         "required": [
           "connect_webview_id",
-          "url",
           "workspace_id",
+          "created_at",
+          "connected_account_id",
+          "url",
           "device_selection_mode",
           "accepted_providers",
           "accepted_devices",
-          "any_provider_allowed",
           "any_device_allowed",
-          "created_at",
+          "any_provider_allowed",
           "login_successful",
           "status",
           "custom_redirect_url",
@@ -15398,19 +13308,12 @@
             "additionalProperties": {
               "oneOf": [
                 {
-                  "type": "string",
-                  "maxLength": 500
+                  "type": "string"
                 },
                 {
                   "type": "boolean"
-                },
-                {
-                  "type": "string",
-                  "format": "null",
-                  "nullable": true
                 }
-              ],
-              "nullable": true
+              ]
             }
           },
           "automatically_manage_new_devices": {
@@ -15419,6 +13322,7 @@
         },
         "required": [
           "account_type_display_name",
+          "custom_metadata",
           "automatically_manage_new_devices"
         ]
       },
@@ -15528,6 +13432,18 @@
                               "is_connected": {
                                 "type": "boolean",
                                 "description": "Indicates if the accessory_keypad is connected to the device."
+                              },
+                              "battery": {
+                                "type": "object",
+                                "properties": {
+                                  "level": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  }
+                                },
+                                "required": ["level"],
+                                "description": "Indicates if the keypad battery properties."
                               }
                             },
                             "required": ["is_connected"],
@@ -15728,6 +13644,9 @@
                           },
                           "site_name": {
                             "type": "string"
+                          },
+                          "entry_relays_total_count": {
+                            "type": "number"
                           }
                         },
                         "required": [
@@ -15736,7 +13655,8 @@
                           "zone_id",
                           "zone_name",
                           "site_id",
-                          "site_name"
+                          "site_name",
+                          "entry_relays_total_count"
                         ]
                       },
                       "schlage_metadata": {
@@ -15805,6 +13725,12 @@
                             "type": "string"
                           },
                           "keypad_battery_critical": {
+                            "type": "boolean"
+                          },
+                          "keypad_paired": {
+                            "type": "boolean"
+                          },
+                          "keypad_2_paired": {
                             "type": "boolean"
                           }
                         },
@@ -16096,6 +14022,9 @@
                           },
                           "bridge_name": {
                             "type": "string"
+                          },
+                          "keypad_id": {
+                            "type": "string"
                           }
                         },
                         "required": ["device_id", "device_name"]
@@ -16173,6 +14102,9 @@
                           "device_id": {
                             "type": "number"
                           },
+                          "door_is_wireless": {
+                            "type": "boolean"
+                          },
                           "site_id": {
                             "type": "number"
                           },
@@ -16237,6 +14169,7 @@
                         "required": [
                           "door_id",
                           "door_name",
+                          "door_is_wireless",
                           "site_id",
                           "site_name"
                         ]
@@ -16261,6 +14194,12 @@
                           },
                           "device_info_model": {
                             "type": "string"
+                          },
+                          "keypad_uuid": {
+                            "type": "string"
+                          },
+                          "locker_status_hardlock": {
+                            "type": "number"
                           }
                         },
                         "required": [
@@ -16338,7 +14277,8 @@
                                     "pin_code_matches_existing_set",
                                     "start_date_in_future",
                                     "no_ascending_or_descending_sequence",
-                                    "at_least_three_unique_digits"
+                                    "at_least_three_unique_digits",
+                                    "cannot_contain_089"
                                   ]
                                 }
                               },
@@ -17115,25 +15055,21 @@
             "additionalProperties": {
               "oneOf": [
                 {
-                  "type": "string",
-                  "maxLength": 500
+                  "type": "string"
                 },
                 {
                   "type": "boolean"
-                },
-                {
-                  "type": "string",
-                  "format": "null",
-                  "nullable": true
                 }
-              ],
-              "nullable": true
+              ]
             }
           },
           "can_remotely_unlock": {
             "type": "boolean"
           },
           "can_remotely_lock": {
+            "type": "boolean"
+          },
+          "can_program_offline_access_codes": {
             "type": "boolean"
           },
           "can_program_online_access_codes": {
@@ -17155,7 +15091,8 @@
           "errors",
           "warnings",
           "created_at",
-          "is_managed"
+          "is_managed",
+          "custom_metadata"
         ]
       },
       "unmanaged_device": {
@@ -17287,6 +15224,29 @@
           "properties": {
             "type": "object",
             "properties": {
+              "accessory_keypad": {
+                "type": "object",
+                "properties": {
+                  "is_connected": {
+                    "type": "boolean",
+                    "description": "Indicates if the accessory_keypad is connected to the device."
+                  },
+                  "battery": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": ["level"],
+                    "description": "Indicates if the keypad battery properties."
+                  }
+                },
+                "required": ["is_connected"],
+                "description": "Represents the accessory keypad state."
+              },
               "name": {
                 "type": "string",
                 "description": "\n      ---\n      deprecated: use device.display_name instead\n      ---\n      Name of the device.\n      "
@@ -17379,6 +15339,9 @@
             "type": "boolean"
           },
           "can_remotely_lock": {
+            "type": "boolean"
+          },
+          "can_program_offline_access_codes": {
             "type": "boolean"
           },
           "can_program_online_access_codes": {
@@ -17481,6 +15444,10 @@
             "format": "uuid"
           },
           "device_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "action_attempt_id": {
             "type": "string",
             "format": "uuid"
           },
@@ -17672,14 +15639,19 @@
           },
           "can_automate_enrollment": {
             "type": "boolean"
+          },
+          "can_create_acs_access_groups": {
+            "type": "boolean"
+          },
+          "can_remove_acs_users_from_acs_access_groups": {
+            "type": "boolean"
+          },
+          "can_add_acs_users_to_acs_access_groups": {
+            "type": "boolean"
           }
         },
         "required": [
           "acs_system_id",
-          "external_type",
-          "external_type_display_name",
-          "system_type",
-          "system_type_display_name",
           "name",
           "created_at",
           "workspace_id",
@@ -17781,7 +15753,8 @@
               "pti_user",
               "brivo_user",
               "hid_credential_manager_user",
-              "salto_site_user"
+              "salto_site_user",
+              "latch_user"
             ]
           },
           "external_type_display_name": {
@@ -17807,11 +15780,17 @@
           "user_identity_id": {
             "type": "string"
           },
+          "user_identity_full_name": {
+            "type": "string",
+            "nullable": true
+          },
           "user_identity_email_address": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "user_identity_phone_number": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "full_name": {
             "type": "string"
@@ -17837,6 +15816,307 @@
           "created_at",
           "display_name",
           "is_suspended"
+        ]
+      },
+      "acs_entrance": {
+        "type": "object",
+        "properties": {
+          "acs_entrance_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "acs_system_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "latch_metadata": {
+            "type": "object",
+            "properties": {
+              "accessibility_type": {
+                "type": "string"
+              },
+              "door_name": {
+                "type": "string"
+              },
+              "door_type": {
+                "type": "string"
+              },
+              "is_connected": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "accessibility_type",
+              "door_name",
+              "door_type",
+              "is_connected"
+            ],
+            "nullable": true
+          },
+          "visionline_metadata": {
+            "type": "object",
+            "properties": {
+              "door_name": {
+                "type": "string"
+              },
+              "door_category": {
+                "type": "string",
+                "enum": [
+                  "entrance",
+                  "guest",
+                  "elevator reader",
+                  "common",
+                  "common (PMS)"
+                ]
+              },
+              "profiles": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "visionline_door_profile_id": {
+                      "type": "string"
+                    },
+                    "visionline_door_profile_type": {
+                      "type": "string",
+                      "enum": ["BLE", "commonDoor", "touch"]
+                    }
+                  },
+                  "required": [
+                    "visionline_door_profile_id",
+                    "visionline_door_profile_type"
+                  ]
+                }
+              }
+            },
+            "required": ["door_name", "door_category"],
+            "nullable": true
+          }
+        },
+        "required": [
+          "acs_entrance_id",
+          "display_name",
+          "acs_system_id",
+          "created_at",
+          "latch_metadata",
+          "visionline_metadata"
+        ]
+      },
+      "acs_credential_provisioning_automation": {
+        "type": "object",
+        "properties": {
+          "acs_credential_provisioning_automation_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "credential_manager_acs_system_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user_identity_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "acs_credential_provisioning_automation_id",
+          "credential_manager_acs_system_id",
+          "user_identity_id",
+          "created_at",
+          "workspace_id"
+        ]
+      },
+      "acs_credential_pool": {
+        "type": "object",
+        "properties": {
+          "acs_credential_pool_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "acs_system_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "display_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "external_type": {
+            "type": "string",
+            "enum": ["hid_part_number"]
+          },
+          "external_type_display_name": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "acs_credential_pool_id",
+          "acs_system_id",
+          "display_name",
+          "external_type",
+          "external_type_display_name",
+          "created_at",
+          "workspace_id"
+        ]
+      },
+      "acs_credential": {
+        "type": "object",
+        "properties": {
+          "acs_credential_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "acs_user_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "acs_credential_pool_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "acs_system_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "parent_acs_credential_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "display_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "access_method": {
+            "type": "string",
+            "enum": ["code", "card", "mobile_key"]
+          },
+          "external_type": {
+            "type": "string",
+            "enum": [
+              "pti_card",
+              "brivo_credential",
+              "hid_credential",
+              "visionline_card"
+            ]
+          },
+          "external_type_display_name": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "starts_at": {
+            "type": "string"
+          },
+          "ends_at": {
+            "type": "string"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "error_code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": ["error_code", "message"]
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "warning_code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": ["warning_code", "message"]
+            }
+          },
+          "is_multi_phone_sync_credential": {
+            "type": "boolean"
+          },
+          "visionline_metadata": {
+            "type": "object",
+            "properties": {
+              "card_function_type": {
+                "type": "string",
+                "enum": ["guest", "staff"]
+              },
+              "joiner_acs_credential_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "guest_acs_entrance_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "common_acs_entrance_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            },
+            "required": ["card_function_type"]
+          }
+        },
+        "required": [
+          "acs_credential_id",
+          "acs_system_id",
+          "display_name",
+          "access_method",
+          "created_at",
+          "workspace_id",
+          "errors",
+          "warnings"
         ]
       },
       "enrollment_automation": {
@@ -18002,25 +16282,21 @@
             "additionalProperties": {
               "oneOf": [
                 {
-                  "type": "string",
-                  "maxLength": 500
+                  "type": "string"
                 },
                 {
                   "type": "boolean"
-                },
-                {
-                  "type": "string",
-                  "format": "null",
-                  "nullable": true
                 }
-              ],
-              "nullable": true
+              ]
             }
           },
           "can_remotely_unlock": {
             "type": "boolean"
           },
           "can_remotely_lock": {
+            "type": "boolean"
+          },
+          "can_program_offline_access_codes": {
             "type": "boolean"
           },
           "can_program_online_access_codes": {
@@ -18041,8 +16317,80 @@
           "errors",
           "warnings",
           "created_at",
-          "is_managed"
+          "is_managed",
+          "custom_metadata"
         ]
+      },
+      "user_identity": {
+        "type": "object",
+        "properties": {
+          "user_identity_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user_identity_key": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": true
+          },
+          "email_address": {
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "phone_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "display_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "full_name": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "user_identity_id",
+          "user_identity_key",
+          "email_address",
+          "phone_number",
+          "display_name",
+          "full_name",
+          "created_at",
+          "workspace_id"
+        ]
+      },
+      "network": {
+        "type": "object",
+        "properties": {
+          "network_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["network_id", "workspace_id", "display_name", "created_at"]
       }
     }
   }

@@ -44,6 +44,7 @@ service:
       response:
         docs: OK
         type: WorkspacesCreateResponse
+        property: workspace
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

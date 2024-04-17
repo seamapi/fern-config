@@ -77,6 +77,7 @@ service:
                   custom_metadata: custom_metadata
                 can_remotely_unlock: true
                 can_remotely_lock: true
+                can_program_offline_access_codes: true
                 can_program_online_access_codes: true
                 can_simulate_removal: true
               ok: true

@@ -65,7 +65,6 @@ types:
     union:
       - string
       - boolean
-      - optional<string>
   ConnectWebviewsListResponse:
     properties:
       connect_webviews: list<root.ConnectWebview>
@@ -106,17 +105,17 @@ service:
             body:
               connect_webview:
                 connect_webview_id: connect_webview_id
+                workspace_id: workspace_id
+                created_at: '2024-01-15T09:30:00Z'
                 connected_account_id: connected_account_id
                 url: url
-                workspace_id: workspace_id
                 device_selection_mode: none
                 accepted_providers:
                   - accepted_providers
                 accepted_devices:
                   - accepted_devices
-                any_provider_allowed: true
                 any_device_allowed: true
-                created_at: '2024-01-15T09:30:00Z'
+                any_provider_allowed: true
                 login_successful: true
                 status: pending
                 custom_redirect_url: custom_redirect_url
@@ -174,17 +173,17 @@ service:
             body:
               connect_webview:
                 connect_webview_id: connect_webview_id
+                workspace_id: workspace_id
+                created_at: '2024-01-15T09:30:00Z'
                 connected_account_id: connected_account_id
                 url: url
-                workspace_id: workspace_id
                 device_selection_mode: none
                 accepted_providers:
                   - accepted_providers
                 accepted_devices:
                   - accepted_devices
-                any_provider_allowed: true
                 any_device_allowed: true
-                created_at: '2024-01-15T09:30:00Z'
+                any_provider_allowed: true
                 login_successful: true
                 status: pending
                 custom_redirect_url: custom_redirect_url
@@ -212,7 +211,7 @@ service:
                 of the provided key/value pairs.
               type: >-
                 optional<map<string,
-                optional<ConnectWebviewsListRequestCustomMetadataHasValue>>>
+                ConnectWebviewsListRequestCustomMetadataHasValue>>
       response:
         docs: OK
         type: ConnectWebviewsListResponse
@@ -226,41 +225,25 @@ service:
             body:
               connect_webviews:
                 - connect_webview_id: connect_webview_id
+                  workspace_id: workspace_id
+                  created_at: '2024-01-15T09:30:00Z'
                   connected_account_id: connected_account_id
                   url: url
-                  workspace_id: workspace_id
                   device_selection_mode: none
                   accepted_providers:
                     - accepted_providers
                   accepted_devices:
                     - accepted_devices
-                  any_provider_allowed: true
                   any_device_allowed: true
-                  created_at: '2024-01-15T09:30:00Z'
+                  any_provider_allowed: true
                   login_successful: true
                   status: pending
                   custom_redirect_url: custom_redirect_url
                   custom_redirect_failure_url: custom_redirect_failure_url
-                  custom_metadata: {}
+                  custom_metadata:
+                    custom_metadata: custom_metadata
                   automatically_manage_new_devices: true
                   wait_for_device_creation: true
                   authorized_at: '2024-01-15T09:30:00Z'
                   selected_provider: selected_provider
               ok: true
-    view:
-      path: /connect_webviews/view
-      method: GET
-      auth: false
-      display-name: /connect_webviews/view
-      request:
-        name: ConnectWebviewsViewRequest
-        query-parameters:
-          connect_webview_id: string
-          auth_token: string
-      errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
-      examples:
-        - query-parameters:
-            connect_webview_id: connect_webview_id
-            auth_token: auth_token

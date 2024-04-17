@@ -21,51 +21,9 @@ types:
     properties:
       acs_users: list<root.AcsUser>
       ok: boolean
-  UsersListAccessibleEntrancesResponseAcsEntrancesItemLatchMetadata:
-    properties:
-      accessibility_type: string
-      name: string
-      type: string
-      is_connected: boolean
-  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataDoorCategory:
-    enum:
-      - entrance
-      - guest
-      - value: elevator reader
-        name: ElevatorReader
-      - common
-      - value: common (PMS)
-        name: CommonPms
-  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType:
-    enum:
-      - BLE
-      - commonDoor
-      - touch
-  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItem:
-    properties:
-      visionline_door_profile_id: string
-      visionline_door_profile_type: >-
-        UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItemVisionlineDoorProfileType
-  UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadata:
-    properties:
-      door_name: string
-      door_category: >-
-        UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataDoorCategory
-      profiles: >-
-        optional<list<UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadataProfilesItem>>
-  UsersListAccessibleEntrancesResponseAcsEntrancesItem:
-    properties:
-      acs_entrance_id: string
-      display_name: string
-      acs_system_id: string
-      created_at: datetime
-      latch_metadata: >-
-        optional<UsersListAccessibleEntrancesResponseAcsEntrancesItemLatchMetadata>
-      visionline_metadata: >-
-        optional<UsersListAccessibleEntrancesResponseAcsEntrancesItemVisionlineMetadata>
   UsersListAccessibleEntrancesResponse:
     properties:
-      acs_entrances: list<UsersListAccessibleEntrancesResponseAcsEntrancesItem>
+      acs_entrances: list<root.AcsEntrance>
       ok: boolean
   UsersRemoveFromAccessGroupResponse:
     properties:
@@ -143,6 +101,7 @@ service:
       response:
         docs: OK
         type: UsersCreateResponse
+        property: acs_user
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -165,6 +124,7 @@ service:
                   starts_at: '2024-01-15T09:30:00Z'
                   ends_at: '2024-01-15T09:30:00Z'
                 user_identity_id: user_identity_id
+                user_identity_full_name: user_identity_full_name
                 user_identity_email_address: user_identity_email_address
                 user_identity_phone_number: user_identity_phone_number
                 full_name: full_name
@@ -207,6 +167,7 @@ service:
       response:
         docs: OK
         type: UsersGetResponse
+        property: acs_user
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -229,6 +190,7 @@ service:
                   starts_at: '2024-01-15T09:30:00Z'
                   ends_at: '2024-01-15T09:30:00Z'
                 user_identity_id: user_identity_id
+                user_identity_full_name: user_identity_full_name
                 user_identity_email_address: user_identity_email_address
                 user_identity_phone_number: user_identity_phone_number
                 full_name: full_name
@@ -252,6 +214,7 @@ service:
       response:
         docs: OK
         type: UsersListResponse
+        property: acs_users
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -273,6 +236,7 @@ service:
                     starts_at: '2024-01-15T09:30:00Z'
                     ends_at: '2024-01-15T09:30:00Z'
                   user_identity_id: user_identity_id
+                  user_identity_full_name: user_identity_full_name
                   user_identity_email_address: user_identity_email_address
                   user_identity_phone_number: user_identity_phone_number
                   full_name: full_name
@@ -293,6 +257,7 @@ service:
       response:
         docs: OK
         type: UsersListAccessibleEntrancesResponse
+        property: acs_entrances
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -308,8 +273,8 @@ service:
                   created_at: '2024-01-15T09:30:00Z'
                   latch_metadata:
                     accessibility_type: accessibility_type
-                    name: name
-                    type: type
+                    door_name: door_name
+                    door_type: door_type
                     is_connected: true
                   visionline_metadata:
                     door_name: door_name

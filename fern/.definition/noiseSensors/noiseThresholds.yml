@@ -87,7 +87,6 @@ service:
       response:
         docs: OK
         type: NoiseThresholdsDeleteResponse
-        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -188,7 +187,6 @@ service:
       response:
         docs: OK
         type: NoiseThresholdsUpdateResponse
-        property: action_attempt
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -60,6 +60,7 @@ service:
       response:
         docs: OK
         type: AccessGroupsGetResponse
+        property: acs_access_group
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -93,6 +94,7 @@ service:
       response:
         docs: OK
         type: AccessGroupsListResponse
+        property: acs_access_groups
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -124,6 +126,7 @@ service:
       response:
         docs: OK
         type: AccessGroupsListUsersResponse
+        property: acs_users
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -146,6 +149,7 @@ service:
                     starts_at: '2024-01-15T09:30:00Z'
                     ends_at: '2024-01-15T09:30:00Z'
                   user_identity_id: user_identity_id
+                  user_identity_full_name: user_identity_full_name
                   user_identity_email_address: user_identity_email_address
                   user_identity_phone_number: user_identity_phone_number
                   full_name: full_name

@@ -576,9 +576,13 @@ types:
   DevicePropertiesCodeConstraintsItemZero:
     properties:
       constraint_type: DevicePropertiesCodeConstraintsItemZeroConstraintType
+  DevicePropertiesCodeConstraintsItemMaxLengthConstraintType:
+    enum:
+      - name_length
+      - name_must_be_unique
   DevicePropertiesCodeConstraintsItemMaxLength:
     properties:
-      constraint_type: literal<"name_length">
+      constraint_type: DevicePropertiesCodeConstraintsItemMaxLengthConstraintType
       min_length: optional<double>
       max_length: optional<double>
   DevicePropertiesCodeConstraintsItem:
@@ -1222,6 +1226,10 @@ types:
       door_name: string
       door_type: string
       is_connected: boolean
+  AcsEntranceErrorsItem:
+    properties:
+      error_code: string
+      message: string
   AcsEntranceVisionlineMetadataDoorCategory:
     enum:
       - entrance
@@ -1252,6 +1260,7 @@ types:
       acs_system_id: string
       created_at: datetime
       latch_metadata: optional<AcsEntranceLatchMetadata>
+      errors: list<AcsEntranceErrorsItem>
       visionline_metadata: optional<AcsEntranceVisionlineMetadata>
   AcsCredentialProvisioningAutomation:
     properties:

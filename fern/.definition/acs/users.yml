@@ -276,6 +276,9 @@ service:
                     door_name: door_name
                     door_type: door_type
                     is_connected: true
+                  errors:
+                    - error_code: error_code
+                      message: message
                   visionline_metadata:
                     door_name: door_name
                     door_category: entrance

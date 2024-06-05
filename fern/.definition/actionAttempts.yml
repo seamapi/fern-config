@@ -36,12 +36,11 @@ service:
           response:
             body:
               action_attempt:
-                status: success
-                action_type: action_attempt
-                action_attempt_id: action_attempt
-                result:
-                  key: value
-                error: action_attempt
+                action_attempt_id: action_attempt_id
+                status: pending
+                result: result
+                error: error
+                action_type: LOCK_DOOR
               ok: true
     list:
       path: /action_attempts/list
@@ -67,10 +66,9 @@ service:
           response:
             body:
               action_attempts:
-                - status: success
-                  action_type: action_attempts
-                  action_attempt_id: action_attempts
-                  result:
-                    key: value
-                  error: action_attempts
+                - action_attempt_id: action_attempt_id
+                  status: pending
+                  result: result
+                  error: error
+                  action_type: LOCK_DOOR
               ok: true

@@ -212,6 +212,7 @@ service:
               type: >-
                 optional<map<string,
                 ConnectWebviewsListRequestCustomMetadataHasValue>>
+            limit: optional<double>
       response:
         docs: OK
         type: ConnectWebviewsListResponse

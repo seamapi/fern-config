@@ -72,12 +72,11 @@ service:
           response:
             body:
               action_attempt:
-                status: success
-                action_type: action_attempt
-                action_attempt_id: action_attempt
-                result:
-                  key: value
-                error: action_attempt
+                action_attempt_id: action_attempt_id
+                status: pending
+                result: result
+                error: error
+                action_type: LOCK_DOOR
               ok: true
     get:
       path: /access_codes/unmanaged/get

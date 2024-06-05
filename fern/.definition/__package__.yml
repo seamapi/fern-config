@@ -147,35 +147,853 @@ types:
         docs: Date and time after which the time-bound access code becomes inactive.
         type: optional<datetime>
       status: literal<"set">
-  ActionAttemptSuccess:
+  ActionAttemptZero:
+    docs: Locking door.
     properties:
-      action_type: string
-      action_attempt_id: string
-      result: optional<unknown>
-      error: optional<string>
-  ActionAttemptPending:
-    properties:
-      action_type: string
-      action_attempt_id: string
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
       result: optional<string>
       error: optional<string>
-  ActionAttemptErrorError:
+      action_type: literal<"LOCK_DOOR">
+  ActionAttemptOneResult:
+    properties: {}
+  ActionAttemptOne:
+    docs: Locking door succeeded.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"LOCK_DOOR">
+      result: ActionAttemptOneResult
+  ActionAttemptTwoError:
     properties:
       type: string
       message: string
-  ActionAttemptError:
+  ActionAttemptTwo:
+    docs: Locking door failed.
     properties:
-      action_type: string
-      action_attempt_id: string
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
       result: optional<string>
-      error: ActionAttemptErrorError
+      action_type: literal<"LOCK_DOOR">
+      error: ActionAttemptTwoError
+  ActionAttemptThree:
+    docs: Unlocking door.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"UNLOCK_DOOR">
+  ActionAttemptFourResult:
+    properties: {}
+  ActionAttemptFour:
+    docs: Unlocking door succeeded.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"UNLOCK_DOOR">
+      result: ActionAttemptFourResult
+  ActionAttemptFiveError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptFive:
+    docs: Unlocking door failed.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"UNLOCK_DOOR">
+      error: ActionAttemptFiveError
+  ActionAttemptSix:
+    docs: Resetting sandbox workspace.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"RESET_SANDBOX_WORKSPACE">
+  ActionAttemptSevenResult:
+    properties: {}
+  ActionAttemptSeven:
+    docs: Resetting sandbox workspace succeeded.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"RESET_SANDBOX_WORKSPACE">
+      result: ActionAttemptSevenResult
+  ActionAttemptEightError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptEight:
+    docs: Resetting sandbox workspace failed.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"RESET_SANDBOX_WORKSPACE">
+      error: ActionAttemptEightError
+  ActionAttemptNine:
+    docs: Setting HVAC to cool.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"SET_COOL">
+  ActionAttemptTenResult:
+    properties: {}
+  ActionAttemptTen:
+    docs: Setting HVAC to cool succeeded.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"SET_COOL">
+      result: ActionAttemptTenResult
+  ActionAttemptElevenError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptEleven:
+    docs: Setting HVAC to cool failed.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"SET_COOL">
+      error: ActionAttemptElevenError
+  ActionAttemptTwelve:
+    docs: Setting HVAC to heat mode.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"SET_HEAT">
+  ActionAttemptThirteenResult:
+    properties: {}
+  ActionAttemptThirteen:
+    docs: Setting HVAC to heat mode succeeded.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"SET_HEAT">
+      result: ActionAttemptThirteenResult
+  ActionAttemptFourteenError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptFourteen:
+    docs: Setting HVAC to heat mode failed.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"SET_HEAT">
+      error: ActionAttemptFourteenError
+  ActionAttemptFifteen:
+    docs: Setting HVAC to heat-cool mode.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"SET_HEAT_COOL">
+  ActionAttemptSixteenResult:
+    properties: {}
+  ActionAttemptSixteen:
+    docs: Setting HVAC to heat-cool mode succeeded.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"SET_HEAT_COOL">
+      result: ActionAttemptSixteenResult
+  ActionAttemptSeventeenError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptSeventeen:
+    docs: Setting heat-cool mode failed.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"SET_HEAT_COOL">
+      error: ActionAttemptSeventeenError
+  ActionAttemptEighteen:
+    docs: Setting fan mode.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"SET_FAN_MODE">
+  ActionAttemptNineteenResult:
+    properties: {}
+  ActionAttemptNineteen:
+    docs: Setting fan mode succeeded.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"SET_FAN_MODE">
+      result: ActionAttemptNineteenResult
+  ActionAttemptTwentyError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptTwenty:
+    docs: Setting fan mode failed.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"SET_FAN_MODE">
+      error: ActionAttemptTwentyError
+  ActionAttemptTwentyOne:
+    docs: Turning HVAC off.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"SET_THERMOSTAT_OFF">
+  ActionAttemptTwentyTwoResult:
+    properties: {}
+  ActionAttemptTwentyTwo:
+    docs: Turning HVAC off succeeded.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"SET_THERMOSTAT_OFF">
+      result: ActionAttemptTwentyTwoResult
+  ActionAttemptTwentyThreeError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptTwentyThree:
+    docs: Turning HVAC off failed.
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"SET_THERMOSTAT_OFF">
+      error: ActionAttemptTwentyThreeError
+  ActionAttemptTwentyFour:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"SYNC_ACCESS_CODES">
+  ActionAttemptTwentyFive:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"SYNC_ACCESS_CODES">
+      result: optional<unknown>
+  ActionAttemptTwentySixError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptTwentySix:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"SYNC_ACCESS_CODES">
+      error: ActionAttemptTwentySixError
+  ActionAttemptTwentySeven:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"CREATE_ACCESS_CODE">
+  ActionAttemptTwentyEight:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"CREATE_ACCESS_CODE">
+      result: optional<unknown>
+  ActionAttemptTwentyNineError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptTwentyNine:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"CREATE_ACCESS_CODE">
+      error: ActionAttemptTwentyNineError
+  ActionAttemptThirty:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"DELETE_ACCESS_CODE">
+  ActionAttemptThirtyOne:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"DELETE_ACCESS_CODE">
+      result: optional<unknown>
+  ActionAttemptThirtyTwoError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptThirtyTwo:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"DELETE_ACCESS_CODE">
+      error: ActionAttemptThirtyTwoError
+  ActionAttemptThirtyThree:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"UPDATE_ACCESS_CODE">
+  ActionAttemptThirtyFour:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"UPDATE_ACCESS_CODE">
+      result: optional<unknown>
+  ActionAttemptThirtyFiveError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptThirtyFive:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"UPDATE_ACCESS_CODE">
+      error: ActionAttemptThirtyFiveError
+  ActionAttemptThirtySix:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"CREATE_NOISE_THRESHOLD">
+  ActionAttemptThirtySeven:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"CREATE_NOISE_THRESHOLD">
+      result: optional<unknown>
+  ActionAttemptThirtyEightError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptThirtyEight:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"CREATE_NOISE_THRESHOLD">
+      error: ActionAttemptThirtyEightError
+  ActionAttemptThirtyNine:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"DELETE_NOISE_THRESHOLD">
+  ActionAttemptForty:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"DELETE_NOISE_THRESHOLD">
+      result: optional<unknown>
+  ActionAttemptFortyOneError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptFortyOne:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"DELETE_NOISE_THRESHOLD">
+      error: ActionAttemptFortyOneError
+  ActionAttemptFortyTwo:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"pending">
+      result: optional<string>
+      error: optional<string>
+      action_type: literal<"UPDATE_NOISE_THRESHOLD">
+  ActionAttemptFortyThree:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"success">
+      error: optional<string>
+      action_type: literal<"UPDATE_NOISE_THRESHOLD">
+      result: optional<unknown>
+  ActionAttemptActionAttemptIdError:
+    properties:
+      type: string
+      message: string
+  ActionAttemptActionAttemptId:
+    properties:
+      action_attempt_id:
+        type: string
+        docs: |2-
+
+              ---
+              title: Action Attempt ID
+              ---
+              The ID of the action attempt.
+            
+      status: literal<"error">
+      result: optional<string>
+      action_type: literal<"UPDATE_NOISE_THRESHOLD">
+      error: ActionAttemptActionAttemptIdError
   ActionAttempt:
-    discriminant: status
-    base-properties: {}
+    discriminated: false
     union:
-      success: ActionAttemptSuccess
-      pending: ActionAttemptPending
-      error: ActionAttemptError
+      - type: ActionAttemptZero
+        docs: Locking door.
+      - type: ActionAttemptOne
+        docs: Locking door succeeded.
+      - type: ActionAttemptTwo
+        docs: Locking door failed.
+      - type: ActionAttemptThree
+        docs: Unlocking door.
+      - type: ActionAttemptFour
+        docs: Unlocking door succeeded.
+      - type: ActionAttemptFive
+        docs: Unlocking door failed.
+      - type: ActionAttemptSix
+        docs: Resetting sandbox workspace.
+      - type: ActionAttemptSeven
+        docs: Resetting sandbox workspace succeeded.
+      - type: ActionAttemptEight
+        docs: Resetting sandbox workspace failed.
+      - type: ActionAttemptNine
+        docs: Setting HVAC to cool.
+      - type: ActionAttemptTen
+        docs: Setting HVAC to cool succeeded.
+      - type: ActionAttemptEleven
+        docs: Setting HVAC to cool failed.
+      - type: ActionAttemptTwelve
+        docs: Setting HVAC to heat mode.
+      - type: ActionAttemptThirteen
+        docs: Setting HVAC to heat mode succeeded.
+      - type: ActionAttemptFourteen
+        docs: Setting HVAC to heat mode failed.
+      - type: ActionAttemptFifteen
+        docs: Setting HVAC to heat-cool mode.
+      - type: ActionAttemptSixteen
+        docs: Setting HVAC to heat-cool mode succeeded.
+      - type: ActionAttemptSeventeen
+        docs: Setting heat-cool mode failed.
+      - type: ActionAttemptEighteen
+        docs: Setting fan mode.
+      - type: ActionAttemptNineteen
+        docs: Setting fan mode succeeded.
+      - type: ActionAttemptTwenty
+        docs: Setting fan mode failed.
+      - type: ActionAttemptTwentyOne
+        docs: Turning HVAC off.
+      - type: ActionAttemptTwentyTwo
+        docs: Turning HVAC off succeeded.
+      - type: ActionAttemptTwentyThree
+        docs: Turning HVAC off failed.
+      - ActionAttemptTwentyFour
+      - ActionAttemptTwentyFive
+      - ActionAttemptTwentySix
+      - ActionAttemptTwentySeven
+      - ActionAttemptTwentyEight
+      - ActionAttemptTwentyNine
+      - ActionAttemptThirty
+      - ActionAttemptThirtyOne
+      - ActionAttemptThirtyTwo
+      - ActionAttemptThirtyThree
+      - ActionAttemptThirtyFour
+      - ActionAttemptThirtyFive
+      - ActionAttemptThirtySix
+      - ActionAttemptThirtySeven
+      - ActionAttemptThirtyEight
+      - ActionAttemptThirtyNine
+      - ActionAttemptForty
+      - ActionAttemptFortyOne
+      - ActionAttemptFortyTwo
+      - ActionAttemptFortyThree
+      - ActionAttemptActionAttemptId
   ClientSession:
     properties:
       client_session_id: string
@@ -330,7 +1148,12 @@ types:
         docs: Indicates whether the device supports online access codes.
         type: optional<boolean>
       accessory_keypad_supported:
-        docs: Indicates whether the device supports an accessory keypad.
+        docs: |2-
+
+                ---
+                deprecated: use device.properties.model.can_connect_accessory_keypad
+                ---
+                
         type: optional<boolean>
   DevicePropertiesBatteryStatus:
     enum:
@@ -486,6 +1309,7 @@ types:
     properties:
       lock_id: double
       lock_alias: string
+      feature_value: string
   DevicePropertiesSeamBridgeMetadataUnlockMethod:
     enum:
       - bridge
@@ -658,7 +1482,7 @@ types:
         docs: |2-
 
                 ---
-                deprecated: use model.accessory_keypad_supported
+                deprecated: use device.properties.model.can_connect_accessory_keypad
                 ---
                 
         type: optional<boolean>
@@ -670,6 +1494,11 @@ types:
                 ---
                 
         type: optional<boolean>
+      noise_level_decibels:
+        docs: >-
+          Indicates current noise level in decibels, if the device supports
+          noise detection.
+        type: optional<double>
       assa_abloy_credential_service_metadata: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
       august_metadata: optional<DevicePropertiesAugustMetadata>
       avigilon_alta_metadata: optional<DevicePropertiesAvigilonAltaMetadata>
@@ -871,7 +1700,12 @@ types:
         docs: Indicates whether the device supports online access codes.
         type: optional<boolean>
       accessory_keypad_supported:
-        docs: Indicates whether the device supports an accessory keypad.
+        docs: |2-
+
+                ---
+                deprecated: use device.properties.model.can_connect_accessory_keypad
+                ---
+                
         type: optional<boolean>
   UnmanagedDeviceProperties:
     properties:
@@ -1108,6 +1942,14 @@ types:
             deprecated: use external_type
             ---
             
+  AcsSystemErrorsItem:
+    properties:
+      error_code: string
+      message: string
+  AcsSystemWarningsItem:
+    properties:
+      warning_code: string
+      message: string
   AcsSystem:
     properties:
       acs_system_id: string
@@ -1135,6 +1977,8 @@ types:
       connected_account_ids: list<string>
       image_url: string
       image_alt_text: string
+      errors: list<AcsSystemErrorsItem>
+      warnings: list<AcsSystemWarningsItem>
       can_automate_enrollment: optional<boolean>
       can_create_acs_access_groups: optional<boolean>
       can_remove_acs_users_from_acs_access_groups: optional<boolean>

@@ -125,6 +125,7 @@ service:
                   offline_access_codes_enabled: true
                   supports_accessory_keypad: true
                   supports_offline_access_codes: true
+                  noise_level_decibels: 1.1
                   assa_abloy_credential_service_metadata:
                     has_active_endpoint: true
                     endpoints:
@@ -211,6 +212,7 @@ service:
                   ttlock_metadata:
                     lock_id: 1.1
                     lock_alias: lock_alias
+                    feature_value: feature_value
                   seam_bridge_metadata:
                     device_num: 1.1
                     name: name

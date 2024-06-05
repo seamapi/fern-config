@@ -352,6 +352,12 @@ service:
                     - connected_account_ids
                   image_url: image_url
                   image_alt_text: image_alt_text
+                  errors:
+                    - error_code: error_code
+                      message: message
+                  warnings:
+                    - warning_code: warning_code
+                      message: message
                   can_automate_enrollment: true
                   can_create_acs_access_groups: true
                   can_remove_acs_users_from_acs_access_groups: true

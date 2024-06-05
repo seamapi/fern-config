@@ -94,6 +94,7 @@ service:
                   offline_access_codes_enabled: true
                   supports_accessory_keypad: true
                   supports_offline_access_codes: true
+                  noise_level_decibels: 1.1
                   assa_abloy_credential_service_metadata:
                     has_active_endpoint: true
                     endpoints:
@@ -180,6 +181,7 @@ service:
                   ttlock_metadata:
                     lock_id: 1.1
                     lock_alias: lock_alias
+                    feature_value: feature_value
                   seam_bridge_metadata:
                     device_num: 1.1
                     name: name
@@ -283,6 +285,7 @@ service:
                   offline_access_codes_enabled: true
                   supports_accessory_keypad: true
                   supports_offline_access_codes: true
+                  noise_level_decibels: 1.1
                   assa_abloy_credential_service_metadata:
                     has_active_endpoint: true
                     endpoints:
@@ -369,6 +372,7 @@ service:
                   ttlock_metadata:
                     lock_id: 1.1
                     lock_alias: lock_alias
+                    feature_value: feature_value
                   seam_bridge_metadata:
                     device_num: 1.1
                     name: name
@@ -567,12 +571,11 @@ service:
           response:
             body:
               action_attempt:
-                status: success
-                action_type: action_attempt
-                action_attempt_id: action_attempt
-                result:
-                  key: value
-                error: action_attempt
+                action_attempt_id: action_attempt_id
+                status: pending
+                result: result
+                error: error
+                action_type: LOCK_DOOR
               ok: true
     unlock_door:
       path: /locks/unlock_door
@@ -598,10 +601,9 @@ service:
           response:
             body:
               action_attempt:
-                status: success
-                action_type: action_attempt
-                action_attempt_id: action_attempt
-                result:
-                  key: value
-                error: action_attempt
+                action_attempt_id: action_attempt_id
+                status: pending
+                result: result
+                error: error
+                action_type: LOCK_DOOR
               ok: true

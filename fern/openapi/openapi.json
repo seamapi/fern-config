@@ -152,7 +152,7 @@
                   "code": {
                     "type": "string",
                     "minLength": 4,
-                    "maxLength": 8,
+                    "maxLength": 9,
                     "pattern": "^\\d+$"
                   },
                   "sync": {
@@ -283,7 +283,7 @@
                   "code": {
                     "type": "string",
                     "minLength": 4,
-                    "maxLength": 8,
+                    "maxLength": 9,
                     "pattern": "^\\d+$"
                   },
                   "attempt_for_offline_device": {
@@ -407,7 +407,7 @@
                   "code": {
                     "type": "string",
                     "minLength": 4,
-                    "maxLength": 8,
+                    "maxLength": 9,
                     "pattern": "^\\d+$"
                   },
                   "attempt_for_offline_device": {
@@ -873,7 +873,7 @@
                   "code": {
                     "type": "string",
                     "minLength": 4,
-                    "maxLength": 8,
+                    "maxLength": 9,
                     "pattern": "^\\d+$"
                   },
                   "sync": {
@@ -996,7 +996,7 @@
                   "code": {
                     "type": "string",
                     "minLength": 4,
-                    "maxLength": 8,
+                    "maxLength": 9,
                     "pattern": "^\\d+$"
                   },
                   "sync": {
@@ -1120,7 +1120,7 @@
                   "code": {
                     "type": "string",
                     "minLength": 4,
-                    "maxLength": 8,
+                    "maxLength": 9,
                     "pattern": "^\\d+$"
                   },
                   "sync": {
@@ -2395,6 +2395,11 @@
                       ]
                     },
                     "description": "Returns devices where the webview's custom_metadata contains all of the provided key/value pairs."
+                  },
+                  "limit": {
+                    "default": 500,
+                    "type": "number",
+                    "nullable": true
                   }
                 }
               }
@@ -2503,6 +2508,9 @@
           }
         },
         "security": [
+          {
+            "client_session": []
+          },
           {
             "api_key": []
           },
@@ -3559,6 +3567,8 @@
                   "event_type": {
                     "type": "string",
                     "enum": [
+                      "device.accessory_keypad_connected",
+                      "device.accessory_keypad_disconnected",
                       "device.connected",
                       "device.unmanaged.connected",
                       "device.disconnected",
@@ -3578,8 +3588,6 @@
                       "device.connection_stabilized",
                       "device.error.subscription_required",
                       "device.error.subscription_required.resolved",
-                      "device.accessory_keypad_connected",
-                      "device.accessory_keypad_disconnected",
                       "access_code.created",
                       "access_code.changed",
                       "access_code.scheduled_on_device",
@@ -3611,7 +3619,11 @@
                       "acs_user.deleted",
                       "acs_credential.deleted",
                       "enrollment_automation.deleted",
-                      "client_session.deleted"
+                      "client_session.deleted",
+                      "action_attempt.lock_door.succeeded",
+                      "action_attempt.lock_door.failed",
+                      "action_attempt.unlock_door.succeeded",
+                      "action_attempt.unlock_door.failed"
                     ]
                   },
                   "event_types": {
@@ -3619,6 +3631,8 @@
                     "items": {
                       "type": "string",
                       "enum": [
+                        "device.accessory_keypad_connected",
+                        "device.accessory_keypad_disconnected",
                         "device.connected",
                         "device.unmanaged.connected",
                         "device.disconnected",
@@ -3638,8 +3652,6 @@
                         "device.connection_stabilized",
                         "device.error.subscription_required",
                         "device.error.subscription_required.resolved",
-                        "device.accessory_keypad_connected",
-                        "device.accessory_keypad_disconnected",
                         "access_code.created",
                         "access_code.changed",
                         "access_code.scheduled_on_device",
@@ -3671,7 +3683,11 @@
                         "acs_user.deleted",
                         "acs_credential.deleted",
                         "enrollment_automation.deleted",
-                        "client_session.deleted"
+                        "client_session.deleted",
+                        "action_attempt.lock_door.succeeded",
+                        "action_attempt.lock_door.failed",
+                        "action_attempt.unlock_door.succeeded",
+                        "action_attempt.unlock_door.failed"
                       ]
                     }
                   },
@@ -6912,7 +6928,7 @@
                       "type": "boolean"
                     }
                   },
-                  "required": ["ok"]
+                  "required": ["workspace", "ok"]
                 }
               }
             }
@@ -6959,7 +6975,7 @@
                       "type": "boolean"
                     }
                   },
-                  "required": ["ok"]
+                  "required": ["workspace", "ok"]
                 }
               }
             }
@@ -7153,6 +7169,594 @@
         "operationId": "workspacesResetSandboxPost"
       }
     },
+    "/access_codes/simulate/create_unmanaged_access_code": {
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "simulate"],
+        "x-fern-sdk-method-name": "create_unmanaged_access_code",
+        "x-fern-sdk-return-value": "access_code",
+        "summary": "/access_codes/simulate/create_unmanaged_access_code",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_code": {
+                      "$ref": "#/components/schemas/unmanaged_access_code"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["access_code", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string",
+                    "minLength": 4,
+                    "maxLength": 8,
+                    "pattern": "^\\d+$"
+                  }
+                },
+                "required": ["device_id", "name", "code"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesSimulateCreateUnmanagedAccessCodePost"
+      }
+    },
+    "/access_codes/unmanaged/convert_to_managed": {
+      "patch": {
+        "x-fern-ignore": true,
+        "summary": "/access_codes/unmanaged/convert_to_managed",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_code_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "is_external_modification_allowed": {
+                    "type": "boolean"
+                  },
+                  "allow_external_modification": {
+                    "type": "boolean"
+                  },
+                  "force": {
+                    "type": "boolean"
+                  },
+                  "sync": {
+                    "default": false,
+                    "type": "boolean"
+                  }
+                },
+                "required": ["access_code_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedConvertToManagedPatch"
+      },
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
+        "x-fern-sdk-method-name": "convert_to_managed",
+        "summary": "/access_codes/unmanaged/convert_to_managed",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_code_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "is_external_modification_allowed": {
+                    "type": "boolean"
+                  },
+                  "allow_external_modification": {
+                    "type": "boolean"
+                  },
+                  "force": {
+                    "type": "boolean"
+                  },
+                  "sync": {
+                    "default": false,
+                    "type": "boolean"
+                  }
+                },
+                "required": ["access_code_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedConvertToManagedPost"
+      }
+    },
+    "/access_codes/unmanaged/delete": {
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
+        "x-fern-sdk-method-name": "delete",
+        "summary": "/access_codes/unmanaged/delete",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action_attempt": {
+                      "$ref": "#/components/schemas/action_attempt"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["action_attempt", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_code_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "sync": {
+                    "default": false,
+                    "type": "boolean"
+                  }
+                },
+                "required": ["access_code_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedDeletePost"
+      }
+    },
+    "/access_codes/unmanaged/get": {
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
+        "x-fern-sdk-method-name": "get",
+        "x-fern-sdk-return-value": "access_code",
+        "summary": "/access_codes/unmanaged/get",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_code": {
+                      "$ref": "#/components/schemas/unmanaged_access_code"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["access_code", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "access_code_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "code": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedGetPost"
+      }
+    },
+    "/access_codes/unmanaged/list": {
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
+        "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-return-value": "access_codes",
+        "summary": "/access_codes/unmanaged/list",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_codes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/unmanaged_access_code"
+                      }
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["access_codes", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "user_identifier_key": {
+                    "type": "string"
+                  }
+                },
+                "required": ["device_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedListPost"
+      }
+    },
+    "/access_codes/unmanaged/update": {
+      "post": {
+        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
+        "x-fern-sdk-method-name": "update",
+        "summary": "/access_codes/unmanaged/update",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_code_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "is_managed": {
+                    "type": "boolean"
+                  },
+                  "allow_external_modification": {
+                    "type": "boolean"
+                  },
+                  "is_external_modification_allowed": {
+                    "type": "boolean"
+                  },
+                  "force": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["access_code_id", "is_managed"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedUpdatePost"
+      },
+      "patch": {
+        "x-fern-ignore": true,
+        "summary": "/access_codes/unmanaged/update",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "client_session": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_code_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "is_managed": {
+                    "type": "boolean"
+                  },
+                  "allow_external_modification": {
+                    "type": "boolean"
+                  },
+                  "is_external_modification_allowed": {
+                    "type": "boolean"
+                  },
+                  "force": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["access_code_id", "is_managed"]
+              }
+            }
+          }
+        },
+        "tags": ["/access_codes"],
+        "operationId": "accessCodesUnmanagedUpdatePatch"
+      }
+    },
     "/acs/access_groups/add_user": {
       "post": {
         "x-fern-sdk-group-name": ["acs", "access_groups"],
@@ -7183,9 +7787,6 @@
           }
         },
         "security": [
-          {
-            "client_session": []
-          },
           {
             "pat_with_workspace": []
           },
@@ -7247,9 +7848,6 @@
           }
         },
         "security": [
-          {
-            "client_session": []
-          },
           {
             "pat_with_workspace": []
           },
@@ -7318,9 +7916,6 @@
           }
         },
         "security": [
-          {
-            "client_session": []
-          },
           {
             "pat_with_workspace": []
           },
@@ -7458,9 +8053,6 @@
           }
         },
         "security": [
-          {
-            "client_session": []
-          },
           {
             "pat_with_workspace": []
           },
@@ -8207,6 +8799,73 @@
         "operationId": "acsCredentialsListPost"
       }
     },
+    "/acs/credentials/list_accessible_entrances": {
+      "post": {
+        "x-fern-sdk-group-name": ["acs", "credentials"],
+        "x-fern-sdk-method-name": "list_accessible_entrances",
+        "x-fern-sdk-return-value": "acs_entrances",
+        "summary": "/acs/credentials/list_accessible_entrances",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "acs_entrances": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/acs_entrance"
+                      }
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["acs_entrances", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "acs_credential_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": ["acs_credential_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/acs"],
+        "operationId": "acsCredentialsListAccessibleEntrancesPost"
+      }
+    },
     "/acs/credentials/unassign": {
       "post": {
         "x-fern-sdk-group-name": ["acs", "credentials"],
@@ -8393,9 +9052,13 @@
                   "code": {
                     "type": "string",
                     "pattern": "^\\d+$"
+                  },
+                  "ends_at": {
+                    "type": "string",
+                    "format": "date-time"
                   }
                 },
-                "required": ["acs_credential_id", "code"]
+                "required": ["acs_credential_id"]
               }
             }
           }
@@ -8456,9 +9119,13 @@
                   "code": {
                     "type": "string",
                     "pattern": "^\\d+$"
+                  },
+                  "ends_at": {
+                    "type": "string",
+                    "format": "date-time"
                   }
                 },
-                "required": ["acs_credential_id", "code"]
+                "required": ["acs_credential_id"]
               }
             }
           }
@@ -8566,9 +9233,6 @@
         "security": [
           {
             "api_key": []
-          },
-          {
-            "client_session": []
           },
           {
             "pat_with_workspace": []
@@ -8882,6 +9546,73 @@
         },
         "tags": ["/acs"],
         "operationId": "acsSystemsListPost"
+      }
+    },
+    "/acs/systems/list_compatible_credential_manager_acs_systems": {
+      "post": {
+        "x-fern-sdk-group-name": ["acs", "systems"],
+        "x-fern-sdk-method-name": "list_compatible_credential_manager_acs_systems",
+        "x-fern-sdk-return-value": "acs_systems",
+        "summary": "/acs/systems/list_compatible_credential_manager_acs_systems",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "acs_systems": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/acs_system"
+                      }
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["acs_systems", "ok"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "pat_with_workspace": []
+          },
+          {
+            "console_session": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "acs_system_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": ["acs_system_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/acs"],
+        "operationId": "acsSystemsListCompatibleCredentialManagerAcsSystemsPost"
       }
     },
     "/acs/users/add_to_access_group": {
@@ -9816,594 +10547,6 @@
         },
         "tags": ["/acs"],
         "operationId": "acsUsersUpdatePatch"
-      }
-    },
-    "/access_codes/simulate/create_unmanaged_access_code": {
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "simulate"],
-        "x-fern-sdk-method-name": "create_unmanaged_access_code",
-        "x-fern-sdk-return-value": "access_code",
-        "summary": "/access_codes/simulate/create_unmanaged_access_code",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "access_code": {
-                      "$ref": "#/components/schemas/unmanaged_access_code"
-                    },
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["access_code", "ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "code": {
-                    "type": "string",
-                    "minLength": 4,
-                    "maxLength": 8,
-                    "pattern": "^\\d+$"
-                  }
-                },
-                "required": ["device_id", "name", "code"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesSimulateCreateUnmanagedAccessCodePost"
-      }
-    },
-    "/access_codes/unmanaged/convert_to_managed": {
-      "patch": {
-        "x-fern-ignore": true,
-        "summary": "/access_codes/unmanaged/convert_to_managed",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "access_code_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "is_external_modification_allowed": {
-                    "type": "boolean"
-                  },
-                  "allow_external_modification": {
-                    "type": "boolean"
-                  },
-                  "force": {
-                    "type": "boolean"
-                  },
-                  "sync": {
-                    "default": false,
-                    "type": "boolean"
-                  }
-                },
-                "required": ["access_code_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedConvertToManagedPatch"
-      },
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
-        "x-fern-sdk-method-name": "convert_to_managed",
-        "summary": "/access_codes/unmanaged/convert_to_managed",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "access_code_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "is_external_modification_allowed": {
-                    "type": "boolean"
-                  },
-                  "allow_external_modification": {
-                    "type": "boolean"
-                  },
-                  "force": {
-                    "type": "boolean"
-                  },
-                  "sync": {
-                    "default": false,
-                    "type": "boolean"
-                  }
-                },
-                "required": ["access_code_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedConvertToManagedPost"
-      }
-    },
-    "/access_codes/unmanaged/delete": {
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
-        "x-fern-sdk-method-name": "delete",
-        "summary": "/access_codes/unmanaged/delete",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "action_attempt": {
-                      "$ref": "#/components/schemas/action_attempt"
-                    },
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["action_attempt", "ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "access_code_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "sync": {
-                    "default": false,
-                    "type": "boolean"
-                  }
-                },
-                "required": ["access_code_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedDeletePost"
-      }
-    },
-    "/access_codes/unmanaged/get": {
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
-        "x-fern-sdk-method-name": "get",
-        "x-fern-sdk-return-value": "access_code",
-        "summary": "/access_codes/unmanaged/get",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "access_code": {
-                      "$ref": "#/components/schemas/unmanaged_access_code"
-                    },
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["access_code", "ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "access_code_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "code": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedGetPost"
-      }
-    },
-    "/access_codes/unmanaged/list": {
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
-        "x-fern-sdk-method-name": "list",
-        "x-fern-sdk-return-value": "access_codes",
-        "summary": "/access_codes/unmanaged/list",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "access_codes": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/unmanaged_access_code"
-                      }
-                    },
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["access_codes", "ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "user_identifier_key": {
-                    "type": "string"
-                  }
-                },
-                "required": ["device_id"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedListPost"
-      }
-    },
-    "/access_codes/unmanaged/update": {
-      "post": {
-        "x-fern-sdk-group-name": ["access_codes", "unmanaged"],
-        "x-fern-sdk-method-name": "update",
-        "summary": "/access_codes/unmanaged/update",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "access_code_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "is_managed": {
-                    "type": "boolean"
-                  },
-                  "allow_external_modification": {
-                    "type": "boolean"
-                  },
-                  "is_external_modification_allowed": {
-                    "type": "boolean"
-                  },
-                  "force": {
-                    "type": "boolean"
-                  }
-                },
-                "required": ["access_code_id", "is_managed"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedUpdatePost"
-      },
-      "patch": {
-        "x-fern-ignore": true,
-        "summary": "/access_codes/unmanaged/update",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["ok"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "client_session": []
-          },
-          {
-            "pat_with_workspace": []
-          },
-          {
-            "console_session": []
-          },
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "access_code_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "is_managed": {
-                    "type": "boolean"
-                  },
-                  "allow_external_modification": {
-                    "type": "boolean"
-                  },
-                  "is_external_modification_allowed": {
-                    "type": "boolean"
-                  },
-                  "force": {
-                    "type": "boolean"
-                  }
-                },
-                "required": ["access_code_id", "is_managed"]
-              }
-            }
-          }
-        },
-        "tags": ["/access_codes"],
-        "operationId": "accessCodesUnmanagedUpdatePatch"
       }
     },
     "/devices/simulate/remove": {
@@ -12683,6 +12826,41 @@
         "type": "apiKey",
         "in": "header",
         "name": "client-session-token"
+      },
+      "access_token": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "pat_with_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "pat_without_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Token"
+      },
+      "client_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Client Session Token"
+      },
+      "user_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "User Session Token"
+      },
+      "user_session_without_workspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "User Session Token"
+      },
+      "console_session": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Console Session Token"
       }
     },
     "schemas": {
@@ -12879,49 +13057,19 @@
         ]
       },
       "action_attempt": {
-        "discriminator": {
-          "propertyName": "status"
-        },
         "oneOf": [
           {
             "type": "object",
             "properties": {
-              "status": {
-                "type": "string",
-                "enum": ["success"]
-              },
-              "action_type": {
-                "type": "string"
-              },
               "action_attempt_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
               },
-              "result": {
-                "nullable": true
-              },
-              "error": {
-                "type": "string",
-                "format": "null",
-                "nullable": true
-              }
-            },
-            "required": ["status", "action_type", "action_attempt_id", "error"]
-          },
-          {
-            "type": "object",
-            "properties": {
               "status": {
                 "type": "string",
                 "enum": ["pending"]
               },
-              "action_type": {
-                "type": "string"
-              },
-              "action_attempt_id": {
-                "type": "string",
-                "format": "uuid"
-              },
               "result": {
                 "type": "string",
                 "format": "null",
@@ -12931,34 +13079,76 @@
                 "type": "string",
                 "format": "null",
                 "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["LOCK_DOOR"]
               }
             },
             "required": [
-              "status",
-              "action_type",
               "action_attempt_id",
+              "status",
               "result",
-              "error"
-            ]
+              "error",
+              "action_type"
+            ],
+            "description": "Locking door."
           },
           {
             "type": "object",
             "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["LOCK_DOOR"]
+              },
+              "result": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "error",
+              "action_type",
+              "result"
+            ],
+            "description": "Locking door succeeded."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
               "status": {
                 "type": "string",
                 "enum": ["error"]
-              },
-              "action_type": {
-                "type": "string"
-              },
-              "action_attempt_id": {
-                "type": "string",
-                "format": "uuid"
               },
               "result": {
                 "type": "string",
                 "format": "null",
                 "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["LOCK_DOOR"]
               },
               "error": {
                 "type": "object",
@@ -12974,10 +13164,1537 @@
               }
             },
             "required": [
-              "status",
-              "action_type",
               "action_attempt_id",
+              "status",
               "result",
+              "action_type",
+              "error"
+            ],
+            "description": "Locking door failed."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["UNLOCK_DOOR"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ],
+            "description": "Unlocking door."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["UNLOCK_DOOR"]
+              },
+              "result": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "error",
+              "action_type",
+              "result"
+            ],
+            "description": "Unlocking door succeeded."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["UNLOCK_DOOR"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ],
+            "description": "Unlocking door failed."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["RESET_SANDBOX_WORKSPACE"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ],
+            "description": "Resetting sandbox workspace."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["RESET_SANDBOX_WORKSPACE"]
+              },
+              "result": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "error",
+              "action_type",
+              "result"
+            ],
+            "description": "Resetting sandbox workspace succeeded."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["RESET_SANDBOX_WORKSPACE"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ],
+            "description": "Resetting sandbox workspace failed."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_COOL"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ],
+            "description": "Setting HVAC to cool."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_COOL"]
+              },
+              "result": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "error",
+              "action_type",
+              "result"
+            ],
+            "description": "Setting HVAC to cool succeeded."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_COOL"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ],
+            "description": "Setting HVAC to cool failed."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_HEAT"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ],
+            "description": "Setting HVAC to heat mode."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_HEAT"]
+              },
+              "result": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "error",
+              "action_type",
+              "result"
+            ],
+            "description": "Setting HVAC to heat mode succeeded."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_HEAT"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ],
+            "description": "Setting HVAC to heat mode failed."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_HEAT_COOL"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ],
+            "description": "Setting HVAC to heat-cool mode."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_HEAT_COOL"]
+              },
+              "result": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "error",
+              "action_type",
+              "result"
+            ],
+            "description": "Setting HVAC to heat-cool mode succeeded."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_HEAT_COOL"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ],
+            "description": "Setting heat-cool mode failed."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_FAN_MODE"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ],
+            "description": "Setting fan mode."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_FAN_MODE"]
+              },
+              "result": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "error",
+              "action_type",
+              "result"
+            ],
+            "description": "Setting fan mode succeeded."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_FAN_MODE"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ],
+            "description": "Setting fan mode failed."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_THERMOSTAT_OFF"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ],
+            "description": "Turning HVAC off."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_THERMOSTAT_OFF"]
+              },
+              "result": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "error",
+              "action_type",
+              "result"
+            ],
+            "description": "Turning HVAC off succeeded."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SET_THERMOSTAT_OFF"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ],
+            "description": "Turning HVAC off failed."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SYNC_ACCESS_CODES"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SYNC_ACCESS_CODES"]
+              },
+              "result": {
+                "nullable": true
+              }
+            },
+            "required": ["action_attempt_id", "status", "error", "action_type"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["SYNC_ACCESS_CODES"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["CREATE_ACCESS_CODE"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["CREATE_ACCESS_CODE"]
+              },
+              "result": {
+                "nullable": true
+              }
+            },
+            "required": ["action_attempt_id", "status", "error", "action_type"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["CREATE_ACCESS_CODE"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["DELETE_ACCESS_CODE"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["DELETE_ACCESS_CODE"]
+              },
+              "result": {
+                "nullable": true
+              }
+            },
+            "required": ["action_attempt_id", "status", "error", "action_type"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["DELETE_ACCESS_CODE"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["UPDATE_ACCESS_CODE"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["UPDATE_ACCESS_CODE"]
+              },
+              "result": {
+                "nullable": true
+              }
+            },
+            "required": ["action_attempt_id", "status", "error", "action_type"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["UPDATE_ACCESS_CODE"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["CREATE_NOISE_THRESHOLD"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["CREATE_NOISE_THRESHOLD"]
+              },
+              "result": {
+                "nullable": true
+              }
+            },
+            "required": ["action_attempt_id", "status", "error", "action_type"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["CREATE_NOISE_THRESHOLD"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["DELETE_NOISE_THRESHOLD"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["DELETE_NOISE_THRESHOLD"]
+              },
+              "result": {
+                "nullable": true
+              }
+            },
+            "required": ["action_attempt_id", "status", "error", "action_type"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["DELETE_NOISE_THRESHOLD"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
+              "error"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["UPDATE_NOISE_THRESHOLD"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "error",
+              "action_type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["success"]
+              },
+              "error": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["UPDATE_NOISE_THRESHOLD"]
+              },
+              "result": {
+                "nullable": true
+              }
+            },
+            "required": ["action_attempt_id", "status", "error", "action_type"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_attempt_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "\n    ---\n    title: Action Attempt ID\n    ---\n    The ID of the action attempt.\n  "
+              },
+              "status": {
+                "type": "string",
+                "enum": ["error"]
+              },
+              "result": {
+                "type": "string",
+                "format": "null",
+                "nullable": true
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["UPDATE_NOISE_THRESHOLD"]
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type", "message"]
+              }
+            },
+            "required": [
+              "action_attempt_id",
+              "status",
+              "result",
+              "action_type",
               "error"
             ]
           }
@@ -13453,7 +15170,7 @@
                               },
                               "accessory_keypad_supported": {
                                 "type": "boolean",
-                                "description": "Indicates whether the device supports an accessory keypad."
+                                "description": "\n      ---\n      deprecated: use device.properties.model.can_connect_accessory_keypad\n      ---\n      "
                               }
                             },
                             "required": [
@@ -13514,11 +15231,15 @@
                           },
                           "supports_accessory_keypad": {
                             "type": "boolean",
-                            "description": "\n      ---\n      deprecated: use model.accessory_keypad_supported\n      ---\n      "
+                            "description": "\n      ---\n      deprecated: use device.properties.model.can_connect_accessory_keypad\n      ---\n      "
                           },
                           "supports_offline_access_codes": {
                             "type": "boolean",
                             "description": "\n      ---\n      deprecated: use offline_access_codes_enabled\n      ---\n      "
+                          },
+                          "noise_level_decibels": {
+                            "type": "number",
+                            "description": "Indicates current noise level in decibels, if the device supports noise detection."
                           }
                         },
                         "required": ["online", "name", "appearance", "model"]
@@ -13953,9 +15674,12 @@
                           },
                           "lock_alias": {
                             "type": "string"
+                          },
+                          "feature_value": {
+                            "type": "string"
                           }
                         },
-                        "required": ["lock_id", "lock_alias"]
+                        "required": ["lock_id", "lock_alias", "feature_value"]
                       },
                       "seam_bridge_metadata": {
                         "type": "object",
@@ -15292,7 +17016,7 @@
                   },
                   "accessory_keypad_supported": {
                     "type": "boolean",
-                    "description": "Indicates whether the device supports an accessory keypad."
+                    "description": "\n      ---\n      deprecated: use device.properties.model.can_connect_accessory_keypad\n      ---\n      "
                   }
                 },
                 "required": ["display_name", "manufacturer_display_name"]
@@ -15622,6 +17346,36 @@
           "image_alt_text": {
             "type": "string"
           },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "error_code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": ["error_code", "message"]
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "warning_code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": ["warning_code", "message"]
+            }
+          },
           "can_automate_enrollment": {
             "type": "boolean"
           },
@@ -15642,7 +17396,9 @@
           "workspace_id",
           "connected_account_ids",
           "image_url",
-          "image_alt_text"
+          "image_alt_text",
+          "errors",
+          "warnings"
         ]
       },
       "acs_access_group": {

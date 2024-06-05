@@ -57,12 +57,11 @@ service:
           response:
             body:
               action_attempt:
-                status: success
-                action_type: action_attempt
-                action_attempt_id: action_attempt
-                result:
-                  key: value
-                error: action_attempt
+                action_attempt_id: action_attempt_id
+                status: pending
+                result: result
+                error: error
+                action_type: LOCK_DOOR
               noise_threshold:
                 noise_threshold_id: noise_threshold_id
                 device_id: device_id
@@ -97,12 +96,11 @@ service:
           response:
             body:
               action_attempt:
-                status: success
-                action_type: action_attempt
-                action_attempt_id: action_attempt
-                result:
-                  key: value
-                error: action_attempt
+                action_attempt_id: action_attempt_id
+                status: pending
+                result: result
+                error: error
+                action_type: LOCK_DOOR
               ok: true
     get:
       path: /noise_sensors/noise_thresholds/get
@@ -197,10 +195,9 @@ service:
           response:
             body:
               action_attempt:
-                status: success
-                action_type: action_attempt
-                action_attempt_id: action_attempt
-                result:
-                  key: value
-                error: action_attempt
+                action_attempt_id: action_attempt_id
+                status: pending
+                result: result
+                error: error
+                action_type: LOCK_DOOR
               ok: true

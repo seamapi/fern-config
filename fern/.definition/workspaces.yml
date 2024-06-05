@@ -9,7 +9,7 @@ types:
       ok: boolean
   WorkspacesGetResponse:
     properties:
-      workspace: optional<root.Workspace>
+      workspace: root.Workspace
       ok: boolean
   WorkspacesListResponse:
     properties:
@@ -118,10 +118,9 @@ service:
         - response:
             body:
               action_attempt:
-                status: success
-                action_type: action_attempt
-                action_attempt_id: action_attempt
-                result:
-                  key: value
-                error: action_attempt
+                action_attempt_id: action_attempt_id
+                status: pending
+                result: result
+                error: error
+                action_type: LOCK_DOOR
               ok: true

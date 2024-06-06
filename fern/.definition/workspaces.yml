@@ -35,9 +35,15 @@ service:
         body:
           properties:
             name: string
+            company_name: optional<string>
             connect_partner_name:
-              type: string
-              docs: The name shown inside the connect webview
+              docs: |2-
+
+                    ---
+                    deprecated: use company_name
+                    ---
+                  
+              type: optional<string>
             is_sandbox: optional<boolean>
             webview_primary_button_color: optional<string>
             webview_logo_shape: optional<webview_logo_shape>
@@ -51,12 +57,12 @@ service:
       examples:
         - request:
             name: name
-            connect_partner_name: connect_partner_name
           response:
             body:
               workspace:
                 workspace_id: workspace_id
                 name: name
+                company_name: company_name
                 is_sandbox: true
                 connect_partner_name: connect_partner_name
               ok: true
@@ -78,6 +84,7 @@ service:
               workspace:
                 workspace_id: workspace_id
                 name: name
+                company_name: company_name
                 is_sandbox: true
                 connect_partner_name: connect_partner_name
               ok: true
@@ -99,6 +106,7 @@ service:
               workspaces:
                 - workspace_id: workspace_id
                   name: name
+                  company_name: company_name
                   is_sandbox: true
                   connect_partner_name: connect_partner_name
               ok: true

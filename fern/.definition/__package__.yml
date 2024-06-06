@@ -1914,8 +1914,16 @@ types:
     properties:
       workspace_id: string
       name: string
+      company_name: string
       is_sandbox: boolean
-      connect_partner_name: optional<string>
+      connect_partner_name:
+        docs: |2-
+
+              ---
+              deprecated: use company_name
+              ---
+            
+        type: optional<string>
   AcsSystemExternalType:
     enum:
       - pti_site

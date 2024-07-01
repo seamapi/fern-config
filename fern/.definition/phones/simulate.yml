@@ -80,4 +80,6 @@ service:
                 can_program_offline_access_codes: true
                 can_program_online_access_codes: true
                 can_simulate_removal: true
+                can_simulate_connection: true
+                can_simulate_disconnection: true
               ok: true

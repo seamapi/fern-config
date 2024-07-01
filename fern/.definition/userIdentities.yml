@@ -284,6 +284,8 @@ service:
                   can_program_offline_access_codes: true
                   can_program_online_access_codes: true
                   can_simulate_removal: true
+                  can_simulate_connection: true
+                  can_simulate_disconnection: true
               accessible_devices:
                 - device_id: device_id
                   device_type: akuvox_lock
@@ -316,6 +318,8 @@ service:
                   can_program_offline_access_codes: true
                   can_program_online_access_codes: true
                   can_simulate_removal: true
+                  can_simulate_connection: true
+                  can_simulate_disconnection: true
               ok: true
     list_acs_systems:
       path: /user_identities/list_acs_systems
@@ -353,11 +357,11 @@ service:
                   image_url: image_url
                   image_alt_text: image_alt_text
                   errors:
-                    - error_code: error_code
-                      message: message
+                    - error_code: seam_bridge_disconnected
+                      created_at: '2024-01-15T09:30:00Z'
+                      message: errors
                   warnings:
-                    - warning_code: warning_code
-                      message: message
+                    - {}
                   can_automate_enrollment: true
                   can_create_acs_access_groups: true
                   can_remove_acs_users_from_acs_access_groups: true

@@ -1,4 +1,10 @@
 types:
+  SimulateConnectResponse:
+    properties:
+      ok: boolean
+  SimulateDisconnectResponse:
+    properties:
+      ok: boolean
   SimulateRemoveResponse:
     properties:
       ok: boolean
@@ -8,6 +14,50 @@ service:
   auth: false
   base-path: ''
   endpoints:
+    connect:
+      path: /devices/simulate/connect
+      method: POST
+      auth: true
+      display-name: /devices/simulate/connect
+      request:
+        name: SimulateConnectRequest
+        body:
+          properties:
+            device_id: string
+      response:
+        docs: OK
+        type: SimulateConnectResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+      examples:
+        - request:
+            device_id: device_id
+          response:
+            body:
+              ok: true
+    disconnect:
+      path: /devices/simulate/disconnect
+      method: POST
+      auth: true
+      display-name: /devices/simulate/disconnect
+      request:
+        name: SimulateDisconnectRequest
+        body:
+          properties:
+            device_id: string
+      response:
+        docs: OK
+        type: SimulateDisconnectResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+      examples:
+        - request:
+            device_id: device_id
+          response:
+            body:
+              ok: true
     remove:
       path: /devices/simulate/remove
       method: POST

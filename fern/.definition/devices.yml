@@ -18,6 +18,8 @@ types:
       - can_program_offline_access_codes
       - can_program_online_access_codes
       - can_simulate_removal
+      - can_simulate_connection
+      - can_simulate_disconnection
   DevicesListRequestExcludeIfItem:
     enum:
       - can_remotely_unlock
@@ -25,6 +27,8 @@ types:
       - can_program_offline_access_codes
       - can_program_online_access_codes
       - can_simulate_removal
+      - can_simulate_connection
+      - can_simulate_disconnection
   DevicesListResponse:
     properties:
       devices: list<root.Device>
@@ -126,6 +130,8 @@ service:
                   supports_accessory_keypad: true
                   supports_offline_access_codes: true
                   noise_level_decibels: 1.1
+                  currently_triggering_noise_threshold_ids:
+                    - currently_triggering_noise_threshold_ids
                   assa_abloy_credential_service_metadata:
                     has_active_endpoint: true
                     endpoints:
@@ -286,6 +292,8 @@ service:
                 can_program_offline_access_codes: true
                 can_program_online_access_codes: true
                 can_simulate_removal: true
+                can_simulate_connection: true
+                can_simulate_disconnection: true
               ok: true
     list:
       path: /devices/list
@@ -354,6 +362,8 @@ service:
                   can_program_offline_access_codes: true
                   can_program_online_access_codes: true
                   can_simulate_removal: true
+                  can_simulate_connection: true
+                  can_simulate_disconnection: true
               ok: true
     list_device_providers:
       path: /devices/list_device_providers

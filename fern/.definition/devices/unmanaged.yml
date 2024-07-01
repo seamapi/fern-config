@@ -17,6 +17,8 @@ types:
       - can_program_offline_access_codes
       - can_program_online_access_codes
       - can_simulate_removal
+      - can_simulate_connection
+      - can_simulate_disconnection
   UnmanagedListRequestExcludeIfItem:
     enum:
       - can_remotely_unlock
@@ -24,6 +26,8 @@ types:
       - can_program_offline_access_codes
       - can_program_online_access_codes
       - can_simulate_removal
+      - can_simulate_connection
+      - can_simulate_disconnection
   UnmanagedListResponse:
     properties:
       devices: list<root.UnmanagedDevice>
@@ -94,6 +98,8 @@ service:
                 can_program_offline_access_codes: true
                 can_program_online_access_codes: true
                 can_simulate_removal: true
+                can_simulate_connection: true
+                can_simulate_disconnection: true
                 device_provider:
                   provider_categories:
                     key: value
@@ -159,6 +165,8 @@ service:
                   can_program_offline_access_codes: true
                   can_program_online_access_codes: true
                   can_simulate_removal: true
+                  can_simulate_connection: true
+                  can_simulate_disconnection: true
               ok: true
     update:
       path: /devices/unmanaged/update

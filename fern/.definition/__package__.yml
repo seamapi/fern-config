@@ -997,14 +997,14 @@ types:
   ClientSession:
     properties:
       client_session_id: string
-      user_identifier_key: optional<string>
+      workspace_id: string
       created_at: datetime
       token: string
+      user_identifier_key: optional<string>
       device_count: double
       connected_account_ids: list<string>
       connect_webview_ids: list<string>
       user_identity_ids: list<string>
-      workspace_id: string
   ClimateSettingScheduleHvacModeSetting:
     enum:
       - 'off'
@@ -1499,6 +1499,9 @@ types:
           Indicates current noise level in decibels, if the device supports
           noise detection.
         type: optional<double>
+      currently_triggering_noise_threshold_ids:
+        docs: Array of noise threshold IDs that are currently triggering.
+        type: optional<list<string>>
       assa_abloy_credential_service_metadata: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
       august_metadata: optional<DevicePropertiesAugustMetadata>
       avigilon_alta_metadata: optional<DevicePropertiesAvigilonAltaMetadata>
@@ -1630,6 +1633,8 @@ types:
       can_program_offline_access_codes: optional<boolean>
       can_program_online_access_codes: optional<boolean>
       can_simulate_removal: optional<boolean>
+      can_simulate_connection: optional<boolean>
+      can_simulate_disconnection: optional<boolean>
   UnmanagedDeviceCapabilitiesSupportedItem:
     enum:
       - access_code
@@ -1818,6 +1823,8 @@ types:
       can_program_offline_access_codes: optional<boolean>
       can_program_online_access_codes: optional<boolean>
       can_simulate_removal: optional<boolean>
+      can_simulate_connection: optional<boolean>
+      can_simulate_disconnection: optional<boolean>
       device_provider: optional<UnmanagedDeviceDeviceProvider>
   DeviceProviderDeviceProviderName:
     enum:
@@ -1950,14 +1957,22 @@ types:
             deprecated: use external_type
             ---
             
+  AcsSystemErrorsItemSeamBridgeDisconnected:
+    properties:
+      created_at: datetime
+      message: string
+  AcsSystemErrorsItemVisionlineInstanceUnreachable:
+    properties:
+      created_at: datetime
+      message: string
   AcsSystemErrorsItem:
-    properties:
-      error_code: string
-      message: string
+    discriminant: error_code
+    base-properties: {}
+    union:
+      seam_bridge_disconnected: AcsSystemErrorsItemSeamBridgeDisconnected
+      visionline_instance_unreachable: AcsSystemErrorsItemVisionlineInstanceUnreachable
   AcsSystemWarningsItem:
-    properties:
-      warning_code: string
-      message: string
+    properties: {}
   AcsSystem:
     properties:
       acs_system_id: string
@@ -2031,6 +2046,7 @@ types:
               deprecated: use external_type_display_name
               ---
               
+      display_name: string
       external_type: AcsAccessGroupExternalType
       external_type_display_name: string
       created_at: datetime
@@ -2072,16 +2088,16 @@ types:
         type: optional<string>
       email_address: optional<string>
       phone_number: optional<string>
+  AcsEntranceErrorsItem:
+    properties:
+      error_code: string
+      message: string
   AcsEntranceLatchMetadata:
     properties:
       accessibility_type: string
       door_name: string
       door_type: string
       is_connected: boolean
-  AcsEntranceErrorsItem:
-    properties:
-      error_code: string
-      message: string
   AcsEntranceVisionlineMetadataDoorCategory:
     enum:
       - entrance
@@ -2107,12 +2123,12 @@ types:
       profiles: optional<list<AcsEntranceVisionlineMetadataProfilesItem>>
   AcsEntrance:
     properties:
-      acs_entrance_id: string
-      display_name: string
       acs_system_id: string
+      acs_entrance_id: string
       created_at: datetime
-      latch_metadata: optional<AcsEntranceLatchMetadata>
+      display_name: string
       errors: list<AcsEntranceErrorsItem>
+      latch_metadata: optional<AcsEntranceLatchMetadata>
       visionline_metadata: optional<AcsEntranceVisionlineMetadata>
   AcsCredentialProvisioningAutomation:
     properties:
@@ -2178,6 +2194,8 @@ types:
       errors: list<AcsCredentialErrorsItem>
       warnings: list<AcsCredentialWarningsItem>
       is_multi_phone_sync_credential: optional<boolean>
+      is_latest_desired_state_synced_with_provider: optional<boolean>
+      latest_desired_state_synced_with_provider_at: optional<datetime>
       visionline_metadata: optional<AcsCredentialVisionlineMetadata>
   EnrollmentAutomation:
     properties:
@@ -2297,6 +2315,8 @@ types:
       can_program_offline_access_codes: optional<boolean>
       can_program_online_access_codes: optional<boolean>
       can_simulate_removal: optional<boolean>
+      can_simulate_connection: optional<boolean>
+      can_simulate_disconnection: optional<boolean>
   UserIdentity:
     properties:
       user_identity_id: string

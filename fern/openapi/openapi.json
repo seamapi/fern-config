@@ -2239,7 +2239,9 @@
                         "can_remotely_lock",
                         "can_program_offline_access_codes",
                         "can_program_online_access_codes",
-                        "can_simulate_removal"
+                        "can_simulate_removal",
+                        "can_simulate_connection",
+                        "can_simulate_disconnection"
                       ]
                     }
                   },
@@ -2252,7 +2254,9 @@
                         "can_remotely_lock",
                         "can_program_offline_access_codes",
                         "can_program_online_access_codes",
-                        "can_simulate_removal"
+                        "can_simulate_removal",
+                        "can_simulate_connection",
+                        "can_simulate_disconnection"
                       ]
                     }
                   }
@@ -2474,6 +2478,7 @@
           "401": { "description": "Unauthorized" }
         },
         "security": [
+          { "client_session": [] },
           { "api_key": [] },
           { "pat_with_workspace": [] },
           { "console_session": [] }
@@ -2610,6 +2615,7 @@
                       "connected_account.completed_first_sync_after_reconnection",
                       "noise_sensor.noise_threshold_triggered",
                       "access_code.backup_access_code_pulled",
+                      "acs_system.connected",
                       "acs_user.deleted",
                       "acs_credential.deleted",
                       "enrollment_automation.deleted",
@@ -2674,6 +2680,7 @@
                         "connected_account.completed_first_sync_after_reconnection",
                         "noise_sensor.noise_threshold_triggered",
                         "access_code.backup_access_code_pulled",
+                        "acs_system.connected",
                         "acs_user.deleted",
                         "acs_credential.deleted",
                         "enrollment_automation.deleted",
@@ -2980,7 +2987,9 @@
                         "can_remotely_lock",
                         "can_program_offline_access_codes",
                         "can_program_online_access_codes",
-                        "can_simulate_removal"
+                        "can_simulate_removal",
+                        "can_simulate_connection",
+                        "can_simulate_disconnection"
                       ]
                     }
                   },
@@ -2993,7 +3002,9 @@
                         "can_remotely_lock",
                         "can_program_offline_access_codes",
                         "can_program_online_access_codes",
-                        "can_simulate_removal"
+                        "can_simulate_removal",
+                        "can_simulate_connection",
+                        "can_simulate_disconnection"
                       ]
                     }
                   }
@@ -3726,7 +3737,9 @@
                         "can_remotely_lock",
                         "can_program_offline_access_codes",
                         "can_program_online_access_codes",
-                        "can_simulate_removal"
+                        "can_simulate_removal",
+                        "can_simulate_connection",
+                        "can_simulate_disconnection"
                       ]
                     }
                   },
@@ -3739,7 +3752,9 @@
                         "can_remotely_lock",
                         "can_program_offline_access_codes",
                         "can_program_online_access_codes",
-                        "can_simulate_removal"
+                        "can_simulate_removal",
+                        "can_simulate_connection",
+                        "can_simulate_disconnection"
                       ]
                     }
                   }
@@ -7661,6 +7676,92 @@
         "operationId": "acsUsersUpdatePatch"
       }
     },
+    "/devices/simulate/connect": {
+      "post": {
+        "x-fern-sdk-group-name": ["devices", "simulate"],
+        "x-fern-sdk-method-name": "connect",
+        "summary": "/devices/simulate/connect",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "api_key": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_id": { "type": "string", "format": "uuid" }
+                },
+                "required": ["device_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/devices"],
+        "operationId": "devicesSimulateConnectPost"
+      }
+    },
+    "/devices/simulate/disconnect": {
+      "post": {
+        "x-fern-sdk-group-name": ["devices", "simulate"],
+        "x-fern-sdk-method-name": "disconnect",
+        "summary": "/devices/simulate/disconnect",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" }
+        },
+        "security": [
+          { "api_key": [] },
+          { "pat_with_workspace": [] },
+          { "console_session": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_id": { "type": "string", "format": "uuid" }
+                },
+                "required": ["device_id"]
+              }
+            }
+          }
+        },
+        "tags": ["/devices"],
+        "operationId": "devicesSimulateDisconnectPost"
+      }
+    },
     "/devices/simulate/remove": {
       "post": {
         "x-fern-sdk-group-name": ["devices", "simulate"],
@@ -7979,7 +8080,9 @@
                         "can_remotely_lock",
                         "can_program_offline_access_codes",
                         "can_program_online_access_codes",
-                        "can_simulate_removal"
+                        "can_simulate_removal",
+                        "can_simulate_connection",
+                        "can_simulate_disconnection"
                       ]
                     }
                   },
@@ -7992,7 +8095,9 @@
                         "can_remotely_lock",
                         "can_program_offline_access_codes",
                         "can_program_online_access_codes",
-                        "can_simulate_removal"
+                        "can_simulate_removal",
+                        "can_simulate_connection",
+                        "can_simulate_disconnection"
                       ]
                     }
                   }
@@ -10799,9 +10904,10 @@
         "type": "object",
         "properties": {
           "client_session_id": { "type": "string", "format": "uuid" },
-          "user_identifier_key": { "type": "string", "nullable": true },
+          "workspace_id": { "type": "string", "format": "uuid" },
           "created_at": { "type": "string", "format": "date-time" },
           "token": { "type": "string" },
+          "user_identifier_key": { "type": "string", "nullable": true },
           "device_count": { "type": "number" },
           "connected_account_ids": {
             "type": "array",
@@ -10814,19 +10920,18 @@
           "user_identity_ids": {
             "type": "array",
             "items": { "type": "string", "format": "uuid" }
-          },
-          "workspace_id": { "type": "string", "format": "uuid" }
+          }
         },
         "required": [
           "client_session_id",
-          "user_identifier_key",
+          "workspace_id",
           "created_at",
           "token",
+          "user_identifier_key",
           "device_count",
           "connected_account_ids",
           "connect_webview_ids",
-          "user_identity_ids",
-          "workspace_id"
+          "user_identity_ids"
         ]
       },
       "climate_setting_schedule": {
@@ -11208,6 +11313,11 @@
                           "noise_level_decibels": {
                             "type": "number",
                             "description": "Indicates current noise level in decibels, if the device supports noise detection."
+                          },
+                          "currently_triggering_noise_threshold_ids": {
+                            "type": "array",
+                            "items": { "type": "string" },
+                            "description": "Array of noise threshold IDs that are currently triggering."
                           }
                         },
                         "required": ["online", "name", "appearance", "model"]
@@ -12312,7 +12422,9 @@
           "can_remotely_lock": { "type": "boolean" },
           "can_program_offline_access_codes": { "type": "boolean" },
           "can_program_online_access_codes": { "type": "boolean" },
-          "can_simulate_removal": { "type": "boolean" }
+          "can_simulate_removal": { "type": "boolean" },
+          "can_simulate_connection": { "type": "boolean" },
+          "can_simulate_disconnection": { "type": "boolean" }
         },
         "required": [
           "device_id",
@@ -12552,7 +12664,9 @@
           "can_remotely_lock": { "type": "boolean" },
           "can_program_offline_access_codes": { "type": "boolean" },
           "can_program_online_access_codes": { "type": "boolean" },
-          "can_simulate_removal": { "type": "boolean" }
+          "can_simulate_removal": { "type": "boolean" },
+          "can_simulate_connection": { "type": "boolean" },
+          "can_simulate_disconnection": { "type": "boolean" }
         },
         "required": [
           "device_id",
@@ -12763,31 +12877,44 @@
           "workspace_id": { "type": "string", "format": "uuid" },
           "connected_account_ids": {
             "type": "array",
-            "items": { "type": "string" }
+            "items": { "type": "string", "format": "uuid" }
           },
           "image_url": { "type": "string" },
           "image_alt_text": { "type": "string" },
           "errors": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "error_code": { "type": "string" },
-                "message": { "type": "string" }
-              },
-              "required": ["error_code", "message"]
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "created_at": { "type": "string", "format": "date-time" },
+                    "message": { "type": "string" },
+                    "error_code": {
+                      "type": "string",
+                      "enum": ["seam_bridge_disconnected"]
+                    }
+                  },
+                  "required": ["created_at", "message", "error_code"]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "created_at": { "type": "string", "format": "date-time" },
+                    "message": { "type": "string" },
+                    "error_code": {
+                      "type": "string",
+                      "enum": ["visionline_instance_unreachable"]
+                    }
+                  },
+                  "required": ["created_at", "message", "error_code"]
+                }
+              ]
             }
           },
           "warnings": {
             "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "warning_code": { "type": "string" },
-                "message": { "type": "string" }
-              },
-              "required": ["warning_code", "message"]
-            }
+            "items": { "type": "object", "properties": {} }
           },
           "can_automate_enrollment": { "type": "boolean" },
           "can_create_acs_access_groups": { "type": "boolean" },
@@ -12827,6 +12954,7 @@
             "type": "string",
             "description": "\n    ---\n    deprecated: use external_type_display_name\n    ---\n    "
           },
+          "display_name": { "type": "string" },
           "external_type": {
             "type": "string",
             "enum": [
@@ -12846,6 +12974,7 @@
           "name",
           "access_group_type",
           "access_group_type_display_name",
+          "display_name",
           "external_type",
           "external_type_display_name",
           "created_at"
@@ -12905,10 +13034,21 @@
       "acs_entrance": {
         "type": "object",
         "properties": {
-          "acs_entrance_id": { "type": "string", "format": "uuid" },
-          "display_name": { "type": "string" },
           "acs_system_id": { "type": "string", "format": "uuid" },
+          "acs_entrance_id": { "type": "string", "format": "uuid" },
           "created_at": { "type": "string", "format": "date-time" },
+          "display_name": { "type": "string" },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "error_code": { "type": "string" },
+                "message": { "type": "string" }
+              },
+              "required": ["error_code", "message"]
+            }
+          },
           "latch_metadata": {
             "type": "object",
             "properties": {
@@ -12922,19 +13062,7 @@
               "door_name",
               "door_type",
               "is_connected"
-            ],
-            "nullable": true
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "error_code": { "type": "string" },
-                "message": { "type": "string" }
-              },
-              "required": ["error_code", "message"]
-            }
+            ]
           },
           "visionline_metadata": {
             "type": "object",
@@ -12968,18 +13096,15 @@
                 }
               }
             },
-            "required": ["door_name", "door_category"],
-            "nullable": true
+            "required": ["door_name", "door_category"]
           }
         },
         "required": [
-          "acs_entrance_id",
-          "display_name",
           "acs_system_id",
+          "acs_entrance_id",
           "created_at",
-          "latch_metadata",
-          "errors",
-          "visionline_metadata"
+          "display_name",
+          "errors"
         ]
       },
       "acs_credential_provisioning_automation": {
@@ -13077,6 +13202,11 @@
             }
           },
           "is_multi_phone_sync_credential": { "type": "boolean" },
+          "is_latest_desired_state_synced_with_provider": { "type": "boolean" },
+          "latest_desired_state_synced_with_provider_at": {
+            "type": "string",
+            "format": "date-time"
+          },
           "visionline_metadata": {
             "type": "object",
             "properties": {
@@ -13253,7 +13383,9 @@
           "can_remotely_lock": { "type": "boolean" },
           "can_program_offline_access_codes": { "type": "boolean" },
           "can_program_online_access_codes": { "type": "boolean" },
-          "can_simulate_removal": { "type": "boolean" }
+          "can_simulate_removal": { "type": "boolean" },
+          "can_simulate_connection": { "type": "boolean" },
+          "can_simulate_disconnection": { "type": "boolean" }
         },
         "required": [
           "device_id",

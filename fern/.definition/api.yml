@@ -8,6 +8,8 @@ default-environment: Default
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer
+    token:
+      name: apiKey
 auth: BearerAuthScheme
 headers:
   seam-workspace:

@@ -32,11 +32,16 @@ service:
         name: UnmanagedConvertToManagedRequest
         body:
           properties:
-            access_code_id: string
+            access_code_id:
+              type: string
+              validation:
+                format: uuid
             is_external_modification_allowed: optional<boolean>
             allow_external_modification: optional<boolean>
             force: optional<boolean>
-            sync: optional<boolean>
+            sync:
+              type: optional<boolean>
+              default: false
       response:
         docs: OK
         type: UnmanagedConvertToManagedResponse
@@ -58,8 +63,13 @@ service:
         name: UnmanagedDeleteRequest
         body:
           properties:
-            access_code_id: string
-            sync: optional<boolean>
+            access_code_id:
+              type: string
+              validation:
+                format: uuid
+            sync:
+              type: optional<boolean>
+              default: false
       response:
         docs: OK
         type: UnmanagedDeleteResponse
@@ -87,8 +97,14 @@ service:
         name: UnmanagedGetRequest
         body:
           properties:
-            device_id: optional<string>
-            access_code_id: optional<string>
+            device_id:
+              type: optional<string>
+              validation:
+                format: uuid
+            access_code_id:
+              type: optional<string>
+              validation:
+                format: uuid
             code: optional<string>
       response:
         docs: OK
@@ -126,7 +142,10 @@ service:
         name: UnmanagedListRequest
         body:
           properties:
-            device_id: string
+            device_id:
+              type: string
+              validation:
+                format: uuid
             user_identifier_key: optional<string>
       response:
         docs: OK
@@ -165,7 +184,10 @@ service:
         name: UnmanagedUpdateRequest
         body:
           properties:
-            access_code_id: string
+            access_code_id:
+              type: string
+              validation:
+                format: uuid
             is_managed: boolean
             allow_external_modification: optional<boolean>
             is_external_modification_allowed: optional<boolean>

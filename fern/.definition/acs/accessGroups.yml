@@ -32,8 +32,14 @@ service:
         name: AccessGroupsAddUserRequest
         body:
           properties:
-            acs_access_group_id: string
-            acs_user_id: string
+            acs_access_group_id:
+              type: string
+              validation:
+                format: uuid
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: AccessGroupsAddUserResponse
@@ -56,7 +62,10 @@ service:
         name: AccessGroupsGetRequest
         body:
           properties:
-            acs_access_group_id: string
+            acs_access_group_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: AccessGroupsGetResponse
@@ -90,8 +99,14 @@ service:
         name: AccessGroupsListRequest
         body:
           properties:
-            acs_system_id: optional<string>
-            acs_user_id: optional<string>
+            acs_system_id:
+              type: optional<string>
+              validation:
+                format: uuid
+            acs_user_id:
+              type: optional<string>
+              validation:
+                format: uuid
       response:
         docs: OK
         type: AccessGroupsListResponse
@@ -124,7 +139,10 @@ service:
         name: AccessGroupsListUsersRequest
         body:
           properties:
-            acs_access_group_id: string
+            acs_access_group_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: AccessGroupsListUsersResponse
@@ -168,8 +186,14 @@ service:
         name: AccessGroupsRemoveUserRequest
         body:
           properties:
-            acs_access_group_id: string
-            acs_user_id: string
+            acs_access_group_id:
+              type: string
+              validation:
+                format: uuid
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: AccessGroupsRemoveUserResponse

@@ -46,7 +46,9 @@ types:
   ConnectWebviewsCreateRequestCustomMetadataValue:
     discriminated: false
     union:
-      - string
+      - type: string
+        validation:
+          maxLength: 500
       - boolean
       - optional<string>
   ConnectWebviewsCreateResponse:
@@ -90,8 +92,12 @@ service:
             custom_metadata: >-
               optional<map<string,
               optional<ConnectWebviewsCreateRequestCustomMetadataValue>>>
-            automatically_manage_new_devices: optional<boolean>
-            wait_for_device_creation: optional<boolean>
+            automatically_manage_new_devices:
+              type: optional<boolean>
+              default: true
+            wait_for_device_creation:
+              type: optional<boolean>
+              default: false
       response:
         docs: OK
         type: ConnectWebviewsCreateResponse
@@ -136,7 +142,10 @@ service:
         name: ConnectWebviewsDeleteRequest
         body:
           properties:
-            connect_webview_id: string
+            connect_webview_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: ConnectWebviewsDeleteResponse
@@ -158,7 +167,10 @@ service:
         name: ConnectWebviewsGetRequest
         body:
           properties:
-            connect_webview_id: string
+            connect_webview_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: ConnectWebviewsGetResponse
@@ -206,13 +218,15 @@ service:
           properties:
             user_identifier_key: optional<string>
             custom_metadata_has:
-              docs: >-
-                Returns devices where the webview's custom_metadata contains all
-                of the provided key/value pairs.
               type: >-
                 optional<map<string,
                 ConnectWebviewsListRequestCustomMetadataHasValue>>
-            limit: optional<double>
+              docs: >-
+                Returns devices where the webview's custom_metadata contains all
+                of the provided key/value pairs.
+            limit:
+              type: optional<double>
+              default: 500
       response:
         docs: OK
         type: ConnectWebviewsListResponse

@@ -55,13 +55,25 @@ service:
         name: AccessCodesCreateRequest
         body:
           properties:
-            device_id: string
+            device_id:
+              type: string
+              validation:
+                format: uuid
             name: optional<string>
             starts_at: optional<string>
             ends_at: optional<string>
-            code: optional<string>
-            sync: optional<boolean>
-            attempt_for_offline_device: optional<boolean>
+            code:
+              type: optional<string>
+              validation:
+                pattern: ^\d+$
+                minLength: 4
+                maxLength: 9
+            sync:
+              type: optional<boolean>
+              default: false
+            attempt_for_offline_device:
+              type: optional<boolean>
+              default: true
             common_code_key: optional<string>
             prefer_native_scheduling: optional<boolean>
             use_backup_access_code_pool: optional<boolean>
@@ -130,8 +142,15 @@ service:
             name: optional<string>
             starts_at: optional<string>
             ends_at: optional<string>
-            code: optional<string>
-            attempt_for_offline_device: optional<boolean>
+            code:
+              type: optional<string>
+              validation:
+                pattern: ^\d+$
+                minLength: 4
+                maxLength: 9
+            attempt_for_offline_device:
+              type: optional<boolean>
+              default: true
             prefer_native_scheduling: optional<boolean>
             use_backup_access_code_pool: optional<boolean>
             allow_external_modification: optional<boolean>
@@ -187,9 +206,17 @@ service:
         name: AccessCodesDeleteRequest
         body:
           properties:
-            device_id: optional<string>
-            access_code_id: string
-            sync: optional<boolean>
+            device_id:
+              type: optional<string>
+              validation:
+                format: uuid
+            access_code_id:
+              type: string
+              validation:
+                format: uuid
+            sync:
+              type: optional<boolean>
+              default: false
       response:
         docs: OK
         type: AccessCodesDeleteResponse
@@ -217,7 +244,10 @@ service:
         name: AccessCodesGenerateCodeRequest
         body:
           properties:
-            device_id: string
+            device_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: AccessCodesGenerateCodeResponse
@@ -264,8 +294,14 @@ service:
         name: AccessCodesGetRequest
         body:
           properties:
-            device_id: optional<string>
-            access_code_id: optional<string>
+            device_id:
+              type: optional<string>
+              validation:
+                format: uuid
+            access_code_id:
+              type: optional<string>
+              validation:
+                format: uuid
             code: optional<string>
       response:
         docs: OK
@@ -312,7 +348,10 @@ service:
         name: AccessCodesListRequest
         body:
           properties:
-            device_id: string
+            device_id:
+              type: string
+              validation:
+                format: uuid
             access_code_ids: optional<list<string>>
             user_identifier_key: optional<string>
       response:
@@ -361,7 +400,10 @@ service:
         name: AccessCodesPullBackupAccessCodeRequest
         body:
           properties:
-            access_code_id: string
+            access_code_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: AccessCodesPullBackupAccessCodeResponse
@@ -411,9 +453,18 @@ service:
             name: optional<string>
             starts_at: optional<string>
             ends_at: optional<string>
-            code: optional<string>
-            sync: optional<boolean>
-            attempt_for_offline_device: optional<boolean>
+            code:
+              type: optional<string>
+              validation:
+                pattern: ^\d+$
+                minLength: 4
+                maxLength: 9
+            sync:
+              type: optional<boolean>
+              default: false
+            attempt_for_offline_device:
+              type: optional<boolean>
+              default: true
             prefer_native_scheduling: optional<boolean>
             use_backup_access_code_pool: optional<boolean>
             allow_external_modification: optional<boolean>
@@ -422,8 +473,14 @@ service:
             is_offline_access_code: optional<boolean>
             is_one_time_use: optional<boolean>
             max_time_rounding: optional<root.MaxTimeRounding>
-            access_code_id: string
-            device_id: optional<string>
+            access_code_id:
+              type: string
+              validation:
+                format: uuid
+            device_id:
+              type: optional<string>
+              validation:
+                format: uuid
             type: optional<AccessCodesUpdateRequestType>
             is_managed: optional<boolean>
       response:

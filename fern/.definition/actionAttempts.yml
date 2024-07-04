@@ -22,7 +22,10 @@ service:
         name: ActionAttemptsGetRequest
         body:
           properties:
-            action_attempt_id: string
+            action_attempt_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: ActionAttemptsGetResponse

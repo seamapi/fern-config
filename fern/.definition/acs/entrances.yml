@@ -29,7 +29,10 @@ service:
         name: EntrancesGetRequest
         body:
           properties:
-            acs_entrance_id: string
+            acs_entrance_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: EntrancesGetResponse
@@ -71,8 +74,14 @@ service:
         name: EntrancesGrantAccessRequest
         body:
           properties:
-            acs_entrance_id: string
-            acs_user_id: string
+            acs_entrance_id:
+              type: string
+              validation:
+                format: uuid
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: EntrancesGrantAccessResponse
@@ -95,8 +104,14 @@ service:
         name: EntrancesListRequest
         body:
           properties:
-            acs_system_id: optional<string>
-            acs_credential_id: optional<string>
+            acs_system_id:
+              type: optional<string>
+              validation:
+                format: uuid
+            acs_credential_id:
+              type: optional<string>
+              validation:
+                format: uuid
       response:
         docs: OK
         type: EntrancesListResponse
@@ -134,7 +149,10 @@ service:
         name: EntrancesListCredentialsWithAccessRequest
         body:
           properties:
-            acs_entrance_id: string
+            acs_entrance_id:
+              type: string
+              validation:
+                format: uuid
             include_if: optional<list<literal<"visionline_metadata.is_valid">>>
       response:
         docs: OK

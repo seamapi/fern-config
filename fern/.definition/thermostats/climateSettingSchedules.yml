@@ -100,7 +100,10 @@ service:
         name: ClimateSettingSchedulesDeleteRequest
         body:
           properties:
-            climate_setting_schedule_id: string
+            climate_setting_schedule_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: ClimateSettingSchedulesDeleteResponse
@@ -122,8 +125,14 @@ service:
         name: ClimateSettingSchedulesGetRequest
         body:
           properties:
-            climate_setting_schedule_id: optional<string>
-            device_id: optional<string>
+            climate_setting_schedule_id:
+              type: optional<string>
+              validation:
+                format: uuid
+            device_id:
+              type: optional<string>
+              validation:
+                format: uuid
       response:
         docs: OK
         type: ClimateSettingSchedulesGetResponse
@@ -163,7 +172,10 @@ service:
         name: ClimateSettingSchedulesListRequest
         body:
           properties:
-            device_id: string
+            device_id:
+              type: string
+              validation:
+                format: uuid
             user_identifier_key: optional<string>
       response:
         docs: OK
@@ -205,7 +217,10 @@ service:
         name: ClimateSettingSchedulesUpdateRequest
         body:
           properties:
-            climate_setting_schedule_id: string
+            climate_setting_schedule_id:
+              type: string
+              validation:
+                format: uuid
             schedule_type: optional<literal<"time_bound">>
             name: optional<string>
             schedule_starts_at: optional<string>

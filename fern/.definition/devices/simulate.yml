@@ -23,7 +23,10 @@ service:
         name: SimulateConnectRequest
         body:
           properties:
-            device_id: string
+            device_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: SimulateConnectResponse
@@ -45,7 +48,10 @@ service:
         name: SimulateDisconnectRequest
         body:
           properties:
-            device_id: string
+            device_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: SimulateDisconnectResponse
@@ -67,7 +73,10 @@ service:
         name: SimulateRemoveRequest
         body:
           properties:
-            device_id: string
+            device_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: SimulateRemoveResponse

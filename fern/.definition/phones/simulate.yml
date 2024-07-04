@@ -4,17 +4,35 @@ types:
   SimulateCreateSandboxPhoneRequestPhoneMetadata:
     properties:
       operating_system: optional<root.PhoneOperatingSystem>
-      os_version: optional<string>
-      device_manufacturer: optional<string>
-      device_model: optional<string>
+      os_version:
+        type: optional<string>
+        default: '10'
+      device_manufacturer:
+        type: optional<string>
+        default: Samsung
+      device_model:
+        type: optional<string>
+        default: Samsung Galaxy S10
   SimulateCreateSandboxPhoneRequestAssaAbloyMetadata:
     properties:
-      ble_capability: optional<boolean>
-      hce_capability: optional<boolean>
-      nfc_capability: optional<boolean>
-      application_version: optional<string>
-      seos_applet_version: optional<string>
-      seos_tsm_endpoint_id: optional<double>
+      ble_capability:
+        type: optional<boolean>
+        default: true
+      hce_capability:
+        type: optional<boolean>
+        default: false
+      nfc_capability:
+        type: optional<boolean>
+        default: false
+      application_version:
+        type: optional<string>
+        default: 1.0.0
+      seos_applet_version:
+        type: optional<string>
+        default: 1.0.0
+      seos_tsm_endpoint_id:
+        type: optional<double>
+        default: 1
   SimulateCreateSandboxPhoneResponse:
     properties:
       phone: root.Phone
@@ -33,7 +51,10 @@ service:
         body:
           properties:
             custom_sdk_installation_id: optional<string>
-            user_identity_id: string
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
             phone_metadata: optional<SimulateCreateSandboxPhoneRequestPhoneMetadata>
             assa_abloy_metadata: optional<SimulateCreateSandboxPhoneRequestAssaAbloyMetadata>
       response:

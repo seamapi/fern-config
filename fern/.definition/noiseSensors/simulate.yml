@@ -17,7 +17,10 @@ service:
         name: SimulateTriggerNoiseThresholdRequest
         body:
           properties:
-            device_id: string
+            device_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: SimulateTriggerNoiseThresholdResponse

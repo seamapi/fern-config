@@ -11,7 +11,10 @@ types:
       ok: boolean
   UserIdentitiesGetRequestUserIdentityId:
     properties:
-      user_identity_id: string
+      user_identity_id:
+        type: string
+        validation:
+          format: uuid
   UserIdentitiesGetRequestUserIdentityKey:
     properties:
       user_identity_key: string
@@ -75,8 +78,14 @@ service:
         name: UserIdentitiesAddAcsUserRequest
         body:
           properties:
-            user_identity_id: string
-            acs_user_id: string
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UserIdentitiesAddAcsUserResponse
@@ -99,10 +108,19 @@ service:
         name: UserIdentitiesCreateRequest
         body:
           properties:
-            user_identity_key: optional<string>
-            email_address: optional<string>
+            user_identity_key:
+              type: optional<string>
+              validation:
+                minLength: 1
+            email_address:
+              type: optional<string>
+              validation:
+                format: email
             phone_number: optional<string>
-            full_name: optional<string>
+            full_name:
+              type: optional<string>
+              validation:
+                minLength: 1
       response:
         docs: OK
         type: UserIdentitiesCreateResponse
@@ -133,7 +151,10 @@ service:
         name: UserIdentitiesDeleteRequest
         body:
           properties:
-            user_identity_id: string
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UserIdentitiesDeleteResponse
@@ -184,8 +205,14 @@ service:
         name: UserIdentitiesGrantAccessToDeviceRequest
         body:
           properties:
-            user_identity_id: string
-            device_id: string
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
+            device_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UserIdentitiesGrantAccessToDeviceResponse
@@ -208,7 +235,10 @@ service:
         name: UserIdentitiesListRequest
         body:
           properties:
-            credential_manager_acs_system_id: optional<string>
+            credential_manager_acs_system_id:
+              type: optional<string>
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UserIdentitiesListResponse
@@ -239,7 +269,10 @@ service:
         name: UserIdentitiesListAccessibleDevicesRequest
         body:
           properties:
-            user_identity_id: string
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UserIdentitiesListAccessibleDevicesResponse
@@ -259,14 +292,7 @@ service:
                   display_name: display_name
                   capabilities_supported:
                     - access_code
-                  properties:
-                    online: true
-                    name: name
-                    appearance:
-                      name: name
-                    model:
-                      display_name: display_name
-                      manufacturer_display_name: manufacturer_display_name
+                  properties: {}
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:
@@ -293,14 +319,7 @@ service:
                   display_name: display_name
                   capabilities_supported:
                     - access_code
-                  properties:
-                    online: true
-                    name: name
-                    appearance:
-                      name: name
-                    model:
-                      display_name: display_name
-                      manufacturer_display_name: manufacturer_display_name
+                  properties: {}
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:
@@ -330,7 +349,10 @@ service:
         name: UserIdentitiesListAcsSystemsRequest
         body:
           properties:
-            user_identity_id: string
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UserIdentitiesListAcsSystemsResponse
@@ -376,7 +398,10 @@ service:
         name: UserIdentitiesListAcsUsersRequest
         body:
           properties:
-            user_identity_id: string
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UserIdentitiesListAcsUsersResponse
@@ -420,8 +445,14 @@ service:
         name: UserIdentitiesRemoveAcsUserRequest
         body:
           properties:
-            user_identity_id: string
-            acs_user_id: string
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UserIdentitiesRemoveAcsUserResponse
@@ -444,8 +475,14 @@ service:
         name: UserIdentitiesRevokeAccessToDeviceRequest
         body:
           properties:
-            user_identity_id: string
-            device_id: string
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
+            device_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UserIdentitiesRevokeAccessToDeviceResponse
@@ -468,11 +505,23 @@ service:
         name: UserIdentitiesUpdateRequest
         body:
           properties:
-            user_identity_id: string
-            user_identity_key: optional<string>
-            email_address: optional<string>
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
+            user_identity_key:
+              type: optional<string>
+              validation:
+                minLength: 1
+            email_address:
+              type: optional<string>
+              validation:
+                format: email
             phone_number: optional<string>
-            full_name: optional<string>
+            full_name:
+              type: optional<string>
+              validation:
+                minLength: 1
       response:
         docs: OK
         type: UserIdentitiesUpdateResponse

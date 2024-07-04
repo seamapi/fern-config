@@ -35,8 +35,13 @@ service:
         name: NoiseThresholdsCreateRequest
         body:
           properties:
-            device_id: string
-            sync: optional<boolean>
+            device_id:
+              type: string
+              validation:
+                format: uuid
+            sync:
+              type: optional<boolean>
+              default: false
             name: optional<string>
             starts_daily_at: string
             ends_daily_at: string
@@ -80,9 +85,17 @@ service:
         name: NoiseThresholdsDeleteRequest
         body:
           properties:
-            noise_threshold_id: string
-            device_id: string
-            sync: optional<boolean>
+            noise_threshold_id:
+              type: string
+              validation:
+                format: uuid
+            device_id:
+              type: string
+              validation:
+                format: uuid
+            sync:
+              type: optional<boolean>
+              default: false
       response:
         docs: OK
         type: NoiseThresholdsDeleteResponse
@@ -111,7 +124,10 @@ service:
         name: NoiseThresholdsGetRequest
         body:
           properties:
-            noise_threshold_id: string
+            noise_threshold_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: NoiseThresholdsGetResponse
@@ -142,7 +158,10 @@ service:
         name: NoiseThresholdsListRequest
         body:
           properties:
-            device_id: string
+            device_id:
+              type: string
+              validation:
+                format: uuid
             is_programmed: optional<boolean>
       response:
         docs: OK
@@ -174,9 +193,17 @@ service:
         name: NoiseThresholdsUpdateRequest
         body:
           properties:
-            noise_threshold_id: string
-            device_id: string
-            sync: optional<boolean>
+            noise_threshold_id:
+              type: string
+              validation:
+                format: uuid
+            device_id:
+              type: string
+              validation:
+                format: uuid
+            sync:
+              type: optional<boolean>
+              default: false
             name: optional<string>
             starts_daily_at: optional<string>
             ends_daily_at: optional<string>

@@ -18,9 +18,17 @@ service:
         name: SimulateCreateUnmanagedAccessCodeRequest
         body:
           properties:
-            device_id: string
+            device_id:
+              type: string
+              validation:
+                format: uuid
             name: string
-            code: string
+            code:
+              type: string
+              validation:
+                pattern: ^\d+$
+                minLength: 4
+                maxLength: 8
       response:
         docs: OK
         type: SimulateCreateUnmanagedAccessCodeResponse

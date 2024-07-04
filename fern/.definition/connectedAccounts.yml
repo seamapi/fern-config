@@ -4,10 +4,16 @@ types:
       ok: boolean
   ConnectedAccountsGetRequestConnectedAccountId:
     properties:
-      connected_account_id: string
+      connected_account_id:
+        type: string
+        validation:
+          format: uuid
   ConnectedAccountsGetRequestEmail:
     properties:
-      email: string
+      email:
+        type: string
+        validation:
+          format: email
   ConnectedAccountsGetRequest:
     discriminated: false
     union:
@@ -29,9 +35,13 @@ types:
   ConnectedAccountsUpdateRequestCustomMetadataValue:
     discriminated: false
     union:
-      - string
+      - type: string
+        validation:
+          maxLength: 500
       - boolean
-      - optional<string>
+      - type: optional<string>
+        validation:
+          format: 'null'
   ConnectedAccountsUpdateResponse:
     properties:
       connected_account: root.ConnectedAccount
@@ -51,8 +61,13 @@ service:
         name: ConnectedAccountsDeleteRequest
         body:
           properties:
-            connected_account_id: string
-            sync: optional<boolean>
+            connected_account_id:
+              type: string
+              validation:
+                format: uuid
+            sync:
+              type: optional<boolean>
+              default: false
       response:
         docs: OK
         type: ConnectedAccountsDeleteResponse
@@ -113,12 +128,12 @@ service:
         body:
           properties:
             custom_metadata_has:
-              docs: >-
-                Returns devices where the account's custom_metadata contains all
-                of the provided key/value pairs.
               type: >-
                 optional<map<string,
                 ConnectedAccountsListRequestCustomMetadataHasValue>>
+              docs: >-
+                Returns devices where the account's custom_metadata contains all
+                of the provided key/value pairs.
       response:
         docs: OK
         type: ConnectedAccountsListResponse
@@ -152,7 +167,10 @@ service:
         name: ConnectedAccountsUpdateRequest
         body:
           properties:
-            connected_account_id: string
+            connected_account_id:
+              type: string
+              validation:
+                format: uuid
             automatically_manage_new_devices: optional<boolean>
             custom_metadata: >-
               optional<map<string,

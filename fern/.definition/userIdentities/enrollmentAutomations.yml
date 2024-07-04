@@ -8,12 +8,27 @@ types:
       ok: boolean
   EnrollmentAutomationsLaunchResponseEnrollmentAutomation:
     properties:
-      acs_credential_provisioning_automation_id: string
-      credential_manager_acs_system_id: string
-      user_identity_id: string
+      acs_credential_provisioning_automation_id:
+        type: string
+        validation:
+          format: uuid
+      credential_manager_acs_system_id:
+        type: string
+        validation:
+          format: uuid
+      user_identity_id:
+        type: string
+        validation:
+          format: uuid
       created_at: datetime
-      workspace_id: string
-      enrollment_automation_id: string
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
+      enrollment_automation_id:
+        type: string
+        validation:
+          format: uuid
   EnrollmentAutomationsLaunchResponse:
     properties:
       enrollment_automation: EnrollmentAutomationsLaunchResponseEnrollmentAutomation
@@ -37,7 +52,10 @@ service:
         name: EnrollmentAutomationsDeleteRequest
         body:
           properties:
-            enrollment_automation_id: string
+            enrollment_automation_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: EnrollmentAutomationsDeleteResponse
@@ -59,7 +77,10 @@ service:
         name: EnrollmentAutomationsGetRequest
         body:
           properties:
-            enrollment_automation_id: string
+            enrollment_automation_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: EnrollmentAutomationsGetResponse
@@ -88,11 +109,23 @@ service:
         name: EnrollmentAutomationsLaunchRequest
         body:
           properties:
-            user_identity_id: string
-            credential_manager_acs_system_id: string
-            acs_credential_pool_id: optional<string>
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
+            credential_manager_acs_system_id:
+              type: string
+              validation:
+                format: uuid
+            acs_credential_pool_id:
+              type: optional<string>
+              validation:
+                format: uuid
             create_credential_manager_user: optional<boolean>
-            credential_manager_acs_user_id: optional<string>
+            credential_manager_acs_user_id:
+              type: optional<string>
+              validation:
+                format: uuid
       response:
         docs: OK
         type: EnrollmentAutomationsLaunchResponse
@@ -123,7 +156,10 @@ service:
         name: EnrollmentAutomationsListRequest
         body:
           properties:
-            user_identity_id: string
+            user_identity_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: EnrollmentAutomationsListResponse

@@ -1,3 +1,12 @@
+errors:
+  BadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  UnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
 types:
   AccessCodeType:
     enum:
@@ -21,15 +30,15 @@ types:
   AccessCode:
     properties:
       common_code_key:
+        type: optional<string>
         docs: >-
           Unique identifier for a group of access codes that share the same
           code.
-        type: optional<string>
       is_scheduled_on_device:
+        type: optional<boolean>
         docs: >-
           Indicates whether the code is set on the device according to a
           preconfigured schedule.
-        type: optional<boolean>
       type:
         type: AccessCodeType
         docs: >-
@@ -37,23 +46,27 @@ types:
           are active continuously until deactivated manually or "time_bound" for
           access codes that have a specific duration.
       is_waiting_for_code_assignment:
-        docs: Indicates whether the access code is waiting for a code assignment.
         type: optional<boolean>
+        docs: Indicates whether the access code is waiting for a code assignment.
       access_code_id:
         type: string
         docs: Unique identifier for the access code.
+        validation:
+          format: uuid
       device_id:
         type: string
         docs: Unique identifier for the device associated with the access code.
+        validation:
+          format: uuid
       name:
+        type: optional<string>
         docs: >-
           Name of the access code. Enables administrators and users to identify
           the access code easily, especially when there are numerous access
           codes.
-        type: optional<string>
       code:
-        docs: Code used for access. Typically, a numeric or alphanumeric string.
         type: optional<string>
+        docs: Code used for access. Typically, a numeric or alphanumeric string.
       created_at:
         type: datetime
         docs: Date and time at which the access code was created.
@@ -63,11 +76,11 @@ types:
         type: boolean
         docs: Indicates whether Seam manages the access code.
       starts_at:
+        type: optional<datetime>
         docs: Date and time at which the time-bound access code becomes active.
-        type: optional<datetime>
       ends_at:
-        docs: Date and time after which the time-bound access code becomes inactive.
         type: optional<datetime>
+        docs: Date and time after which the time-bound access code becomes inactive.
       status:
         type: AccessCodeStatus
         docs: |2-
@@ -80,13 +93,15 @@ types:
           Indicates whether a backup access code is available for use if the
           primary access code is lost or compromised.
       is_backup:
-        docs: Indicates whether the access code is a backup code.
         type: optional<boolean>
+        docs: Indicates whether the access code is a backup code.
       pulled_backup_access_code_id:
+        type: optional<string>
         docs: >-
           Identifier of the pulled backup access code. Used to associate the
           pulled backup access code with the original access code.
-        type: optional<string>
+        validation:
+          format: uuid
       is_external_modification_allowed:
         type: boolean
         docs: >-
@@ -122,18 +137,22 @@ types:
       access_code_id:
         type: string
         docs: Unique identifier for the access code.
+        validation:
+          format: uuid
       device_id:
         type: string
         docs: Unique identifier for the device associated with the access code.
+        validation:
+          format: uuid
       name:
+        type: optional<string>
         docs: >-
           Name of the access code. Enables administrators and users to identify
           the access code easily, especially when there are numerous access
           codes.
-        type: optional<string>
       code:
-        docs: Code used for access. Typically, a numeric or alphanumeric string.
         type: optional<string>
+        docs: Code used for access. Typically, a numeric or alphanumeric string.
       created_at:
         type: datetime
         docs: Date and time at which the access code was created.
@@ -141,11 +160,11 @@ types:
       warnings: optional<unknown>
       is_managed: boolean
       starts_at:
+        type: optional<datetime>
         docs: Date and time at which the time-bound access code becomes active.
-        type: optional<datetime>
       ends_at:
-        docs: Date and time after which the time-bound access code becomes inactive.
         type: optional<datetime>
+        docs: Date and time after which the time-bound access code becomes inactive.
       status: literal<"set">
   ActionAttemptZero:
     docs: Locking door.
@@ -159,9 +178,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"LOCK_DOOR">
   ActionAttemptOneResult:
     properties: {}
@@ -177,8 +204,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"LOCK_DOOR">
       result: ActionAttemptOneResult
   ActionAttemptTwoError:
@@ -197,8 +229,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"LOCK_DOOR">
       error: ActionAttemptTwoError
   ActionAttemptThree:
@@ -213,9 +250,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"UNLOCK_DOOR">
   ActionAttemptFourResult:
     properties: {}
@@ -231,8 +276,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"UNLOCK_DOOR">
       result: ActionAttemptFourResult
   ActionAttemptFiveError:
@@ -251,8 +301,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"UNLOCK_DOOR">
       error: ActionAttemptFiveError
   ActionAttemptSix:
@@ -267,9 +322,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
   ActionAttemptSevenResult:
     properties: {}
@@ -285,8 +348,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
       result: ActionAttemptSevenResult
   ActionAttemptEightError:
@@ -305,8 +373,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
       error: ActionAttemptEightError
   ActionAttemptNine:
@@ -321,9 +394,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_COOL">
   ActionAttemptTenResult:
     properties: {}
@@ -339,8 +420,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_COOL">
       result: ActionAttemptTenResult
   ActionAttemptElevenError:
@@ -359,8 +445,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_COOL">
       error: ActionAttemptElevenError
   ActionAttemptTwelve:
@@ -375,9 +466,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_HEAT">
   ActionAttemptThirteenResult:
     properties: {}
@@ -393,8 +492,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_HEAT">
       result: ActionAttemptThirteenResult
   ActionAttemptFourteenError:
@@ -413,8 +517,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_HEAT">
       error: ActionAttemptFourteenError
   ActionAttemptFifteen:
@@ -429,9 +538,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_HEAT_COOL">
   ActionAttemptSixteenResult:
     properties: {}
@@ -447,8 +564,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_HEAT_COOL">
       result: ActionAttemptSixteenResult
   ActionAttemptSeventeenError:
@@ -467,8 +589,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_HEAT_COOL">
       error: ActionAttemptSeventeenError
   ActionAttemptEighteen:
@@ -483,9 +610,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_FAN_MODE">
   ActionAttemptNineteenResult:
     properties: {}
@@ -501,8 +636,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_FAN_MODE">
       result: ActionAttemptNineteenResult
   ActionAttemptTwentyError:
@@ -521,8 +661,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_FAN_MODE">
       error: ActionAttemptTwentyError
   ActionAttemptTwentyOne:
@@ -537,9 +682,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_THERMOSTAT_OFF">
   ActionAttemptTwentyTwoResult:
     properties: {}
@@ -555,8 +708,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_THERMOSTAT_OFF">
       result: ActionAttemptTwentyTwoResult
   ActionAttemptTwentyThreeError:
@@ -575,8 +733,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SET_THERMOSTAT_OFF">
       error: ActionAttemptTwentyThreeError
   ActionAttemptTwentyFour:
@@ -590,9 +753,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SYNC_ACCESS_CODES">
   ActionAttemptTwentyFive:
     properties:
@@ -605,8 +776,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SYNC_ACCESS_CODES">
       result: optional<unknown>
   ActionAttemptTwentySixError:
@@ -624,8 +800,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"SYNC_ACCESS_CODES">
       error: ActionAttemptTwentySixError
   ActionAttemptTwentySeven:
@@ -639,9 +820,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"CREATE_ACCESS_CODE">
   ActionAttemptTwentyEight:
     properties:
@@ -654,8 +843,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"CREATE_ACCESS_CODE">
       result: optional<unknown>
   ActionAttemptTwentyNineError:
@@ -673,8 +867,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"CREATE_ACCESS_CODE">
       error: ActionAttemptTwentyNineError
   ActionAttemptThirty:
@@ -688,9 +887,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"DELETE_ACCESS_CODE">
   ActionAttemptThirtyOne:
     properties:
@@ -703,8 +910,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"DELETE_ACCESS_CODE">
       result: optional<unknown>
   ActionAttemptThirtyTwoError:
@@ -722,8 +934,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"DELETE_ACCESS_CODE">
       error: ActionAttemptThirtyTwoError
   ActionAttemptThirtyThree:
@@ -737,9 +954,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"UPDATE_ACCESS_CODE">
   ActionAttemptThirtyFour:
     properties:
@@ -752,8 +977,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"UPDATE_ACCESS_CODE">
       result: optional<unknown>
   ActionAttemptThirtyFiveError:
@@ -771,8 +1001,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"UPDATE_ACCESS_CODE">
       error: ActionAttemptThirtyFiveError
   ActionAttemptThirtySix:
@@ -786,9 +1021,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"CREATE_NOISE_THRESHOLD">
   ActionAttemptThirtySeven:
     properties:
@@ -801,8 +1044,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"CREATE_NOISE_THRESHOLD">
       result: optional<unknown>
   ActionAttemptThirtyEightError:
@@ -820,8 +1068,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"CREATE_NOISE_THRESHOLD">
       error: ActionAttemptThirtyEightError
   ActionAttemptThirtyNine:
@@ -835,9 +1088,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"DELETE_NOISE_THRESHOLD">
   ActionAttemptForty:
     properties:
@@ -850,8 +1111,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"DELETE_NOISE_THRESHOLD">
       result: optional<unknown>
   ActionAttemptFortyOneError:
@@ -869,8 +1135,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"DELETE_NOISE_THRESHOLD">
       error: ActionAttemptFortyOneError
   ActionAttemptFortyTwo:
@@ -884,9 +1155,17 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
   ActionAttemptFortyThree:
     properties:
@@ -899,8 +1178,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"success">
-      error: optional<string>
+      error:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
       result: optional<unknown>
   ActionAttemptActionAttemptIdError:
@@ -918,8 +1202,13 @@ types:
               ---
               The ID of the action attempt.
             
+        validation:
+          format: uuid
       status: literal<"error">
-      result: optional<string>
+      result:
+        type: optional<string>
+        validation:
+          format: 'null'
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
       error: ActionAttemptActionAttemptIdError
   ActionAttempt:
@@ -996,8 +1285,14 @@ types:
       - ActionAttemptActionAttemptId
   ClientSession:
     properties:
-      client_session_id: string
-      workspace_id: string
+      client_session_id:
+        type: string
+        validation:
+          format: uuid
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
       created_at: datetime
       token: string
       user_identifier_key: optional<string>
@@ -1013,9 +1308,15 @@ types:
       - heat_cool
   ClimateSettingSchedule:
     properties:
-      climate_setting_schedule_id: string
+      climate_setting_schedule_id:
+        type: string
+        validation:
+          format: uuid
       schedule_type: literal<"time_bound">
-      device_id: string
+      device_id:
+        type: string
+        validation:
+          format: uuid
       name: optional<string>
       schedule_starts_at: string
       schedule_ends_at: string
@@ -1041,11 +1342,23 @@ types:
       - boolean
   ConnectWebview:
     properties:
-      connect_webview_id: string
-      workspace_id: string
+      connect_webview_id:
+        type: string
+        validation:
+          format: uuid
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
       created_at: datetime
-      connected_account_id: optional<string>
-      url: string
+      connected_account_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      url:
+        type: string
+        validation:
+          format: uri
       device_selection_mode: SelectionMode
       accepted_providers: list<string>
       accepted_devices:
@@ -1067,8 +1380,14 @@ types:
       any_provider_allowed: boolean
       login_successful: boolean
       status: ConnectWebviewStatus
-      custom_redirect_url: optional<string>
-      custom_redirect_failure_url: optional<string>
+      custom_redirect_url:
+        type: optional<string>
+        validation:
+          format: uri
+      custom_redirect_failure_url:
+        type: optional<string>
+        validation:
+          format: uri
       custom_metadata: map<string, ConnectWebviewCustomMetadataValue>
       automatically_manage_new_devices: boolean
       wait_for_device_creation: boolean
@@ -1088,7 +1407,10 @@ types:
       - boolean
   ConnectedAccount:
     properties:
-      connected_account_id: optional<string>
+      connected_account_id:
+        type: optional<string>
+        validation:
+          format: uuid
       created_at: optional<datetime>
       user_identifier: optional<ConnectedAccountUserIdentifier>
       account_type: optional<string>
@@ -1105,448 +1427,18 @@ types:
       - thermostat
       - battery
       - phone
-  DevicePropertiesAccessoryKeypadBattery:
-    docs: Indicates if the keypad battery properties.
-    properties:
-      level: double
-  DevicePropertiesAccessoryKeypad:
-    docs: Represents the accessory keypad state.
-    properties:
-      is_connected:
-        type: boolean
-        docs: Indicates if the accessory_keypad is connected to the device.
-      battery:
-        docs: Indicates if the keypad battery properties.
-        type: optional<DevicePropertiesAccessoryKeypadBattery>
-  DevicePropertiesAppearance:
-    properties:
-      name:
-        type: string
-        docs: >-
-          Name of the device as seen from the provider API and application, not
-          settable through Seam.
-  DevicePropertiesModel:
-    properties:
-      can_connect_accessory_keypad:
-        docs: Indicates whether the device can connect a accessory keypad.
-        type: optional<boolean>
-      display_name:
-        type: string
-        docs: Display name of the device model.
-      manufacturer_display_name:
-        type: string
-        docs: >-
-          Display name that corresponds to the manufacturer-specific terminology
-          for the device.
-      has_built_in_keypad:
-        docs: Indicates whether the device has a built in accessory keypad.
-        type: optional<boolean>
-      offline_access_codes_supported:
-        docs: Indicates whether the device supports offline access codes.
-        type: optional<boolean>
-      online_access_codes_supported:
-        docs: Indicates whether the device supports online access codes.
-        type: optional<boolean>
-      accessory_keypad_supported:
-        docs: |2-
-
-                ---
-                deprecated: use device.properties.model.can_connect_accessory_keypad
-                ---
-                
-        type: optional<boolean>
-  DevicePropertiesBatteryStatus:
-    enum:
-      - critical
-      - low
-      - good
-      - full
-  DevicePropertiesBattery:
-    docs: >-
-      Represents the current status of the battery charge level. Values are
-      "critical," which indicates an extremely low level, suggesting imminent
-      shutdown or an urgent need for charging; "low," which signifies that the
-      battery is under the preferred threshold and should be charged soon;
-      "good," which denotes a satisfactory charge level, adequate for normal use
-      without the immediate need for recharging; and "full," which represents a
-      battery that is fully charged, providing the maximum duration of usage.
-    properties:
-      level: double
-      status: DevicePropertiesBatteryStatus
-  DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem:
-    properties:
-      endpoint_id: string
-      is_active: boolean
-  DevicePropertiesAssaAbloyCredentialServiceMetadata:
-    properties:
-      has_active_endpoint: boolean
-      endpoints: list<DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem>
-  DevicePropertiesAugustMetadata:
-    properties:
-      lock_id: string
-      lock_name: string
-      house_name: string
-      has_keypad: boolean
-      keypad_battery_level: optional<string>
-      model: optional<string>
-      house_id: optional<string>
-  DevicePropertiesAvigilonAltaMetadata:
-    properties:
-      entry_name: string
-      org_name: string
-      zone_id: double
-      zone_name: string
-      site_id: double
-      site_name: string
-      entry_relays_total_count: double
-  DevicePropertiesSchlageMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      access_code_length: optional<double>
-      model: optional<string>
-  DevicePropertiesSmartthingsMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      model: optional<string>
-      location_id: optional<string>
-  DevicePropertiesLocklyMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      model: optional<string>
-  DevicePropertiesNukiMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      keypad_battery_critical: optional<boolean>
-      keypad_paired: optional<boolean>
-      keypad_2_paired: optional<boolean>
-  DevicePropertiesKwiksetMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      model_number: string
-  DevicePropertiesSaltoMetadata:
-    properties:
-      lock_id: string
-      customer_reference: string
-      lock_type: string
-      battery_level: string
-      locked_state: string
-      model: optional<string>
-  DevicePropertiesGenieMetadata:
-    properties:
-      device_name: string
-      door_name: string
-  DevicePropertiesBrivoMetadata:
-    properties:
-      device_name: string
-  DevicePropertiesIglooMetadata:
-    properties:
-      device_id: string
-      bridge_id: string
-      model: optional<string>
-  DevicePropertiesNoiseawareMetadataDeviceModel:
-    enum:
-      - indoor
-      - outdoor
-  DevicePropertiesNoiseawareMetadata:
-    properties:
-      device_model: DevicePropertiesNoiseawareMetadataDeviceModel
-      noise_level_nrs: double
-      noise_level_decibel: double
-      device_name: string
-      device_id: string
-  DevicePropertiesMinutMetadataLatestSensorValuesTemperature:
-    properties:
-      time: string
-      value: double
-  DevicePropertiesMinutMetadataLatestSensorValuesSound:
-    properties:
-      time: string
-      value: double
-  DevicePropertiesMinutMetadataLatestSensorValuesHumidity:
-    properties:
-      time: string
-      value: double
-  DevicePropertiesMinutMetadataLatestSensorValuesPressure:
-    properties:
-      time: string
-      value: double
-  DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ:
-    properties:
-      time: string
-      value: double
-  DevicePropertiesMinutMetadataLatestSensorValues:
-    properties:
-      temperature: DevicePropertiesMinutMetadataLatestSensorValuesTemperature
-      sound: DevicePropertiesMinutMetadataLatestSensorValuesSound
-      humidity: DevicePropertiesMinutMetadataLatestSensorValuesHumidity
-      pressure: DevicePropertiesMinutMetadataLatestSensorValuesPressure
-      accelerometer_z: DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ
-  DevicePropertiesMinutMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      latest_sensor_values: DevicePropertiesMinutMetadataLatestSensorValues
-  DevicePropertiesFourSuitesMetadata:
-    properties:
-      device_id: double
-      device_name: string
-      reclose_delay_in_seconds: double
-  DevicePropertiesTwoNMetadata:
-    properties:
-      device_id: double
-      device_name: string
-  DevicePropertiesControlbywebMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      relay_name: optional<string>
-  DevicePropertiesTtlockMetadata:
-    properties:
-      lock_id: double
-      lock_alias: string
-      feature_value: string
-  DevicePropertiesSeamBridgeMetadataUnlockMethod:
-    enum:
-      - bridge
-      - doorking
-  DevicePropertiesSeamBridgeMetadata:
-    properties:
-      unlock_method: optional<DevicePropertiesSeamBridgeMetadataUnlockMethod>
-      device_num: double
-      name: string
-  DevicePropertiesIgloohomeMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      bridge_id: optional<string>
-      bridge_name: optional<string>
-      keypad_id: optional<string>
-  DevicePropertiesNestMetadata:
-    properties:
-      nest_device_id: string
-      device_name: string
-      custom_name: string
-  DevicePropertiesEcobeeMetadata:
-    properties:
-      ecobee_device_id: string
-      device_name: string
-  DevicePropertiesHoneywellResideoMetadata:
-    properties:
-      honeywell_resideo_device_id: string
-      device_name: string
-  DevicePropertiesHubitatMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      device_label: string
-  DevicePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem:
-    properties:
-      name: string
-      prefix: double
-      check_in_time: string
-      check_out_time: string
-      is_24_hour: boolean
-      is_biweekly_mode: boolean
-      is_one_shot: boolean
-      is_master: boolean
-      ext_dormakaba_oracode_user_level_prefix: double
-      dormakaba_oracode_user_level_id: string
-  DevicePropertiesDormakabaOracodeMetadata:
-    properties:
-      door_id: double
-      door_name: string
-      device_id: optional<double>
-      door_is_wireless: boolean
-      site_id: double
-      site_name: string
-      iana_timezone: optional<string>
-      predefined_time_slots: >-
-        optional<list<DevicePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem>>
-  DevicePropertiesWyzeMetadata:
-    properties:
-      device_id: string
-      device_name: string
-      product_name: string
-      product_type: string
-      product_model: string
-      device_info_model: string
-      keypad_uuid: optional<string>
-      locker_status_hardlock: optional<double>
-  DevicePropertiesTedeeMetadata:
-    properties:
-      device_id: double
-      serial_number: string
-      device_name: string
-      device_model: string
-      bridge_id: double
-      bridge_name: string
-      keypad_id: optional<double>
-  DevicePropertiesCodeConstraintsItemZeroConstraintType:
-    enum:
-      - no_zeros
-      - cannot_start_with_12
-      - no_triple_consecutive_ints
-      - cannot_specify_pin_code
-      - pin_code_matches_existing_set
-      - start_date_in_future
-      - no_ascending_or_descending_sequence
-      - at_least_three_unique_digits
-      - cannot_contain_089
-  DevicePropertiesCodeConstraintsItemZero:
-    properties:
-      constraint_type: DevicePropertiesCodeConstraintsItemZeroConstraintType
-  DevicePropertiesCodeConstraintsItemMaxLengthConstraintType:
-    enum:
-      - name_length
-      - name_must_be_unique
-  DevicePropertiesCodeConstraintsItemMaxLength:
-    properties:
-      constraint_type: DevicePropertiesCodeConstraintsItemMaxLengthConstraintType
-      min_length: optional<double>
-      max_length: optional<double>
-  DevicePropertiesCodeConstraintsItem:
-    discriminated: false
-    union:
-      - DevicePropertiesCodeConstraintsItemZero
-      - DevicePropertiesCodeConstraintsItemMaxLength
-  DevicePropertiesKeypadBattery:
-    properties:
-      level: double
   DeviceProperties:
     docs: Properties of the device.
-    properties:
-      online:
-        type: boolean
-        docs: Indicates whether the device is online.
-      name:
-        type: string
-        docs: |2-
-
-                ---
-                deprecated: use device.display_name instead
-                ---
-                Name of the device.
-                
-      accessory_keypad:
-        docs: Represents the accessory keypad state.
-        type: optional<DevicePropertiesAccessoryKeypad>
-      appearance: DevicePropertiesAppearance
-      model: DevicePropertiesModel
-      has_direct_power:
-        docs: Indicates whether the device has direct power.
-        type: optional<boolean>
-      battery_level:
-        docs: >-
-          Indicates the battery level of the device as a decimal value between 0
-          and 1, inclusive.
-        type: optional<double>
-      battery:
-        docs: >-
-          Represents the current status of the battery charge level. Values are
-          "critical," which indicates an extremely low level, suggesting
-          imminent shutdown or an urgent need for charging; "low," which
-          signifies that the battery is under the preferred threshold and should
-          be charged soon; "good," which denotes a satisfactory charge level,
-          adequate for normal use without the immediate need for recharging; and
-          "full," which represents a battery that is fully charged, providing
-          the maximum duration of usage.
-        type: optional<DevicePropertiesBattery>
-      manufacturer:
-        docs: Manufacturer of the device.
-        type: optional<string>
-      image_url:
-        docs: Image URL for the device.
-        type: optional<string>
-      image_alt_text:
-        docs: Alt text for the device image.
-        type: optional<string>
-      serial_number:
-        docs: Serial number of the device.
-        type: optional<string>
-      online_access_codes_enabled:
-        docs: >-
-          Indicates whether it is currently possible to use online access codes
-          for the device.
-        type: optional<boolean>
-      offline_access_codes_enabled:
-        docs: >-
-          Indicates whether it is currently possible to use offline access codes
-          for the device.
-        type: optional<boolean>
-      supports_accessory_keypad:
-        docs: |2-
-
-                ---
-                deprecated: use device.properties.model.can_connect_accessory_keypad
-                ---
-                
-        type: optional<boolean>
-      supports_offline_access_codes:
-        docs: |2-
-
-                ---
-                deprecated: use offline_access_codes_enabled
-                ---
-                
-        type: optional<boolean>
-      noise_level_decibels:
-        docs: >-
-          Indicates current noise level in decibels, if the device supports
-          noise detection.
-        type: optional<double>
-      currently_triggering_noise_threshold_ids:
-        docs: Array of noise threshold IDs that are currently triggering.
-        type: optional<list<string>>
-      assa_abloy_credential_service_metadata: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
-      august_metadata: optional<DevicePropertiesAugustMetadata>
-      avigilon_alta_metadata: optional<DevicePropertiesAvigilonAltaMetadata>
-      schlage_metadata: optional<DevicePropertiesSchlageMetadata>
-      smartthings_metadata: optional<DevicePropertiesSmartthingsMetadata>
-      lockly_metadata: optional<DevicePropertiesLocklyMetadata>
-      nuki_metadata: optional<DevicePropertiesNukiMetadata>
-      kwikset_metadata: optional<DevicePropertiesKwiksetMetadata>
-      salto_metadata: optional<DevicePropertiesSaltoMetadata>
-      genie_metadata: optional<DevicePropertiesGenieMetadata>
-      brivo_metadata: optional<DevicePropertiesBrivoMetadata>
-      igloo_metadata: optional<DevicePropertiesIglooMetadata>
-      noiseaware_metadata: optional<DevicePropertiesNoiseawareMetadata>
-      minut_metadata: optional<DevicePropertiesMinutMetadata>
-      four_suites_metadata: optional<DevicePropertiesFourSuitesMetadata>
-      two_n_metadata: optional<DevicePropertiesTwoNMetadata>
-      controlbyweb_metadata: optional<DevicePropertiesControlbywebMetadata>
-      ttlock_metadata: optional<DevicePropertiesTtlockMetadata>
-      seam_bridge_metadata: optional<DevicePropertiesSeamBridgeMetadata>
-      igloohome_metadata: optional<DevicePropertiesIgloohomeMetadata>
-      nest_metadata: optional<DevicePropertiesNestMetadata>
-      ecobee_metadata: optional<DevicePropertiesEcobeeMetadata>
-      honeywell_resideo_metadata: optional<DevicePropertiesHoneywellResideoMetadata>
-      hubitat_metadata: optional<DevicePropertiesHubitatMetadata>
-      dormakaba_oracode_metadata: optional<DevicePropertiesDormakabaOracodeMetadata>
-      wyze_metadata: optional<DevicePropertiesWyzeMetadata>
-      tedee_metadata: optional<DevicePropertiesTedeeMetadata>
-      _experimental_supported_code_from_access_codes_lengths: optional<list<double>>
-      code_constraints: optional<list<DevicePropertiesCodeConstraintsItem>>
-      supported_code_lengths: optional<list<double>>
-      max_active_codes_supported: optional<double>
-      supports_backup_access_code_pool: optional<boolean>
-      has_native_entry_events: optional<boolean>
-      locked: optional<boolean>
-      keypad_battery: optional<DevicePropertiesKeypadBattery>
-      door_open: optional<boolean>
+    properties: {}
   DeviceLocation:
     docs: Location information for the device.
     properties:
       location_name:
+        type: optional<string>
         docs: Name of the device location.
-        type: optional<string>
       timezone:
-        docs: Time zone of the device location.
         type: optional<string>
+        docs: Time zone of the device location.
   DeviceErrorsItem:
     properties:
       error_code: string
@@ -1565,12 +1457,14 @@ types:
       device_id:
         type: string
         docs: Unique identifier for the device.
+        validation:
+          format: uuid
       device_type:
         type: DeviceType
         docs: Type of the device.
       nickname:
-        docs: Optional nickname to describe the device, settable through Seam
         type: optional<string>
+        docs: Optional nickname to describe the device, settable through Seam
       display_name:
         type: string
         docs: >-
@@ -1595,14 +1489,18 @@ types:
         type: DeviceProperties
         docs: Properties of the device.
       location:
-        docs: Location information for the device.
         type: optional<DeviceLocation>
+        docs: Location information for the device.
       connected_account_id:
         type: string
         docs: Unique identifier for the account associated with the device.
+        validation:
+          format: uuid
       workspace_id:
         type: string
         docs: Unique identifier for the Seam workspace associated with the device.
+        validation:
+          format: uuid
       errors:
         docs: >-
           Array of errors associated with the device. Each error object within
@@ -1654,7 +1552,11 @@ types:
   UnmanagedDevicePropertiesAccessoryKeypadBattery:
     docs: Indicates if the keypad battery properties.
     properties:
-      level: double
+      level:
+        type: double
+        validation:
+          min: 0
+          max: 1
   UnmanagedDevicePropertiesAccessoryKeypad:
     docs: Represents the accessory keypad state.
     properties:
@@ -1662,8 +1564,8 @@ types:
         type: boolean
         docs: Indicates if the accessory_keypad is connected to the device.
       battery:
-        docs: Indicates if the keypad battery properties.
         type: optional<UnmanagedDevicePropertiesAccessoryKeypadBattery>
+        docs: Indicates if the keypad battery properties.
   UnmanagedDevicePropertiesBatteryStatus:
     enum:
       - critical
@@ -1680,13 +1582,17 @@ types:
       without the immediate need for recharging; and "full," which represents a
       battery that is fully charged, providing the maximum duration of usage.
     properties:
-      level: double
+      level:
+        type: double
+        validation:
+          min: 0
+          max: 1
       status: UnmanagedDevicePropertiesBatteryStatus
   UnmanagedDevicePropertiesModel:
     properties:
       can_connect_accessory_keypad:
-        docs: Indicates whether the device can connect a accessory keypad.
         type: optional<boolean>
+        docs: Indicates whether the device can connect a accessory keypad.
       display_name:
         type: string
         docs: Display name of the device model.
@@ -1696,27 +1602,27 @@ types:
           Display name that corresponds to the manufacturer-specific terminology
           for the device.
       has_built_in_keypad:
+        type: optional<boolean>
         docs: Indicates whether the device has a built in accessory keypad.
-        type: optional<boolean>
       offline_access_codes_supported:
+        type: optional<boolean>
         docs: Indicates whether the device supports offline access codes.
-        type: optional<boolean>
       online_access_codes_supported:
-        docs: Indicates whether the device supports online access codes.
         type: optional<boolean>
+        docs: Indicates whether the device supports online access codes.
       accessory_keypad_supported:
+        type: optional<boolean>
         docs: |2-
 
                 ---
                 deprecated: use device.properties.model.can_connect_accessory_keypad
                 ---
                 
-        type: optional<boolean>
   UnmanagedDeviceProperties:
     properties:
       accessory_keypad:
-        docs: Represents the accessory keypad state.
         type: optional<UnmanagedDevicePropertiesAccessoryKeypad>
+        docs: Represents the accessory keypad state.
       name:
         type: string
         docs: |2-
@@ -1730,20 +1636,26 @@ types:
         type: boolean
         docs: Indicates whether the device is online.
       manufacturer:
+        type: optional<string>
         docs: Manufacturer of the device.
-        type: optional<string>
       image_url:
+        type: optional<string>
         docs: Image URL for the device.
-        type: optional<string>
+        validation:
+          format: uri
       image_alt_text:
-        docs: Alt text for the device image.
         type: optional<string>
+        docs: Alt text for the device image.
       battery_level:
+        type: optional<double>
         docs: >-
           Indicates the battery level of the device as a decimal value between 0
           and 1, inclusive.
-        type: optional<double>
+        validation:
+          min: 0
+          max: 1
       battery:
+        type: optional<UnmanagedDevicePropertiesBattery>
         docs: >-
           Represents the current status of the battery charge level. Values are
           "critical," which indicates an extremely low level, suggesting
@@ -1753,17 +1665,16 @@ types:
           adequate for normal use without the immediate need for recharging; and
           "full," which represents a battery that is fully charged, providing
           the maximum duration of usage.
-        type: optional<UnmanagedDevicePropertiesBattery>
       online_access_codes_enabled:
+        type: optional<boolean>
         docs: >-
           Indicates whether it is currently possible to use online access codes
           for the device.
-        type: optional<boolean>
       offline_access_codes_enabled:
+        type: optional<boolean>
         docs: >-
           Indicates whether it is currently possible to use offline access codes
           for the device.
-        type: optional<boolean>
       model: UnmanagedDevicePropertiesModel
   UnmanagedDeviceDeviceProvider:
     properties:
@@ -1773,12 +1684,16 @@ types:
       device_id:
         type: string
         docs: Unique identifier for the device.
+        validation:
+          format: uuid
       device_type:
         type: DeviceType
         docs: Type of the device.
       connected_account_id:
         type: string
         docs: Unique identifier for the account associated with the device.
+        validation:
+          format: uuid
       capabilities_supported:
         docs: >-
           Collection of capabilities that the device supports when connected to
@@ -1795,6 +1710,8 @@ types:
       workspace_id:
         type: string
         docs: Unique identifier for the Seam workspace associated with the device.
+        validation:
+          format: uuid
       errors:
         docs: >-
           Array of errors associated with the device. Each error object within
@@ -1880,22 +1797,55 @@ types:
       provider_categories: list<DeviceProviderProviderCategoriesItem>
   Event:
     properties:
-      event_id: string
-      device_id: optional<string>
-      action_attempt_id: optional<string>
-      acs_credential_id: optional<string>
-      acs_user_id: optional<string>
-      acs_system_id: optional<string>
-      client_session_id: optional<string>
-      enrollment_automation_id: optional<string>
+      event_id:
+        type: string
+        validation:
+          format: uuid
+      device_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      action_attempt_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      acs_credential_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      acs_user_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      acs_system_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      client_session_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      enrollment_automation_id:
+        type: optional<string>
+        validation:
+          format: uuid
       event_type: string
-      workspace_id: string
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
       created_at: datetime
       occurred_at: datetime
   NoiseThreshold:
     properties:
-      noise_threshold_id: string
-      device_id: string
+      noise_threshold_id:
+        type: string
+        validation:
+          format: uuid
+      device_id:
+        type: string
+        validation:
+          format: uuid
       name: string
       noise_threshold_nrs: optional<double>
       starts_daily_at: string
@@ -1919,18 +1869,21 @@ types:
       secret: optional<string>
   Workspace:
     properties:
-      workspace_id: string
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
       name: string
       company_name: string
       is_sandbox: boolean
       connect_partner_name:
+        type: optional<string>
         docs: |2-
 
               ---
               deprecated: use company_name
               ---
             
-        type: optional<string>
   AcsSystemExternalType:
     enum:
       - pti_site
@@ -1975,28 +1928,34 @@ types:
     properties: {}
   AcsSystem:
     properties:
-      acs_system_id: string
+      acs_system_id:
+        type: string
+        validation:
+          format: uuid
       external_type: optional<AcsSystemExternalType>
       external_type_display_name: optional<string>
       system_type:
+        type: optional<AcsSystemSystemType>
         docs: |2-
 
                 ---
                 deprecated: use external_type
                 ---
                 
-        type: optional<AcsSystemSystemType>
       system_type_display_name:
+        type: optional<string>
         docs: |2-
 
                 ---
                 deprecated: use external_type_display_name
                 ---
                 
-        type: optional<string>
       name: string
       created_at: datetime
-      workspace_id: string
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
       connected_account_ids: list<string>
       image_url: string
       image_alt_text: string
@@ -2026,9 +1985,18 @@ types:
       - brivo_group
   AcsAccessGroup:
     properties:
-      acs_access_group_id: string
-      acs_system_id: string
-      workspace_id: string
+      acs_access_group_id:
+        type: string
+        validation:
+          format: uuid
+      acs_system_id:
+        type: string
+        validation:
+          format: uuid
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
       name: string
       access_group_type:
         type: AcsAccessGroupAccessGroupType
@@ -2063,10 +2031,22 @@ types:
       ends_at: datetime
   AcsUser:
     properties:
-      acs_user_id: string
-      acs_system_id: string
-      hid_acs_system_id: optional<string>
-      workspace_id: string
+      acs_user_id:
+        type: string
+        validation:
+          format: uuid
+      acs_system_id:
+        type: string
+        validation:
+          format: uuid
+      hid_acs_system_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
       created_at: datetime
       display_name: string
       external_type: optional<AcsUserExternalType>
@@ -2079,14 +2059,19 @@ types:
       user_identity_phone_number: optional<string>
       full_name: optional<string>
       email:
+        type: optional<string>
         docs: |2-
 
               ---
               deprecated: use email_address.
               ---
               
+        validation:
+          format: email
+      email_address:
         type: optional<string>
-      email_address: optional<string>
+        validation:
+          format: email
       phone_number: optional<string>
   AcsEntranceErrorsItem:
     properties:
@@ -2123,8 +2108,14 @@ types:
       profiles: optional<list<AcsEntranceVisionlineMetadataProfilesItem>>
   AcsEntrance:
     properties:
-      acs_system_id: string
-      acs_entrance_id: string
+      acs_system_id:
+        type: string
+        validation:
+          format: uuid
+      acs_entrance_id:
+        type: string
+        validation:
+          format: uuid
       created_at: datetime
       display_name: string
       errors: list<AcsEntranceErrorsItem>
@@ -2132,20 +2123,44 @@ types:
       visionline_metadata: optional<AcsEntranceVisionlineMetadata>
   AcsCredentialProvisioningAutomation:
     properties:
-      acs_credential_provisioning_automation_id: string
-      credential_manager_acs_system_id: string
-      user_identity_id: string
+      acs_credential_provisioning_automation_id:
+        type: string
+        validation:
+          format: uuid
+      credential_manager_acs_system_id:
+        type: string
+        validation:
+          format: uuid
+      user_identity_id:
+        type: string
+        validation:
+          format: uuid
       created_at: datetime
-      workspace_id: string
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
   AcsCredentialPool:
     properties:
-      acs_credential_pool_id: string
-      acs_system_id: string
-      display_name: string
+      acs_credential_pool_id:
+        type: string
+        validation:
+          format: uuid
+      acs_system_id:
+        type: string
+        validation:
+          format: uuid
+      display_name:
+        type: string
+        validation:
+          minLength: 1
       external_type: literal<"hid_part_number">
       external_type_display_name: string
       created_at: datetime
-      workspace_id: string
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
   AcsCredentialAccessMethod:
     enum:
       - code
@@ -2177,18 +2192,39 @@ types:
       common_acs_entrance_ids: optional<list<string>>
   AcsCredential:
     properties:
-      acs_credential_id: string
-      acs_user_id: optional<string>
-      acs_credential_pool_id: optional<string>
-      acs_system_id: string
-      parent_acs_credential_id: optional<string>
-      display_name: string
+      acs_credential_id:
+        type: string
+        validation:
+          format: uuid
+      acs_user_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      acs_credential_pool_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      acs_system_id:
+        type: string
+        validation:
+          format: uuid
+      parent_acs_credential_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      display_name:
+        type: string
+        validation:
+          minLength: 1
       code: optional<string>
       access_method: AcsCredentialAccessMethod
       external_type: optional<AcsCredentialExternalType>
       external_type_display_name: optional<string>
       created_at: datetime
-      workspace_id: string
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
       starts_at: optional<string>
       ends_at: optional<string>
       errors: list<AcsCredentialErrorsItem>
@@ -2199,11 +2235,23 @@ types:
       visionline_metadata: optional<AcsCredentialVisionlineMetadata>
   EnrollmentAutomation:
     properties:
-      credential_manager_acs_system_id: string
-      user_identity_id: string
+      credential_manager_acs_system_id:
+        type: string
+        validation:
+          format: uuid
+      user_identity_id:
+        type: string
+        validation:
+          format: uuid
       created_at: datetime
-      workspace_id: string
-      enrollment_automation_id: string
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
+      enrollment_automation_id:
+        type: string
+        validation:
+          format: uuid
   PhoneDeviceType:
     enum:
       - android_phone
@@ -2231,11 +2279,11 @@ types:
     docs: Location information for the device.
     properties:
       location_name:
+        type: optional<string>
         docs: Name of the device location.
-        type: optional<string>
       timezone:
-        docs: Time zone of the device location.
         type: optional<string>
+        docs: Time zone of the device location.
   PhoneErrorsItem:
     properties:
       error_code: string
@@ -2254,10 +2302,12 @@ types:
       device_id:
         type: string
         docs: Unique identifier for the device.
+        validation:
+          format: uuid
       device_type: PhoneDeviceType
       nickname:
-        docs: Optional nickname to describe the device, settable through Seam
         type: optional<string>
+        docs: Optional nickname to describe the device, settable through Seam
       display_name:
         type: string
         docs: >-
@@ -2280,11 +2330,13 @@ types:
         type: list<PhoneCapabilitiesSupportedItem>
       properties: PhoneProperties
       location:
-        docs: Location information for the device.
         type: optional<PhoneLocation>
+        docs: Location information for the device.
       workspace_id:
         type: string
         docs: Unique identifier for the Seam workspace associated with the device.
+        validation:
+          format: uuid
       errors:
         docs: >-
           Array of errors associated with the device. Each error object within
@@ -2319,18 +2371,42 @@ types:
       can_simulate_disconnection: optional<boolean>
   UserIdentity:
     properties:
-      user_identity_id: string
-      user_identity_key: optional<string>
-      email_address: optional<string>
+      user_identity_id:
+        type: string
+        validation:
+          format: uuid
+      user_identity_key:
+        type: optional<string>
+        validation:
+          minLength: 1
+      email_address:
+        type: optional<string>
+        validation:
+          format: email
       phone_number: optional<string>
-      display_name: string
-      full_name: optional<string>
+      display_name:
+        type: string
+        validation:
+          minLength: 1
+      full_name:
+        type: optional<string>
+        validation:
+          minLength: 1
       created_at: datetime
-      workspace_id: string
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
   Network:
     properties:
-      network_id: string
-      workspace_id: string
+      network_id:
+        type: string
+        validation:
+          format: uuid
+      workspace_id:
+        type: string
+        validation:
+          format: uuid
       display_name: string
       created_at: datetime
   DeviceType:
@@ -2537,10 +2613,3 @@ types:
       - heat
       - cool
       - heat_cool
-errors:
-  BadRequestError:
-    status-code: 400
-    type: unknown
-  UnauthorizedError:
-    status-code: 401
-    type: unknown

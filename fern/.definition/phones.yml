@@ -43,7 +43,10 @@ service:
         name: PhonesListRequest
         body:
           properties:
-            owner_user_identity_id: optional<string>
+            owner_user_identity_id:
+              type: optional<string>
+              validation:
+                format: uuid
       response:
         docs: OK
         type: PhonesListResponse

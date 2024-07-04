@@ -26,7 +26,10 @@ service:
         name: SystemsGetRequest
         body:
           properties:
-            acs_system_id: string
+            acs_system_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: SystemsGetResponse
@@ -72,7 +75,10 @@ service:
         name: SystemsListRequest
         body:
           properties:
-            connected_account_id: optional<string>
+            connected_account_id:
+              type: optional<string>
+              validation:
+                format: uuid
       response:
         docs: OK
         type: SystemsListResponse
@@ -117,7 +123,10 @@ service:
         name: SystemsListCompatibleCredentialManagerAcsSystemsRequest
         body:
           properties:
-            acs_system_id: string
+            acs_system_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: SystemsListCompatibleCredentialManagerAcsSystemsResponse

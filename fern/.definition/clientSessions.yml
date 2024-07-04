@@ -40,7 +40,10 @@ service:
         name: ClientSessionsCreateRequest
         body:
           properties:
-            user_identifier_key: optional<string>
+            user_identifier_key:
+              type: optional<string>
+              validation:
+                minLength: 1
             connect_webview_ids: optional<list<string>>
             connected_account_ids: optional<list<string>>
             user_identity_ids: optional<list<string>>
@@ -79,7 +82,10 @@ service:
         name: ClientSessionsDeleteRequest
         body:
           properties:
-            client_session_id: string
+            client_session_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: ClientSessionsDeleteResponse
@@ -137,7 +143,10 @@ service:
         name: ClientSessionsGetOrCreateRequest
         body:
           properties:
-            user_identifier_key: optional<string>
+            user_identifier_key:
+              type: optional<string>
+              validation:
+                minLength: 1
             connect_webview_ids: optional<list<string>>
             connected_account_ids: optional<list<string>>
             user_identity_ids: optional<list<string>>
@@ -253,7 +262,10 @@ service:
         name: ClientSessionsRevokeRequest
         body:
           properties:
-            client_session_id: string
+            client_session_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: ClientSessionsRevokeResponse

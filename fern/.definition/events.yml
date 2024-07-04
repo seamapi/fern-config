@@ -28,9 +28,15 @@ service:
         name: EventsGetRequest
         body:
           properties:
-            event_id: optional<string>
+            event_id:
+              type: optional<string>
+              validation:
+                format: uuid
             event_type: optional<string>
-            device_id: optional<string>
+            device_id:
+              type: optional<string>
+              validation:
+                format: uuid
       response:
         docs: OK
         type: EventsGetResponse
@@ -68,14 +74,25 @@ service:
           properties:
             since: optional<string>
             between: optional<list<EventsListRequestBetweenItem>>
-            device_id: optional<string>
+            device_id:
+              type: optional<string>
+              validation:
+                format: uuid
             device_ids: optional<list<string>>
-            access_code_id: optional<string>
+            access_code_id:
+              type: optional<string>
+              validation:
+                format: uuid
             access_code_ids: optional<list<string>>
             event_type: optional<root.EventType>
             event_types: optional<list<root.EventType>>
-            connected_account_id: optional<string>
-            limit: optional<double>
+            connected_account_id:
+              type: optional<string>
+              validation:
+                format: uuid
+            limit:
+              type: optional<double>
+              default: 500
       response:
         docs: OK
         type: EventsListResponse

@@ -59,8 +59,14 @@ service:
         name: UsersAddToAccessGroupRequest
         body:
           properties:
-            acs_user_id: string
-            acs_access_group_id: string
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
+            acs_access_group_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UsersAddToAccessGroupResponse
@@ -83,21 +89,32 @@ service:
         name: UsersCreateRequest
         body:
           properties:
-            acs_system_id: string
+            acs_system_id:
+              type: string
+              validation:
+                format: uuid
             acs_access_group_ids: optional<list<string>>
-            user_identity_id: optional<string>
+            user_identity_id:
+              type: optional<string>
+              validation:
+                format: uuid
             access_schedule: optional<UsersCreateRequestAccessSchedule>
             full_name: optional<string>
             email:
+              type: optional<string>
               docs: |2-
 
                     ---
                     deprecated: use email_address.
                     ---
                     
-              type: optional<string>
+              validation:
+                format: email
             phone_number: optional<string>
-            email_address: optional<string>
+            email_address:
+              type: optional<string>
+              validation:
+                format: email
       response:
         docs: OK
         type: UsersCreateResponse
@@ -141,7 +158,10 @@ service:
         name: UsersDeleteRequest
         body:
           properties:
-            acs_user_id: string
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UsersDeleteResponse
@@ -163,7 +183,10 @@ service:
         name: UsersGetRequest
         body:
           properties:
-            acs_user_id: string
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UsersGetResponse
@@ -207,10 +230,16 @@ service:
         name: UsersListRequest
         body:
           properties:
-            user_identity_id: optional<string>
+            user_identity_id:
+              type: optional<string>
+              validation:
+                format: uuid
             user_identity_phone_number: optional<string>
             user_identity_email_address: optional<string>
-            acs_system_id: optional<string>
+            acs_system_id:
+              type: optional<string>
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UsersListResponse
@@ -253,7 +282,10 @@ service:
         name: UsersListAccessibleEntrancesRequest
         body:
           properties:
-            acs_user_id: string
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UsersListAccessibleEntrancesResponse
@@ -292,8 +324,14 @@ service:
         name: UsersRemoveFromAccessGroupRequest
         body:
           properties:
-            acs_user_id: string
-            acs_access_group_id: string
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
+            acs_access_group_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UsersRemoveFromAccessGroupResponse
@@ -316,7 +354,10 @@ service:
         name: UsersRevokeAccessToAllEntrancesRequest
         body:
           properties:
-            acs_user_id: string
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UsersRevokeAccessToAllEntrancesResponse
@@ -338,7 +379,10 @@ service:
         name: UsersSuspendRequest
         body:
           properties:
-            acs_user_id: string
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UsersSuspendResponse
@@ -360,7 +404,10 @@ service:
         name: UsersUnsuspendRequest
         body:
           properties:
-            acs_user_id: string
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UsersUnsuspendResponse
@@ -383,19 +430,30 @@ service:
         body:
           properties:
             access_schedule: optional<UsersUpdateRequestAccessSchedule>
-            acs_user_id: string
+            acs_user_id:
+              type: string
+              validation:
+                format: uuid
             full_name: optional<string>
             email:
+              type: optional<string>
               docs: |2-
 
                     ---
                     deprecated: use email_address.
                     ---
                     
-              type: optional<string>
+              validation:
+                format: email
             phone_number: optional<string>
-            email_address: optional<string>
-            hid_acs_system_id: optional<string>
+            email_address:
+              type: optional<string>
+              validation:
+                format: email
+            hid_acs_system_id:
+              type: optional<string>
+              validation:
+                format: uuid
       response:
         docs: OK
         type: UsersUpdateResponse

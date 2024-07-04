@@ -55,7 +55,10 @@ service:
         name: LocksGetRequest
         body:
           properties:
-            device_id: optional<string>
+            device_id:
+              type: optional<string>
+              validation:
+                format: uuid
             name: optional<string>
       response:
         docs: OK
@@ -75,172 +78,7 @@ service:
                 display_name: display_name
                 capabilities_supported:
                   - access_code
-                properties:
-                  online: true
-                  name: name
-                  accessory_keypad:
-                    is_connected: true
-                  appearance:
-                    name: name
-                  model:
-                    display_name: display_name
-                    manufacturer_display_name: manufacturer_display_name
-                  has_direct_power: true
-                  battery_level: 1.1
-                  battery:
-                    level: 1.1
-                    status: critical
-                  manufacturer: manufacturer
-                  image_url: image_url
-                  image_alt_text: image_alt_text
-                  serial_number: serial_number
-                  online_access_codes_enabled: true
-                  offline_access_codes_enabled: true
-                  supports_accessory_keypad: true
-                  supports_offline_access_codes: true
-                  noise_level_decibels: 1.1
-                  currently_triggering_noise_threshold_ids:
-                    - currently_triggering_noise_threshold_ids
-                  assa_abloy_credential_service_metadata:
-                    has_active_endpoint: true
-                    endpoints:
-                      - endpoint_id: endpoint_id
-                        is_active: true
-                  august_metadata:
-                    lock_id: lock_id
-                    lock_name: lock_name
-                    house_name: house_name
-                    has_keypad: true
-                  avigilon_alta_metadata:
-                    entry_name: entry_name
-                    org_name: org_name
-                    zone_id: 1.1
-                    zone_name: zone_name
-                    site_id: 1.1
-                    site_name: site_name
-                    entry_relays_total_count: 1.1
-                  schlage_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  smartthings_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  lockly_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nuki_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  kwikset_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    model_number: model_number
-                  salto_metadata:
-                    lock_id: lock_id
-                    customer_reference: customer_reference
-                    lock_type: lock_type
-                    battery_level: battery_level
-                    locked_state: locked_state
-                  genie_metadata:
-                    device_name: device_name
-                    door_name: door_name
-                  brivo_metadata:
-                    device_name: device_name
-                  igloo_metadata:
-                    device_id: device_id
-                    bridge_id: bridge_id
-                  noiseaware_metadata:
-                    device_model: indoor
-                    noise_level_nrs: 1.1
-                    noise_level_decibel: 1.1
-                    device_name: device_name
-                    device_id: device_id
-                  minut_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    latest_sensor_values:
-                      temperature:
-                        time: time
-                        value: 1.1
-                      sound:
-                        time: time
-                        value: 1.1
-                      humidity:
-                        time: time
-                        value: 1.1
-                      pressure:
-                        time: time
-                        value: 1.1
-                      accelerometer_z:
-                        time: time
-                        value: 1.1
-                  four_suites_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                    reclose_delay_in_seconds: 1.1
-                  two_n_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                  controlbyweb_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  ttlock_metadata:
-                    lock_id: 1.1
-                    lock_alias: lock_alias
-                    feature_value: feature_value
-                  seam_bridge_metadata:
-                    device_num: 1.1
-                    name: name
-                  igloohome_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nest_metadata:
-                    nest_device_id: nest_device_id
-                    device_name: device_name
-                    custom_name: custom_name
-                  ecobee_metadata:
-                    ecobee_device_id: ecobee_device_id
-                    device_name: device_name
-                  honeywell_resideo_metadata:
-                    honeywell_resideo_device_id: honeywell_resideo_device_id
-                    device_name: device_name
-                  hubitat_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    device_label: device_label
-                  dormakaba_oracode_metadata:
-                    door_id: 1.1
-                    door_name: door_name
-                    door_is_wireless: true
-                    site_id: 1.1
-                    site_name: site_name
-                  wyze_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    product_name: product_name
-                    product_type: product_type
-                    product_model: product_model
-                    device_info_model: device_info_model
-                  tedee_metadata:
-                    device_id: 1.1
-                    serial_number: serial_number
-                    device_name: device_name
-                    device_model: device_model
-                    bridge_id: 1.1
-                    bridge_name: bridge_name
-                  _experimental_supported_code_from_access_codes_lengths:
-                    - 1.1
-                  code_constraints:
-                    - constraint_type: no_zeros
-                  supported_code_lengths:
-                    - 1.1
-                  max_active_codes_supported: 1.1
-                  supports_backup_access_code_pool: true
-                  has_native_entry_events: true
-                  locked: true
-                  keypad_battery:
-                    level: 1.1
-                  door_open: true
+                properties: {}
                 location:
                   location_name: location_name
                   timezone: timezone
@@ -270,172 +108,7 @@ service:
                 display_name: display_name
                 capabilities_supported:
                   - access_code
-                properties:
-                  online: true
-                  name: name
-                  accessory_keypad:
-                    is_connected: true
-                  appearance:
-                    name: name
-                  model:
-                    display_name: display_name
-                    manufacturer_display_name: manufacturer_display_name
-                  has_direct_power: true
-                  battery_level: 1.1
-                  battery:
-                    level: 1.1
-                    status: critical
-                  manufacturer: manufacturer
-                  image_url: image_url
-                  image_alt_text: image_alt_text
-                  serial_number: serial_number
-                  online_access_codes_enabled: true
-                  offline_access_codes_enabled: true
-                  supports_accessory_keypad: true
-                  supports_offline_access_codes: true
-                  noise_level_decibels: 1.1
-                  currently_triggering_noise_threshold_ids:
-                    - currently_triggering_noise_threshold_ids
-                  assa_abloy_credential_service_metadata:
-                    has_active_endpoint: true
-                    endpoints:
-                      - endpoint_id: endpoint_id
-                        is_active: true
-                  august_metadata:
-                    lock_id: lock_id
-                    lock_name: lock_name
-                    house_name: house_name
-                    has_keypad: true
-                  avigilon_alta_metadata:
-                    entry_name: entry_name
-                    org_name: org_name
-                    zone_id: 1.1
-                    zone_name: zone_name
-                    site_id: 1.1
-                    site_name: site_name
-                    entry_relays_total_count: 1.1
-                  schlage_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  smartthings_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  lockly_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nuki_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  kwikset_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    model_number: model_number
-                  salto_metadata:
-                    lock_id: lock_id
-                    customer_reference: customer_reference
-                    lock_type: lock_type
-                    battery_level: battery_level
-                    locked_state: locked_state
-                  genie_metadata:
-                    device_name: device_name
-                    door_name: door_name
-                  brivo_metadata:
-                    device_name: device_name
-                  igloo_metadata:
-                    device_id: device_id
-                    bridge_id: bridge_id
-                  noiseaware_metadata:
-                    device_model: indoor
-                    noise_level_nrs: 1.1
-                    noise_level_decibel: 1.1
-                    device_name: device_name
-                    device_id: device_id
-                  minut_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    latest_sensor_values:
-                      temperature:
-                        time: time
-                        value: 1.1
-                      sound:
-                        time: time
-                        value: 1.1
-                      humidity:
-                        time: time
-                        value: 1.1
-                      pressure:
-                        time: time
-                        value: 1.1
-                      accelerometer_z:
-                        time: time
-                        value: 1.1
-                  four_suites_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                    reclose_delay_in_seconds: 1.1
-                  two_n_metadata:
-                    device_id: 1.1
-                    device_name: device_name
-                  controlbyweb_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  ttlock_metadata:
-                    lock_id: 1.1
-                    lock_alias: lock_alias
-                    feature_value: feature_value
-                  seam_bridge_metadata:
-                    device_num: 1.1
-                    name: name
-                  igloohome_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                  nest_metadata:
-                    nest_device_id: nest_device_id
-                    device_name: device_name
-                    custom_name: custom_name
-                  ecobee_metadata:
-                    ecobee_device_id: ecobee_device_id
-                    device_name: device_name
-                  honeywell_resideo_metadata:
-                    honeywell_resideo_device_id: honeywell_resideo_device_id
-                    device_name: device_name
-                  hubitat_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    device_label: device_label
-                  dormakaba_oracode_metadata:
-                    door_id: 1.1
-                    door_name: door_name
-                    door_is_wireless: true
-                    site_id: 1.1
-                    site_name: site_name
-                  wyze_metadata:
-                    device_id: device_id
-                    device_name: device_name
-                    product_name: product_name
-                    product_type: product_type
-                    product_model: product_model
-                    device_info_model: device_info_model
-                  tedee_metadata:
-                    device_id: 1.1
-                    serial_number: serial_number
-                    device_name: device_name
-                    device_model: device_model
-                    bridge_id: 1.1
-                    bridge_name: bridge_name
-                  _experimental_supported_code_from_access_codes_lengths:
-                    - 1.1
-                  code_constraints:
-                    - constraint_type: no_zeros
-                  supported_code_lengths:
-                    - 1.1
-                  max_active_codes_supported: 1.1
-                  supports_backup_access_code_pool: true
-                  has_native_entry_events: true
-                  locked: true
-                  keypad_battery:
-                    level: 1.1
-                  door_open: true
+                properties: {}
                 location:
                   location_name: location_name
                   timezone: timezone
@@ -469,15 +142,22 @@ service:
         body:
           properties:
             connected_account_id:
-              docs: List all devices owned by this connected account
               type: optional<string>
+              docs: List all devices owned by this connected account
+              validation:
+                format: uuid
             connected_account_ids: optional<list<string>>
-            connect_webview_id: optional<string>
+            connect_webview_id:
+              type: optional<string>
+              validation:
+                format: uuid
             device_type: optional<root.DeviceType>
             device_types: optional<list<root.DeviceType>>
             manufacturer: optional<root.Manufacturer>
             device_ids: optional<list<string>>
-            limit: optional<double>
+            limit:
+              type: optional<double>
+              default: 500
             created_before: optional<datetime>
             user_identifier_key: optional<string>
             custom_metadata_has: optional<map<string, LocksListRequestCustomMetadataHasValue>>
@@ -501,14 +181,7 @@ service:
                   display_name: display_name
                   capabilities_supported:
                     - access_code
-                  properties:
-                    online: true
-                    name: name
-                    appearance:
-                      name: name
-                    model:
-                      display_name: display_name
-                      manufacturer_display_name: manufacturer_display_name
+                  properties: {}
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:
@@ -535,14 +208,7 @@ service:
                   display_name: display_name
                   capabilities_supported:
                     - access_code
-                  properties:
-                    online: true
-                    name: name
-                    appearance:
-                      name: name
-                    model:
-                      display_name: display_name
-                      manufacturer_display_name: manufacturer_display_name
+                  properties: {}
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:
@@ -572,8 +238,13 @@ service:
         name: LocksLockDoorRequest
         body:
           properties:
-            device_id: string
-            sync: optional<boolean>
+            device_id:
+              type: string
+              validation:
+                format: uuid
+            sync:
+              type: optional<boolean>
+              default: false
       response:
         docs: OK
         type: LocksLockDoorResponse
@@ -602,8 +273,13 @@ service:
         name: LocksUnlockDoorRequest
         body:
           properties:
-            device_id: string
-            sync: optional<boolean>
+            device_id:
+              type: string
+              validation:
+                format: uuid
+            sync:
+              type: optional<boolean>
+              default: false
       response:
         docs: OK
         type: LocksUnlockDoorResponse

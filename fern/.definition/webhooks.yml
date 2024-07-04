@@ -32,7 +32,10 @@ service:
         name: WebhooksCreateRequest
         body:
           properties:
-            url: string
+            url:
+              type: string
+              validation:
+                format: uri
             event_types: optional<list<string>>
       response:
         docs: OK

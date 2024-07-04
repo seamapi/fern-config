@@ -37,14 +37,16 @@ service:
             name: string
             company_name: optional<string>
             connect_partner_name:
+              type: optional<string>
               docs: |2-
 
                     ---
                     deprecated: use company_name
                     ---
                   
-              type: optional<string>
-            is_sandbox: optional<boolean>
+            is_sandbox:
+              type: optional<boolean>
+              default: false
             webview_primary_button_color: optional<string>
             webview_logo_shape: optional<webview_logo_shape>
       response:

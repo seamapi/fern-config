@@ -22,7 +22,10 @@ service:
         name: NetworksGetRequest
         body:
           properties:
-            network_id: string
+            network_id:
+              type: string
+              validation:
+                format: uuid
       response:
         docs: OK
         type: NetworksGetResponse

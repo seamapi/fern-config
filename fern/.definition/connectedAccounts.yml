@@ -39,9 +39,7 @@ types:
         validation:
           maxLength: 500
       - boolean
-      - type: optional<string>
-        validation:
-          format: 'null'
+      - optional<string>
   ConnectedAccountsUpdateResponse:
     properties:
       connected_account: root.ConnectedAccount

@@ -50,9 +50,7 @@ types:
         validation:
           maxLength: 500
       - boolean
-      - type: optional<string>
-        validation:
-          format: 'null'
+      - optional<string>
   ConnectWebviewsCreateResponse:
     properties:
       connect_webview: root.ConnectWebview

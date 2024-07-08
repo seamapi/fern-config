@@ -30,9 +30,7 @@ types:
       seos_applet_version:
         type: optional<string>
         default: 1.0.0
-      seos_tsm_endpoint_id:
-        type: optional<double>
-        default: 1
+      seos_tsm_endpoint_id: optional<double>
   SimulateCreateSandboxPhoneResponse:
     properties:
       phone: root.Phone

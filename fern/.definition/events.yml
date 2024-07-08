@@ -90,9 +90,7 @@ service:
               type: optional<string>
               validation:
                 format: uuid
-            limit:
-              type: optional<double>
-              default: 500
+            limit: optional<double>
       response:
         docs: OK
         type: EventsListResponse

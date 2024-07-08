@@ -50,7 +50,6 @@ types:
         validation:
           maxLength: 500
       - boolean
-      - optional<string>
   ConnectWebviewsCreateResponse:
     properties:
       connect_webview: root.ConnectWebview
@@ -224,9 +223,7 @@ service:
               docs: >-
                 Returns devices where the webview's custom_metadata contains all
                 of the provided key/value pairs.
-            limit:
-              type: optional<double>
-              default: 500
+            limit: optional<double>
       response:
         docs: OK
         type: ConnectWebviewsListResponse

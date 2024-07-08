@@ -102,12 +102,6 @@ service:
             full_name: optional<string>
             email:
               type: optional<string>
-              docs: |2-
-
-                    ---
-                    deprecated: use email_address.
-                    ---
-                    
               validation:
                 format: email
             phone_number: optional<string>
@@ -437,12 +431,6 @@ service:
             full_name: optional<string>
             email:
               type: optional<string>
-              docs: |2-
-
-                    ---
-                    deprecated: use email_address.
-                    ---
-                    
               validation:
                 format: email
             phone_number: optional<string>

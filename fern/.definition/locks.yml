@@ -155,9 +155,7 @@ service:
             device_types: optional<list<root.DeviceType>>
             manufacturer: optional<root.Manufacturer>
             device_ids: optional<list<string>>
-            limit:
-              type: optional<double>
-              default: 500
+            limit: optional<double>
             created_before: optional<datetime>
             user_identifier_key: optional<string>
             custom_metadata_has: optional<map<string, LocksListRequestCustomMetadataHasValue>>
@@ -260,8 +258,10 @@ service:
               action_attempt:
                 action_attempt_id: action_attempt_id
                 status: pending
-                result: result
-                error: error
+                result:
+                  key: value
+                error:
+                  key: value
                 action_type: LOCK_DOOR
               ok: true
     unlock_door:
@@ -295,7 +295,9 @@ service:
               action_attempt:
                 action_attempt_id: action_attempt_id
                 status: pending
-                result: result
-                error: error
+                result:
+                  key: value
+                error:
+                  key: value
                 action_type: LOCK_DOOR
               ok: true

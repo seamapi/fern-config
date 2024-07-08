@@ -171,18 +171,12 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"LOCK_DOOR">
   ActionAttemptOneResult:
     properties: {}
@@ -191,17 +185,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"LOCK_DOOR">
       result: ActionAttemptOneResult
   ActionAttemptTwoError:
@@ -213,17 +201,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"LOCK_DOOR">
       error: ActionAttemptTwoError
   ActionAttemptThree:
@@ -231,18 +213,12 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"UNLOCK_DOOR">
   ActionAttemptFourResult:
     properties: {}
@@ -251,17 +227,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"UNLOCK_DOOR">
       result: ActionAttemptFourResult
   ActionAttemptFiveError:
@@ -273,17 +243,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"UNLOCK_DOOR">
       error: ActionAttemptFiveError
   ActionAttemptSix:
@@ -291,18 +255,12 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
   ActionAttemptSevenResult:
     properties: {}
@@ -311,17 +269,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
       result: ActionAttemptSevenResult
   ActionAttemptEightError:
@@ -333,17 +285,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
       error: ActionAttemptEightError
   ActionAttemptNine:
@@ -351,18 +297,12 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"SET_COOL">
   ActionAttemptTenResult:
     properties: {}
@@ -371,17 +311,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"SET_COOL">
       result: ActionAttemptTenResult
   ActionAttemptElevenError:
@@ -393,17 +327,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"SET_COOL">
       error: ActionAttemptElevenError
   ActionAttemptTwelve:
@@ -411,18 +339,12 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"SET_HEAT">
   ActionAttemptThirteenResult:
     properties: {}
@@ -431,17 +353,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"SET_HEAT">
       result: ActionAttemptThirteenResult
   ActionAttemptFourteenError:
@@ -453,17 +369,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"SET_HEAT">
       error: ActionAttemptFourteenError
   ActionAttemptFifteen:
@@ -471,18 +381,12 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"SET_HEAT_COOL">
   ActionAttemptSixteenResult:
     properties: {}
@@ -491,17 +395,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"SET_HEAT_COOL">
       result: ActionAttemptSixteenResult
   ActionAttemptSeventeenError:
@@ -513,17 +411,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"SET_HEAT_COOL">
       error: ActionAttemptSeventeenError
   ActionAttemptEighteen:
@@ -531,18 +423,12 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"SET_FAN_MODE">
   ActionAttemptNineteenResult:
     properties: {}
@@ -551,17 +437,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"SET_FAN_MODE">
       result: ActionAttemptNineteenResult
   ActionAttemptTwentyError:
@@ -573,17 +453,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"SET_FAN_MODE">
       error: ActionAttemptTwentyError
   ActionAttemptTwentyOne:
@@ -591,18 +465,12 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"SET_THERMOSTAT_OFF">
   ActionAttemptTwentyTwoResult:
     properties: {}
@@ -611,17 +479,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"SET_THERMOSTAT_OFF">
       result: ActionAttemptTwentyTwoResult
   ActionAttemptTwentyThreeError:
@@ -633,51 +495,33 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"SET_THERMOSTAT_OFF">
       error: ActionAttemptTwentyThreeError
   ActionAttemptTwentyFour:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"SYNC_ACCESS_CODES">
   ActionAttemptTwentyFive:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"SYNC_ACCESS_CODES">
       result: optional<unknown>
   ActionAttemptTwentySixError:
@@ -688,51 +532,33 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"SYNC_ACCESS_CODES">
       error: ActionAttemptTwentySixError
   ActionAttemptTwentySeven:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"CREATE_ACCESS_CODE">
   ActionAttemptTwentyEight:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"CREATE_ACCESS_CODE">
       result: optional<unknown>
   ActionAttemptTwentyNineError:
@@ -743,51 +569,33 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"CREATE_ACCESS_CODE">
       error: ActionAttemptTwentyNineError
   ActionAttemptThirty:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"DELETE_ACCESS_CODE">
   ActionAttemptThirtyOne:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"DELETE_ACCESS_CODE">
       result: optional<unknown>
   ActionAttemptThirtyTwoError:
@@ -798,51 +606,33 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"DELETE_ACCESS_CODE">
       error: ActionAttemptThirtyTwoError
   ActionAttemptThirtyThree:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"UPDATE_ACCESS_CODE">
   ActionAttemptThirtyFour:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"UPDATE_ACCESS_CODE">
       result: optional<unknown>
   ActionAttemptThirtyFiveError:
@@ -853,51 +643,33 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"UPDATE_ACCESS_CODE">
       error: ActionAttemptThirtyFiveError
   ActionAttemptThirtySix:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"CREATE_NOISE_THRESHOLD">
   ActionAttemptThirtySeven:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"CREATE_NOISE_THRESHOLD">
       result: optional<unknown>
   ActionAttemptThirtyEightError:
@@ -908,51 +680,33 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"CREATE_NOISE_THRESHOLD">
       error: ActionAttemptThirtyEightError
   ActionAttemptThirtyNine:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"DELETE_NOISE_THRESHOLD">
   ActionAttemptForty:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"DELETE_NOISE_THRESHOLD">
       result: optional<unknown>
   ActionAttemptFortyOneError:
@@ -963,51 +717,33 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"DELETE_NOISE_THRESHOLD">
       error: ActionAttemptFortyOneError
   ActionAttemptFortyTwo:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<string>
-      error: optional<string>
+      result: unknown
+      error: unknown
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
   ActionAttemptFortyThree:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<string>
+      error: unknown
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
       result: optional<unknown>
   ActionAttemptActionAttemptIdError:
@@ -1018,17 +754,11 @@ types:
     properties:
       action_attempt_id:
         type: string
-        docs: |2-
-
-              ---
-              title: Action Attempt ID
-              ---
-              The ID of the action attempt.
-            
+        docs: The ID of the action attempt.
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<string>
+      result: unknown
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
       error: ActionAttemptActionAttemptIdError
   ActionAttempt:
@@ -1181,22 +911,8 @@ types:
           format: uri
       device_selection_mode: SelectionMode
       accepted_providers: list<string>
-      accepted_devices:
-        docs: |2-
-
-                ---
-                deprecated: Unused. Will be removed.
-                ---
-                
-        type: list<string>
-      any_device_allowed:
-        type: boolean
-        docs: |2-
-
-                ---
-                deprecated: Unused. Will be removed.
-                ---
-                
+      accepted_devices: list<string>
+      any_device_allowed: boolean
       any_provider_allowed: boolean
       login_successful: boolean
       status: ConnectWebviewStatus
@@ -1372,11 +1088,7 @@ types:
   UnmanagedDevicePropertiesAccessoryKeypadBattery:
     docs: Indicates if the keypad battery properties.
     properties:
-      level:
-        type: double
-        validation:
-          min: 0
-          max: 1
+      level: double
   UnmanagedDevicePropertiesAccessoryKeypad:
     docs: Represents the accessory keypad state.
     properties:
@@ -1402,11 +1114,7 @@ types:
       without the immediate need for recharging; and "full," which represents a
       battery that is fully charged, providing the maximum duration of usage.
     properties:
-      level:
-        type: double
-        validation:
-          min: 0
-          max: 1
+      level: double
       status: UnmanagedDevicePropertiesBatteryStatus
   UnmanagedDevicePropertiesModel:
     properties:
@@ -1430,14 +1138,7 @@ types:
       online_access_codes_supported:
         type: optional<boolean>
         docs: Indicates whether the device supports online access codes.
-      accessory_keypad_supported:
-        type: optional<boolean>
-        docs: |2-
-
-                ---
-                deprecated: use device.properties.model.can_connect_accessory_keypad
-                ---
-                
+      accessory_keypad_supported: optional<boolean>
   UnmanagedDeviceProperties:
     properties:
       accessory_keypad:
@@ -1445,13 +1146,7 @@ types:
         docs: Represents the accessory keypad state.
       name:
         type: string
-        docs: |2-
-
-                ---
-                deprecated: use device.display_name instead
-                ---
-                Name of the device.
-                
+        docs: Name of the device.
       online:
         type: boolean
         docs: Indicates whether the device is online.
@@ -1471,9 +1166,6 @@ types:
         docs: >-
           Indicates the battery level of the device as a decimal value between 0
           and 1, inclusive.
-        validation:
-          min: 0
-          max: 1
       battery:
         type: optional<UnmanagedDevicePropertiesBattery>
         docs: >-
@@ -1696,14 +1388,7 @@ types:
       name: string
       company_name: string
       is_sandbox: boolean
-      connect_partner_name:
-        type: optional<string>
-        docs: |2-
-
-              ---
-              deprecated: use company_name
-              ---
-            
+      connect_partner_name: optional<string>
   AcsSystemExternalType:
     enum:
       - pti_site
@@ -1724,12 +1409,6 @@ types:
       - visionline_system
       - assa_abloy_credential_service
       - latch_building
-    docs: |2-
-
-            ---
-            deprecated: use external_type
-            ---
-            
   AcsSystemErrorsItemSeamBridgeDisconnected:
     properties:
       created_at: datetime
@@ -1754,22 +1433,8 @@ types:
           format: uuid
       external_type: optional<AcsSystemExternalType>
       external_type_display_name: optional<string>
-      system_type:
-        type: optional<AcsSystemSystemType>
-        docs: |2-
-
-                ---
-                deprecated: use external_type
-                ---
-                
-      system_type_display_name:
-        type: optional<string>
-        docs: |2-
-
-                ---
-                deprecated: use external_type_display_name
-                ---
-                
+      system_type: optional<AcsSystemSystemType>
+      system_type_display_name: optional<string>
       name: string
       created_at: datetime
       workspace_id:
@@ -1791,12 +1456,6 @@ types:
       - pti_access_level
       - salto_access_group
       - brivo_group
-    docs: |2-
-
-          ---
-          deprecated: use external_type
-          ---
-        
   AcsAccessGroupExternalType:
     enum:
       - pti_unit
@@ -1818,22 +1477,8 @@ types:
         validation:
           format: uuid
       name: string
-      access_group_type:
-        type: AcsAccessGroupAccessGroupType
-        docs: |2-
-
-              ---
-              deprecated: use external_type
-              ---
-            
-      access_group_type_display_name:
-        type: string
-        docs: |2-
-
-              ---
-              deprecated: use external_type_display_name
-              ---
-              
+      access_group_type: AcsAccessGroupAccessGroupType
+      access_group_type_display_name: string
       display_name: string
       external_type: AcsAccessGroupExternalType
       external_type_display_name: string
@@ -1880,12 +1525,6 @@ types:
       full_name: optional<string>
       email:
         type: optional<string>
-        docs: |2-
-
-              ---
-              deprecated: use email_address.
-              ---
-              
         validation:
           format: email
       email_address:

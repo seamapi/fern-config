@@ -98,8 +98,10 @@ service:
               action_attempt:
                 action_attempt_id: action_attempt_id
                 status: pending
-                result: result
-                error: error
+                result:
+                  key: value
+                error:
+                  key: value
                 action_type: LOCK_DOOR
               access_code:
                 common_code_key: common_code_key
@@ -231,8 +233,10 @@ service:
               action_attempt:
                 action_attempt_id: action_attempt_id
                 status: pending
-                result: result
-                error: error
+                result:
+                  key: value
+                error:
+                  key: value
                 action_type: LOCK_DOOR
               ok: true
     generate_code:
@@ -497,7 +501,9 @@ service:
               action_attempt:
                 action_attempt_id: action_attempt_id
                 status: pending
-                result: result
-                error: error
+                result:
+                  key: value
+                error:
+                  key: value
                 action_type: LOCK_DOOR
               ok: true

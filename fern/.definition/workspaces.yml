@@ -36,14 +36,7 @@ service:
           properties:
             name: string
             company_name: optional<string>
-            connect_partner_name:
-              type: optional<string>
-              docs: |2-
-
-                    ---
-                    deprecated: use company_name
-                    ---
-                  
+            connect_partner_name: optional<string>
             is_sandbox:
               type: optional<boolean>
               default: false
@@ -130,7 +123,9 @@ service:
               action_attempt:
                 action_attempt_id: action_attempt_id
                 status: pending
-                result: result
-                error: error
+                result:
+                  key: value
+                error:
+                  key: value
                 action_type: LOCK_DOOR
               ok: true

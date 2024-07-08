@@ -84,8 +84,10 @@ service:
               action_attempt:
                 action_attempt_id: action_attempt_id
                 status: pending
-                result: result
-                error: error
+                result:
+                  key: value
+                error:
+                  key: value
                 action_type: LOCK_DOOR
               ok: true
     get:

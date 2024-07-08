@@ -37,14 +37,7 @@ types:
   UserIdentitiesListAccessibleDevicesResponse:
     properties:
       devices: list<root.Device>
-      accessible_devices:
-        docs: |2-
-
-                ---
-                deprecated: use devices.
-                ---
-              
-        type: list<root.Device>
+      accessible_devices: list<root.Device>
       ok: boolean
   UserIdentitiesListAcsSystemsResponse:
     properties:

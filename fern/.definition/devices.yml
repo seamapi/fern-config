@@ -47,7 +47,6 @@ types:
         validation:
           maxLength: 500
       - boolean
-      - optional<string>
   DevicesUpdateResponse:
     properties:
       ok: boolean
@@ -161,9 +160,7 @@ service:
             device_types: optional<list<root.DeviceType>>
             manufacturer: optional<root.Manufacturer>
             device_ids: optional<list<string>>
-            limit:
-              type: optional<double>
-              default: 500
+            limit: optional<double>
             created_before: optional<datetime>
             user_identifier_key: optional<string>
             custom_metadata_has: optional<map<string, DevicesListRequestCustomMetadataHasValue>>

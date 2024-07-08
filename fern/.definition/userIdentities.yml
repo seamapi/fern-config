@@ -285,7 +285,14 @@ service:
                   display_name: display_name
                   capabilities_supported:
                     - access_code
-                  properties: {}
+                  properties:
+                    online: true
+                    name: name
+                    appearance:
+                      name: name
+                    model:
+                      display_name: display_name
+                      manufacturer_display_name: manufacturer_display_name
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:
@@ -312,7 +319,14 @@ service:
                   display_name: display_name
                   capabilities_supported:
                     - access_code
-                  properties: {}
+                  properties:
+                    online: true
+                    name: name
+                    appearance:
+                      name: name
+                    model:
+                      display_name: display_name
+                      manufacturer_display_name: manufacturer_display_name
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:

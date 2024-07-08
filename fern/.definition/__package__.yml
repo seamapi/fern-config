@@ -963,9 +963,417 @@ types:
       - thermostat
       - battery
       - phone
+  DevicePropertiesAccessoryKeypadBattery:
+    docs: Indicates if the keypad battery properties.
+    properties:
+      level: double
+  DevicePropertiesAccessoryKeypad:
+    docs: Represents the accessory keypad state.
+    properties:
+      is_connected:
+        type: boolean
+        docs: Indicates if the accessory_keypad is connected to the device.
+      battery:
+        type: optional<DevicePropertiesAccessoryKeypadBattery>
+        docs: Indicates if the keypad battery properties.
+  DevicePropertiesAppearance:
+    properties:
+      name:
+        type: string
+        docs: >-
+          Name of the device as seen from the provider API and application, not
+          settable through Seam.
+  DevicePropertiesModel:
+    properties:
+      can_connect_accessory_keypad:
+        type: optional<boolean>
+        docs: Indicates whether the device can connect a accessory keypad.
+      display_name:
+        type: string
+        docs: Display name of the device model.
+      manufacturer_display_name:
+        type: string
+        docs: >-
+          Display name that corresponds to the manufacturer-specific terminology
+          for the device.
+      has_built_in_keypad:
+        type: optional<boolean>
+        docs: Indicates whether the device has a built in accessory keypad.
+      offline_access_codes_supported:
+        type: optional<boolean>
+        docs: Indicates whether the device supports offline access codes.
+      online_access_codes_supported:
+        type: optional<boolean>
+        docs: Indicates whether the device supports online access codes.
+      accessory_keypad_supported: optional<boolean>
+  DevicePropertiesBatteryStatus:
+    enum:
+      - critical
+      - low
+      - good
+      - full
+  DevicePropertiesBattery:
+    docs: >-
+      Represents the current status of the battery charge level. Values are
+      "critical," which indicates an extremely low level, suggesting imminent
+      shutdown or an urgent need for charging; "low," which signifies that the
+      battery is under the preferred threshold and should be charged soon;
+      "good," which denotes a satisfactory charge level, adequate for normal use
+      without the immediate need for recharging; and "full," which represents a
+      battery that is fully charged, providing the maximum duration of usage.
+    properties:
+      level: double
+      status: DevicePropertiesBatteryStatus
+  DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem:
+    properties:
+      endpoint_id: string
+      is_active: boolean
+  DevicePropertiesAssaAbloyCredentialServiceMetadata:
+    properties:
+      has_active_endpoint: boolean
+      endpoints: list<DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem>
+  DevicePropertiesAugustMetadata:
+    properties:
+      lock_id: string
+      lock_name: string
+      house_name: string
+      has_keypad: boolean
+      keypad_battery_level: optional<string>
+      model: optional<string>
+      house_id: optional<string>
+  DevicePropertiesAvigilonAltaMetadata:
+    properties:
+      entry_name: string
+      org_name: string
+      zone_id: double
+      zone_name: string
+      site_id: double
+      site_name: string
+      entry_relays_total_count: double
+  DevicePropertiesSchlageMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      access_code_length: optional<double>
+      model: optional<string>
+  DevicePropertiesSmartthingsMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      model: optional<string>
+      location_id: optional<string>
+  DevicePropertiesLocklyMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      model: optional<string>
+  DevicePropertiesNukiMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      keypad_battery_critical: optional<boolean>
+      keypad_paired: optional<boolean>
+      keypad_2_paired: optional<boolean>
+  DevicePropertiesKwiksetMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      model_number: string
+  DevicePropertiesSaltoMetadata:
+    properties:
+      lock_id: string
+      customer_reference: string
+      lock_type: string
+      battery_level: string
+      locked_state: string
+      model: optional<string>
+  DevicePropertiesGenieMetadata:
+    properties:
+      device_name: string
+      door_name: string
+  DevicePropertiesBrivoMetadata:
+    properties:
+      device_name: string
+  DevicePropertiesIglooMetadata:
+    properties:
+      device_id: string
+      bridge_id: string
+      model: optional<string>
+  DevicePropertiesNoiseawareMetadataDeviceModel:
+    enum:
+      - indoor
+      - outdoor
+  DevicePropertiesNoiseawareMetadata:
+    properties:
+      device_model: DevicePropertiesNoiseawareMetadataDeviceModel
+      noise_level_nrs: double
+      noise_level_decibel: double
+      device_name: string
+      device_id: string
+  DevicePropertiesMinutMetadataLatestSensorValuesTemperature:
+    properties:
+      time: string
+      value: double
+  DevicePropertiesMinutMetadataLatestSensorValuesSound:
+    properties:
+      time: string
+      value: double
+  DevicePropertiesMinutMetadataLatestSensorValuesHumidity:
+    properties:
+      time: string
+      value: double
+  DevicePropertiesMinutMetadataLatestSensorValuesPressure:
+    properties:
+      time: string
+      value: double
+  DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ:
+    properties:
+      time: string
+      value: double
+  DevicePropertiesMinutMetadataLatestSensorValues:
+    properties:
+      temperature: DevicePropertiesMinutMetadataLatestSensorValuesTemperature
+      sound: DevicePropertiesMinutMetadataLatestSensorValuesSound
+      humidity: DevicePropertiesMinutMetadataLatestSensorValuesHumidity
+      pressure: DevicePropertiesMinutMetadataLatestSensorValuesPressure
+      accelerometer_z: DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ
+  DevicePropertiesMinutMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      latest_sensor_values: DevicePropertiesMinutMetadataLatestSensorValues
+  DevicePropertiesFourSuitesMetadata:
+    properties:
+      device_id: double
+      device_name: string
+      reclose_delay_in_seconds: double
+  DevicePropertiesTwoNMetadata:
+    properties:
+      device_id: double
+      device_name: string
+  DevicePropertiesControlbywebMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      relay_name: optional<string>
+  DevicePropertiesTtlockMetadata:
+    properties:
+      lock_id: double
+      lock_alias: string
+      feature_value: string
+  DevicePropertiesSeamBridgeMetadataUnlockMethod:
+    enum:
+      - bridge
+      - doorking
+  DevicePropertiesSeamBridgeMetadata:
+    properties:
+      unlock_method: optional<DevicePropertiesSeamBridgeMetadataUnlockMethod>
+      device_num: double
+      name: string
+  DevicePropertiesIgloohomeMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      bridge_id: optional<string>
+      bridge_name: optional<string>
+      keypad_id: optional<string>
+  DevicePropertiesNestMetadata:
+    properties:
+      nest_device_id: string
+      device_name: string
+      custom_name: string
+  DevicePropertiesEcobeeMetadata:
+    properties:
+      ecobee_device_id: string
+      device_name: string
+  DevicePropertiesHoneywellResideoMetadata:
+    properties:
+      honeywell_resideo_device_id: string
+      device_name: string
+  DevicePropertiesHubitatMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      device_label: string
+  DevicePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem:
+    properties:
+      name: string
+      prefix: double
+      check_in_time: string
+      check_out_time: string
+      is_24_hour: boolean
+      is_biweekly_mode: boolean
+      is_one_shot: boolean
+      is_master: boolean
+      ext_dormakaba_oracode_user_level_prefix: double
+      dormakaba_oracode_user_level_id:
+        type: string
+        validation:
+          format: uuid
+  DevicePropertiesDormakabaOracodeMetadata:
+    properties:
+      door_id: double
+      door_name: string
+      device_id: optional<double>
+      door_is_wireless: boolean
+      site_id: double
+      site_name: string
+      iana_timezone: optional<string>
+      predefined_time_slots: >-
+        optional<list<DevicePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem>>
+  DevicePropertiesWyzeMetadata:
+    properties:
+      device_id: string
+      device_name: string
+      product_name: string
+      product_type: string
+      product_model: string
+      device_info_model: string
+      keypad_uuid: optional<string>
+      locker_status_hardlock: optional<double>
+  DevicePropertiesTedeeMetadata:
+    properties:
+      device_id: double
+      serial_number: string
+      device_name: string
+      device_model: string
+      bridge_id: double
+      bridge_name: string
+      keypad_id: optional<double>
+  DevicePropertiesCodeConstraintsItemZeroConstraintType:
+    enum:
+      - no_zeros
+      - cannot_start_with_12
+      - no_triple_consecutive_ints
+      - cannot_specify_pin_code
+      - pin_code_matches_existing_set
+      - start_date_in_future
+      - no_ascending_or_descending_sequence
+      - at_least_three_unique_digits
+      - cannot_contain_089
+  DevicePropertiesCodeConstraintsItemZero:
+    properties:
+      constraint_type: DevicePropertiesCodeConstraintsItemZeroConstraintType
+  DevicePropertiesCodeConstraintsItemMaxLengthConstraintType:
+    enum:
+      - name_length
+      - name_must_be_unique
+  DevicePropertiesCodeConstraintsItemMaxLength:
+    properties:
+      constraint_type: DevicePropertiesCodeConstraintsItemMaxLengthConstraintType
+      min_length: optional<double>
+      max_length: optional<double>
+  DevicePropertiesCodeConstraintsItem:
+    discriminated: false
+    union:
+      - DevicePropertiesCodeConstraintsItemZero
+      - DevicePropertiesCodeConstraintsItemMaxLength
+  DevicePropertiesKeypadBattery:
+    properties:
+      level: double
   DeviceProperties:
     docs: Properties of the device.
-    properties: {}
+    properties:
+      online:
+        type: boolean
+        docs: Indicates whether the device is online.
+      name:
+        type: string
+        docs: Name of the device.
+      accessory_keypad:
+        type: optional<DevicePropertiesAccessoryKeypad>
+        docs: Represents the accessory keypad state.
+      appearance: DevicePropertiesAppearance
+      model: DevicePropertiesModel
+      has_direct_power:
+        type: optional<boolean>
+        docs: Indicates whether the device has direct power.
+      battery_level:
+        type: optional<double>
+        docs: >-
+          Indicates the battery level of the device as a decimal value between 0
+          and 1, inclusive.
+      battery:
+        type: optional<DevicePropertiesBattery>
+        docs: >-
+          Represents the current status of the battery charge level. Values are
+          "critical," which indicates an extremely low level, suggesting
+          imminent shutdown or an urgent need for charging; "low," which
+          signifies that the battery is under the preferred threshold and should
+          be charged soon; "good," which denotes a satisfactory charge level,
+          adequate for normal use without the immediate need for recharging; and
+          "full," which represents a battery that is fully charged, providing
+          the maximum duration of usage.
+      manufacturer:
+        type: optional<string>
+        docs: Manufacturer of the device.
+      image_url:
+        type: optional<string>
+        docs: Image URL for the device.
+        validation:
+          format: uri
+      image_alt_text:
+        type: optional<string>
+        docs: Alt text for the device image.
+      serial_number:
+        type: optional<string>
+        docs: Serial number of the device.
+      online_access_codes_enabled:
+        type: optional<boolean>
+        docs: >-
+          Indicates whether it is currently possible to use online access codes
+          for the device.
+      offline_access_codes_enabled:
+        type: optional<boolean>
+        docs: >-
+          Indicates whether it is currently possible to use offline access codes
+          for the device.
+      supports_accessory_keypad: optional<boolean>
+      supports_offline_access_codes: optional<boolean>
+      noise_level_decibels:
+        type: optional<double>
+        docs: >-
+          Indicates current noise level in decibels, if the device supports
+          noise detection.
+      currently_triggering_noise_threshold_ids:
+        type: optional<list<string>>
+        docs: Array of noise threshold IDs that are currently triggering.
+      assa_abloy_credential_service_metadata: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
+      august_metadata: optional<DevicePropertiesAugustMetadata>
+      avigilon_alta_metadata: optional<DevicePropertiesAvigilonAltaMetadata>
+      schlage_metadata: optional<DevicePropertiesSchlageMetadata>
+      smartthings_metadata: optional<DevicePropertiesSmartthingsMetadata>
+      lockly_metadata: optional<DevicePropertiesLocklyMetadata>
+      nuki_metadata: optional<DevicePropertiesNukiMetadata>
+      kwikset_metadata: optional<DevicePropertiesKwiksetMetadata>
+      salto_metadata: optional<DevicePropertiesSaltoMetadata>
+      genie_metadata: optional<DevicePropertiesGenieMetadata>
+      brivo_metadata: optional<DevicePropertiesBrivoMetadata>
+      igloo_metadata: optional<DevicePropertiesIglooMetadata>
+      noiseaware_metadata: optional<DevicePropertiesNoiseawareMetadata>
+      minut_metadata: optional<DevicePropertiesMinutMetadata>
+      four_suites_metadata: optional<DevicePropertiesFourSuitesMetadata>
+      two_n_metadata: optional<DevicePropertiesTwoNMetadata>
+      controlbyweb_metadata: optional<DevicePropertiesControlbywebMetadata>
+      ttlock_metadata: optional<DevicePropertiesTtlockMetadata>
+      seam_bridge_metadata: optional<DevicePropertiesSeamBridgeMetadata>
+      igloohome_metadata: optional<DevicePropertiesIgloohomeMetadata>
+      nest_metadata: optional<DevicePropertiesNestMetadata>
+      ecobee_metadata: optional<DevicePropertiesEcobeeMetadata>
+      honeywell_resideo_metadata: optional<DevicePropertiesHoneywellResideoMetadata>
+      hubitat_metadata: optional<DevicePropertiesHubitatMetadata>
+      dormakaba_oracode_metadata: optional<DevicePropertiesDormakabaOracodeMetadata>
+      wyze_metadata: optional<DevicePropertiesWyzeMetadata>
+      tedee_metadata: optional<DevicePropertiesTedeeMetadata>
+      _experimental_supported_code_from_access_codes_lengths: optional<list<double>>
+      code_constraints: optional<list<DevicePropertiesCodeConstraintsItem>>
+      supported_code_lengths: optional<list<double>>
+      max_active_codes_supported: optional<double>
+      supports_backup_access_code_pool: optional<boolean>
+      has_native_entry_events: optional<boolean>
+      locked: optional<boolean>
+      keypad_battery: optional<DevicePropertiesKeypadBattery>
+      door_open: optional<boolean>
   DeviceLocation:
     docs: Location information for the device.
     properties:
